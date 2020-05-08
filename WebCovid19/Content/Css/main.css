@@ -84,19 +84,22 @@ button {
 }
 
 
-    /*Esto hace que el fondo se vea opaco*/
-    .container-login100::before {
-        content: "";
-        display: block;
-        position: absolute;
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-color: rgba(0,0,0,0.65);
-    }
-
+  
+/*Esto hace que el fondo se vea opaco*/
+.container-login100::before {
+    
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.65);
+    
+}
+    
 .wrap-login100 {
     width: 390px;
     border-radius: 10px;

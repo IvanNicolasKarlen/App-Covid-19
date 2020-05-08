@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 
@@ -32,6 +33,28 @@ namespace WebCovid19.Controllers
             return View("Index");
         }
 
+
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            Usuarios usuario = new Usuarios();
+            return View(usuario);
+        }
+
+
+
+
+        [HttpPost]
+        public ActionResult Login(Usuarios usuario)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            return View("Index");
+        }
 
     }
 }

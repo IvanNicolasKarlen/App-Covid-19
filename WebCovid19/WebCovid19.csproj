@@ -280,6 +280,7 @@
     <Content Include="Scripts\umd\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\umd\bootstrap.js.map" />
     <Content Include="Scripts\umd\bootstrap.min.js.map" />
+    <Content Include="Views\Home\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
