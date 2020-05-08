@@ -1,0 +1,24 @@
+namespace WebCovid19
+{
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class DonacionesInsumos
+    {
+        [Key]
+        public int IdDonacionInsumo { get; set; }
+
+        public int IdNecesidadDonacionInsumo { get; set; }
+
+        public int IdUsuario { get; set; }
+
+        public int Cantidad { get; set; }
+
+        public virtual NecesidadesDonacionesInsumos NecesidadesDonacionesInsumos { get; set; }
+
+        public virtual Usuarios Usuarios { get; set; }
+    }
+}
