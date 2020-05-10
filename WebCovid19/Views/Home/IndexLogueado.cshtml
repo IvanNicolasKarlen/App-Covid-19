@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "IndexLogueado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="card espace">
+        <div class="card-body text-center black text-light t-15">
+            Solicitemos ayuda a la gente <button type="button" class="btn btn-primary ml-3">Crear una Necesidad</button>
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container">
+    <div class="card" id="card">
+        <div class="col-md-12">
+            <div class="float-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-dark mt-3 float-right dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></button>
+                    <ul class="dropdown-menu hover " role="menu" id="colour">
+                        <li class="text-center ">
+                            <a href="" class="text-light">
+                                <svg class="bi bi-exclamation-square-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2zm6 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+                                </svg>
+                                Denunciar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="~/Content/Img/negritten.jpg">
+                    <div class="col-md-2">
+                        <p class=" text-secondary mt-3"><b>Turco Mohamed</b></p>
+                        <p><span class="fa fa-calendar"></span> 08/05/2020</p>
+                </div>
+            </div>
+
+        </div>
+        <img class="card-img-top" src="~/Content/Img/inicio3.jpg" id="imagen-necesidad" alt="Card image cap">
+        <div class="card-body">
+            <div class="float-auto">
+                <button type="button" class="btn btn-outline-info"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                <label> <b class="text-primary">80%</b> de coincidencias </label>
+
+                <button type="button" class="btn btn-outline-danger"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+                <label> 6 votos negativos </label>
+                <div class="float-right">
+                    <label> <b class="text-primary">Solicita Dinero</b> </label>
+                </div>
+            </div>
+
+
+            <h2 class="card-title text-center">Necesitamos ayuda urgente</h2>
+            <p class="card-text mt-3">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+                printer took a galley of type and scrambled it to make a type specimen book. It has survived not
+                only five centuries,
+            </p>
+
+            <p class="card-text text-secondary"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> 15/06/2020</p>
+            <div class="text-center">
+                <a href="#" class="btn btn-primary">Mas detalles</a>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!--FIN DE LA PUBLICACION-->

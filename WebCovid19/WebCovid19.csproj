@@ -122,6 +122,7 @@
     <Content Include="Content\Css\bootstrap.css" />
     <Content Include="Content\Css\bootstrap.min.css" />
     <Content Include="Content\Css\Datepicker.js" />
+    <Content Include="Content\Img\negritten.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
@@ -281,6 +282,8 @@
     <Content Include="Scripts\umd\bootstrap.js.map" />
     <Content Include="Scripts\umd\bootstrap.min.js.map" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\IndexLogueado.cshtml" />
+    <Content Include="Views\Shared\VPFooter.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

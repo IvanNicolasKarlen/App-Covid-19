@@ -14,21 +14,33 @@ namespace WebCovid19.Controllers
         {
             return View();
         }
+
+        public ActionResult Indexlogueado()
+        {
+            return View();
+        }
         public ActionResult Registro()
         {
             Usuarios usuario = new Usuarios();
             return View(usuario);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Registro(Usuarios usuario)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View();
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
             }
-            
+            catch (Exception ex)
+            {
+
+                ModelState.AddModelError("Error: ", ex.Message);
+            }
 
             return View("Index");
         }
