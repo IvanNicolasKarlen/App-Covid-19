@@ -1,6 +1,10 @@
 ﻿#colour {
-    background-color: #2f1793;
+    background-color: white;
+
 }
+
+
+
 
 .espace {
     margin-top: 100px;
@@ -272,7 +276,7 @@ button {
     min-width: 160px;
     height: 42px;
     border-radius: 21px;
-    background: #0000ff;
+    background: #3cebbb;
     position: relative;
     z-index: 1;
 }
