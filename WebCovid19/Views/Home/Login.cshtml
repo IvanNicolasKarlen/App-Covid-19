@@ -1,5 +1,4 @@
-﻿@model WebCovid19.Usuarios
-
+﻿@model WebCovid19.Models.Views.VMLogin
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,6 +18,11 @@
             {
                 @Html.AntiForgeryToken()
 
+                if(ViewBag.mensajeError != null)
+                {
+                    <div class="p-3 mb-2 bg-danger text-white">@ViewBag.mensajeError</div>
+                }
+
 
                 <div class="wrap-input100 validate-input">
                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input100", placeholder = Html.DisplayNameFor(x => x.Email) } })
@@ -34,10 +38,13 @@
                 </div><br>
 
                 <div class="container-login100-form-btn m-t-32">
-                    <button class="login100-form-btn">
+                    <button class="login100-form-btn" type="submit">
                         Login
                     </button>
                 </div><br>
+                <div class="container-login100-form-btn m-t-32">
+                    Aun no estoy registrado  &nbsp;  @Html.ActionLink("Registrarme", "Registro", "Home", new { @class = " text-primary" })
+                </div>
             }
         </div>
 
