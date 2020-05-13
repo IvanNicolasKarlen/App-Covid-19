@@ -253,6 +253,7 @@
     <Compile Include="Models\NecesidadesReferencias.cs" />
     <Compile Include="Models\NecesidadesValoraciones.cs" />
     <Compile Include="Models\Views\CheckValidDate.cs" />
+    <Compile Include="Models\Views\VMDonacionMonetaria.cs" />
     <Compile Include="Models\Views\VMLogin.cs" />
     <Compile Include="Models\Views\VMPerfil.cs" />
     <Compile Include="Models\Views\VMRegistro.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="Context\TpDBContext.cs" />
     <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Services\ServicioDenuncia.cs" />
+    <Compile Include="Services\ServicioDonacion.cs" />
     <Compile Include="Services\ServicioNecesidad.cs" />
     <Compile Include="Services\ServicioUsuario.cs" />
   </ItemGroup>
@@ -294,6 +296,7 @@
     <Content Include="Views\Shared\VPFooter.cshtml" />
     <Content Include="Views\Home\Perfil.cshtml" />
     <Content Include="Views\Home\Denuncia.cshtml" />
+    <Content Include="Views\Home\DonacionMonetaria.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -14,7 +14,8 @@ namespace WebCovid19
         public int IdNecesidadDonacionMonetaria { get; set; }
 
         public int IdUsuario { get; set; }
-
+        
+        [Required]
         public decimal Dinero { get; set; }
 
         [Required]
