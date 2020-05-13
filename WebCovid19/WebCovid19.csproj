@@ -252,6 +252,7 @@
     <Compile Include="Models\NecesidadesDonacionesMonetarias.cs" />
     <Compile Include="Models\NecesidadesReferencias.cs" />
     <Compile Include="Models\NecesidadesValoraciones.cs" />
+    <Compile Include="Models\Views\CheckValidDate.cs" />
     <Compile Include="Models\Views\VMLogin.cs" />
     <Compile Include="Models\Views\VMPerfil.cs" />
     <Compile Include="Models\Views\VMRegistro.cs" />

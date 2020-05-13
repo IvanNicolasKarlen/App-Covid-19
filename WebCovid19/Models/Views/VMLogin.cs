@@ -11,7 +11,7 @@ namespace WebCovid19.Models.Views
         [Display(Name = "Email")]
         [Required(ErrorMessage = " Email es obligatorio")]
         [EmailAddress(ErrorMessage = "Formato de Email erroneo")]
-        [StringLength(50, ErrorMessage = "Email demaciado largo")]
+        [StringLength(50, ErrorMessage = "Email demasiado largo")]
         public string Email { get; set; }
 
         [Display(Name = "Clave")]
