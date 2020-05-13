@@ -22,7 +22,7 @@ namespace WebCovid19.Models.Views
             if (year > 18)
             {
                 return true;
-            }else if(year==18 && fecha.Month<=now.Year && fecha.Day<=now.Day){
+            }else if(year==18 && fecha.Month<=now.Month && fecha.Day<=now.Day){
                 return true;
             }
             else
