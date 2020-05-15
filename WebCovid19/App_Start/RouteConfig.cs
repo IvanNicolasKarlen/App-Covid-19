@@ -14,6 +14,18 @@ namespace WebCovid19
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+              name: "DenunciaMonetaria",
+              url: "DonacionMonetaria/{action}/{id}",
+              defaults: new { controller = "DonacionMonetaria", action = "DonacionMonetaria", id = UrlParameter.Optional }
+          );
+
+            routes.MapRoute(
+                name: "Perfil",
+                url: "Perfil/{action}/{id}",
+                defaults: new { controller = "Perfil", action = "Perfil", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

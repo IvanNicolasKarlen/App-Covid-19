@@ -122,7 +122,13 @@
     <Content Include="Content\Css\bootstrap.css" />
     <Content Include="Content\Css\bootstrap.min.css" />
     <Content Include="Content\Css\Datepicker.js" />
+    <Content Include="Content\Img\bolsaDinero.png" />
+    <Content Include="Content\Img\Completo.png" />
+    <Content Include="Content\Img\dinero.png" />
     <Content Include="Content\Img\imagenPerfil-Nula.png" />
+    <Content Include="Content\Img\itemProducto.png" />
+    <Content Include="Content\Img\necesitamosInsumos.jpg" />
+    <Content Include="Content\Img\necesitanDinero.jpg" />
     <Content Include="Content\Img\negritten.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -238,7 +244,12 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DenunciaController.cs" />
+    <Compile Include="Controllers\DonacionMonetariaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NecesidadController.cs" />
+    <Compile Include="Controllers\NecesidadDonacionInsumosController.cs" />
+    <Compile Include="Controllers\NecesidadesDonacionesMonetariasController.cs" />
     <Compile Include="Migrations\C__MigrationHistory.cs" />
     <Compile Include="Models\Denuncias.cs" />
     <Compile Include="Models\DonacionesInsumos.cs" />
@@ -270,7 +281,6 @@
     <Content Include="libman.json" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
@@ -295,8 +305,13 @@
     <Content Include="Views\Home\IndexLogueado.cshtml" />
     <Content Include="Views\Shared\VPFooter.cshtml" />
     <Content Include="Views\Home\Perfil.cshtml" />
-    <Content Include="Views\Home\Denuncia.cshtml" />
-    <Content Include="Views\Home\DonacionMonetaria.cshtml" />
+    <Content Include="Views\Denuncia\Denuncia.cshtml" />
+    <Content Include="Views\DonacionMonetaria\DonacionMonetaria.cshtml" />
+    <Content Include="Views\Shared\_AnonimoLayout.cshtml" />
+    <Content Include="Views\Shared\_BaseLayout.cshtml" />
+    <Content Include="Views\Shared\_NecesidadesLayout.cshtml" />
+    <Content Include="Views\NecesidadDonacionInsumos\NecesidadDonacionInsumos.cshtml" />
+    <Content Include="Views\NecesidadesDonacionesMonetarias\NecesidadesDonacionesMonetarias.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -307,6 +322,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Js\" />
+    <Folder Include="Views\Necesidad\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

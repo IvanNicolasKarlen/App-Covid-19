@@ -20,6 +20,7 @@ namespace WebCovid19.Models.Views
 
         [Display(Name = "Fecha de nacimiento")]
         [Required(ErrorMessage = "Fecha de nacimiento obligatoria")]
+        [CheckValidDate]
         public DateTime FechaNacimiento { get; set; }
 
         [Display(Name = "Email")]

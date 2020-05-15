@@ -1,7 +1,7 @@
 ﻿@model WebCovid19.Models.Views.VMLogin
 @{
     ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AnonimoLayout.cshtml";
 }
 
 
@@ -18,7 +18,7 @@
             {
                 @Html.AntiForgeryToken()
 
-                if(ViewBag.mensajeError != null)
+                if (ViewBag.mensajeError != null)
                 {
                     <div class="p-3 mb-2 bg-danger text-white">@ViewBag.mensajeError</div>
                 }

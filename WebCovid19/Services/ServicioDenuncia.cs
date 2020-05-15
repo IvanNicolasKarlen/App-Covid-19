@@ -7,12 +7,29 @@ namespace WebCovid19.Services
 {
     public class ServicioDenuncia
     {
-       /* public Denuncias realizarDenuncia(int? id)
+        /// <summary>
+        /// Guardar la denuncia y validar si es necesario enviarselo al Admin o no
+        /// </summary>
+        /// <param name="denuncia"></param>
+        /// <returns>True o False</returns>
+        public bool guardarDenuncia(Denuncias denuncia)
         {
-            Denuncias denuncia = new Denuncias();
-            //Buscar necesidad por id
+            List<Denuncias> denunciasObtenidas = new List<Denuncias>();
+            //Registro la denuncia
+            //Recibo lista de denuncias de esa publicacion
+            //Validar si supera a 5 para enviarle la publicacion al admin.
 
-            return denuncia;
-        }*/
+            //Validar si se guardo 
+
+
+
+            if (denunciasObtenidas.Count >= 5)
+            {
+                //Enviarsela al admin
+            }
+
+
+            return true;
+        }
     }
 }
