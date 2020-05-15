@@ -18,7 +18,7 @@ namespace WebCovid19
         [Required]
         public decimal Dinero { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Debe seleccionar el comprobante de pago")]
         [StringLength(200)]
         public string ArchivoTransferencia { get; set; }
 

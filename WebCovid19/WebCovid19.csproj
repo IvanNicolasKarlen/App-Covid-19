@@ -312,6 +312,8 @@
     <Content Include="Views\Shared\_NecesidadesLayout.cshtml" />
     <Content Include="Views\NecesidadDonacionInsumos\NecesidadDonacionInsumos.cshtml" />
     <Content Include="Views\NecesidadesDonacionesMonetarias\NecesidadesDonacionesMonetarias.cshtml" />
+    <Content Include="Views\DonacionMonetaria\GraciasPorDonarMonetariamente.cshtml" />
+    <Content Include="Views\DonacionMonetaria\SeleccionComprobanteDePago.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "DonacionMonetaria";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
 }
 <br>
 <br>
@@ -21,11 +21,12 @@
 
             if (ViewBag.mensajeError != null) //Mensaje que esta en el controller.
             {
-                <div class="p-3 mb-2 bg-danger text-white">@ViewBag.mensajeError</div> 
+                <div class="p-3 mb-2 bg-danger text-white">@ViewBag.mensajeError</div>
             }
 
 
-            <div class="wrap-input100 validate-input"> @*Inputs con razor*@
+            <div class="wrap-input100 validate-input">
+                @*Inputs con razor*@
                 @Html.EditorFor(model => model.Dinero, new { htmlAttributes = new { @class = "input100", placeholder = Html.DisplayNameFor(x => x.Dinero) } })
                 <span class="focus-input100" data-placeholder="&#xe813;"></span>
                 @Html.ValidationMessageFor(model => model.Dinero, "", new { @class = "text-danger" })
@@ -33,10 +34,9 @@
 
             <div class="col-md-12 btn-group mt-4">
 
-                <a type="button" class="btn btn-danger" href="~/Home/IndexLogueado">Cancelar</a>
+                <button type="button" class="btn btn-danger" onclick="location.href='/Home/IndexLogueado'">Cancelar</button>
                 <button type="submit" class="btn btn-primary ml-2">Enviar</button>
             </div>
         }
     </div>
 </div>
-

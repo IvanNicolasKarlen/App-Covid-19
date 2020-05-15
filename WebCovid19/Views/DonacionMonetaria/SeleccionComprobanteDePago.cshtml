@@ -1,0 +1,37 @@
+﻿@model WebCovid19.DonacionesMonetarias
+
+@{
+    ViewBag.Title = "SeleccionComprobanteDePago";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+}
+
+<br />
+<br />
+<center><h2>Seleccione comprobante de pago</h2></center>
+
+<div class="card" id="card">
+
+    <div class="col-md-4 mt-3 mb-3 float-left">
+
+            @using (Html.BeginForm("SeleccionComprobanteDePago", "DonacionMonetaria", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+            {
+                @Html.AntiForgeryToken()
+
+                if (ViewBag.mensajeError2 != null) //Mensaje que esta en el controller.
+                {
+                    <div class="p-3 mb-2 bg-danger text-white">@ViewBag.mensajeError2</div>
+                }
+
+                @*Valido que me suba un comprobante*@
+                <div class="form-group">
+                    <input type="file" class="form-control-file">
+                    <br /> @Html.ValidationMessageFor(model => model.ArchivoTransferencia, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-12 btn-group mt-4">
+                    <button type="submit" class="btn btn-primary ml-2">Confirmar</button>
+                </div>
+            }
+       </div>
+</div>
+

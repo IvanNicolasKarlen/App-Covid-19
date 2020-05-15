@@ -44,7 +44,39 @@ namespace WebCovid19.Controllers
                 ModelState.AddModelError("Error: ", ex.Message);
             }
 
-            return RedirectToAction("DonacionMonetaria");
+            return RedirectToAction("SeleccionComprobanteDePago");
+        }
+
+        [HttpGet]
+        public ActionResult SeleccionComprobanteDePago()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult SeleccionComprobanteDePago(DonacionesMonetarias donacionesMonetarias)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(donacionesMonetarias);
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Error: ", ex.Message);
+            }
+
+            return RedirectToAction("GraciasPorDonarMonetariamente");
+        }
+
+
+        [HttpGet]
+        public ActionResult GraciasPorDonarMonetariamente()
+        {
+            return View();
         }
     }
 }
