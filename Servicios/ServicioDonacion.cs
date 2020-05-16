@@ -8,7 +8,7 @@ namespace WebCovid19.Services
 {
     public class ServicioDonacion
     {
-        internal bool MontoADonarRecibido(VMDonacionMonetaria vmdonacionMonetaria)
+        public bool MontoADonarRecibido(VMDonacionMonetaria vmdonacionMonetaria)
         {
             if (vmdonacionMonetaria.Dinero < 100)
             {

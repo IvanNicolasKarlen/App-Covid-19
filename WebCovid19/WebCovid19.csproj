@@ -253,30 +253,11 @@
     <Compile Include="Controllers\NecesidadDonacionInsumosController.cs" />
     <Compile Include="Controllers\NecesidadesDonacionesMonetariasController.cs" />
     <Compile Include="Migrations\C__MigrationHistory.cs" />
-    <Compile Include="Models\Denuncias.cs" />
-    <Compile Include="Models\DonacionesInsumos.cs" />
-    <Compile Include="Models\DonacionesMonetarias.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\MotivoDenuncia.cs" />
-    <Compile Include="Models\Necesidades.cs" />
-    <Compile Include="Models\NecesidadesDonacionesInsumos.cs" />
-    <Compile Include="Models\NecesidadesDonacionesMonetarias.cs" />
-    <Compile Include="Models\NecesidadesReferencias.cs" />
-    <Compile Include="Models\NecesidadesValoraciones.cs" />
-    <Compile Include="Models\Views\CheckValidDate.cs" />
-    <Compile Include="Models\Views\VMDonacionMonetaria.cs" />
-    <Compile Include="Models\Views\VMLogin.cs" />
-    <Compile Include="Models\Views\VMPerfil.cs" />
-    <Compile Include="Models\Views\VMRegistro.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Context\TpDBContext.cs" />
-    <Compile Include="Models\Usuarios.cs" />
-    <Compile Include="Services\ServicioDenuncia.cs" />
-    <Compile Include="Services\ServicioDonacion.cs" />
-    <Compile Include="Services\ServicioNecesidad.cs" />
-    <Compile Include="Services\ServicioUsuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -329,12 +310,24 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Js\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entidades\Entidades.csproj">
+      <Project>{e1fc45c0-c7f1-41fc-887e-bbbe38321f1f}</Project>
+      <Name>Entidades</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Servicios\Servicios.csproj">
+      <Project>{a80d23e9-4238-47ae-ae8c-e27e05b0a0f2}</Project>
+      <Name>Servicios</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
