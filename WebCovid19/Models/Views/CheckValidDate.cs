@@ -15,6 +15,11 @@ namespace WebCovid19.Models.Views
 
         public override bool IsValid(object value)
         {
+            if(value == null)
+            {
+                return false;
+            }
+
             DateTime fecha = (DateTime)value;
             DateTime now = DateTime.Now;
             int year = now.Year - fecha.Year;

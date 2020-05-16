@@ -169,6 +169,12 @@ namespace WebCovid19.Controllers
             return RedirectToAction("Index");
         }
 
-        
+
+        public ActionResult Administrador()
+        {
+            return View();
+        }
+
+
     }
     }
