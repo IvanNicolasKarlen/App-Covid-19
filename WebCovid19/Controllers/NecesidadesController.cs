@@ -6,12 +6,18 @@ using System.Web.Mvc;
 
 namespace WebCovid19.Controllers
 {
-    public class NecesidadController : Controller
+    public class NecesidadesController : Controller
     {
-        // GET: Necesidad
+        // GET: Necesidades
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult Create()
+        {
+            Necesidades necesidades = new Necesidades();
+            return View(necesidades);
         }
     }
 }

@@ -249,7 +249,7 @@
     <Compile Include="Controllers\DonacionMonetariaController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\NecesidadController.cs" />
+    <Compile Include="Controllers\NecesidadesController.cs" />
     <Compile Include="Controllers\NecesidadDonacionInsumosController.cs" />
     <Compile Include="Controllers\NecesidadesDonacionesMonetariasController.cs" />
     <Compile Include="Migrations\C__MigrationHistory.cs" />
@@ -318,6 +318,7 @@
     <Content Include="Views\DonacionMonetaria\SeleccionComprobanteDePago.cshtml" />
     <Content Include="Views\Home\Administrador.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Necesidades\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -328,7 +329,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Js\" />
-    <Folder Include="Views\Necesidad\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

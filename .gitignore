@@ -466,3 +466,4 @@ Connection.config.Release.Template
 
 archivos/
 .vs/
+/WebCovid19/Views/Necesidades/Create.cshtml

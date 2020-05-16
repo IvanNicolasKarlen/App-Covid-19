@@ -11,11 +11,12 @@ namespace WebCovid19.Controllers
         // GET: Error
         public ActionResult Index(int error = 0)
         {
+            
             switch (error)
             {
                 case 505:
                     ViewBag.Title = "Ocurrio un error inesperado";
-                    ViewBag.Description = "Comuniquelo a soporte para su verificación ..";
+                    ViewBag.Description = "Disculpe las molestias, esperamos esto no vuelva a suceder :( ...";
                     break;
 
                 case 404:
@@ -25,7 +26,7 @@ namespace WebCovid19.Controllers
 
                 default:
                     ViewBag.Title = "Página no encontrada";
-                    ViewBag.Description = "Algo salio muy mal :( ..";
+                    ViewBag.Description = "Algo salio muy mal :( ...";
                     break;
             }
 
