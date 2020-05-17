@@ -879,3 +879,7 @@ D:\Proyectos Visual Studio\App-Covid-19 (18-5)\WebCovid19\bin\es\System.Web.Webp
 D:\Proyectos Visual Studio\App-Covid-19 (18-5)\WebCovid19\bin\es\System.Web.Helpers.resources.dll
 D:\Proyectos Visual Studio\App-Covid-19 (18-5)\WebCovid19\bin\es\System.Web.Mvc.resources.dll
 D:\Proyectos Visual Studio\App-Covid-19 (18-5)\WebCovid19\obj\Debug\WebCovid19.csproj.CopyComplete
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\Entidades.dll
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\Servicios.dll
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\Entidades.pdb
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\Servicios.pdb

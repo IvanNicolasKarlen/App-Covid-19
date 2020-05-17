@@ -437,4 +437,9 @@ button {
         border-left: solid 1px rgba(255,255,255,0.10);
     }
 }
+
 /********Fin de Footer*******/
+
+.display-none{
+    display:none;
+}

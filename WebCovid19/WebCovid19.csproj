@@ -164,6 +164,7 @@
     <Content Include="Content\Img\9.jpg" />
     <Content Include="Content\Img\inicio.jpg" />
     <Content Include="Content\Img\inicio3.jpg" />
+    <Content Include="Scripts\necesidades.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -299,7 +300,7 @@
     <Content Include="Views\DonacionMonetaria\SeleccionComprobanteDePago.cshtml" />
     <Content Include="Views\Home\Administrador.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
-    <Content Include="Views\Necesidades\Create.cshtml" />
+    <Content Include="Views\Necesidades\Crear.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

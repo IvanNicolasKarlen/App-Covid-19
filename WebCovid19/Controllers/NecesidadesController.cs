@@ -14,10 +14,19 @@ namespace WebCovid19.Controllers
             return View();
         }
 
-        public ActionResult Create()
+        public ActionResult Crear()
         {
             Necesidades necesidades = new Necesidades();
             return View(necesidades);
+        }
+
+        [HttpPost]
+        public ActionResult Crear(Necesidades necesidades)
+        {
+            //ToDo: Falta agregar la logica aca
+            necesidades.FechaCreacion = DateTime.Now;
+
+            return null;
         }
     }
 }
