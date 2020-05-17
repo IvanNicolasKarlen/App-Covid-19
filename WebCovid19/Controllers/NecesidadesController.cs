@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Entidades.Views;
+using Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebCovid19.Services;
 
 namespace WebCovid19.Controllers
 {
@@ -16,17 +19,54 @@ namespace WebCovid19.Controllers
 
         public ActionResult Crear()
         {
-            Necesidades necesidades = new Necesidades();
-            return View(necesidades);
+            VMNecesidad necesidad = new VMNecesidad();
+            return View(necesidad);
         }
 
         [HttpPost]
-        public ActionResult Crear(Necesidades necesidades)
+        public ActionResult Crear(VMNecesidad vmnecesidad)
         {
             //ToDo: Falta agregar la logica aca
-            necesidades.FechaCreacion = DateTime.Now;
 
-            return null;
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            else
+            {
+                ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
+                //ToDo: Agregar el idUsuario. Aca esta hardcodeado
+                Necesidades necesidad = servicioNecesidad.buildNecesidad(vmnecesidad, 3);
+                if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")
+                {
+                    return View("Insumos", necesidad);
+                }
+                else
+                {
+                    return View("Monetaria", necesidad);
+                }
+            }
+
+        }
+        //toDo: No entiendo como hacer esto:
+        public ActionResult Insumos(Necesidades necesidades)
+        {
+            NecesidadesDonacionesInsumos insumos = new NecesidadesDonacionesInsumos();
+            insumos.Necesidades = necesidades;
+            return View();
+        }            
+        [HttpPost]
+        public ActionResult Insumos(NecesidadesDonacionesInsumos insumos)
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Monetaria(Necesidades necesidades)
+        {
+            NecesidadesDonacionesMonetarias monetaria = new NecesidadesDonacionesMonetarias();
+            monetaria.Necesidades = necesidades;
+            //monetaria.IdNecesidad = necesidades.IdNecesidad;
+            return View(monetaria);
         }
     }
 }
