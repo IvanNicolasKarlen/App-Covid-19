@@ -57,6 +57,7 @@
     <Compile Include="Views\CheckValidDate.cs" />
     <Compile Include="Views\VMDonacionMonetaria.cs" />
     <Compile Include="Views\VMLogin.cs" />
+    <Compile Include="Views\VMNecesidad.cs" />
     <Compile Include="Views\VMPerfil.cs" />
     <Compile Include="Views\VMRegistro.cs" />
   </ItemGroup>
