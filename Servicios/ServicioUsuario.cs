@@ -45,7 +45,7 @@ namespace WebCovid19.Services
             return usuario;
         }
 
-        internal Usuarios asignoDatosAUsuarioDelLogin(VMLogin login)
+        public Usuarios asignoDatosAUsuarioDelLogin(VMLogin login)
         {
             Usuarios usuario = new Usuarios();
             usuario.Email = login.Email;
@@ -53,7 +53,7 @@ namespace WebCovid19.Services
             return usuario;
         }
 
-        internal bool datosRecibidosDelFormularioRegistro(Usuarios usuario)
+        public bool datosRecibidosDelFormularioRegistro(Usuarios usuario)
         {
             if (usuario.Email == null | usuario.Password == null | usuario.RepeatPassword == null | usuario.FechaNacimiento == null)
             {
@@ -67,7 +67,7 @@ namespace WebCovid19.Services
             return true;
         }
 
-        internal bool datosRecibidosDelFormularioLogin(Usuarios usuario)
+        public bool datosRecibidosDelFormularioLogin(Usuarios usuario)
         {
             if(usuario.Email==null | usuario.Password== null)
             {
@@ -77,7 +77,7 @@ namespace WebCovid19.Services
             return true;
         }
 
-        internal Usuarios asignoDatosAUsuarioDelPerfil(VMPerfil perfil)
+        public Usuarios asignoDatosAUsuarioDelPerfil(VMPerfil perfil)
         {
             Usuarios usuario = new Usuarios();
             usuario.Nombre = perfil.Nombre;
@@ -87,7 +87,7 @@ namespace WebCovid19.Services
             return usuario;
         }
 
-        internal bool datosRecibidosDelFormularioPerfil(Usuarios usuario)
+        public bool datosRecibidosDelFormularioPerfil(Usuarios usuario)
         {
             if(usuario.Nombre==null | usuario.Apellido== null | usuario.FechaNacimiento==null | usuario.Foto==null)
             {

@@ -20,4 +20,21 @@
     @System.Web.Optimization.Scripts.Render("~/bundles/Scripts/umdJS")
 </head>
 
-@RenderBody()
+<body>
+
+    <div class="container">
+        <!-- Definición del menú -->
+        @Html.Partial("VPHeader")
+        <!-- Termina la definición del menú -->
+
+
+
+        @RenderBody()
+
+
+
+    </div>
+</body>
+@Html.Partial("VPFooter")
+
+</html>

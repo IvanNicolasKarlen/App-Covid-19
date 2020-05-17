@@ -3,21 +3,5 @@
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
 
-<body>
 
-    <div class="container">
-        <!-- Definición del menú -->
-        @Html.Partial("VPHeader")
-        <!-- Termina la definición del menú -->
-
-
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-        </div>
-
-    </div>
-
-    @Html.Partial("VPFooter")
-
-</body>
+@RenderBody()
