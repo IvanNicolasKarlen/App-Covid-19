@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="TipoDonacion.cs" />
     <Compile Include="Denuncias.cs" />
     <Compile Include="DonacionesInsumos.cs" />
     <Compile Include="DonacionesMonetarias.cs" />

@@ -1,5 +1,6 @@
 namespace WebCovid19
 {
+    using Entidades;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -27,16 +28,16 @@ namespace WebCovid19
         [Column(TypeName = "text")]
         [Required]
         public string Descripcion { get; set; }
-
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaCreacion { get; set; }
-
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaFin { get; set; }
 
         [Required]
         [StringLength(30)]
         public string TelefonoContacto { get; set; }
 
-        public int TipoDonacion { get; set; }
+        public TipoDonacion TipoDonacion { get; set; }
 
         [Required]
         [StringLength(100)]

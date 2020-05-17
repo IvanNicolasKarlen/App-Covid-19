@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    public class Class1
+    public enum TipoDonacion
     {
+        Monetaria = 1,
+        Insumos = 2
     }
 }
