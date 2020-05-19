@@ -126,6 +126,7 @@
     <Content Include="Content\Img\Completo.png" />
     <Content Include="Content\Img\dinero.png" />
     <Content Include="Content\Img\error.png" />
+    <Content Include="Content\Img\iconoPresidenciaDeLaNacion.png" />
     <Content Include="Content\Img\imagenPerfil-Nula.png" />
     <Content Include="Content\Img\itemProducto.png" />
     <Content Include="Content\Img\necesitamosInsumos.jpg" />

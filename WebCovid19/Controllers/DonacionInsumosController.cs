@@ -5,9 +5,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using WebCovid19.Models.Views;
-using WebCovid19.Services;
-
 namespace WebCovid19.Controllers
 {
     public class DonacionInsumosController : Controller
@@ -33,7 +30,6 @@ namespace WebCovid19.Controllers
 
                 //Valido que los datos ingresados estén bien
                 bool cantidadIngresada = servicioDonacionInsumo.CantidadMinimaDeInsumo(DonacionesInsumos);
-
                 if (!cantidadIngresada)
                 {
                     ViewBag.mensajeError = "Debe ingresar al menos un insumo";
@@ -44,6 +40,7 @@ namespace WebCovid19.Controllers
             {
                 ModelState.AddModelError("Error: ", ex.Message);
             }
+
             return RedirectToAction("GraciasPorDonarInsumos");
         }
 

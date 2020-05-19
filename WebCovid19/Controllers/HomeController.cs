@@ -65,7 +65,19 @@ namespace WebCovid19.Controllers
                     if(servicioUsuario.registrarUsuario(usuario) >= 0)
                     {
                         ViewData.Add("mensajeAdvertencia", "Te hemos enviado un email con su clave de activación");
-                        return View();
+                        /* //ToDo: Sacar esto */  usuario.Email = "Ivannicolaskarlen@gmail.com";
+
+                        string mensajeEnviado = servicioUsuario.EnviarCodigoPorEmail(usuario);
+
+                        if(mensajeEnviado != "Ok")
+                        {
+                            ViewData.Add("mensajeError", mensajeEnviado);
+                        }
+                        else
+                        {
+                            ViewData.Add("mensajeAdvertencia", mensajeEnviado);
+                        }
+
                     }
                     
                 }
@@ -88,7 +100,7 @@ namespace WebCovid19.Controllers
                 ModelState.AddModelError("Error: ", ex.Message);
             }
 
-            return RedirectToAction("Perfil");
+            return View();
         }
 
 

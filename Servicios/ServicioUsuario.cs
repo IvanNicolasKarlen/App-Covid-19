@@ -3,7 +3,10 @@ using Entidades.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
+using System.Text;
 using System.Web;
 using WebCovid19.Models.Views;
 
@@ -82,10 +85,10 @@ namespace WebCovid19.Services
             try
             {   //Generar un numero random para enviar el token al email del usuario
                 Random random = new Random();
-                const string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890*+-/$%&!";
+                const string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-/$%&!";
                 int longitud = allowedChars.Length;
                 string res = "";
-                int maxLenght = random.Next(10, 100);
+                int maxLenght = random.Next(10, 40);
 
                 for (int i = 0; i < maxLenght; i++)
                 {
@@ -100,19 +103,44 @@ namespace WebCovid19.Services
             }
         }
 
-        public void EnviarCodigoPorEmail(Usuarios usuario)
+        public String EnviarCodigoPorEmail(Usuarios usuario)
         {
             MailMessage email = new MailMessage();
+            SmtpClient smtp = new SmtpClient();
 
             email.To.Add(new MailAddress(usuario.Email));
             email.From = new MailAddress("EquipoAyudar@gmail.com");
-            email.Subject = "Asunto: Codigo de seguridad para activar mi cuenta";
-            email.Body = "Bienvenido a nuestro sitio web Ayudar, para activar tu email: " + usuario.Email + " debes usar el siguiente codigo: " + usuario.Token + ". Puede activar su cuenta desde aca: https://localhost:44303/Home/CodigoDeVerificacion";
+            email.Subject = "Codigo de seguridad para activar mi cuenta";
+            email.SubjectEncoding = System.Text.Encoding.UTF8;
+            email.Body = " <h1> Bienvenido a nuestro sitio web Ayudar </h1> <p> Para activar tu email: " + usuario.Email + " tenes que usar el siguiente codigo: <h3><b>" + usuario.Token + "</b></h3></br> Podes activar tu cuenta desde aca: https://localhost:44303/Home/CodigoDeVerificacion  </br> <h4> Equipo Ayudar - 2020 </h4>";
             email.IsBodyHtml = true;
             email.Priority = MailPriority.Normal;
+
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587; /*SMTP | Port 587 (Transporte inseguro, pero se puede actualizar a una conexión segura usando STARTTLS)
+                               SMTP | Port 465 (Transporte Seguro - función SSL habilitada) relentizó demaciado la app, entro en un bucle.
+                              
+                                INFO: El puerto 587 es un puerto alternativo altamente recomendado, porque los ISP (proveedores de Internet por sus
+                               siglas en Inglés) suelen bloquear el puerto 25. Asegúrate de que has habilitado el STARTTLS al usar el puerto 587.*/
+            smtp.EnableSsl = true;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential("EquipoAyudar@gmail.com", "Aguayodelgadoirachetakarlen2020");
+
+            string output;
+            try
+            {
+                smtp.Send(email);
+                email.Dispose();
+                output = "Ok";
+            }
+            catch (Exception ex)
+            {
+                output = "Error enviando correo electrónico: " + ex.Message;
+            }
+
+             return output;
         }
-
-
+        
 
 
         public TipoEmail ValidoEstadoEmail(Usuarios usuario)
