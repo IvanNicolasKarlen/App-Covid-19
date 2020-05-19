@@ -254,6 +254,7 @@
     <Compile Include="Controllers\NecesidadesController.cs" />
     <Compile Include="Controllers\NecesidadDonacionInsumosController.cs" />
     <Compile Include="Controllers\NecesidadesDonacionesMonetariasController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Migrations\C__MigrationHistory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -307,6 +308,9 @@
     <Content Include="Views\Home\CodigoDeVerificacion.cshtml" />
     <Content Include="Views\DonacionInsumos\DonacionInsumos.cshtml" />
     <Content Include="Views\DonacionInsumos\GraciasPorDonarInsumos.cshtml" />
+    <Content Include="Views\Usuario\IndexLogueado.cshtml" />
+    <Content Include="Views\Usuario\Perfil.cshtml" />
+    <Content Include="Views\Necesidades\Detalles.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

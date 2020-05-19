@@ -74,6 +74,16 @@ namespace WebCovid19.Controllers
             return View(monetaria);
         }
 
+        public ActionResult Detalles()
+        {
+            Session["url"] = Request["url"];
+            if (Session["Email"] as string == "")
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            return View();
+        }
+
 
     }
 }

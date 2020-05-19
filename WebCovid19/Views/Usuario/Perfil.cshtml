@@ -1,0 +1,102 @@
+﻿@model WebCovid19.Models.Views.VMPerfil
+
+@{
+    ViewBag.Title = "Perfil";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+
+}
+
+
+
+
+@using (Html.BeginForm("ActualizarPerfil", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    <br /><div class="container mt-5">
+
+        @if (ViewBag.mensajeError != null)
+        {
+            <div class="p-3 mb-2 bg-danger text-white">@ViewBag.mensajeError</div>
+        }
+        <div class="card" id="card">
+            <div class="col-md-12 ">
+                <div class="col-md-4 mt-3 mb-3 float-left">
+
+
+                    <div class="card" id="card">
+                        <img class="rounded-circle border border-white mx-auto d-block  ml-5 mt-5 mb-2" id="imgperfil" src="~/Content/Img/imagenPerfil-Nula.png" />
+
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <h3 class="text-center">Turco Mohamed</h3>
+
+                                <div class="input-group mb-3">
+                                    <div class="form-group">
+                                        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="Foto">
+                                        <br /> @Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-md-8 mt-3 float-right">
+                    <div class="card" id="card">
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <h2 class="text-center">Datos Personales</h2>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                                    </div>
+                                    @Html.EditorFor(o => o.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                    @*Para Disabled @Html.EditorFor(o => o.Nombre, new { htmlAttributes = new { @class = "form-control disabled", @disabled="disabled", placeholder="Nombre" } }) *@
+                                    <br /> @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Apellido</span>
+                                    </div>
+                                    @Html.EditorFor(o => o.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                                    @*Para Disabled @Html.EditorFor(o => o.Apellido, new { htmlAttributes = new { @class = "form-control disabled", @disabled="disabled", placeholder="Nombre" } }) *@
+                                    <br /> @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Fecha de nacimiento</span>
+                                    </div>
+                                    @Html.EditorFor(o => o.FechaNacimiento, new { htmlAttributes = new { @class = "form-control", Type = "date" } })
+                                    @*Para Disabled @Html.EditorFor(o => o.FechaNacimiento, new { htmlAttributes = new { @class = "form-control disabled", @disabled="disabled", placeholder="Nombre" } }) *@
+                                    <br /> @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                                    </div>
+                                    @Html.EditorFor(o => o.Email, new { htmlAttributes = new { @class = "form-control disabled", @disabled = "disabled", placeholder = "Email_Logueado@hotmail.com" } })
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-12 btn-group mb-4">
+                                <a type="button" class="btn btn-danger" href="~/Home/IndexLogueado">Cancelar</a>
+                                <button type="submit" class="btn btn-primary ml-2">Guardar datos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
