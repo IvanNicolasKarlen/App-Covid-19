@@ -103,15 +103,31 @@ namespace WebCovid19.Services
             }
         }
 
-       public String EnviarCodigoPorOutlook(Usuarios usuario)
+       public String EnviarCodigoPorEmail(Usuarios usuario, string extension)
         {
+           //Depende la extension que reciba se va a enviar un email por Outlook o por Gmail
+            string emailEquipoCrear="";
+            string host="";
+
+            if(extension == "hotmail")
+            {
+                emailEquipoCrear = "Equipoayudar@hotmail.com";
+                host = "smtp.live.com";
+            }
+            else if(extension == "gmail")
+            {
+                emailEquipoCrear = "Equipoayudar@gmail.com";
+                host = "smtp.gmail.com";
+            }
+
+
             MailMessage email = new MailMessage();
             SmtpClient smtp = new SmtpClient();
 
             // A quien va dirigido
             email.To.Add(new MailAddress(usuario.Email));
             // Quien se lo envia
-            email.From = new MailAddress("EquipoAyudar@hotmail.com"); // Para enviar por gmail: Aca tiene que ir una cuenta de @gmail.com
+            email.From = new MailAddress(emailEquipoCrear); // Para enviar por gmail: Aca tiene que ir una cuenta de @gmail.com
             // Titulo del mensahe
             email.Subject = "Codigo de seguridad para activar mi cuenta";
             // Caracteres en UTF - 8 
@@ -124,7 +140,7 @@ namespace WebCovid19.Services
             email.Priority = MailPriority.Normal;
 
             //Protocolo de mensajeria hecho por gmail
-            smtp.Host = "smtp.live.com"; //Para enviar por gmail: smtp.gmail.com
+            smtp.Host = host; //Para enviar por gmail: smtp.gmail.com / Outlook: smtp.live.com
             //Puerto utilizado, recomendado
             smtp.Port = 587; /*SMTP | Port 587 (Transporte inseguro, pero se puede actualizar a una conexión segura usando STARTTLS)
                                SMTP | Port 465 (Transporte Seguro - función SSL habilitada) relentizó demaciado la app, entro en un bucle.
@@ -136,7 +152,7 @@ namespace WebCovid19.Services
             // No tenemos credenciales por default
             smtp.UseDefaultCredentials = false;
             //Asigno el email y password utilizados para este caso
-            smtp.Credentials = new NetworkCredential("EquipoAyudar@hotmail.com", "Aguayodelgadoirachetakarlen2020");      //Para enviar por gmail: cuenta @gmail.com
+            smtp.Credentials = new NetworkCredential(emailEquipoCrear, "Aguayodelgadoirachetakarlen2020");      //Para enviar por gmail: cuenta @gmail.com
 
             string output;
             try
@@ -154,60 +170,6 @@ namespace WebCovid19.Services
 
              return output;
         }
-
-        public String EnviarCodigoPorGmail(Usuarios usuario)
-        {
-            MailMessage email = new MailMessage();
-            SmtpClient smtp = new SmtpClient();
-
-            // A quien va dirigido
-            email.To.Add(new MailAddress(usuario.Email));
-            // Quien se lo envia
-            email.From = new MailAddress("EquipoAyudar@gmail.com"); 
-            // Titulo del mensahe
-            email.Subject = "Codigo de seguridad para activar mi cuenta";
-            // Caracteres en UTF - 8 
-            email.SubjectEncoding = System.Text.Encoding.UTF8;
-            // Cuerpo del mensaje
-            email.Body = " <h1> Bienvenido a nuestro sitio web Ayudar </h1> <p> Para activar tu email: " + usuario.Email + " tenes que usar el siguiente codigo: <h3><b>" + usuario.Token + "</b></h3></br> Podes activar tu cuenta desde aca: https://localhost:44303/Home/CodigoDeVerificacion  </br> <h4> Equipo Ayudar - 2020 </h4>";
-            // Aca activo que acepte etiquetes html en el mensaje
-            email.IsBodyHtml = true;
-            // El envio tiene prioridad normal
-            email.Priority = MailPriority.Normal;
-
-            //Protocolo de mensajeria hecho por gmail
-            smtp.Host = "smtp.gmail.com"; 
-            //Puerto utilizado, recomendado
-            smtp.Port = 587; /*SMTP | Port 587 (Transporte inseguro, pero se puede actualizar a una conexión segura usando STARTTLS)
-                               SMTP | Port 465 (Transporte Seguro - función SSL habilitada) relentizó demaciado la app, entro en un bucle.
-                              
-                                INFO: El puerto 587 es un puerto alternativo altamente recomendado, porque los ISP (proveedores de Internet por sus
-                               siglas en Inglés) suelen bloquear el puerto 25. Asegúrate de que has habilitado el STARTTLS al usar el puerto 587.*/
-            // SSl disponible
-            smtp.EnableSsl = true;
-            // No tenemos credenciales por default
-            smtp.UseDefaultCredentials = false;
-            //Asigno el email y password utilizados para este caso
-            smtp.Credentials = new NetworkCredential("EquipoAyudar@gmail.com", "Aguayodelgadoirachetakarlen2020");      //Para enviar por gmail: cuenta @gmail.com
-
-            string output;
-            try
-            {
-                //Envio del mensaje
-                smtp.Send(email);
-                email.Dispose();
-                //Asigno un ok para asegurarme en el servicio utilizado de que se envio el mensaje
-                output = "Ok";
-            }
-            catch (Exception ex)
-            {
-                output = "Error enviando correo electrónico: " + ex.Message;
-            }
-
-            return output;
-        }
-        
-
 
         public TipoEmail ValidoEstadoEmail(Usuarios usuario)
         {
