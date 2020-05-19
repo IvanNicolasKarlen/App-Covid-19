@@ -1069,3 +1069,7 @@ D:\DIANA\proyectosNET\covid-5\App-Covid-19\WebCovid19\obj\Debug\WebCovid19.cspro
 D:\DIANA\proyectosNET\covid-5\App-Covid-19\WebCovid19\obj\Debug\WebCovid19.csproj.CopyComplete
 D:\DIANA\proyectosNET\covid-5\App-Covid-19\WebCovid19\obj\Debug\WebCovid19.dll
 D:\DIANA\proyectosNET\covid-5\App-Covid-19\WebCovid19\obj\Debug\WebCovid19.pdb
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Entidades.dll
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Servicios.dll
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Entidades.pdb
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Servicios.pdb
