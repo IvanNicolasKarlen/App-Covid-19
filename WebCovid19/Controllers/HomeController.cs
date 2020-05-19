@@ -72,12 +72,14 @@ namespace WebCovid19.Controllers
 
                         if(email == "hotmail")
                         {
-                             mensajeEnviado = servicioUsuario.EnviarCodigoPorOutlook(usuario);
+                            string hotmail= "hotmail";
+                             mensajeEnviado = servicioUsuario.EnviarCodigoPorEmail(usuario, hotmail);
                         }else
                         {
                             if(email == "gmail")
                             {
-                                 mensajeEnviado = servicioUsuario.EnviarCodigoPorGmail(usuario);
+                                string hotmail = "gmail";
+                                mensajeEnviado = servicioUsuario.EnviarCodigoPorEmail(usuario, hotmail);
                             }
                         }
 
