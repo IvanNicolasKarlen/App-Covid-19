@@ -104,6 +104,22 @@ namespace WebCovid19.Controllers
         [HttpPost]
         public ActionResult Login(VMLogin login)
         {
+        
+          /*Seccion para probar inicio, cierre de sesion, y autorizacion de secciones*/
+            bool bandera = true;
+            if (bandera)
+            {
+                Session["Email"] = login.Email;
+
+                string url = Session["url"] as string;
+                if (url != "")
+                {
+                    return Redirect(url);
+
+                }
+                return RedirectToAction("IndexLogueado","Usuario");
+            }
+            /*-----------*/
             try
             {
 
