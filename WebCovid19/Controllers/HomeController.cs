@@ -32,7 +32,7 @@ namespace WebCovid19.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Registro(VMRegistro registro)
+         public ActionResult Registro(VMRegistro registro)
         {
             try
             {
@@ -65,9 +65,21 @@ namespace WebCovid19.Controllers
                     if(servicioUsuario.registrarUsuario(usuario) >= 0)
                     {
                         ViewData.Add("mensajeAdvertencia", "Te hemos enviado un email con su clave de activación");
-                        
+                        string mensajeEnviado = "";
 
-                        string mensajeEnviado = servicioUsuario.EnviarCodigoPorEmail(usuario);
+                        //Validar extension del email - Si es Gmail lo envia por gmail, si es hotmail lo envia por outlook
+                        string email = servicioUsuario.extensionDelEmail(usuario);
+
+                        if(email == "hotmail")
+                        {
+                             mensajeEnviado = servicioUsuario.EnviarCodigoPorOutlook(usuario);
+                        }else
+                        {
+                            if(email == "gmail")
+                            {
+                                 mensajeEnviado = servicioUsuario.EnviarCodigoPorGmail(usuario);
+                            }
+                        }
 
                         if(mensajeEnviado != "Ok")
                         {
@@ -99,10 +111,9 @@ namespace WebCovid19.Controllers
             {
                 ModelState.AddModelError("Error: ", ex.Message);
             }
-
+            
             return View();
         }
-
 
 
         [HttpGet]
