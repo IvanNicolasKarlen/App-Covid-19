@@ -89,12 +89,15 @@
                                 </a>
                             </li>
                             <li class="divider"></li>
+                            @if (Session["Email"] as string != "")
+                            {
                             <li>
                                 <a href="" class="text-light">
                                     <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                    @Html.ActionLink("Salir", "Salir", "Home", null, new { @class = "hover", id = "link" })
+                                    @Html.ActionLink("Salir", "Salir", "Usuario", null, new { @class = "hover", id = "link" })
                                 </a>
                             </li>
+                            }
 
                         </ul>
                     </div>
