@@ -103,34 +103,49 @@ namespace WebCovid19.Services
             }
         }
 
-        public String EnviarCodigoPorEmail(Usuarios usuario)
+       public String EnviarCodigoPorEmail(Usuarios usuario)
         {
+           //Instancio objeto y a su vez el objeto del protocolo SMTP para enviar el mensaje
             MailMessage email = new MailMessage();
             SmtpClient smtp = new SmtpClient();
 
+            // A quien va dirigido
             email.To.Add(new MailAddress(usuario.Email));
+            // Quien se lo envia
             email.From = new MailAddress("EquipoAyudar@gmail.com");
+            // Titulo del mensahe
             email.Subject = "Codigo de seguridad para activar mi cuenta";
+            // Caracteres en UTF - 8 
             email.SubjectEncoding = System.Text.Encoding.UTF8;
+            // Cuerpo del mensaje
             email.Body = " <h1> Bienvenido a nuestro sitio web Ayudar </h1> <p> Para activar tu email: " + usuario.Email + " tenes que usar el siguiente codigo: <h3><b>" + usuario.Token + "</b></h3></br> Podes activar tu cuenta desde aca: https://localhost:44303/Home/CodigoDeVerificacion  </br> <h4> Equipo Ayudar - 2020 </h4>";
+            // Aca activo que acepte etiquetes html en el mensaje
             email.IsBodyHtml = true;
+            // El envio tiene prioridad normal
             email.Priority = MailPriority.Normal;
 
+            //Protocolo de mensajeria hecho por gmail
             smtp.Host = "smtp.gmail.com";
+            //Puerto utilizado, recomendado
             smtp.Port = 587; /*SMTP | Port 587 (Transporte inseguro, pero se puede actualizar a una conexión segura usando STARTTLS)
                                SMTP | Port 465 (Transporte Seguro - función SSL habilitada) relentizó demaciado la app, entro en un bucle.
                               
                                 INFO: El puerto 587 es un puerto alternativo altamente recomendado, porque los ISP (proveedores de Internet por sus
                                siglas en Inglés) suelen bloquear el puerto 25. Asegúrate de que has habilitado el STARTTLS al usar el puerto 587.*/
+            // SSl disponible
             smtp.EnableSsl = true;
+            // No tenemos credenciales por default
             smtp.UseDefaultCredentials = false;
+            //Asigno el email y password utilizados para este caso
             smtp.Credentials = new NetworkCredential("EquipoAyudar@gmail.com", "Aguayodelgadoirachetakarlen2020");
 
             string output;
             try
             {
+                //Envio del mensaje
                 smtp.Send(email);
                 email.Dispose();
+                //Asigno un ok para asegurarme en el servicio utilizado de que se envio el mensaje
                 output = "Ok";
             }
             catch (Exception ex)
