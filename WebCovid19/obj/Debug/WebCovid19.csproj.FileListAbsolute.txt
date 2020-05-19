@@ -1069,3 +1069,7 @@ D:\Proyectos Visual Studio\App-Covid-19 (19-5)\WebCovid19\bin\roslyn\vbc.exe.con
 D:\Proyectos Visual Studio\App-Covid-19 (19-5)\WebCovid19\bin\roslyn\vbc.rsp
 D:\Proyectos Visual Studio\App-Covid-19 (19-5)\WebCovid19\bin\roslyn\VBCSCompiler.exe
 D:\Proyectos Visual Studio\App-Covid-19 (19-5)\WebCovid19\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Entidades.dll
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Servicios.dll
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Entidades.pdb
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Servicios.pdb
