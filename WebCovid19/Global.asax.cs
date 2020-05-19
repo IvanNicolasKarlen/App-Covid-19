@@ -30,5 +30,12 @@ namespace WebCovid19
             Server.ClearError();
             Response.Redirect(String.Format("~/Error/?error={0}", error, exception.Message));
         }
+        
+         protected void Session_Start(Object sender, EventArgs e)
+        {
+            Session["Email"] = String.Empty;
+            Session["url"] = String.Empty;
+          
+        }
     }
 }
