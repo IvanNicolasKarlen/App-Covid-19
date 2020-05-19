@@ -883,3 +883,7 @@ C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\Entid
 C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\Servicios.dll
 C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\Entidades.pdb
 C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\Servicios.pdb
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Entidades.dll
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Servicios.dll
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Entidades.pdb
+C:\Users\pc\App-Covid-19\WebCovid19\bin\Servicios.pdb

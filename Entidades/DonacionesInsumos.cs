@@ -14,6 +14,7 @@ namespace WebCovid19
 
         public int IdUsuario { get; set; }
 
+        [Required]
         public int Cantidad { get; set; }
 
         public virtual NecesidadesDonacionesInsumos NecesidadesDonacionesInsumos { get; set; }

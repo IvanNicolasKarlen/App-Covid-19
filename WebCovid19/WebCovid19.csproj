@@ -247,6 +247,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DenunciaController.cs" />
+    <Compile Include="Controllers\DonacionInsumosController.cs" />
     <Compile Include="Controllers\DonacionMonetariaController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -303,6 +304,8 @@
     <Content Include="Views\Necesidades\Crear.cshtml" />
     <Content Include="Views\Necesidades\Insumos.cshtml" />
     <Content Include="Views\Necesidades\Monetaria.cshtml" />
+    <Content Include="Views\DonacionInsumos\DonacionInsumos.cshtml" />
+    <Content Include="Views\DonacionInsumos\GraciasPorDonarInsumos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
