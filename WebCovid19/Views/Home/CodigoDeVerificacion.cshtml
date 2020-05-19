@@ -1,0 +1,70 @@
+﻿@model Entidades.Views.VMDatosDeVerificacionDeUsuario
+
+@{
+    ViewBag.Title = "CodigoDeVerificacion";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    string mensajeCorrecto = (string)ViewData["mensajeCorrecto"];
+    string mensajeError = (string)ViewData["mensajeError"];
+}
+
+<h2>CodigoDeVerificacion</h2>
+
+
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('~/Content/Img/5.jpg');">
+            <div class="wrap-login100 p-t-30 p-b-50">
+                <span class="login100-form-title p-b-41">
+                   Activar mi cuenta 
+                </span><br>
+                @using (Html.BeginForm("CodigoDeVerificacion", "Home", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+                {
+
+
+                    @Html.AntiForgeryToken()
+
+                    if (mensajeCorrecto != null)
+                    {
+                        <div class="p-3 mb-2 bg-success text-white">@mensajeCorrecto</div>
+                       
+                        <div class="container-login100-form-btn m-t-32">
+                            @Html.ActionLink("Ir al Login", "Login", "Home", new { @class = "btn btn-primary" })
+                        </div>
+                    
+                    }
+                    if (mensajeError != null)
+                    {
+                        <div class="p-3 mb-2 bg-danger text-white">@mensajeError</div>
+                    }
+
+
+            <div class="wrap-input100 validate-input">
+                @Html.EditorFor(model => model.codigoDeVerificacion, new { htmlAttributes = new { @class = "input100", placeholder = Html.DisplayNameFor(x => x.codigoDeVerificacion) } })
+                <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+               
+                @Html.ValidationMessageFor(model => model.codigoDeVerificacion, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="wrap-input100 validate-input">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "input100", placeholder = Html.DisplayNameFor(x => x.email) } })
+                <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+
+                    <div class="container-login100-form-btn m-t-32">
+                        <button class="login100-form-btn">
+                            Validar codigo
+                        </button>
+                    </div><br>
+                          <div class="col-md-8 text-center container-login100-form-btn">
+                              Ya tengo una cuenta  &nbsp;  @Html.ActionLink("Log in", "Login", "Home", null, new { @class = " text-primary" })
+                              Aun no me registre  &nbsp;  @Html.ActionLink("Registro", "Login", "Home", null, new { @class = " text-primary" })
+                          </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+

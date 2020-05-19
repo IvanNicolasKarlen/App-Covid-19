@@ -7,7 +7,7 @@
 
 <h2>Crear necesidad</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Crear", "Necesidades", FormMethod.Post)) 
 {
     @Html.AntiForgeryToken()
     
@@ -35,7 +35,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.FechaFin, "Fecha de finalización: ")
         <div class="col-md-10">
-            @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "input-group", Type = "date" } })
+            @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "form-control", Type = "date" } })
             @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
         </div>
     </div>

@@ -3,6 +3,9 @@
 @{
     ViewBag.Title = "Registro";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    string mensajeAdvertencia = (string)ViewData["mensajeAdvertencia"];
+    string mensajeError = (string)ViewData["mensajeError"];
+
 }
 
 
@@ -18,9 +21,13 @@
 
                 @Html.AntiForgeryToken()
 
-                if (ViewBag.mensajeError != null)
+                if (mensajeError != null)
                 {
-                    <div class="p-3 mb-2 bg-danger text-white">@ViewBag.mensajeError</div>
+                    <div class="p-3 mb-2 bg-danger text-white">@mensajeError</div>
+                }
+                if (mensajeAdvertencia != null)
+                {
+                     <div class="p-3 mb-2 bg-warning text-white">@mensajeAdvertencia</div>
                 }
 
 
@@ -55,9 +62,10 @@
                         Registrarse
                     </button>
                 </div><br>
-                <div class="container-login100-form-btn m-t-32">
-                    Ya tengo una cuenta  &nbsp;  @Html.ActionLink(" Log in", "Login", "Home",null, new { @class = " text-primary" })
-                </div>
+                      <div class="col-md-10 text-center container-login100-form-btn">
+                          Ya tengo una cuenta  &nbsp;  @Html.ActionLink(" Log in", "Login", "Home", null, new { @class = " text-primary" })
+                          Aun no active mi cuenta   &nbsp; @Html.ActionLink("Activar cuenta", "CodigoDeVerificacion", "Home", null, new { @class = " text-primary" })
+                      </div>
             }
         </div>
     </div>

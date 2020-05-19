@@ -1,18 +1,14 @@
-﻿using System;
+﻿using Servicios;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
+using System.Web;
 using System.Web.Mvc;
-using WebCovid19.Models.Views;
-using WebCovid19.Services;
-
 
 namespace WebCovid19.Controllers
 {
     public class DonacionInsumosController : Controller
     {
-        // GET: DonacionInsumos
-
         [HttpGet]
         public ActionResult DonacionInsumos()
         {

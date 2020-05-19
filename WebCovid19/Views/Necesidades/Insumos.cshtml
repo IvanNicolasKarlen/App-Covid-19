@@ -7,7 +7,7 @@
 
 <h2>Insumos</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Insumos", "Necesidades", FormMethod.Post)) 
 {
     @Html.AntiForgeryToken()
     

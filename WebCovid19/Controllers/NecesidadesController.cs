@@ -39,11 +39,13 @@ namespace WebCovid19.Controllers
                 Necesidades necesidad = servicioNecesidad.buildNecesidad(vmnecesidad, 3);
                 if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")
                 {
-                    return View("Insumos", necesidad);
+                  
+                    return RedirectToAction("Insumos", "Necesidades", necesidad);
+
                 }
                 else
                 {
-                    return View("Monetaria", necesidad);
+                    return RedirectToAction("Monetaria", "Necesidades", necesidad);
                 }
             }
 
@@ -51,22 +53,27 @@ namespace WebCovid19.Controllers
         //toDo: No entiendo como hacer esto:
         public ActionResult Insumos(Necesidades necesidades)
         {
+           
             NecesidadesDonacionesInsumos insumos = new NecesidadesDonacionesInsumos();
             insumos.Necesidades = necesidades;
-            return View();
+            return View(insumos);
         }            
+        
         [HttpPost]
         public ActionResult Insumos(NecesidadesDonacionesInsumos insumos)
         {
             return View();
         }
-        [HttpPost]
+
         public ActionResult Monetaria(Necesidades necesidades)
         {
+            
             NecesidadesDonacionesMonetarias monetaria = new NecesidadesDonacionesMonetarias();
             monetaria.Necesidades = necesidades;
             //monetaria.IdNecesidad = necesidades.IdNecesidad;
             return View(monetaria);
         }
+
+
     }
 }

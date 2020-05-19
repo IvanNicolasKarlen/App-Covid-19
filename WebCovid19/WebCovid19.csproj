@@ -304,6 +304,7 @@
     <Content Include="Views\Necesidades\Crear.cshtml" />
     <Content Include="Views\Necesidades\Insumos.cshtml" />
     <Content Include="Views\Necesidades\Monetaria.cshtml" />
+    <Content Include="Views\Home\CodigoDeVerificacion.cshtml" />
     <Content Include="Views\DonacionInsumos\DonacionInsumos.cshtml" />
     <Content Include="Views\DonacionInsumos\GraciasPorDonarInsumos.cshtml" />
     <None Include="Web.Debug.config">

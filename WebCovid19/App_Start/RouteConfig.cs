@@ -13,6 +13,13 @@ namespace WebCovid19
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+            routes.MapRoute(
+                name: "Necesidades",
+                url: "Necesidades/{action}/{id}",
+                defaults: new { controller = "Necesidades", action = "Index", id = UrlParameter.Optional }
+            );
+
             routes.MapRoute(
               name: "DenunciaMonetaria",
               url: "DonacionMonetaria/{action}/{id}",
