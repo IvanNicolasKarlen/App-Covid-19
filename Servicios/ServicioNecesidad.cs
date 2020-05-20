@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using DAO;
 namespace WebCovid19.Services
 {
     public class ServicioNecesidad
     {
+        NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
         public Necesidades obtenerNecesidadPorId(int? id)
         {
             Necesidades necesidad = new Necesidades();
@@ -30,7 +31,8 @@ namespace WebCovid19.Services
                 Estado = 1,
                 Valoracion = null
             };
-            return necesidades;
+
+            return necesidadesDAO.CrearNecesidades(necesidades);
         }
     }
 }

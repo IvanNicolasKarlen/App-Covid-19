@@ -12,7 +12,7 @@ namespace WebCovid19
         {
         }
 
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        
         public virtual DbSet<Denuncias> Denuncias { get; set; }
         public virtual DbSet<DonacionesInsumos> DonacionesInsumos { get; set; }
         public virtual DbSet<DonacionesMonetarias> DonacionesMonetarias { get; set; }

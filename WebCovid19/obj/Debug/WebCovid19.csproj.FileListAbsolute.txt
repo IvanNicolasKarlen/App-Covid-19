@@ -1166,3 +1166,8 @@ C:\Users\pc\App-Covid-1919999\WebCovid19\obj\Debug\WebCovid19.csproj.CoreCompile
 C:\Users\pc\App-Covid-1919999\WebCovid19\obj\Debug\WebCovid19.csproj.CopyComplete
 C:\Users\pc\App-Covid-1919999\WebCovid19\obj\Debug\WebCovid19.dll
 C:\Users\pc\App-Covid-1919999\WebCovid19\obj\Debug\WebCovid19.pdb
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\DAO.dll
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\Entidades.dll.config
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\Servicios.dll.config
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\DAO.pdb
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\WebCovid19\bin\DAO.dll.config
