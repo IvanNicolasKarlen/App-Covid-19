@@ -1,4 +1,4 @@
-﻿using Entidades.Views;
+﻿/*using Entidades.Views;
 using Entidades;
 using System;
 using System.Collections.Generic;
@@ -86,4 +86,4 @@ namespace WebCovid19.Controllers
 
 
     }
-}
+}*/

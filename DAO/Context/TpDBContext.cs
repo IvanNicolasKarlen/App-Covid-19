@@ -1,9 +1,11 @@
+
 namespace WebCovid19
 {
-    using System;
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System;
+    using System.Data.Entity.Infrastructure;
 
     public partial class TpDBContext : DbContext
     {
@@ -12,7 +14,7 @@ namespace WebCovid19
         {
         }
 
-        
+
         public virtual DbSet<Denuncias> Denuncias { get; set; }
         public virtual DbSet<DonacionesInsumos> DonacionesInsumos { get; set; }
         public virtual DbSet<DonacionesMonetarias> DonacionesMonetarias { get; set; }
@@ -107,3 +109,6 @@ namespace WebCovid19
         }
     }
 }
+
+
+

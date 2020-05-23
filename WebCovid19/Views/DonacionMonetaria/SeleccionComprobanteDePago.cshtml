@@ -23,9 +23,10 @@
                 }
 
                 @*Valido que me suba un comprobante*@
+
                 <div class="form-group">
-                    <input type="file" class="form-control-file">
-                    <br /> @Html.ValidationMessageFor(model => model.ArchivoTransferencia, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.ArchivoTransferencia, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(model => model.ArchivoTransferencia, new { type = "file" })
                 </div>
 
                 <div class="col-md-12 btn-group mt-4">
