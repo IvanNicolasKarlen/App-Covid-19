@@ -8,9 +8,8 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 using System.Web;
-using WebCovid19.Models.Views;
 
-namespace WebCovid19.Services
+namespace Servicios
 {
     public class ServicioUsuario
     {

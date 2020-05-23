@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace WebCovid19.Models.Views
+namespace Entidades.Views
 {
     public class VMLogin
     {

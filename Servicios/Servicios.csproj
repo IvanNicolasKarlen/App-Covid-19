@@ -58,6 +58,7 @@
     <Compile Include="ServicioDonacion.cs" />
     <Compile Include="ServicioDonacionInsumo.cs" />
     <Compile Include="ServicioNecesidad.cs" />
+    <Compile Include="ServicioNecesidadesInsumos.cs" />
     <Compile Include="ServicioUsuario.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebCovid19.Services
+namespace Servicios
 {
     public class ServicioDenuncia
     {

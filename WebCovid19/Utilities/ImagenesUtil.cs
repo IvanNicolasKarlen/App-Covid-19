@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Entidades.Views;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
-using System.Configuration;
+using System.Web;
 
-
-namespace WebCovid19.Content.Utilities
+namespace WebCovid19.Utilities
 {
-    public class ImagenesUtility
+    public class ImagenesUtil
     {
-
+        /// <summary>
+        /// Guarda la imagen y retorna la ruta relativa donde se guardó.
+        /// </summary>
+        /// <param name="archivoSubido"></param>
+        /// <param name="nombreSignificativo">Puede ser el username en el caso de la imagen de un usuario, puede ser el nombde de una marca, el nombre un producto, dependiendo de con que se relacione la imagen subida</param>
+        /// <returns></returns>
         public static string Guardar(HttpPostedFileBase archivoSubido, string nombreSignificativo)
         {
-            //Aclaracion: si queremos agrandar el tamaño máximo de archivo permitido modificar web.config (por defecto es 4MB -> 4096)
-            //<httpRuntime maxRequestLength="4096" />
-
-            //ejemplo: /Media/Imagenes/
-            //la carpeta (con path relativo) donde se guardan las imagenes se obtiene del web.config
             string carpetaImagenes = System.Configuration.ConfigurationManager.AppSettings["CarpetaImagenes"];
 
             if (string.IsNullOrEmpty(carpetaImagenes))
@@ -49,7 +46,6 @@ namespace WebCovid19.Content.Utilities
             return string.Concat(carpetaImagenes, nombreArchivoFinal);
         }
 
-
         private static string GenerarNombreUnico(string nombreSignificativo)
         {
             //Genero un string random de 20 caracteres para asegurar un nombre unico y que no se pisen archivos inesperadamente
@@ -65,7 +61,28 @@ namespace WebCovid19.Content.Utilities
 
             //{Nombre,8 carac}-{Random,5 carac}
             return string.Format("{0}-{1}", StringUtility.Truncar(nombreSignificativo, 8), StringUtility.Truncar(randomString, 5));
-           
         }
+
+        /// <summary>
+        /// Borra la imagen guardada en el server basandose en el parametro (relativo o absoluto)
+        /// </summary>
+        /// <param name="pathGuardado"></param>
+        /// <returns></returns>
+        public static void Borrar(string pathGuardado)
+        {
+            //si el path es relativo, se le agrega el mapeo completo para que sea absoluto
+            //y pasar de /temp/imagen.jpg a c:\inetpub\temp\imagen.jpg por ejemplo
+            if (Path.GetPathRoot(pathGuardado).Contains(":"))
+            {
+                //Alternativa a Server.MapPath(
+                pathGuardado = System.Web.Hosting.HostingEnvironment.MapPath("~") + pathGuardado;
+            }
+
+            if (System.IO.File.Exists(pathGuardado))
+            {
+                System.IO.File.Decrypt(pathGuardado);
+            }
+        }
+
     }
 }

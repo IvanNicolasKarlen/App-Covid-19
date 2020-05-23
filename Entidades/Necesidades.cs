@@ -1,4 +1,4 @@
-namespace WebCovid19
+namespace Entidades
 {
     using Entidades;
     using System;

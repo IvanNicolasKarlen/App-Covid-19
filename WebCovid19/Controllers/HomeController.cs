@@ -6,8 +6,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
-using WebCovid19.Models.Views;
-using WebCovid19.Services;
+using Servicios;
 
 namespace WebCovid19.Controllers
 {

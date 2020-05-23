@@ -1,4 +1,4 @@
-namespace WebCovid19
+namespace Entidades
 {
     using System;
     using System.Collections.Generic;

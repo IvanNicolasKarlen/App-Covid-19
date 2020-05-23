@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebCovid19.Models.Views;
+using Entidades.Views;
 
-namespace WebCovid19.Services
+namespace Servicios
 {
     public class ServicioDonacion
     {

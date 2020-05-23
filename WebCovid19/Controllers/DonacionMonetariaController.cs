@@ -4,8 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebCovid19.Content.Utilities;
-using WebCovid19.Models.Views;
-using WebCovid19.Services;
+using Servicios;
+using Entidades.Views;
+using Entidades;
 
 namespace WebCovid19.Controllers
 {
@@ -86,7 +87,7 @@ namespace WebCovid19.Controllers
         {
             if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
             {
-                //TODO: Agregar validacion para confirmar que el archivo es una imagen
+                
                 //creo un nombre significativo en este caso apellidonombre pero solo un caracter del nombre, ejemplo BatistutaG
                 string nombreSignificativo = VMDonacionMonetaria.NombreSignificativoImagen;
                 //Guardar Imagen

@@ -7,7 +7,7 @@
 
 <h2>Crear necesidad</h2>
 
-@using (Html.BeginForm("Crear", "Necesidades", FormMethod.Post)) 
+@using (Html.BeginForm("Crear", "Necesidades", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -61,8 +61,7 @@
     <div class="form-group">
         <label for="Foto">Imagen: </label>
         <div class="col-md-10">
-            <input type="file" name="Foto" id="Foto" accept="image/jpg, image/jpeg, image/png" class="form-control-file" onchange="obtenerNombre(this.name())" />
-            @Html.EditorFor(model => model.Foto, new { @class = "display-none", @value = "", @id = "nombreFoto" })
+            @Html.TextBoxFor(model => model.Foto, new { type = "file", accept ="image/jpg, image/jpeg, image/png", @class = "form-control-file" })
             @Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })
         </div>
     </div>

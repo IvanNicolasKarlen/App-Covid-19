@@ -1,19 +1,18 @@
-﻿/*using Entidades.Views;
+﻿using Entidades.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using DAO;
-namespace WebCovid19.Services
+using Entidades;
+namespace Servicios
 {
     public class ServicioNecesidad
     {
         NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
-        public Necesidades obtenerNecesidadPorId(int? id)
+        public Necesidades obtenerNecesidadPorId(int id)
         {
-            Necesidades necesidad = new Necesidades();
-            //Buscar necesidad por id
-            return necesidad;
+            return necesidadesDAO.BuscarNecesidad(id);
         }
 
         public Necesidades buildNecesidad(VMNecesidad vmnecesidad, int idUser)
@@ -28,11 +27,11 @@ namespace WebCovid19.Services
                 Foto = vmnecesidad.Foto,
                 TipoDonacion = vmnecesidad.TipoDonacion,
                 IdUsuarioCreador = idUser,
-                Estado = 1,
+                Estado = 0,
                 Valoracion = null
             };
 
             return necesidadesDAO.CrearNecesidades(necesidades);
         }
     }
-}*/
+}
