@@ -1,4 +1,4 @@
-﻿using Entidades.Views;
+﻿/*using Entidades.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,4 +35,4 @@ namespace WebCovid19.Services
             return necesidadesDAO.CrearNecesidades(necesidades);
         }
     }
-}
+}*/
