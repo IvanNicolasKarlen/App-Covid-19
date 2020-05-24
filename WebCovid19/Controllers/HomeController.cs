@@ -31,7 +31,7 @@ namespace WebCovid19.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-         public ActionResult Registro(VMRegistro registro)
+        public ActionResult Registro(VMRegistro registro)
         {
             try
             {
@@ -42,77 +42,61 @@ namespace WebCovid19.Controllers
 
                 ServicioUsuario servicioUsuario = new ServicioUsuario();
                 Usuarios usuario = new Usuarios();
-               
+
                 //Asigno datos obtenidos del formulario a usuario
                 usuario = servicioUsuario.asignoDatosAUsuarioDelRegistro(registro);
 
-                //Validar datos ingresados
-                bool datosIngresados = servicioUsuario.datosRecibidosDelFormularioRegistro(usuario);
-                if(!datosIngresados)
-                {
-                    ViewBag.mensajeError = "Debe ingresar sus datos en todos los campos";
-                    return View();
-                }
 
 
                 //Validar si el email es un email nuevo o si ya fue solicitado para registrarse
                 TipoEmail emailIngresado = servicioUsuario.ValidoEstadoEmail(usuario);
 
                 //Esta condicion es por si se le envie la activacion, elimina el mensaje, y quiere recuperar su activacion.
-                if(emailIngresado == TipoEmail.EmailNuevo)
-                {
-                    if(servicioUsuario.registrarUsuario(usuario) >= 0)
-                    {
-                        ViewData.Add("mensajeAdvertencia", "Te hemos enviado un email con su clave de activación");
-                        string mensajeEnviado = "";
-
-                        //Validar extension del email - Si es Gmail lo envia por gmail, si es hotmail lo envia por outlook
-                        string email = servicioUsuario.extensionDelEmail(usuario);
-
-                        if(email == "hotmail")
-                        {
-                            string hotmail= "hotmail";
-                             mensajeEnviado = servicioUsuario.EnviarCodigoPorEmail(usuario, hotmail);
-                        }else
-                        {
-                            if(email == "gmail")
-                            {
-                                string hotmail = "gmail";
-                                mensajeEnviado = servicioUsuario.EnviarCodigoPorEmail(usuario, hotmail);
-                            }
-                        }
-
-                        if(mensajeEnviado != "Ok")
-                        {
-                            ViewData.Add("mensajeError", mensajeEnviado);
-                        }
-                        else
-                        {
-                            ViewData.Add("mensajeAdvertencia", mensajeEnviado);
-                        }
-
-                    }
-                    
-                }
-                else if(emailIngresado == TipoEmail.EmailSolicitado)
+                if (emailIngresado == TipoEmail.EmailNuevo)
                 {
                     if (servicioUsuario.registrarUsuario(usuario) >= 0)
                     {
-                        ViewData.Add("mensajeAdvertencia", "Te hemos enviado nuevamente un email con su clave de activación");
-                        return View();
+                        ViewData.Add("mensajeAdvertencia", "Te hemos enviado un email por Gmail con su clave de activación");
+
+                        string mensajeEnviado = servicioUsuario.EnviarCodigoPorEmail(usuario);
+
+                        if (mensajeEnviado != "Ok")
+                        {
+                            ViewData.Add("mensajeError", mensajeEnviado);
+                        }
+
+                    }
+                    else
+                    {
+                        ViewData.Add("mensajeError", "Ha ocurrido un error al registrarse, por favor intentelo nuevamente");
+                    }
+
+                }
+                else if (emailIngresado == TipoEmail.EmailSolicitado)
+                {
+                    //Se le envia nuevamente su token al usuario ya registrado
+                    ViewData.Add("mensajeAdvertencia", "Te hemos enviado nuevamente un email por Gmail con su clave de activación");
+
+                    string mensajeEnviado = servicioUsuario.EnviarCodigoPorEmail(usuario);
+
+                    if (mensajeEnviado != "Ok")
+                    {
+                        ViewData.Add("mensajeError", mensajeEnviado);
                     }
                 }
                 else
                 {
-                    ViewData.Add("mensajeError", "Ya existe una cuenta con ese email");
+                    ViewData.Add("mensajeError", "Ya existe una cuenta activa con ese email");
                     return View();
                 }
+
+
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("Error: ", ex.Message);
             }
-            
+
             return View();
         }
 
@@ -128,22 +112,9 @@ namespace WebCovid19.Controllers
         [HttpPost]
         public ActionResult Login(VMLogin login)
         {
-        
-          /*Seccion para probar inicio, cierre de sesion, y autorizacion de secciones*/
-            bool bandera = true;
-            if (bandera)
-            {
-                Session["Email"] = login.Email;
 
-                string url = Session["url"] as string;
-                if (url != "")
-                {
-                    return Redirect(url);
+            /*Seccion para probar inicio, cierre de sesion, y autorizacion de secciones*/
 
-                }
-                return RedirectToAction("IndexLogueado","Usuario");
-            }
-            /*-----------*/
             try
             {
 
@@ -159,30 +130,51 @@ namespace WebCovid19.Controllers
                 usuario = servicioUsuario.asignoDatosAUsuarioDelLogin(login);
 
                 //Validar si existe este usuario
-                bool usuarioExistente = servicioUsuario.validoQueExistaEsteUsuario(usuario);
-                if (!usuarioExistente)
+                string usuarioExistente = servicioUsuario.validoQueExistaEsteUsuario(usuario);
+                if (usuarioExistente == null)
                 {
-                    ViewData.Add("mensajeError", "Email o contraseña ha sido incorrecto");
+                    ViewData.Add("mensajeError", "No existe ese email, debera registrarse primero");
                     return View();
                 }
-
-                //Validar si esta activo o no
-                TipoEmail estadoEmail = servicioUsuario.ValidoEstadoEmail(usuario);
-                if(estadoEmail != TipoEmail.EmailActivo)
+                else if (usuarioExistente == "incorrecto")
                 {
-                    ViewData.Add("mensajeAdvertencia", "Su usuario está inactivo. Actívelo desde el email recibido");
+                    ViewData.Add("mensajeError", "La contraseña ha sido incorrecta");
                     return View();
                 }
-
-                //Validar datos ingresados
-                bool datosIngresados = servicioUsuario.datosRecibidosDelFormularioLogin(usuario);
-                if(!datosIngresados)
+                else if (usuarioExistente == "ok")
                 {
-                    ViewData.Add("mensajeError", "Ingrese los datos correspondientes en cada campo");
-                    return View();
+                    //Validar si esta activo o no
+                    TipoEmail estadoEmail = servicioUsuario.ValidoEstadoEmail(usuario);
+                    if (estadoEmail != TipoEmail.EmailActivo)
+                    {
+                        ViewData.Add("mensajeAdvertencia", "Su usuario está inactivo. Actívelo desde el email recibido");
+                        return View();
+                    }
+
+                    /*      bool bandera = true;
+            if (bandera)
+            {
+                Session["Email"] = login.Email;
+
+                string url = Session["url"] as string;
+                if (url != "")
+                {
+                    return Redirect(url);
+
+                }
+                return RedirectToAction("IndexLogueado","Usuario");
+            }
+            /*-----------*/
+                    return RedirectToAction("IndexLogueado");
+
                 }
 
-            }catch (Exception ex)
+
+
+
+
+            }
+            catch (Exception ex)
             {
                 ModelState.AddModelError("Error: ", ex.Message);
             }
@@ -213,8 +205,8 @@ namespace WebCovid19.Controllers
                 usuario = servicioUsuario.asignoDatosAUsuarioDelPerfil(perfil);
                 //Valido que los datos ingresados estén bien
                 bool datosIngresados = servicioUsuario.datosRecibidosDelFormularioPerfil(usuario);
-                
-                if(!datosIngresados)
+
+                if (!datosIngresados)
                 {
                     ViewBag.mensajeError = "Ingrese los datos correspondientes en cada campo";
                     return View();
@@ -228,35 +220,31 @@ namespace WebCovid19.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult CodigoDeVerificacion()
+        public ActionResult ActivarMiCuenta(string token)
         {
             VMDatosDeVerificacionDeUsuario vmDatosDeVerificacion = new VMDatosDeVerificacionDeUsuario();
-            return View(vmDatosDeVerificacion);
-        }
 
-        [HttpPost]
-        public ActionResult CodigoDeVerificacion(VMDatosDeVerificacionDeUsuario vmDatosDeVerificacion)
-        {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View();
             }
             ServicioUsuario servicioUsuario = new ServicioUsuario();
 
             //Validar que el email coincida con el codigo
-            bool estado = servicioUsuario.validacionDelCodigoDeVerificacionJuntoAlEmail(vmDatosDeVerificacion);
-            if(!estado)
-            {
-                ViewData.Add("mensajeError", "No encontramos un email con esa clave de verificacion, " +
-                    "asegurese de estar ingresando los datos correctamente");
-                return View();
-            }
-            else 
-            {
-                ViewData.Add("mensajeCorrecto", "Has activado tu cuenta exitosamente, dirigite al Login asi podés ingresar");
-                servicioUsuario.ponerEstadoActivoAlUsuario(vmDatosDeVerificacion);
-            }
-            return View();
+            /* bool estado = servicioUsuario.validacionDelCodigoDeVerificacionJuntoAlEmail(token);
+             if (!estado)
+             {
+                 ViewData.Add("mensajeError", "No encontramos un email con esa clave de verificacion, " +
+                     "asegurese de estar ingresando los datos correctamente");
+                 return View();
+             }
+             else
+             {
+                 ViewData.Add("mensajeCorrecto", "¡Has activado tu cuenta exitosamente! Logueate asi podés ingresar");
+                 servicioUsuario.ponerEstadoActivoAlUsuario(vmDatosDeVerificacion);
+             }
+             */
+            return View("Login");
         }
 
 

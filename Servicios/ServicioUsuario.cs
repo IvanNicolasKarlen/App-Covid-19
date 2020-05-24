@@ -1,4 +1,5 @@
-﻿using Entidades;
+﻿using DAO;
+using Entidades;
 using Entidades.Views;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,16 @@ namespace Servicios
     {
         public Usuarios asignoDatosAUsuarioDelRegistro(VMRegistro registro)
         {
-            Usuarios usuario = new Usuarios();
+            Usuarios usuario = new Usuarios()
+            {
+                Email = registro.Email,
+                Password = registro.Password,
+                TipoUsuario = 1,
+                Activo = false,
+                FechaCracion = DateTime.Now,
+                FechaNacimiento = registro.FechaNacimiento.AddHours(11).AddMinutes(04).AddSeconds(04)
 
-            usuario.Email = registro.Email;
-            usuario.FechaNacimiento = registro.FechaNacimiento;
-            usuario.Password = registro.Password;
-            usuario.RepeatPassword = registro.RepeatPassword;
+            };
 
             return usuario;
         }
@@ -33,31 +38,7 @@ namespace Servicios
             return usuario;
         }
 
-        public bool datosRecibidosDelFormularioRegistro(Usuarios usuario)
-        {
-            if (usuario.Email == null | usuario.Password == null | usuario.RepeatPassword == null | usuario.FechaNacimiento == null)
-            {
-                if (usuario.Password != usuario.RepeatPassword)
-                {
-                    return false;
-                }
-                return false;
-            }
 
-            return true;
-        }
-
-        public bool datosRecibidosDelFormularioLogin(Usuarios usuario)
-        {
-            if(usuario.Email==null | usuario.Password== null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-      
 
         public Usuarios asignoDatosAUsuarioDelPerfil(VMPerfil perfil)
         {
@@ -71,7 +52,7 @@ namespace Servicios
 
         public bool datosRecibidosDelFormularioPerfil(Usuarios usuario)
         {
-            if(usuario.Nombre==null | usuario.Apellido== null | usuario.FechaNacimiento==null | usuario.Foto==null)
+            if (usuario.Nombre == null | usuario.Apellido == null | usuario.FechaNacimiento == null | usuario.Foto == null)
             {
                 return false;
             }
@@ -87,7 +68,7 @@ namespace Servicios
                 const string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-/$%&!";
                 int longitud = allowedChars.Length;
                 string res = "";
-                int maxLenght = random.Next(10, 40);
+                int maxLenght = random.Next(10, 30);
 
                 for (int i = 0; i < maxLenght; i++)
                 {
@@ -102,29 +83,16 @@ namespace Servicios
             }
         }
 
-       public String EnviarCodigoPorEmail(Usuarios usuario, string extension)
+        public String EnviarCodigoPorEmail(Usuarios usuario)
         {
-           //Depende la extension que reciba se va a enviar un email por Outlook o por Gmail
-            string emailEquipoCrear="";
-            string host="";
-
-            if(extension == "hotmail")
-            {
-                emailEquipoCrear = "Equipoayudar@hotmail.com";
-                host = "smtp.live.com";
-            }
-            else if(extension == "gmail")
-            {
-                emailEquipoCrear = "Equipoayudar@gmail.com";
-                host = "smtp.gmail.com";
-            }
-
+            string emailEquipoCrear = "Equipoayudar@gmail.com";
+            string host = "smtp.gmail.com";
 
             MailMessage email = new MailMessage();
             SmtpClient smtp = new SmtpClient();
 
             // A quien va dirigido
-            email.To.Add(new MailAddress(usuario.Email));
+            email.To.Add(new MailAddress(usuario.Email)); //En Gmail: aca va una cuenta @gmail.com
             // Quien se lo envia
             email.From = new MailAddress(emailEquipoCrear); // Para enviar por gmail: Aca tiene que ir una cuenta de @gmail.com
             // Titulo del mensahe
@@ -132,7 +100,7 @@ namespace Servicios
             // Caracteres en UTF - 8 
             email.SubjectEncoding = System.Text.Encoding.UTF8;
             // Cuerpo del mensaje
-            email.Body = " <h1> Bienvenido a nuestro sitio web Ayudar </h1> <p> Para activar tu email: " + usuario.Email + " tenes que usar el siguiente codigo: <h3><b>" + usuario.Token + "</b></h3></br> Podes activar tu cuenta desde aca: https://localhost:44303/Home/CodigoDeVerificacion  </br> <h4> Equipo Ayudar - 2020 </h4>";
+            email.Body = " <h1> Bienvenido a nuestro sitio web Ayudar </h1> <p> Para activar tu email: " + usuario.Email + " tenes que usar ingresar al siguiente enlace: <h3><b>  https://localhost:44303/Home/ActivarMiCuenta?token=" + usuario.Token + "  </br> <h4> Equipo Ayudar - 2020 </h4> <br>";
             // Aca activo que acepte etiquetes html en el mensaje
             email.IsBodyHtml = true;
             // El envio tiene prioridad normal
@@ -167,56 +135,91 @@ namespace Servicios
                 output = "Error enviando correo electrónico: " + ex.Message;
             }
 
-             return output;
+            return output;
         }
 
         public TipoEmail ValidoEstadoEmail(Usuarios usuario)
         {
+            UsuarioDao usuarioDao = new UsuarioDao();
 
-            Usuarios usuarioObtenido = null;
-
-            TipoEmail estadoDelEmail = new TipoEmail();
+            Usuarios usuarioObtenido = usuarioDao.obtenerUsuarioPorEmail(usuario.Email);
 
             //Si no se encontro usuario, el email es nuevo
-            if(usuarioObtenido == null)
+            if (usuarioObtenido == null)
             {
-                estadoDelEmail = TipoEmail.EmailNuevo;
+                return TipoEmail.EmailNuevo;
             }
-            else if(!usuarioObtenido.Activo) //Si el email aun no fue activo, entonces ya fue solicitado
+            else if (!usuarioObtenido.Activo) //Si el email aun no fue activo, entonces ya fue solicitado
             {
-                estadoDelEmail = TipoEmail.EmailSolicitado;
+                return TipoEmail.EmailSolicitado;
             }
             else //Y sino, el email ya esta anotado
             {
                 return TipoEmail.EmailActivo;
             }
 
+        }
 
-            //Enviar email al usuario
-            
+        public Usuarios ValidarCodigoDeActivacion(Usuarios usuario)
+        {
+            bool existeCodigo = true;
+            UsuarioDao usuarioDao = new UsuarioDao();
+            Usuarios usuarioObtenido = new Usuarios();
 
-            return estadoDelEmail;
+            ServicioUsuario servicioUsuario = new ServicioUsuario();
+
+
+            do
+            {
+                usuario.Token = servicioUsuario.CodigoDeActivacion();
+
+                usuarioObtenido = usuarioDao.obtenerUsuarioPorCodigoDeActivacion(usuario.Token);
+
+                if (usuarioObtenido == null)
+                {
+                    usuarioObtenido = usuario;
+                    existeCodigo = false;
+                }
+                else
+                {
+                    existeCodigo = true;
+                }
+            } while (existeCodigo != false);
+
+
+            return usuarioObtenido;
         }
 
 
         public int registrarUsuario(Usuarios usuario)
         {
-            //Asigno valor del token al usuario
-            usuario.Token = CodigoDeActivacion();
-            usuario.Activo = false;
+            UsuarioDao usuarioDao = new UsuarioDao();
+
+            //Validamos que se cree un codigo unico para cada usuario y que no se repita
+            Usuarios usuarioObtenido = ValidarCodigoDeActivacion(usuario);
 
             //Save usuario
-            return 0; //id usuario
+            Usuarios usuarioGuardado = usuarioDao.guardarUsuario(usuarioObtenido);
+
+            return usuarioGuardado.IdUsuario;
         }
 
-        public bool validoQueExistaEsteUsuario(Usuarios usuario)
+        public string validoQueExistaEsteUsuario(Usuarios usuario)
         {
-            if(usuario == null)
+            UsuarioDao usuarioDao = new UsuarioDao();
+
+            Usuarios usuarioObtenido = usuarioDao.obtenerUsuarioPorEmail(usuario.Email);
+            if (usuarioObtenido == null)
             {
-                return false;
+                return null;
             }
 
-            return true;
+            if (usuarioObtenido.Password == usuario.Password)
+            {
+                return "ok";
+            }
+
+            return "incorrecto";
         }
 
         public bool validacionDelCodigoDeVerificacionJuntoAlEmail(VMDatosDeVerificacionDeUsuario datosIngresados)
@@ -224,8 +227,8 @@ namespace Servicios
             Usuarios usuario = new Usuarios();
 
             //ToDo: Obtener objeto Usuario de la bd por el email ingresado y token ingresados
-            
-            if(usuario != null )
+
+            if (usuario != null)
             {
                 return true;
             }
@@ -242,27 +245,7 @@ namespace Servicios
 
             //Update usuario
         }
-        
-         public string extensionDelEmail(Usuarios usuario)
-        {
-            string email = usuario.Email;
-            string extension = email.Substring(email.LastIndexOf("@") + 1, email.Length + 1 - email.LastIndexOf("."));
-            string resultado= "";
 
-            if(extension == "gmail")
-            {
-                resultado = "gmail";
-            }
-            else 
-            {   
-                if(extension == "hotma")
-                {
-                    resultado = "hotmail";
-                }
-            }
-
-            return resultado;
-        }
 
     }
 }

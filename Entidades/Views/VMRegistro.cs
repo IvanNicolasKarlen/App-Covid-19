@@ -29,6 +29,7 @@ namespace Entidades.Views
         [Display(Name = "Fecha de nacimiento")]
         [Required(ErrorMessage = "Fecha de nacimiento obligatoria")]
         [CheckValidDate]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaNacimiento { get; set; }
     }
 }
