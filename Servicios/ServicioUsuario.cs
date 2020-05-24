@@ -16,10 +16,12 @@ namespace Servicios
     {
         public Usuarios asignoDatosAUsuarioDelRegistro(VMRegistro registro)
         {
+           
+
             Usuarios usuario = new Usuarios()
             {
                 Email = registro.Email,
-                Password = registro.Password,
+                Password = EncriptarPassword.GetSha256(registro.Password),
                 TipoUsuario = 1,
                 Activo = false,
                 FechaCracion = DateTime.Now,
@@ -213,8 +215,8 @@ namespace Servicios
             {
                 return null;
             }
-
-            if (usuarioObtenido.Password == usuario.Password)
+            String passwordEncriptada = EncriptarPassword.GetSha256(usuario.Password);
+            if (usuarioObtenido.Password == passwordEncriptada)
             {
                 return "ok";
             }

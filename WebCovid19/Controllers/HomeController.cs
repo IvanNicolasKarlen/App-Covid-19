@@ -7,9 +7,11 @@ using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 using Servicios;
+using WebCovid19.Filters;
 
 namespace WebCovid19.Controllers
 {
+    
     public class HomeController : Controller
     {
         // GET: Home
@@ -151,6 +153,9 @@ namespace WebCovid19.Controllers
                         return View();
                     }
 
+                    Session["Email"] = login.Email;
+                    Session["IdUsuario"] = usuario.IdUsuario;
+
                     /*      bool bandera = true;
             if (bandera)
             {
@@ -182,7 +187,7 @@ namespace WebCovid19.Controllers
 
             return RedirectToAction("IndexLogueado");
         }
-
+        [VerificarSession]
         public ActionResult Perfil()
         {
             return View();
@@ -249,7 +254,7 @@ namespace WebCovid19.Controllers
 
 
 
-
+        [VerificarSession]
         public ActionResult Administrador()
         {
             return View();
