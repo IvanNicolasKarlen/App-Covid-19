@@ -1,25 +1,38 @@
-﻿@model WebCovid19.Models.Views.VMPerfil
+﻿@model Entidades.Views.VMPerfil
 
 @{
     ViewBag.Title = "Perfil";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
-
+    string mensajeInfo = (string)ViewData["mensajeInfo"];
+    string mensajeError = (string)ViewData["mensajeError"];
+    string mensajeCorrecto = (string)ViewData["mensajeCorrecto"];
 }
 
 
 
 
-@using (Html.BeginForm("ActualizarPerfil", "Home", FormMethod.Post))
+@using (Html.BeginForm("ActualizarPerfil", "Usuario", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
 
     <br /><div class="container mt-5">
 
-        @if (ViewBag.mensajeError != null)
+        @if (mensajeInfo != null)
         {
-            <div class="p-3 mb-2 bg-danger text-white">@ViewBag.mensajeError</div>
+            <div class="p-3 mb-2 bg-info text-white">@mensajeInfo</div>
         }
+        @if (mensajeError != null)
+        {
+            <div class="p-3 mb-2 bg-danger text-white">@mensajeError</div>
+        }
+        @if (mensajeCorrecto != null)
+            {
+                <div class="p-3 mb-2 bg-success text-white">@mensajeCorrecto</div>
+            }
+
+
+
         <div class="card" id="card">
             <div class="col-md-12 ">
                 <div class="col-md-4 mt-3 mb-3 float-left">
@@ -68,15 +81,6 @@
                                     @Html.EditorFor(o => o.Apellido, new { htmlAttributes = new { @class = "form-control" } })
                                     @*Para Disabled @Html.EditorFor(o => o.Apellido, new { htmlAttributes = new { @class = "form-control disabled", @disabled="disabled", placeholder="Nombre" } }) *@
                                     <br /> @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
-                                </div>
-
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">Fecha de nacimiento</span>
-                                    </div>
-                                    @Html.EditorFor(o => o.FechaNacimiento, new { htmlAttributes = new { @class = "form-control", Type = "date" } })
-                                    @*Para Disabled @Html.EditorFor(o => o.FechaNacimiento, new { htmlAttributes = new { @class = "form-control disabled", @disabled="disabled", placeholder="Nombre" } }) *@
-                                    <br /> @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
                                 </div>
 
                                 <div class="input-group mb-3">

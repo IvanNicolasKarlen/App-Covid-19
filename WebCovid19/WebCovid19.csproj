@@ -247,7 +247,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Content\Utilities\ImagenesUtility.cs" />
     <Compile Include="Content\Utilities\StringUtility.cs" />
@@ -255,12 +254,10 @@
     <Compile Include="Controllers\DonacionInsumosController.cs" />
     <Compile Include="Controllers\DonacionMonetariaController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NecesidadesController.cs" />
     <Compile Include="Controllers\NecesidadDonacionInsumosController.cs" />
     <Compile Include="Controllers\NecesidadesDonacionesMonetariasController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
-    <Compile Include="Filters\VerificarSession.cs" />
     <Compile Include="Migrations\C__MigrationHistory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -273,12 +270,12 @@
     <Content Include="libman.json" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\Shared\VPCarrucel.cshtml" />
     <Content Include="Views\Shared\VPHeader.cshtml" />
-    <Content Include="Views\Home\Registro.cshtml" />
+    <Content Include="Views\Usuario\Registro.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -293,10 +290,8 @@
     <Content Include="Scripts\umd\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\umd\bootstrap.js.map" />
     <Content Include="Scripts\umd\bootstrap.min.js.map" />
-    <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\IndexLogueado.cshtml" />
+    <Content Include="Views\Usuario\Login.cshtml" />
     <Content Include="Views\Shared\VPFooter.cshtml" />
-    <Content Include="Views\Home\Perfil.cshtml" />
     <Content Include="Views\Denuncia\Denuncia.cshtml" />
     <Content Include="Views\DonacionMonetaria\DonacionMonetaria.cshtml" />
     <Content Include="Views\Shared\_AnonimoLayout.cshtml" />
@@ -306,12 +301,11 @@
     <Content Include="Views\NecesidadesDonacionesMonetarias\NecesidadesDonacionesMonetarias.cshtml" />
     <Content Include="Views\DonacionMonetaria\GraciasPorDonarMonetariamente.cshtml" />
     <Content Include="Views\DonacionMonetaria\SeleccionComprobanteDePago.cshtml" />
-    <Content Include="Views\Home\Administrador.cshtml" />
+    <Content Include="Views\Usuario\Administrador.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Necesidades\Crear.cshtml" />
     <Content Include="Views\Necesidades\Insumos.cshtml" />
     <Content Include="Views\Necesidades\Monetaria.cshtml" />
-    <Content Include="Views\Home\CodigoDeVerificacion.cshtml" />
     <Content Include="Views\DonacionInsumos\DonacionInsumos.cshtml" />
     <Content Include="Views\DonacionInsumos\GraciasPorDonarInsumos.cshtml" />
     <Content Include="Views\Usuario\IndexLogueado.cshtml" />

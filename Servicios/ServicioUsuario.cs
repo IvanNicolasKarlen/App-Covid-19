@@ -14,10 +14,15 @@ namespace Servicios
 {
     public class ServicioUsuario
     {
+        UsuarioDao usuarioDao = new UsuarioDao();
+
+        public Usuarios obtenerUsuarioPorEmail(string email)
+        {
+            Usuarios usuarioObtenido = usuarioDao.obtenerUsuarioPorEmail(email);
+            return usuarioObtenido;
+        }
         public Usuarios asignoDatosAUsuarioDelRegistro(VMRegistro registro)
         {
-           
-
             Usuarios usuario = new Usuarios()
             {
                 Email = registro.Email,
@@ -47,20 +52,11 @@ namespace Servicios
             Usuarios usuario = new Usuarios();
             usuario.Nombre = perfil.Nombre;
             usuario.Apellido = perfil.Apellido;
-            usuario.FechaNacimiento = perfil.FechaNacimiento;
             usuario.Foto = perfil.Foto;
+            usuario.UserName = perfil.Nombre + " " + perfil.Apellido;
             return usuario;
         }
-
-        public bool datosRecibidosDelFormularioPerfil(Usuarios usuario)
-        {
-            if (usuario.Nombre == null | usuario.Apellido == null | usuario.FechaNacimiento == null | usuario.Foto == null)
-            {
-                return false;
-            }
-
-            return true;
-        }
+         
 
         public string CodigoDeActivacion()
         {
@@ -142,7 +138,7 @@ namespace Servicios
 
         public TipoEmail ValidoEstadoEmail(Usuarios usuario)
         {
-            UsuarioDao usuarioDao = new UsuarioDao();
+            
 
             Usuarios usuarioObtenido = usuarioDao.obtenerUsuarioPorEmail(usuario.Email);
 
@@ -167,10 +163,7 @@ namespace Servicios
             bool existeCodigo = true;
             UsuarioDao usuarioDao = new UsuarioDao();
             Usuarios usuarioObtenido = new Usuarios();
-
             ServicioUsuario servicioUsuario = new ServicioUsuario();
-
-
             do
             {
                 usuario.Token = servicioUsuario.CodigoDeActivacion();
@@ -187,7 +180,6 @@ namespace Servicios
                     existeCodigo = true;
                 }
             } while (existeCodigo != false);
-
 
             return usuarioObtenido;
         }
@@ -224,29 +216,59 @@ namespace Servicios
             return "incorrecto";
         }
 
-        public bool validacionDelCodigoDeVerificacionJuntoAlEmail(VMDatosDeVerificacionDeUsuario datosIngresados)
+        public bool validacionDelCodigoDeVerificacionJuntoAlEmail(string token)
         {
-            Usuarios usuario = new Usuarios();
+            UsuarioDao usuarioDao = new UsuarioDao();
+
+            Usuarios usuarioConElToken = usuarioDao.obtenerUsuarioPorCodigoDeActivacion(token);
 
             //ToDo: Obtener objeto Usuario de la bd por el email ingresado y token ingresados
 
-            if (usuario != null)
+            if (usuarioConElToken != null)
+            {
+                usuarioConElToken.Activo = true;
+                int resultado = usuarioDao.actualizarDatosDeUsuario(usuarioConElToken);
+                
+                if(resultado >= 0)
+                {
+                    return true;
+                }
+                
+            }
+
+            return false;
+        }
+
+        public bool actualizoDatosDelPerfilDelUsuario(Usuarios usuario)
+        {
+            UsuarioDao usuarioDao = new UsuarioDao();
+/*
+            Usuarios usuarioObtenido = obtenerUsuarioPorEmail(usuario.Email);
+            usuarioObtenido.Nombre = usuario.Nombre;
+            usuarioObtenido.Apellido = usuario.Apellido;
+            usuarioObtenido.Foto = usuario.Foto;
+            usuarioObtenido.UserName = usuario.UserName;
+*/
+            int resultado = usuarioDao.actualizarDatosDeUsuario(usuario);
+
+            if (resultado >= 0)
             {
                 return true;
             }
 
             return false;
         }
-
-
-        public void ponerEstadoActivoAlUsuario(VMDatosDeVerificacionDeUsuario datosIngresados)
+        
+        public Usuarios asignoDatosFaltantesAUsuarioDePerfil(Usuarios usuarioPerfil, Usuarios usuarioObtenido)
         {
-            Usuarios usuarioObtenido = new Usuarios();
-            //Obtener al usuario por email y token
-            usuarioObtenido.Activo = true;
+            usuarioObtenido.Nombre = usuarioPerfil.Nombre;
+            usuarioObtenido.Apellido = usuarioPerfil.Apellido;
+            usuarioObtenido.Foto = usuarioPerfil.Foto;
+            usuarioObtenido.UserName = usuarioPerfil.UserName;
 
-            //Update usuario
+            return usuarioObtenido;
         }
+
 
 
     }

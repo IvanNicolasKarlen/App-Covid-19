@@ -18,11 +18,6 @@ namespace Entidades.Views
         [StringLength(50)]
         public string Apellido { get; set; }
 
-        [Display(Name = "Fecha de nacimiento")]
-        [Required(ErrorMessage = "Fecha de nacimiento obligatoria")]
-        [CheckValidDate]
-        public DateTime FechaNacimiento { get; set; }
-
         [Display(Name = "Email")]
         [EmailAddress(ErrorMessage = "Formato de Email erroneo")]
         [StringLength(50, ErrorMessage = "Email demaciado largo")]

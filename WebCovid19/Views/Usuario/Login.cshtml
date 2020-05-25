@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_AnonimoLayout.cshtml";
     string mensajeAdvertencia = (string)ViewData["mensajeAdvertencia"];
     string mensajeError = (string)ViewData["mensajeError"];
+    string mensajeCorrecto = (string)ViewData["mensajeCorrecto"];
 }
 
 
@@ -15,7 +16,7 @@
                 Login
             </span><br>
 
-            @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+            @using (Html.BeginForm("Login", "Usuario", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
 
             {
                 @Html.AntiForgeryToken()
@@ -27,6 +28,10 @@
                 if (mensajeAdvertencia != null)
                 {
                     <div class="p-3 mb-2 bg-warning text-white">@mensajeAdvertencia</div>
+                }
+                if (mensajeCorrecto != null)
+                {
+                    <div class="p-3 mb-2 bg-success text-white">@mensajeCorrecto</div>
                 }
 
 

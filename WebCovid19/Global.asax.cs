@@ -13,7 +13,7 @@ namespace WebCovid19
     {
         protected void Application_Start()
         {
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+          
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
