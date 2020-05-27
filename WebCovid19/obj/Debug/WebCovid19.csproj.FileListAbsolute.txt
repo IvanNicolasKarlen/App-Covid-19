@@ -1271,3 +1271,6 @@ D:\Proyectos Visual Studio\Proyecto Covid-19\App-Covid-19\WebCovid19\obj\Debug\W
 D:\Proyectos Visual Studio\Proyecto Covid-19\App-Covid-19\WebCovid19\obj\Debug\WebCovid19.csproj.CopyComplete
 D:\Proyectos Visual Studio\Proyecto Covid-19\App-Covid-19\WebCovid19\obj\Debug\WebCovid19.dll
 D:\Proyectos Visual Studio\Proyecto Covid-19\App-Covid-19\WebCovid19\obj\Debug\WebCovid19.pdb
+C:\Users\pc\App-Covid-19\WebCovid19\bin\DAO.dll
+C:\Users\pc\App-Covid-19\WebCovid19\bin\DAO.pdb
+C:\Users\pc\App-Covid-19\WebCovid19\bin\DAO.dll.config
