@@ -34,9 +34,19 @@ namespace DAO
         public int actualizarDatosDeUsuario(Usuarios usuarioActualizado)
         {
             Usuarios usuarioObtenido = obtenerUsuarioPorEmail(usuarioActualizado.Email);
-            usuarioObtenido = usuarioActualizado;
-            context.SaveChanges();
-            return 1;
+            usuarioObtenido.Activo = usuarioActualizado.Activo;
+            usuarioObtenido.Apellido = usuarioActualizado.Apellido;
+            usuarioObtenido.Foto = usuarioActualizado.Foto;
+            usuarioObtenido.Nombre = usuarioActualizado.Nombre;
+            usuarioObtenido.UserName = usuarioActualizado.UserName;
+            usuarioObtenido.Denuncias = usuarioActualizado.Denuncias;
+            usuarioObtenido.DonacionesInsumos = usuarioActualizado.DonacionesInsumos;
+            usuarioObtenido.DonacionesMonetarias = usuarioActualizado.DonacionesMonetarias;
+            usuarioObtenido.Necesidades = usuarioActualizado.Necesidades;
+            usuarioObtenido.NecesidadesValoraciones = usuarioActualizado.NecesidadesValoraciones;
+
+           int result = context.SaveChanges();
+            return result;
         }
     }
 }

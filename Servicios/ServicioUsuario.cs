@@ -98,7 +98,7 @@ namespace Servicios
             // Caracteres en UTF - 8 
             email.SubjectEncoding = System.Text.Encoding.UTF8;
             // Cuerpo del mensaje
-            email.Body = " <h1> Bienvenido a nuestro sitio web Ayudar </h1> <p> Para activar tu email: " + usuario.Email + " tenes que usar ingresar al siguiente enlace: <h3><b>  https://localhost:44303/Home/ActivarMiCuenta?token=" + usuario.Token + "  </br> <h4> Equipo Ayudar - 2020 </h4> <br>";
+            email.Body = " <h1> Bienvenido a nuestro sitio web Ayudar </h1> <p> Para activar tu email: " + usuario.Email + " tenes que usar ingresar al siguiente enlace: <h3><b>  https://localhost:44303/Usuario/ActivarMiCuenta?token=" + usuario.Token + "  </br> <h4> Equipo Ayudar - 2020 </h4> <br>";
             // Aca activo que acepte etiquetes html en el mensaje
             email.IsBodyHtml = true;
             // El envio tiene prioridad normal
@@ -134,6 +134,17 @@ namespace Servicios
             }
 
             return output;
+        }
+
+        public string ReenviarEmail(Usuarios usuarioObtenido)
+        {
+            //Obtengo datos del usuario
+            Usuarios usuarioRegistrado = obtenerUsuarioPorEmail(usuarioObtenido.Email);
+
+            //Se le envia nuevamente su token al usuario ya registrado
+            string mensajeEnviado = EnviarCodigoPorEmail(usuarioRegistrado);
+
+            return mensajeEnviado;
         }
 
         public TipoEmail ValidoEstadoEmail(Usuarios usuario)
@@ -242,13 +253,7 @@ namespace Servicios
         public bool actualizoDatosDelPerfilDelUsuario(Usuarios usuario)
         {
             UsuarioDao usuarioDao = new UsuarioDao();
-/*
-            Usuarios usuarioObtenido = obtenerUsuarioPorEmail(usuario.Email);
-            usuarioObtenido.Nombre = usuario.Nombre;
-            usuarioObtenido.Apellido = usuario.Apellido;
-            usuarioObtenido.Foto = usuario.Foto;
-            usuarioObtenido.UserName = usuario.UserName;
-*/
+
             int resultado = usuarioDao.actualizarDatosDeUsuario(usuario);
 
             if (resultado >= 0)

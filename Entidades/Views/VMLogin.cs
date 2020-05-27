@@ -17,7 +17,7 @@ namespace Entidades.Views
         [Display(Name = "Clave")]
         [Required(ErrorMessage = " Contraseña es obligatoria")]
         //Puede comenzar con A-Z, o a-z, o numeros de 0 a 9    |  finaliza con a-z - A-Z -ó- 0-9   {desde, hasta}
-        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])[a-zA-Z0-9]{1,}$", ErrorMessage = "La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número")]
+        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])[a-zA-Z0-9]{1,}$", ErrorMessage = "La contraseña contenia al menos una letra mayúscula, una letra minúscula y un número")]
         [MinLength(8, ErrorMessage = "Su contraseña debe tener 8 digitos como minimo")]
         public string Password { get; set; }
     }

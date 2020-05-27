@@ -27,7 +27,7 @@
                 }
                 if (mensajeAdvertencia != null)
                 {
-                     <div class="p-3 mb-2 bg-warning text-white">@mensajeAdvertencia</div>
+                    <div class="p-3 mb-2 bg-warning text-white">@mensajeAdvertencia</div>
                 }
 
 
@@ -61,12 +61,23 @@
                     <button class="login100-form-btn">
                         Registrarse
                     </button>
+
                 </div><br>
-                      <div class="col-md-10 text-center container-login100-form-btn">
-                          Ya tengo una cuenta  &nbsp;  @Html.ActionLink(" Log in", "Login", "Home", null, new { @class = " text-primary" })
-                          Aun no active mi cuenta   &nbsp; @Html.ActionLink("Activar cuenta", "CodigoDeVerificacion", "Home", null, new { @class = " text-primary" })
-                      </div>
+                <div class="col-md-10 text-center container-login100-form-btn">
+                    Ya tengo una cuenta  &nbsp;  @Html.ActionLink(" Log in", "Login", "Usuario", null, new { @class = " text-primary" })
+                </div>
             }
+
+        <div class=" text-light card-body text-center black ">
+            <p class="text-light" id="font-Registro-info"> No me llego el email de activacion al registrarme</p> @Html.ActionLink("Volver a Enviarme", "ReenvioDeCodigo", "Usuario", null, new { @class = " btn btn-primary ml-3" })
+
         </div>
+           
+        </div>
+        
     </div>
+    
 </div>
+
+@*<div class="p-3 mb-2 bg-info text-white text-center">En caso de que no le haya llegado el email con su codigo de activacion, ingrese aca  </div>
+*@

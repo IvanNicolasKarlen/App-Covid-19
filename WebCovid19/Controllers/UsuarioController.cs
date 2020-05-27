@@ -65,9 +65,7 @@ namespace WebCovid19.Controllers
                 //Asigno datos obtenidos del formulario a usuario
                 usuario = servicioUsuario.asignoDatosAUsuarioDelRegistro(registro);
 
-
-
-                //Validar si el email es un email nuevo o si ya fue solicitado para registrarse
+                //Validar si el email es un email nuevo o si ya fue registrado
                 TipoEmail emailIngresado = servicioUsuario.ValidoEstadoEmail(usuario);
 
                 //Esta condicion es por si se le envie la activacion, elimina el mensaje, y quiere recuperar su activacion.
@@ -83,33 +81,16 @@ namespace WebCovid19.Controllers
                         {
                             ViewData.Add("mensajeError", mensajeEnviado);
                         }
-
                     }
                     else
                     {
                         ViewData.Add("mensajeError", "Ha ocurrido un error al registrarse, por favor intentelo nuevamente");
                     }
-
                 }
-                else if (emailIngresado == TipoEmail.EmailSolicitado)
-                {
-                    //Se le envia nuevamente su token al usuario ya registrado
-                    ViewData.Add("mensajeAdvertencia", "Te hemos enviado nuevamente un email por Gmail con su clave de activación");
-
-                    string mensajeEnviado = servicioUsuario.EnviarCodigoPorEmail(usuario);
-
-                    if (mensajeEnviado != "Ok")
-                    {
-                        ViewData.Add("mensajeError", mensajeEnviado);
-                    }
+                else{
+                    ViewData.Add("mensajeError", "Ya existe una cuenta con ese email");
                 }
-                else
-                {
-                    ViewData.Add("mensajeError", "Ya existe una cuenta activa con ese email");
-                    return View();
-                }
-
-
+                
             }
             catch (Exception ex)
             {
@@ -119,6 +100,60 @@ namespace WebCovid19.Controllers
             return View();
         }
 
+        public ActionResult ReenvioDeCodigo()
+        {
+            VMReenvioDeEmail email = new VMReenvioDeEmail();
+            return View(email);
+        }
+
+        [HttpPost]
+        public ActionResult ReenvioDeCodigo(VMReenvioDeEmail emailRecibido)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            try
+            {
+                ServicioUsuario servicioUsuario = new ServicioUsuario();
+                Usuarios usuarioObtenido = new Usuarios(); 
+                usuarioObtenido.Email = emailRecibido.Email;
+
+                //Validar si el email es un email nuevo o si ya fue registrado
+                TipoEmail emailIngresado = servicioUsuario.ValidoEstadoEmail(usuarioObtenido);
+
+                if (emailIngresado == TipoEmail.EmailSolicitado)
+                {
+                    //Se le envia nuevamente su token al usuario ya registrado
+                    string mensajeEnviado = servicioUsuario.ReenviarEmail(usuarioObtenido);
+
+                    if (servicioUsuario.ReenviarEmail(usuarioObtenido) != "Ok")
+                    {
+                        ViewData.Add("mensajeError", mensajeEnviado);
+                    }
+                    else
+                    {
+                        ViewData.Add("mensajeAdvertencia", "Te hemos enviado nuevamente un email por Gmail con su clave de activación");
+                    }
+                }
+                else if(emailIngresado == TipoEmail.EmailNuevo)
+                {
+                    //Aun no se registro
+                    ViewData.Add("mensajeAdvertencia", "Todavia no se ha registrado un usuario con ese email");
+                }
+                else
+                {   //Usuario ya activo
+                    ViewData.Add("mensajeError", "Ya existe una cuenta activa con ese email");
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Error: ", ex.Message);
+            }
+
+            return View();
+        }
 
         [HttpGet]
         public ActionResult Login()
@@ -131,9 +166,6 @@ namespace WebCovid19.Controllers
         [HttpPost]
         public ActionResult Login(VMLogin login)
         {
-
-            /*Seccion para probar inicio, cierre de sesion, y autorizacion de secciones*/
-
             try
             {
                 if (!ModelState.IsValid)
@@ -185,7 +217,6 @@ namespace WebCovid19.Controllers
                 return RedirectToAction("IndexLogueado","Usuario");
             }
             /*-----------*/
-                    return RedirectToAction("IndexLogueado");
 
                 }
             }
@@ -219,7 +250,7 @@ namespace WebCovid19.Controllers
 
                 //Asigno datos obtenidos del formulario a usuario
                 Usuarios usuarioPerfil = servicioUsuario.asignoDatosAUsuarioDelPerfil(perfil);
-                /*DE PRUEBA*/usuarioPerfil.Email = "Ivan1@hotmail.com";
+                /*DE PRUEBA*/usuarioPerfil.Email = "Ivan3@hotmail.com";
                 
                 //Obtengo el objeto usuario con los datos anteriores para agregarle los nuevos datos
                 Usuarios usuarioObtenido = servicioUsuario.obtenerUsuarioPorEmail(usuarioPerfil.Email);

@@ -1,7 +1,8 @@
-﻿@model Entidades.Views.VMLogin
+﻿@model Entidades.Views.VMReenvioDeEmail
+
 @{
-    ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_AnonimoLayout.cshtml";
+    ViewBag.Title = "ReenvioDeCodigo";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
     string mensajeAdvertencia = (string)ViewData["mensajeAdvertencia"];
     string mensajeError = (string)ViewData["mensajeError"];
     string mensajeCorrecto = (string)ViewData["mensajeCorrecto"];
@@ -13,10 +14,10 @@
     <div class="container-login100">
         <div class="wrap-login100 p-t-30 p-b-50">
             <span class="login100-form-title p-b-41">
-                Login
+                Enviarme mi codigo de activacion
             </span><br>
 
-            @using (Html.BeginForm("Login", "Usuario", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+            @using (Html.BeginForm("ReenvioDeCodigo", "Usuario", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
 
             {
                 @Html.AntiForgeryToken()
@@ -42,24 +43,20 @@
 
                 </div>
 
-                <div class="wrap-input100 validate-input">
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "input100", placeholder = Html.DisplayNameFor(x => x.Password), Type = "password" } })
-                    <span class="focus-input100" data-placeholder="&#xe80f;"></span>
-                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                </div><br>
-
                 <div class="container-login100-form-btn m-t-32">
                     <button class="login100-form-btn" type="submit">
-                        Login
+                        Enviar codigo
                     </button>
                 </div><br>
-                      <div class="text-center container-login100-form-btn m-t-32">
-                          Aun no estoy registrado  &nbsp;  @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = " text-primary" })
-                          No me llego el mensaje   &nbsp; @Html.ActionLink("Volver a Enviarme", "ReenvioDeCodigo", "Usuario", null, new { @class = " text-primary" })
-                      </div>
+                <div class="text-center container-login100-form-btn m-t-32">
+                    Aun no estoy registrado  &nbsp;  @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = " text-primary" })
+                   Ya lo he activado   &nbsp; @Html.ActionLink("Log in", "Login", "Usuario", null, new { @class = " text-primary" })
+                </div>
             }
         </div>
 
     </div>
 </div>
+
+
 

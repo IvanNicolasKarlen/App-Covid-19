@@ -311,6 +311,7 @@
     <Content Include="Views\Usuario\IndexLogueado.cshtml" />
     <Content Include="Views\Usuario\Perfil.cshtml" />
     <Content Include="Views\Necesidades\Detalles.cshtml" />
+    <Content Include="Views\Usuario\ReenvioDeCodigo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
