@@ -53,10 +53,10 @@ namespace Servicios
             usuario.Nombre = perfil.Nombre;
             usuario.Apellido = perfil.Apellido;
             usuario.Foto = perfil.Foto;
-            usuario.UserName = perfil.Nombre + " " + perfil.Apellido;
+            usuario.UserName = perfil.Nombre + "." + perfil.Apellido;
             return usuario;
         }
-         
+
 
         public string CodigoDeActivacion()
         {
@@ -149,7 +149,7 @@ namespace Servicios
 
         public TipoEmail ValidoEstadoEmail(Usuarios usuario)
         {
-            
+
 
             Usuarios usuarioObtenido = usuarioDao.obtenerUsuarioPorEmail(usuario.Email);
 
@@ -239,12 +239,12 @@ namespace Servicios
             {
                 usuarioConElToken.Activo = true;
                 int resultado = usuarioDao.actualizarDatosDeUsuario(usuarioConElToken);
-                
-                if(resultado >= 0)
+
+                if (resultado >= 0)
                 {
                     return true;
                 }
-                
+
             }
 
             return false;
@@ -263,18 +263,48 @@ namespace Servicios
 
             return false;
         }
-        
+
         public Usuarios asignoDatosFaltantesAUsuarioDePerfil(Usuarios usuarioPerfil, Usuarios usuarioObtenido)
         {
+            UsuarioDao usuarioDao = new UsuarioDao();
+
             usuarioObtenido.Nombre = usuarioPerfil.Nombre;
             usuarioObtenido.Apellido = usuarioPerfil.Apellido;
             usuarioObtenido.Foto = usuarioPerfil.Foto;
+
+            List<Usuarios> listaUsuarios = usuarioDao.listadoUsuariosActivos();
+
+            string nombreDeUsuario = null;
+            int contador = 2;
+
+            foreach (var item in listaUsuarios)
+            {
+                if (item.UserName == usuarioPerfil.UserName)
+                {
+                    //Le agrego un numero al nombre, ej: Steven.Gerard.3
+                    nombreDeUsuario = usuarioPerfil.UserName + "." + contador;
+                    //Se lo asigno a UsuarioPerfil
+                    usuarioPerfil.UserName = nombreDeUsuario;
+                    contador++;
+                }
+            }
             usuarioObtenido.UserName = usuarioPerfil.UserName;
 
             return usuarioObtenido;
         }
 
+        public bool completoDatosDeMiPerfil(Usuarios usuarioPerfil)
+        {
+            //Obtengo el objeto usuario con los datos anteriores para agregarle los nuevos datos
+            Usuarios usuarioObtenido = obtenerUsuarioPorEmail(usuarioPerfil.Email);
 
+            //Agrego los datos faltantes al usuario obtenido de la bd
+            Usuarios usuarioActualizado = asignoDatosFaltantesAUsuarioDePerfil(usuarioPerfil, usuarioObtenido);
+
+            bool actualizado = actualizoDatosDelPerfilDelUsuario(usuarioActualizado);
+
+            return actualizado;
+        }
 
     }
 }

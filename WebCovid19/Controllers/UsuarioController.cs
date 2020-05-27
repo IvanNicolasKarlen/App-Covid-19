@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebCovid19.Utilities;
 
 namespace WebCovid19.Controllers
 {
@@ -87,10 +88,11 @@ namespace WebCovid19.Controllers
                         ViewData.Add("mensajeError", "Ha ocurrido un error al registrarse, por favor intentelo nuevamente");
                     }
                 }
-                else{
+                else
+                {
                     ViewData.Add("mensajeError", "Ya existe una cuenta con ese email");
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -116,7 +118,7 @@ namespace WebCovid19.Controllers
             try
             {
                 ServicioUsuario servicioUsuario = new ServicioUsuario();
-                Usuarios usuarioObtenido = new Usuarios(); 
+                Usuarios usuarioObtenido = new Usuarios();
                 usuarioObtenido.Email = emailRecibido.Email;
 
                 //Validar si el email es un email nuevo o si ya fue registrado
@@ -136,7 +138,7 @@ namespace WebCovid19.Controllers
                         ViewData.Add("mensajeAdvertencia", "Te hemos enviado nuevamente un email por Gmail con su clave de activación");
                     }
                 }
-                else if(emailIngresado == TipoEmail.EmailNuevo)
+                else if (emailIngresado == TipoEmail.EmailNuevo)
                 {
                     //Aun no se registro
                     ViewData.Add("mensajeAdvertencia", "Todavia no se ha registrado un usuario con ese email");
@@ -232,7 +234,10 @@ namespace WebCovid19.Controllers
         public ActionResult Perfil()
         {
             ViewData.Add("mensajeInfo", "Debe completar sus datos para poder Crear Necesidades");
-            return View();
+
+            //ToDo: obtener usuario logueado y pasarselo aca
+            Usuarios usuarioSession = new Usuarios();
+            return View(usuarioSession);
         }
 
         [HttpPost]
@@ -244,26 +249,33 @@ namespace WebCovid19.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return View("Perfil");
+                    //ToDo: obtener usuario logueado y pasarselo aca
+                    Usuarios usuarioSession = new Usuarios();
+                    return View("Perfil", usuarioSession);
                 }
+
+                if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
+                {
+                    //TODO: Agregar validacion para confirmar que el archivo es una imagen - UsuarioController
+                    //creo un nombre significativo en este caso apellidonombre pero solo un caracter del nombre, ejemplo BatistutaG
+                    string nombreSignificativo = perfil.Apellido + perfil.Nombre + Session["Email"];
+                    //Guardar Imagen
+                    string pathRelativoImagen = ImagenesUtil.Guardar(Request.Files[0], nombreSignificativo);
+                    perfil.Foto = pathRelativoImagen;
+                }
+
                 ServicioUsuario servicioUsuario = new ServicioUsuario();
 
                 //Asigno datos obtenidos del formulario a usuario
                 Usuarios usuarioPerfil = servicioUsuario.asignoDatosAUsuarioDelPerfil(perfil);
-                /*DE PRUEBA*/usuarioPerfil.Email = "Ivan3@hotmail.com";
-                
-                //Obtengo el objeto usuario con los datos anteriores para agregarle los nuevos datos
-                Usuarios usuarioObtenido = servicioUsuario.obtenerUsuarioPorEmail(usuarioPerfil.Email);
-                
-                //Agrego los datos faltantes al usuario obtenido de la bd
-                Usuarios usuarioActualizado = servicioUsuario.asignoDatosFaltantesAUsuarioDePerfil(usuarioPerfil, usuarioObtenido);
+                //ToDo: EMAIL DE PRUEBA 
+                usuarioPerfil.Email = "Ivo@gmail.com";
 
-                bool actualizado = servicioUsuario.actualizoDatosDelPerfilDelUsuario(usuarioActualizado);
+                bool actualizado = servicioUsuario.completoDatosDeMiPerfil(usuarioPerfil);
 
                 if (!actualizado)
                 {
                     ViewData.Add("mensajeError", "Error: No se ha podido guardar los datos, intentelo nuevamente");
-                    return View("Perfil");
                 }
                 else
                 {
@@ -275,7 +287,9 @@ namespace WebCovid19.Controllers
                 ModelState.AddModelError("Error: ", ex.Message);
             }
 
-            return View("Perfil");
+            //ToDo: obtener usuario logueado y pasarselo aca
+            Usuarios usuarioSessionPerfil = new Usuarios();
+            return View("Perfil", usuarioSessionPerfil);
         }
 
         public ActionResult ActivarMiCuenta(string token)

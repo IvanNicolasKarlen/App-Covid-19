@@ -45,8 +45,14 @@ namespace DAO
             usuarioObtenido.Necesidades = usuarioActualizado.Necesidades;
             usuarioObtenido.NecesidadesValoraciones = usuarioActualizado.NecesidadesValoraciones;
 
-           int result = context.SaveChanges();
+            int result = context.SaveChanges();
             return result;
+        }
+
+        public List<Usuarios> listadoUsuariosActivos()
+        {
+            List<Usuarios> listadoUsuarios = context.Usuarios.Where(a => a.Activo == true).ToList();
+            return listadoUsuarios;
         }
     }
 }
