@@ -54,5 +54,7 @@ namespace DAO
             List<Usuarios> listadoUsuarios = context.Usuarios.Where(a => a.Activo == true).ToList();
             return listadoUsuarios;
         }
+
+        
     }
 }

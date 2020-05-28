@@ -64,6 +64,7 @@
     <Compile Include="NecesidadesValoraciones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TipoEmail.cs" />
+    <Compile Include="TipoUsuario.cs" />
     <Compile Include="Usuarios.cs" />
     <Compile Include="Views\CheckValidDate.cs" />
     <Compile Include="Views\VMDatosDeVerificacionDeUsuario.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Views\VMLogin.cs" />
     <Compile Include="Views\VMNecesidad.cs" />
     <Compile Include="Views\VMPerfil.cs" />
+    <Compile Include="Views\VMPublicacionNecesidad.cs" />
     <Compile Include="Views\VMReenvioDeEmail.cs" />
     <Compile Include="Views\VMRegistro.cs" />
   </ItemGroup>

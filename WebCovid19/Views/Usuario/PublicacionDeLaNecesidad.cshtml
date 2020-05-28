@@ -1,0 +1,85 @@
+﻿@model Entidades.Views.VMPublicacionNecesidad
+
+
+
+@foreach (var usuario in Model.listaUsuarios)
+{
+    foreach (var necesidad in Model.listaNecesidades)
+    {
+
+        <div class="container" id="margin-top-header">
+            <div class="card" id="card" id="margin-top-header">
+                <div class="col-md-12">
+                    <div class="float-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-dark mt-3 float-right dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></button>
+                            <ul class="dropdown-menu hover " role="menu" id="colour">
+                                <li class="text-center ">
+                                    <a href="" class="text-light">
+                                        <svg class="bi bi-exclamation-square-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2zm6 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+                                        </svg>
+                                        @Html.ActionLink("Denunciar", "Denuncia", "Denuncia", null, new { @class = "hover text-light", value=necesidad.IdNecesidad })
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="~/Content/Img/@usuario.Foto">
+                        <div class="col-md-2">
+                            <p class=" text-secondary mt-3"><b>@usuario.UserName</b></p>
+                            <p><span class="fa fa-calendar"></span> @usuario.FechaCracion</p>
+                        </div>
+                    </div>
+
+                </div>
+                <img class="card-img-top" src="~/Content/Img/@necesidad.Foto" id="imagen-necesidad" alt="Card image cap">
+                <div class="card-body">
+                    <div class="float-auto">
+                        <button type="button" class="btn btn-outline-info"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                        <label> <b class="text-primary">@necesidad.Valoracion%</b> de coincidencias </label>
+
+                        <button type="button" class="btn btn-outline-danger"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+                        <label> No estoy de acuerdo </label>
+                        <div class="float-right">
+                            @if (necesidad.TipoDonacion == Entidades.TipoDonacion.Monetaria)
+                            {
+                                <label> <b class="text-primary">Solicita Dinero</b> </label>
+                            }
+                            else
+                            {
+                                <label> <b class="text-primary">Solicita Insumos</b> </label>
+                            }
+
+                        </div>
+                    </div>
+
+
+                    <h2 class="card-title text-center">@necesidad.Nombre</h2>
+                    <p class="card-text mt-3">
+                        @necesidad.Descripcion
+                    </p>
+
+                    <p class="card-text text-secondary"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> @necesidad.FechaFin</p>
+                    <div class="text-center">
+                        @Html.ActionLink("Más detalles", "NecesidadDonacionInsumos", "NecesidadDonacionInsumos", null, new { @class = "btn btn-info" })
+                        @if (usuario.Nombre == null & usuario.Apellido == null)
+                        {
+                            @Html.ActionLink("Ayudar", "NecesidadDonacionInsumos", "NecesidadDonacionInsumos", null, new { @class = "btn btn-primary" })
+
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Ayudar a " + usuario.Nombre + " " + usuario.Apellido, "NecesidadDonacionInsumos", "NecesidadDonacionInsumos", null, new { @class = "btn btn-primary" })
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--FIN DE LA PUBLICACION-->
+
+    }
+}

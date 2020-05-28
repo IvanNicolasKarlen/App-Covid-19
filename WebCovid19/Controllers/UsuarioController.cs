@@ -203,6 +203,17 @@ namespace WebCovid19.Controllers
                         return View();
                     }
 
+                    //Validar si es un Usuario o un Administrador
+                    TipoUsuario tipoUsuario = servicioUsuario.tipoDeUsuario(usuario);
+                    if (tipoUsuario == TipoUsuario.Usuario)
+                    {
+                        return RedirectToAction("IndexLogueado");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Administrador");
+                    }
+
 
 
                     /*      bool bandera = true;
@@ -323,6 +334,10 @@ namespace WebCovid19.Controllers
         {
             return View();
         }
+
+        
+
+       
 
     }
 }

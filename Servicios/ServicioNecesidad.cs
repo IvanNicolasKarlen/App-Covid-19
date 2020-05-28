@@ -33,5 +33,26 @@ namespace Servicios
 
             return necesidadesDAO.CrearNecesidades(necesidades);
         }
+
+        public List<Necesidades> necesidadesDelUsuario(int idSession, string necesidad)
+        {
+            NecesidadesDAO necesidadesDao = new NecesidadesDAO();
+
+            if (necesidad == "on")
+            {
+                // Aquellas que fueron creadas por él y
+                //aún no están finalizadas pudiendo recibir donaciones
+                List<Necesidades> necesidadesActivas = necesidadesDao.necesidadesActivas(idSession);
+                return necesidadesActivas;
+            }
+            else
+            {
+                //En caso de que se destilde, se visualizarán
+                //todas las del usuario sin importar si están o no finalizadas.
+
+                List<Necesidades> todasLasNecesidadesDelUsuario = necesidadesDao.necesidadesDelUsuario(idSession);
+                return todasLasNecesidadesDelUsuario;
+            }
+        }
     }
 }

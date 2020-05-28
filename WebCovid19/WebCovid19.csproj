@@ -127,7 +127,6 @@
     <Content Include="Content\Img\Completo.png" />
     <Content Include="Content\Img\dinero.png" />
     <Content Include="Content\Img\error.png" />
-    <Content Include="Content\Img\iconoPresidenciaDeLaNacion.png" />
     <Content Include="Content\Img\imagenPerfil-Nula.png" />
     <Content Include="Content\Img\itemProducto.png" />
     <Content Include="Content\Img\necesitamosInsumos.jpg" />
@@ -312,6 +311,8 @@
     <Content Include="Views\Usuario\Perfil.cshtml" />
     <Content Include="Views\Necesidades\Detalles.cshtml" />
     <Content Include="Views\Usuario\ReenvioDeCodigo.cshtml" />
+    <Content Include="Views\Necesidades\MisNecesidades.cshtml" />
+    <Content Include="Views\Usuario\PublicacionDeLaNecesidad.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

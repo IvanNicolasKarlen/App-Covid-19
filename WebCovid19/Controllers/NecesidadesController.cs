@@ -106,5 +106,27 @@ namespace WebCovid19.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult MisNecesidades(string necesidad)
+        {
+            ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
+            ServicioUsuario servicioUsuario = new ServicioUsuario();
+           //ToDo: Usar Session real
+            int idSession = 3;
+            string email = "a@a.a";
+            Usuarios usuarioObtenido = servicioUsuario.obtenerUsuarioPorEmail(email);
+
+            List<Necesidades> necesidadesObtenidas = servicioNecesidad.necesidadesDelUsuario(idSession, necesidad);
+            //Mantener el checkbox seleccionado o no, dependiendo lo que haya elegido
+            TempData["estadoCheckbox"] = necesidad;
+
+            VMPublicacionNecesidad vMPublicacion = new VMPublicacionNecesidad();
+
+            vMPublicacion.listaUsuarios.Add(usuarioObtenido);
+            vMPublicacion.listaNecesidades = necesidadesObtenidas;
+
+            return View(vMPublicacion);
+        }
+
     }
 }

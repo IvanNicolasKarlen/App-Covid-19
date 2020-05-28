@@ -1,4 +1,8 @@
-﻿<div class="container mb-5">
+﻿@{ 
+    string estadoCheckbox = (string)TempData["estadoCheckbox"];
+}
+
+<div class="container mb-5">
     <!-- Definición del menú -->
     <nav class=" shadow-lg navbar navbar-expand-md  fixed-top position-fixed mb-5" id="colour" >
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#miNavbar"
@@ -10,15 +14,23 @@
 
         <div class="collapse navbar-collapse" id="miNavbar">
             <img class="border border-white" id="image-perfil" src="~/Content/Img/logo2.png">
+         
+            @using (Html.BeginForm("MisNecesidades", "Necesidades", FormMethod.Post, new {@class= "col-md-3 ml-4" }))
+            {
+        <div class="form-check">
+            @if (estadoCheckbox == "on")
+            {
+                <input type="checkbox" class="form-check-input my-lg-2" name="necesidad" checked>
+            }
+            else
+            {
+                <input type="checkbox" class="form-check-input my-lg-2" name="necesidad">
+            }
+            <label class="form-check-label text-light">Necesidades activas</label>
+            <button type="submit" class="btn btn-outline-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+        </div>
+            }
 
-
-            <div class="col-md-3 ml-4">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input my-lg-2" id="exampleCheck1">
-                    <label class="form-check-label text-light " for="exampleCheck1">Necesidades activas</label>
-                    <button type="submit" class="btn btn-outline-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                </div>
-            </div>
 
             <div class="col-md-4">
                 <form class="form-inline my-2 my-lg-0">

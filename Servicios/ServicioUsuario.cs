@@ -306,5 +306,23 @@ namespace Servicios
             return actualizado;
         }
 
+        public TipoUsuario tipoDeUsuario(Usuarios usuarioObtenido)
+        {
+            //Obtengo datos del usuario
+            Usuarios usuarioRegistrado = obtenerUsuarioPorEmail(usuarioObtenido.Email);
+            
+            if(usuarioRegistrado.TipoUsuario == 1)
+            {
+                return TipoUsuario.Usuario;
+            }
+            else 
+            {
+                return TipoUsuario.Administrador;
+            }
+
+
+        }
+
+       
     }
 }
