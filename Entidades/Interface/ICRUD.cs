@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entidades.Views
+namespace Entidades.Interface
 {
     public interface ICRUD<T> where T : class
     {

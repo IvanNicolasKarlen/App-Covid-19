@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Servicios;
 using WebCovid19.Utilities;
-using Entidades;
+using Entidades.Metadata;
 
 namespace WebCovid19.Controllers
 {
@@ -23,13 +23,14 @@ namespace WebCovid19.Controllers
 
         public ActionResult Crear()                     /*****CAMBIOS EN LA VISTA, tipada con NECESIDADESMETADATA****/
         {                                               /***ViewModel Necesidad se puede eliminar***/
-            VMNecesidad necesidad = new VMNecesidad();
-            return View(necesidad);
+            // VMNecesidad necesidad = new VMNecesidad();
+            NecesidadesMetadata necesidadesMetadata = new NecesidadesMetadata();
+            return View(necesidadesMetadata);
         }
 
         [HttpPost]
         // public ActionResult Crear(VMNecesidad vmnecesidad)
-        public ActionResult Crear(VMNecesidad vmnecesidad)
+        public ActionResult Crear(NecesidadesMetadata vmnecesidad)
         {
             //ToDo: Falta agregar la logica aca
             //ToDo: Fijarse como subir archivos en el github de la materia. Para tmbn asi no tener q usar javascript para guardar el nombre de la imagen
@@ -50,7 +51,6 @@ namespace WebCovid19.Controllers
                 }
                 //ToDo: Agregar el idUsuario. Aca esta hardcodeado. Persistir en la bs la necesidad. Y pasarle por parametro el id a Insumos o Monetarias. Inicializar necesidad como estado=0 (cerrado) y luego de agregar insumo/necesidad, verificar q tenga eso agregado pa cambiar el estado
 
-              
                 Necesidades necesidad = servicioNecesidad.buildNecesidad(vmnecesidad, 2); /******CAMBIOS DENTRO, LE PUSE NECESIDADMETADATA*****/
                 TempData["idNecesidad"] = necesidad.IdNecesidad;
                 if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")

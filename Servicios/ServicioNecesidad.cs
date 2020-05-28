@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using DAO;
 using Entidades;
-using Entidades;
+using Entidades.Metadata;
 
 namespace Servicios
 {
@@ -18,7 +18,7 @@ namespace Servicios
         }
 
         //public Necesidades buildNecesidad(VMNecesidad vmnecesidad, int idUser)
-        public Necesidades buildNecesidad(VMNecesidad vmnecesidad, int idUser)
+        public Necesidades buildNecesidad(NecesidadesMetadata vmnecesidad, int idUser)
         
         {
             Necesidades necesidades = new Necesidades()
