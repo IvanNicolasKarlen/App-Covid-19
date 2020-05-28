@@ -12,19 +12,6 @@ namespace WebCovid19.Controllers
 {
     public class UsuarioController : Controller
     {
-
-        /*
-                public ActionResult Perfil()
-                {
-                    Session["url"] = Request["url"];
-                    if (Session["Email"] as string == "") 
-                    {
-                        return RedirectToAction("Login","Home");
-                    }
-                    return View();
-                }
-        */
-
         public ActionResult Index()
         {
             return View();
@@ -92,7 +79,6 @@ namespace WebCovid19.Controllers
                 {
                     ViewData.Add("mensajeError", "Ya existe una cuenta con ese email");
                 }
-
             }
             catch (Exception ex)
             {

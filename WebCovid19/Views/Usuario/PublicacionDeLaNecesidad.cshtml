@@ -2,13 +2,13 @@
 
 
 
-@foreach (var usuario in Model.listaUsuarios)
+@foreach (var usuario in Model.listaUsuarios.OrderBy(o=> o.FechaCracion))
 {
     foreach (var necesidad in Model.listaNecesidades)
     {
 
         <div class="container" id="margin-top-header">
-            <div class="card" id="card" id="margin-top-header">
+            <div class="card" id="card">
                 <div class="col-md-12">
                     <div class="float-right">
                         <div class="btn-group">
@@ -44,7 +44,7 @@
                         <button type="button" class="btn btn-outline-danger"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
                         <label> No estoy de acuerdo </label>
                         <div class="float-right">
-                            @if (necesidad.TipoDonacion == Entidades.TipoDonacion.Monetaria)
+                            @if (necesidad.TipoDonacion == 1)
                             {
                                 <label> <b class="text-primary">Solicita Dinero</b> </label>
                             }

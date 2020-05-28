@@ -64,6 +64,7 @@
     <Compile Include="NecesidadesValoraciones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TipoEmail.cs" />
+    <Compile Include="TipoEstadoNecesidad.cs" />
     <Compile Include="TipoUsuario.cs" />
     <Compile Include="Usuarios.cs" />
     <Compile Include="Views\CheckValidDate.cs" />
@@ -81,6 +82,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

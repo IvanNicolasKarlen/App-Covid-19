@@ -29,7 +29,7 @@ namespace DAO
             var necesidadesObtenidas = (from c in context.Necesidades
                                         where c.IdUsuarioCreador == idSession
                                         where c.Estado == 1
-                                        where c.FechaFin > DateTime.Now
+                                        where c.FechaFin < DateTime.Now
                                         select c);
 
             foreach (var item in necesidadesObtenidas)
@@ -42,13 +42,11 @@ namespace DAO
 
         public List<Necesidades> necesidadesDelUsuario(int idSession)
         {
-           // List<Necesidades> todasLasNecesidadesDelUsuario = context.Necesidades.Where(o => o.IdUsuarioCreador == idSession).ToList();
-
             List<Necesidades> todasLasNecesidadesDelUsuario = new List<Necesidades>();
             
             var necesidadesObtenidas = (from c in context.Necesidades
                                         where c.IdUsuarioCreador == idSession
-                                        where c.FechaFin > DateTime.Now
+                                        where c.FechaFin < DateTime.Now
                                         select c);
 
             foreach (var item in necesidadesObtenidas)

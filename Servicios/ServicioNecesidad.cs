@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using DAO;
 using Entidades;
+using Entidades;
+
 namespace Servicios
 {
     public class ServicioNecesidad
@@ -15,7 +17,9 @@ namespace Servicios
             return necesidadesDAO.BuscarNecesidad(id);
         }
 
+        //public Necesidades buildNecesidad(VMNecesidad vmnecesidad, int idUser)
         public Necesidades buildNecesidad(VMNecesidad vmnecesidad, int idUser)
+        
         {
             Necesidades necesidades = new Necesidades()
             {
@@ -25,7 +29,7 @@ namespace Servicios
                 FechaCreacion = DateTime.Now,
                 FechaFin = vmnecesidad.FechaFin,
                 Foto = vmnecesidad.Foto,
-                TipoDonacion = vmnecesidad.TipoDonacion,
+                TipoDonacion = (vmnecesidad.TipoDonacion == TipoDonacion.Monetaria) ? 1 : 2,
                 IdUsuarioCreador = idUser,
                 Estado = 0,
                 Valoracion = null
@@ -49,7 +53,6 @@ namespace Servicios
             {
                 //En caso de que se destilde, se visualizarán
                 //todas las del usuario sin importar si están o no finalizadas.
-
                 List<Necesidades> todasLasNecesidadesDelUsuario = necesidadesDao.necesidadesDelUsuario(idSession);
                 return todasLasNecesidadesDelUsuario;
             }

@@ -1,6 +1,7 @@
 namespace Entidades
 {
     using Entidades;
+    using Entidades;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -21,26 +22,21 @@ namespace Entidades
         [Key]
         public int IdNecesidad { get; set; }
 
-        [Required]
-        [StringLength(50)]
+
         public string Nombre { get; set; }
 
-        [Column(TypeName = "text")]
-        [Required]
+
         public string Descripcion { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+
         public DateTime FechaCreacion { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+
         public DateTime FechaFin { get; set; }
 
-        [Required]
-        [StringLength(30)]
+ 
         public string TelefonoContacto { get; set; }
 
-        public TipoDonacion TipoDonacion { get; set; }
+        public int TipoDonacion { get; set; }
 
-        [Required]
-        [StringLength(100)]
         public string Foto { get; set; }
 
         public int IdUsuarioCreador { get; set; }

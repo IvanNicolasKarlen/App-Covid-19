@@ -26,10 +26,9 @@ namespace Entidades
       
         public string Apellido { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaNacimiento { get; set; }
 
-        [StringLength(20)]
+     
         public string UserName { get; set; }
 
         
@@ -38,13 +37,9 @@ namespace Entidades
 
         public string Password { get; set; }
 
-   
-
-        [StringLength(100)]
         public string Foto { get; set; }
 
         public int TipoUsuario { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaCracion { get; set; }
 
         public bool Activo { get; set; }
