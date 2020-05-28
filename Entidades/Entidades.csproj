@@ -67,6 +67,7 @@
     <Compile Include="TipoUsuario.cs" />
     <Compile Include="Usuarios.cs" />
     <Compile Include="Views\CheckValidDate.cs" />
+    <Compile Include="Views\ICRUD.cs" />
     <Compile Include="Views\VMDatosDeVerificacionDeUsuario.cs" />
     <Compile Include="Views\VMDonacionMonetaria.cs" />
     <Compile Include="Views\VMLogin.cs" />

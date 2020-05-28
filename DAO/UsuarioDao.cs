@@ -1,5 +1,6 @@
 ﻿using DAO.Context;
 using Entidades;
+using Entidades.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAO
 {
-    public class UsuarioDao
+    public class UsuarioDao : ICRUD<Usuarios> //Uso de Generics
     {
         TpDBContext context = new TpDBContext();
 
@@ -24,14 +25,22 @@ namespace DAO
             return usuario;
         }
 
-        public Usuarios guardarUsuario(Usuarios usuario)
+        public Usuarios Guardar(Usuarios usuario)
         {
             Usuarios usuarioGuardado = context.Usuarios.Add(usuario);
-            context.SaveChanges();
-            return usuarioGuardado;
-        }
+            int valor = context.SaveChanges();
 
-        public int actualizarDatosDeUsuario(Usuarios usuarioActualizado)
+            if(valor >=0)
+            {
+                return usuarioGuardado;
+            }
+            else
+            {
+                return null;
+            }
+            
+        }
+        public int Actualizar(Usuarios usuarioActualizado)
         {
             Usuarios usuarioObtenido = obtenerUsuarioPorEmail(usuarioActualizado.Email);
             usuarioObtenido.Activo = usuarioActualizado.Activo;
@@ -49,6 +58,13 @@ namespace DAO
             return result;
         }
 
+        public Usuarios ObtenerPorID(int idSession)
+        {
+            Usuarios usuarioObtenido = context.Usuarios.Find(idSession);
+            return usuarioObtenido;
+        }
+
+       
         public List<Usuarios> listadoUsuariosActivos()
         {
             List<Usuarios> listadoUsuarios = context.Usuarios.Where(a => a.Activo == true).ToList();
