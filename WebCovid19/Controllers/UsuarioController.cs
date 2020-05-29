@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebCovid19.Filters;
 using WebCovid19.Utilities;
 
 namespace WebCovid19.Controllers
@@ -17,6 +18,7 @@ namespace WebCovid19.Controllers
             return View();
         }
 
+        [LoginFilter]
         public ActionResult IndexLogueado()
         {
             ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
@@ -191,16 +193,27 @@ namespace WebCovid19.Controllers
                         return View();
                     }
 
-                    //Validar si es un Usuario o un Administrador
-                    TipoUsuario tipoUsuario = servicioUsuario.tipoDeUsuario(usuario);
-                    if (tipoUsuario == TipoUsuario.Usuario)
-                    {
-                        return RedirectToAction("IndexLogueado");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Administrador");
-                    }
+                    
+                    servicioUsuario.SetearSession(usuario);
+                  
+                    return RedirectToAction("AsignarRuta",usuario);
+
+
+                    /*      bool bandera = true;
+            if (bandera)
+            {
+                Session["Email"] = login.Email;
+
+                string url = Session["url"] as string;
+                if (url != "")
+                {
+                    return Redirect(url);
+
+                }
+                return RedirectToAction("IndexLogueado","Usuario");
+            }
+            /*-----------*/
+
                 }
             }
             catch (Exception ex)
@@ -212,6 +225,25 @@ namespace WebCovid19.Controllers
             return RedirectToAction("IndexLogueado");
         }
 
+        [LoginFilter]
+        public ActionResult AsignarRuta(Usuarios u)
+        {
+            ServicioUsuario servicioUsuario = new ServicioUsuario();
+           
+            //Validar si es un Usuario o un Administrador
+            TipoUsuario tipoUsuario = servicioUsuario.tipoDeUsuario(u);
+            if (tipoUsuario == TipoUsuario.Usuario)
+            {
+                return RedirectToAction("IndexLogueado");
+            }
+            else
+            {
+                return RedirectToAction("Administrador");
+            }
+        }
+
+
+        [LoginFilter]
         public ActionResult Perfil()
         {
             ViewData.Add("mensajeInfo", "Debe completar sus datos para poder Crear Necesidades");
@@ -223,6 +255,7 @@ namespace WebCovid19.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [LoginFilter]
         public ActionResult ActualizarPerfil(VMPerfil perfil)
         {
             //toDo: Uso de session para saber a que perfil pertenece el usuario logueado
@@ -296,6 +329,10 @@ namespace WebCovid19.Controllers
             }
             return View("Login");
         }
+
+
+
+        [LoginFilter]
 
         public ActionResult Administrador()
         {
