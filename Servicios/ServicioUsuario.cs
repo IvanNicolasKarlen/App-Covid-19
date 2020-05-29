@@ -195,6 +195,11 @@ namespace Servicios
             return usuarioObtenido;
         }
 
+        public void SetearSession(Usuarios usuario)
+        {
+            Usuarios user = obtenerUsuarioPorEmail(usuario.Email);
+            HttpContext.Current.Session["UserId"] = user.IdUsuario;
+        }
 
         public int registrarUsuario(Usuarios usuario)
         {

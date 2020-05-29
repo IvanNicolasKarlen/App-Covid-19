@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Entidades.Necesidades>
 @{
     ViewBag.Title = "IndexLogueado";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
@@ -13,5 +13,11 @@
     </div>
 
 </div>
-
-@Html.Partial("PublicacionDeLaNecesidad")
+@if (Model == null)
+{
+    <h1>No hay necesidades cargadas</h1>
+}
+else
+{
+    @Html.Partial("PublicacionDeLaNecesidad", Model)
+}

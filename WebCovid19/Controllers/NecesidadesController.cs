@@ -8,9 +8,12 @@ using System.Web.Mvc;
 using Servicios;
 using WebCovid19.Utilities;
 using Entidades;
+using WebCovid19.Filters;
 
 namespace WebCovid19.Controllers
 {
+
+    [LoginFilter]
     public class NecesidadesController : Controller
     {
         ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
@@ -20,6 +23,7 @@ namespace WebCovid19.Controllers
         {
             return View();
         }
+
 
         public ActionResult Crear()                     /*****CAMBIOS EN LA VISTA, tipada con NECESIDADESMETADATA****/
         {                                               /***ViewModel Necesidad se puede eliminar***/
