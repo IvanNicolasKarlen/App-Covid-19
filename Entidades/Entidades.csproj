@@ -76,7 +76,6 @@
     <Compile Include="Views\VMLogin.cs" />
     <Compile Include="Views\VMNecesidad.cs" />
     <Compile Include="Views\VMPerfil.cs" />
-    <Compile Include="Views\VMPublicacionNecesidad.cs" />
     <Compile Include="Views\VMReenvioDeEmail.cs" />
     <Compile Include="Views\VMRegistro.cs" />
   </ItemGroup>

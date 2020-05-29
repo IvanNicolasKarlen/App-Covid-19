@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Entidades;
 using DAO.Context;
+using System.Security.Cryptography;
+using System.Runtime.CompilerServices;
+
 namespace DAO
 {
     public class NecesidadesDAO
@@ -29,7 +32,7 @@ namespace DAO
             var necesidadesObtenidas = (from c in context.Necesidades
                                         where c.IdUsuarioCreador == idSession
                                         where c.Estado == 1
-                                        where c.FechaFin < DateTime.Now
+                                        where c.FechaFin > DateTime.Now
                                         select c);
 
             foreach (var item in necesidadesObtenidas)
@@ -46,7 +49,7 @@ namespace DAO
             
             var necesidadesObtenidas = (from c in context.Necesidades
                                         where c.IdUsuarioCreador == idSession
-                                        where c.FechaFin < DateTime.Now
+                                        where c.FechaFin > DateTime.Now
                                         select c);
 
             foreach (var item in necesidadesObtenidas)
@@ -56,6 +59,30 @@ namespace DAO
 
 
             return todasLasNecesidadesDelUsuario;
+        }
+
+        public List<Necesidades> listadoNecesidades()
+        {
+            //  List < Necesidades > listadoNecesidades = context.Necesidades.Where(o => o.FechaFin > DateTime.Now)
+
+            /*.Where(o=> o.FechaFin.Hour < DateTime.UtcNow.Hour)
+            .Where(o => o.FechaFin.Minute < DateTime.UtcNow.Minute)
+            .Where(o => o.FechaFin.Second < DateTime.UtcNow.Second)
+            .ToList();*/
+
+            List<Necesidades> listadoNecesidades = new List<Necesidades>();
+
+            var listaObtenida = (from nec in context.Necesidades
+                                // join user in context.Usuarios on nec.IdUsuarioCreador equals user.IdUsuario
+                                 where nec.FechaFin > DateTime.Now
+                                 select nec);
+
+            foreach (var item in listaObtenida)
+            {
+                listadoNecesidades.Add(item);
+            }
+
+            return listadoNecesidades;
         }
     }
 }

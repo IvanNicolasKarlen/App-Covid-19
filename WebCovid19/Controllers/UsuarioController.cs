@@ -19,7 +19,9 @@ namespace WebCovid19.Controllers
 
         public ActionResult IndexLogueado()
         {
-            return View();
+            ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
+            List<Necesidades> todasLasNecesidades = servicioNecesidad.listadoDeNecesidades();
+            return View(todasLasNecesidades);
         }
 
         public ActionResult Salir()
@@ -199,24 +201,6 @@ namespace WebCovid19.Controllers
                     {
                         return RedirectToAction("Administrador");
                     }
-
-
-
-                    /*      bool bandera = true;
-            if (bandera)
-            {
-                Session["Email"] = login.Email;
-
-                string url = Session["url"] as string;
-                if (url != "")
-                {
-                    return Redirect(url);
-
-                }
-                return RedirectToAction("IndexLogueado","Usuario");
-            }
-            /*-----------*/
-
                 }
             }
             catch (Exception ex)
@@ -310,20 +294,13 @@ namespace WebCovid19.Controllers
             {
                 ViewData.Add("mensajeCorrecto", "¡Has activado tu cuenta exitosamente! Logueate asi podés ingresar");
             }
-
             return View("Login");
         }
-
-
 
         public ActionResult Administrador()
         {
             return View();
         }
-
-        
-
-       
 
     }
 }

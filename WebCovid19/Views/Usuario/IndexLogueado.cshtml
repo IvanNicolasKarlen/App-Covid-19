@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Entidades.Necesidades>
 @{
     ViewBag.Title = "IndexLogueado";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
@@ -7,11 +7,12 @@
 
 <div class="container">
     <div class="card espace">
-        <div class="card-body text-center black text-light t-15">
-            Solicitemos ayuda a la gente <button type="button" class="btn btn-primary ml-3">Crear una Necesidad</button>
+        <div class="card-body text-center" id="colour-card">
+            Solicitemos ayuda a la gente <button type="button" class="btn btn-success text-light ml-3">Crear una Necesidad</button>
         </div>
     </div>
 
 </div>
 
-@Html.Partial("PublicacionDeLaNecesidad")
+@Html.Partial("PublicacionDeLaNecesidad", Model)
+

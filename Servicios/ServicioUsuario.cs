@@ -327,10 +327,6 @@ namespace Servicios
             {
                 return TipoUsuario.Administrador;
             }
-
-
         }
-
-       
     }
 }
