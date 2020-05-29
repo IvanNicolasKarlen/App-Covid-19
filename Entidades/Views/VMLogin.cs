@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entidades.ValidationCustom;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Entidades.Views
         [Required(ErrorMessage = " Email es obligatorio")]
         [EmailAddress(ErrorMessage = "Formato de Email erroneo")]
         [StringLength(50, ErrorMessage = "Email demasiado largo")]
+        [ValidarSiExisteEmail]
         public string Email { get; set; }
 
         [Display(Name = "Clave")]

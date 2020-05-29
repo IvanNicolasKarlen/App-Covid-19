@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Entidades.Views
+namespace Entidades.ValidationCustom
 {
-    public class CheckValidDate : ValidationAttribute
+    class CheckValidDate : ValidationAttribute
     {
         public CheckValidDate()
         {
@@ -15,7 +16,7 @@ namespace Entidades.Views
 
         public override bool IsValid(object value)
         {
-            if(value == null)
+            if (value == null)
             {
                 return false;
             }
@@ -23,11 +24,13 @@ namespace Entidades.Views
             DateTime fecha = (DateTime)value;
             DateTime now = DateTime.Now;
             int year = now.Year - fecha.Year;
-            
+
             if (year > 18)
             {
                 return true;
-            }else if(year==18 && fecha.Month<=now.Month && fecha.Day<=now.Day){
+            }
+            else if (year == 18 && fecha.Month <= now.Month && fecha.Day <= now.Day)
+            {
                 return true;
             }
             else
@@ -37,3 +40,4 @@ namespace Entidades.Views
         }
     }
 }
+

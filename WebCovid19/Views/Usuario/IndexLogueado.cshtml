@@ -14,5 +14,13 @@
 
 </div>
 
-@Html.Partial("PublicacionDeLaNecesidad", Model)
+@if (Model == null)
+{
+    <h1> No hay necesidades cargadas </h1>
+}
+else
+{
+    @Html.Partial("PublicacionDeLaNecesidad", Model)
+
+}
 
