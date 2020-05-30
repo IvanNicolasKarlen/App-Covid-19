@@ -37,6 +37,7 @@ namespace WebCovid19
         {
             
             Session["UserId"] = String.Empty;
+            Session["Admin"] = String.Empty;
             Session["action"] = String.Empty;
             Session["controller"] = String.Empty;
 

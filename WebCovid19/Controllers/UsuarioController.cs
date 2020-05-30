@@ -20,6 +20,7 @@ namespace WebCovid19.Controllers
         public ActionResult IndexLogueado()
         {
             ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
+
             ServicioNecesidadValoraciones servNecesidadValoraciones = new ServicioNecesidadValoraciones();
             int idSession = 91; //ToDo: Usar session
             List<Necesidades> todasLasNecesidades = servicioNecesidad.listadoDeNecesidades();
@@ -33,13 +34,13 @@ namespace WebCovid19.Controllers
             // return View(todasLasNecesidades);
             return View(vMPublicacion);
 
+
         }
 
         public ActionResult Salir()
         {
-            Session.Clear();
-            Session.Abandon();
-            Session.RemoveAll();
+            ServicioUsuario servicioUsuario = new ServicioUsuario();
+            servicioUsuario.CerrarSession();
             return RedirectToAction("Index");
         }
 
@@ -203,20 +204,6 @@ namespace WebCovid19.Controllers
                     return RedirectToAction("AsignarRuta",usuario);
 
 
-                    /*      bool bandera = true;
-            if (bandera)
-            {
-                Session["Email"] = login.Email;
-
-                string url = Session["url"] as string;
-                if (url != "")
-                {
-                    return Redirect(url);
-
-                }
-                return RedirectToAction("IndexLogueado","Usuario");
-            }
-            /*-----------*/
 
                 }
             }
@@ -229,7 +216,9 @@ namespace WebCovid19.Controllers
             return RedirectToAction("IndexLogueado");
         }
 
+
         [LoginFilter]
+        [ValidarPeticionFilter]
         public ActionResult AsignarRuta(Usuarios u)
         {
             ServicioUsuario servicioUsuario = new ServicioUsuario();
@@ -242,6 +231,7 @@ namespace WebCovid19.Controllers
             }
             else
             {
+                Session["Admin"] = u.IdUsuario;
                 return RedirectToAction("Administrador");
             }
         }
@@ -334,6 +324,7 @@ namespace WebCovid19.Controllers
             return View("Login");
         }
 
+
         [LoginFilter]
 
         public ActionResult LikeOrDislike(int idNecesidad)
@@ -346,8 +337,7 @@ namespace WebCovid19.Controllers
         }
 
 
-        [LoginFilter]
-
+        [AdminFilter]
         public ActionResult Administrador()
         {
             ServicioDenuncia servicioDenuncia = new ServicioDenuncia();
@@ -355,6 +345,7 @@ namespace WebCovid19.Controllers
 
             return View("Administrador", denunciasObtenidas);
         }
+
 
 
         [HttpPost]
@@ -379,5 +370,15 @@ namespace WebCovid19.Controllers
             return View("Administrador", denunciasObtenidas);
         }
             
+
+        [LoginFilter]
+
+        [ActionName("acerca-de")]
+        public ActionResult AcercaDe()
+        {
+            return View();
+        }
+
+
     }
 }

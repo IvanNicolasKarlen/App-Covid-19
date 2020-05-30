@@ -44,6 +44,13 @@ namespace Servicios
             return usuario;
         }
 
+        public void CerrarSession()
+        {
+            HttpContext.Current.Session.Clear();
+            HttpContext.Current.Session.Abandon();
+            HttpContext.Current.Session.RemoveAll();
+        }
+
         public Usuarios asignoDatosAUsuarioDelLogin(VMLogin login)
         {
             Usuarios usuario = new Usuarios();
@@ -204,6 +211,11 @@ namespace Servicios
 
         public void SetearSession(Usuarios usuario)
         {
+            TipoUsuario tipoUsuario = tipoDeUsuario(usuario);
+            if (tipoUsuario == TipoUsuario.Administrador)
+            {
+                HttpContext.Current.Session["Admin"] = usuario.IdUsuario;
+            }
             Usuarios user = obtenerUsuarioPorEmail(usuario.Email);
             HttpContext.Current.Session["UserId"] = user.IdUsuario;
         }

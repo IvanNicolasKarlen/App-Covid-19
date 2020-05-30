@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAO
 {
-    public class UsuarioDao : ICRUD<Usuarios> //Uso de Generics
+    public class UsuarioDao : ICrud<Usuarios> //Uso de Generics
     {
         TpDBContext context = new TpDBContext();
 

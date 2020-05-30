@@ -257,7 +257,9 @@
     <Compile Include="Controllers\NecesidadDonacionInsumosController.cs" />
     <Compile Include="Controllers\NecesidadesDonacionesMonetariasController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Filters\AdminFilter.cs" />
     <Compile Include="Filters\LoginFilter.cs" />
+    <Compile Include="Filters\ValidarPeticionFilter.cs" />
     <Compile Include="Migrations\C__MigrationHistory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -292,7 +294,7 @@
     <Content Include="Scripts\umd\bootstrap.min.js.map" />
     <Content Include="Views\Usuario\Login.cshtml" />
     <Content Include="Views\Shared\VPFooter.cshtml" />
-    <Content Include="Views\Usuario\Denuncia.cshtml" />
+    <Content Include="Views\Denuncia\Denuncia.cshtml" />
     <Content Include="Views\DonacionMonetaria\DonacionMonetaria.cshtml" />
     <Content Include="Views\Shared\_AnonimoLayout.cshtml" />
     <Content Include="Views\Shared\_BaseLayout.cshtml" />
@@ -313,7 +315,8 @@
     <Content Include="Views\Necesidades\Detalles.cshtml" />
     <Content Include="Views\Usuario\ReenvioDeCodigo.cshtml" />
     <Content Include="Views\Necesidades\MisNecesidades.cshtml" />
-    <Content Include="Views\Shared\PublicacionDeLaNecesidad.cshtml" />
+    <Content Include="Views\Usuario\PublicacionDeLaNecesidad.cshtml" />
+    <Content Include="Views\Usuario\acerca-de.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -332,10 +335,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAO\DAO.csproj">
-      <Project>{99f8eb88-bd40-4f85-b365-d889dc99372d}</Project>
-      <Name>DAO</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entidades\Entidades.csproj">
       <Project>{e1fc45c0-c7f1-41fc-887e-bbbe38321f1f}</Project>
       <Name>Entidades</Name>
