@@ -37,6 +37,13 @@ namespace Servicios
             return usuario;
         }
 
+        public void CerrarSession()
+        {
+            HttpContext.Current.Session.Clear();
+            HttpContext.Current.Session.Abandon();
+            HttpContext.Current.Session.RemoveAll();
+        }
+
         public Usuarios asignoDatosAUsuarioDelLogin(VMLogin login)
         {
             Usuarios usuario = new Usuarios();

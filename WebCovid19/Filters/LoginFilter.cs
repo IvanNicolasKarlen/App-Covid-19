@@ -4,16 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.UI.WebControls;
 
 namespace WebCovid19.Filters
 {
-    public class LoginFilter : ActionFilterAttribute, IActionFilter
+    public class LoginFilter :ActionFilterAttribute, IActionFilter
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
 
-            //HttpContext.Current.Session["action"] = action;
-            //HttpContext.Current.Session["controller"] = controller;
             if (HttpContext.Current.Session["UserId"] as string == String.Empty)
             {
                 string action = filterContext.RouteData.Values["action"].ToString();
@@ -23,6 +22,7 @@ namespace WebCovid19.Filters
                 HttpContext.Current.Session["action"] = action;
                 HttpContext.Current.Session["controller"] = controller;
                 filterContext.Result = new RedirectToRouteResult
+
                     (
                         new RouteValueDictionary
                         {
@@ -32,12 +32,7 @@ namespace WebCovid19.Filters
                         }
                     );
             }
-       
-
-
         }
-
-
 
 
     }
