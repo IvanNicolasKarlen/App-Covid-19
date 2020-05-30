@@ -196,20 +196,6 @@ namespace WebCovid19.Controllers
                     return RedirectToAction("AsignarRuta",usuario);
 
 
-                    /*      bool bandera = true;
-            if (bandera)
-            {
-                Session["Email"] = login.Email;
-
-                string url = Session["url"] as string;
-                if (url != "")
-                {
-                    return Redirect(url);
-
-                }
-                return RedirectToAction("IndexLogueado","Usuario");
-            }
-            /*-----------*/
 
                 }
             }
@@ -237,6 +223,7 @@ namespace WebCovid19.Controllers
             }
             else
             {
+                Session["Admin"] = u.IdUsuario;
                 return RedirectToAction("Administrador");
             }
         }
@@ -330,13 +317,14 @@ namespace WebCovid19.Controllers
             return View("Login");
         }
 
-
+        [AdminFilter]
         [LoginFilter]
         public ActionResult Administrador()
         {
             return View();
         }
 
+        [LoginFilter]
         [ActionName("acerca-de")]
         public ActionResult AcercaDe()
         {

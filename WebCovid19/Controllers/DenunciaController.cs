@@ -9,6 +9,7 @@ using WebCovid19.Filters;
 
 namespace WebCovid19.Controllers
 {
+    [AdminFilter]
     [LoginFilter]
     public class DenunciaController : Controller
     {
