@@ -312,7 +312,7 @@
     <Content Include="Views\Necesidades\Detalles.cshtml" />
     <Content Include="Views\Usuario\ReenvioDeCodigo.cshtml" />
     <Content Include="Views\Necesidades\MisNecesidades.cshtml" />
-    <Content Include="Views\Usuario\PublicacionDeLaNecesidad.cshtml" />
+    <Content Include="Views\Shared\PublicacionDeLaNecesidad.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

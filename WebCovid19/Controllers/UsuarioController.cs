@@ -57,7 +57,7 @@ namespace WebCovid19.Controllers
 
                 //Validar si el email es un email nuevo o si ya fue registrado
                 TipoEmail emailIngresado = servicioUsuario.ValidoEstadoEmail(usuario);
-
+               
                 //Esta condicion es por si se le envie la activacion, elimina el mensaje, y quiere recuperar su activacion.
                 if (emailIngresado == TipoEmail.EmailNuevo)
                 {

@@ -1,9 +1,6 @@
-﻿using Entidades.Views;
-using Entidades;
+﻿using Entidades;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Servicios;
 using WebCovid19.Utilities;

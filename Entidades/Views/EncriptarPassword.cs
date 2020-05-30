@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Entidades
+namespace Entidades.Views
 {
     public class EncriptarPassword
-    {
-        public static string GetSha256(string str)
+    {  public static string GetSha256(string str)
         {
             SHA256 sha256 = SHA256Managed.Create();
             ASCIIEncoding encoding = new ASCIIEncoding();

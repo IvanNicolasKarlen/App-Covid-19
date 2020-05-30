@@ -5,11 +5,5 @@
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
 }
 
-@if (Model == null)
-{
-    <h1> No hay necesidades cargadas </h1>
-}
-else
-{
-    @Html.Partial("~/Views/Usuario/PublicacionDeLaNecesidad.cshtml", Model)
-}
+@Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", Model)
+

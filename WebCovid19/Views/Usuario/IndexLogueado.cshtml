@@ -8,19 +8,10 @@
 <div class="container">
     <div class="card espace">
         <div class="card-body text-center" id="colour-card">
-            Solicitemos ayuda a la gente <button type="button" class="btn btn-success text-light ml-3">Crear una Necesidad</button>
+            Solicitemos ayuda a la gente @Html.ActionLink("Crear una Necesidad", "Crear", "Necesidades", null, new { @class = "btn btn-success text-light ml-3" })
         </div>
     </div>
 
 </div>
 
-@if (Model == null)
-{
-    <h1> No hay necesidades cargadas </h1>
-}
-else
-{
-    @Html.Partial("PublicacionDeLaNecesidad", Model)
-
-}
-
+@Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", Model)
