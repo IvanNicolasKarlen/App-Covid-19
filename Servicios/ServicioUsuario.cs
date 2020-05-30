@@ -15,12 +15,19 @@ namespace Servicios
     public class ServicioUsuario
     {
         UsuarioDao usuarioDao = new UsuarioDao();
+        
+            public Usuarios obtenerUsuarioPorID(int idUsuario)
+            {
+            Usuarios usuarioObtenido = usuarioDao.ObtenerPorID(idUsuario);
+            return usuarioObtenido;
+            }
 
-        public Usuarios obtenerUsuarioPorEmail(string email)
-        {
+            public Usuarios obtenerUsuarioPorEmail(string email)
+            {
             Usuarios usuarioObtenido = usuarioDao.obtenerUsuarioPorEmail(email);
             return usuarioObtenido;
-        }
+            }
+
         public Usuarios asignoDatosAUsuarioDelRegistro(VMRegistro registro)
         {
             Usuarios usuario = new Usuarios()

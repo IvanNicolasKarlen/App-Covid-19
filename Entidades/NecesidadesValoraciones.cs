@@ -14,7 +14,7 @@ namespace Entidades
 
         public int IdNecesidad { get; set; }
 
-        public bool Valoracion { get; set; }
+        public string Valoracion { get; set; }
 
         public virtual Necesidades Necesidades { get; set; }
 

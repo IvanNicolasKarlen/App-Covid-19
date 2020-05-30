@@ -61,6 +61,7 @@ namespace DAO
             return todasLasNecesidadesDelUsuario;
         }
 
+        
         public List<Necesidades> listadoNecesidades()
         {
             //  List < Necesidades > listadoNecesidades = context.Necesidades.Where(o => o.FechaFin > DateTime.Now)
@@ -84,5 +85,25 @@ namespace DAO
 
             return listadoNecesidades;
         }
+
+        public Necesidades Actualizar(Necesidades necesidadObtenida)
+        {
+            {
+                Necesidades necesidadBd = BuscarNecesidad(necesidadObtenida.IdNecesidad);
+
+                necesidadBd.Valoracion = necesidadObtenida.Valoracion;
+                necesidadBd.Descripcion = necesidadObtenida.Descripcion;
+                necesidadBd.Estado = necesidadObtenida.Estado;
+                necesidadBd.Foto = necesidadObtenida.Foto;
+                necesidadBd.Nombre = necesidadObtenida.Nombre;
+                necesidadBd.TelefonoContacto = necesidadObtenida.TelefonoContacto;
+                necesidadBd.NecesidadesValoraciones = necesidadObtenida.NecesidadesValoraciones;
+           
+
+                context.SaveChanges();
+                return necesidadBd;
+            }
+        }
+
     }
 }

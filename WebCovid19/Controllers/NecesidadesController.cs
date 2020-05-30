@@ -4,11 +4,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Servicios;
 using WebCovid19.Utilities;
-
 using Entidades.Metadata;
-
-
-using Entidades;
 using WebCovid19.Filters;
 
 namespace WebCovid19.Controllers

@@ -3,8 +3,6 @@ using Entidades.Views;
 using Servicios;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebCovid19.Filters;
 using WebCovid19.Utilities;
@@ -22,8 +20,19 @@ namespace WebCovid19.Controllers
         public ActionResult IndexLogueado()
         {
             ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
+            ServicioNecesidadValoraciones servNecesidadValoraciones = new ServicioNecesidadValoraciones();
+            int idSession = 91; //ToDo: Usar session
             List<Necesidades> todasLasNecesidades = servicioNecesidad.listadoDeNecesidades();
-            return View(todasLasNecesidades);
+            List<NecesidadesValoraciones> valoracionesObtenidas = servNecesidadValoraciones.obtenerValoracionesDelUsuario(idSession);
+            VMPublicacion vMPublicacion = new VMPublicacion()
+            {
+                listaNecesidades = todasLasNecesidades,
+                necesidadesValoraciones = valoracionesObtenidas
+            };
+
+            // return View(todasLasNecesidades);
+            return View(vMPublicacion);
+
         }
 
         public ActionResult Salir()
@@ -325,14 +334,50 @@ namespace WebCovid19.Controllers
             return View("Login");
         }
 
+        [LoginFilter]
+
+        public ActionResult LikeOrDislike(int idNecesidad)
+        {
+            ServicioNecesidadValoraciones servicioValoraciones = new ServicioNecesidadValoraciones();
+            int idSession = 91; //ToDo usar session
+            string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["DisLike"] != null) ? "Dislike" : null;
+            bool likeOrDislike = servicioValoraciones.guardarValoracion(idSession, idNecesidad, boton);
+            return RedirectToAction("IndexLogueado");
+        }
 
 
         [LoginFilter]
 
         public ActionResult Administrador()
         {
-            return View();
+            ServicioDenuncia servicioDenuncia = new ServicioDenuncia();
+            List<Denuncias> denunciasObtenidas = servicioDenuncia.obtenerDenuncias();
+
+            return View("Administrador", denunciasObtenidas);
         }
 
+
+        [HttpPost]
+        public ActionResult DenunciaEvaluada(int idNecesidad)
+        {
+            ServicioDenuncia servicioDenuncia = new ServicioDenuncia();
+            //Si es Desestimar obtengo un false, si es Bloquear obtengo un true
+            bool estado =  (Request.Form["Desestimar"] != null) ? false : (Request.Form["Bloquear"] != null) ? true : false;
+
+            bool evaluada = servicioDenuncia.necesidadEvaluada(idNecesidad, estado);
+            
+            if(evaluada)
+            {
+                ViewData["mensajeCorrecto"] = "La Denuncia que evaluaste fue guardada con exito";
+            }
+            else
+            {
+                ViewData["mensajeError"] = "Ha ocurrido un error al evaluar la necesidad, volverá a aparecerte en el listado";
+            }
+
+            List<Denuncias> denunciasObtenidas = servicioDenuncia.obtenerDenuncias();
+            return View("Administrador", denunciasObtenidas);
+        }
+            
     }
 }
