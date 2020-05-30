@@ -98,7 +98,7 @@ namespace Servicios
             // Caracteres en UTF - 8 
             email.SubjectEncoding = System.Text.Encoding.UTF8;
             // Cuerpo del mensaje
-            email.Body = " <h1> Bienvenido a nuestro sitio web Ayudar </h1> <p> Para activar tu email: " + usuario.Email + " tenes que usar ingresar al siguiente enlace: <h3><b>  https://localhost:44303/Usuario/ActivarMiCuenta?token=" + usuario.Token + "  </br> <h4> Equipo Ayudar - 2020 </h4> <br>";
+            email.Body = " <h1> Bienvenido a nuestro sitio web Ayudar </h1> <p> Para activar tu email: " + usuario.Email + " tenes que ingresar al siguiente enlace: <h3><b>  https://localhost:44303/Usuario/ActivarMiCuenta?token=" + usuario.Token + "  </br> <h4> Equipo Ayudar - 2020 </h4> <br>";
             // Aca activo que acepte etiquetes html en el mensaje
             email.IsBodyHtml = true;
             // El envio tiene prioridad normal
