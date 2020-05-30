@@ -337,6 +337,12 @@ namespace WebCovid19.Controllers
             return View();
         }
 
+        [ActionName("acerca-de")]
+        public ActionResult AcercaDe()
+        {
+            return View();
+        }
+
         
 
        
