@@ -257,6 +257,7 @@
     <Compile Include="Controllers\NecesidadDonacionInsumosController.cs" />
     <Compile Include="Controllers\NecesidadesDonacionesMonetariasController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Filters\AdminFilter.cs" />
     <Compile Include="Filters\LoginFilter.cs" />
     <Compile Include="Filters\ValidarPeticionFilter.cs" />
     <Compile Include="Migrations\C__MigrationHistory.cs" />

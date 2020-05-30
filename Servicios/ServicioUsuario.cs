@@ -204,6 +204,11 @@ namespace Servicios
 
         public void SetearSession(Usuarios usuario)
         {
+            TipoUsuario tipoUsuario = tipoDeUsuario(usuario);
+            if (tipoUsuario == TipoUsuario.Administrador)
+            {
+                HttpContext.Current.Session["Admin"] = usuario.IdUsuario;
+            }
             Usuarios user = obtenerUsuarioPorEmail(usuario.Email);
             HttpContext.Current.Session["UserId"] = user.IdUsuario;
         }
