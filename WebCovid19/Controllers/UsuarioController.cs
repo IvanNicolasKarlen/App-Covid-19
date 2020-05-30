@@ -22,7 +22,7 @@ namespace WebCovid19.Controllers
         public ActionResult IndexLogueado()
         {
             ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
-            List<Necesidades> todasLasNecesidades = servicioNecesidad.listadoDeNecesidades();
+            List<Necesidades> todasLasNecesidades = servicioNecesidad.ListarTodasLasNecesidades();
             return View(todasLasNecesidades);
         }
 
