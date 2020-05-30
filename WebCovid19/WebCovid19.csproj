@@ -258,6 +258,7 @@
     <Compile Include="Controllers\NecesidadesDonacionesMonetariasController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Filters\LoginFilter.cs" />
+    <Compile Include="Filters\ValidarPeticionFilter.cs" />
     <Compile Include="Migrations\C__MigrationHistory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

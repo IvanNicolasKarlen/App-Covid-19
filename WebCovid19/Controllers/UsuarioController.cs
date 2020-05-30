@@ -28,9 +28,8 @@ namespace WebCovid19.Controllers
 
         public ActionResult Salir()
         {
-            Session.Clear();
-            Session.Abandon();
-            Session.RemoveAll();
+            ServicioUsuario servicioUsuario = new ServicioUsuario();
+            servicioUsuario.CerrarSession();
             return RedirectToAction("Index");
         }
 
@@ -225,7 +224,9 @@ namespace WebCovid19.Controllers
             return RedirectToAction("IndexLogueado");
         }
 
+
         [LoginFilter]
+        [ValidarPeticionFilter]
         public ActionResult AsignarRuta(Usuarios u)
         {
             ServicioUsuario servicioUsuario = new ServicioUsuario();
