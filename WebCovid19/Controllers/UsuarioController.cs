@@ -11,6 +11,7 @@ namespace WebCovid19.Controllers
 {
     public class UsuarioController : Controller
     {
+        ServicioUsuario servicioUsuario = new ServicioUsuario();
         public ActionResult Index()
         {
             return View();
@@ -22,7 +23,7 @@ namespace WebCovid19.Controllers
             ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
 
             ServicioNecesidadValoraciones servNecesidadValoraciones = new ServicioNecesidadValoraciones();
-            int idSession = 3; //ToDo: Usar session
+            int idSession = int.Parse(Session["UserId"].ToString());
             List<Necesidades> todasLasNecesidades = servicioNecesidad.ListarTodasLasNecesidades();
             List<NecesidadesValoraciones> valoracionesObtenidas = servNecesidadValoraciones.obtenerValoracionesDelUsuario(idSession);
             VMPublicacion vMPublicacion = new VMPublicacion()
@@ -39,7 +40,6 @@ namespace WebCovid19.Controllers
 
         public ActionResult Salir()
         {
-            ServicioUsuario servicioUsuario = new ServicioUsuario();
             servicioUsuario.CerrarSession();
             return RedirectToAction("Index");
         }
@@ -63,7 +63,6 @@ namespace WebCovid19.Controllers
                     return View();
                 }
 
-                ServicioUsuario servicioUsuario = new ServicioUsuario();
                 Usuarios usuario = new Usuarios();
 
                 //Asigno datos obtenidos del formulario a usuario
@@ -177,7 +176,6 @@ namespace WebCovid19.Controllers
                     return View();
                 }
 
-                ServicioUsuario servicioUsuario = new ServicioUsuario();
                 Usuarios usuario = new Usuarios();
 
                 //Asigno datos obtenidos del formulario a usuario
@@ -200,22 +198,17 @@ namespace WebCovid19.Controllers
                         return View();
                     }
 
-                    
+                    //seteo de session
                     servicioUsuario.SetearSession(usuario);
-                  
+                  //Lo lleva a la vista a donde queria ir
                     return RedirectToAction("AsignarRuta",usuario);
-
-
-
                 }
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("Error: ", ex.Message);
             }
-
-
-            return RedirectToAction("IndexLogueado");
+            return View();
         }
 
 
@@ -223,7 +216,6 @@ namespace WebCovid19.Controllers
         [ValidarPeticionFilter]
         public ActionResult AsignarRuta(Usuarios u)
         {
-            ServicioUsuario servicioUsuario = new ServicioUsuario();
            
             //Validar si es un Usuario o un Administrador
             TipoUsuario tipoUsuario = servicioUsuario.tipoDeUsuario(u);
@@ -242,11 +234,16 @@ namespace WebCovid19.Controllers
         [LoginFilter]
         public ActionResult Perfil()
         {
-            ViewData.Add("mensajeInfo", "Debe completar sus datos para poder Crear Necesidades");
-
-            //ToDo: obtener usuario logueado y pasarselo aca
-            Usuarios usuarioSession = new Usuarios();
-            return View(usuarioSession);
+            
+            int idSession = int.Parse(Session["UserId"].ToString());
+            Usuarios usuarioSession = servicioUsuario.obtenerUsuarioPorID(idSession);
+            VMPerfil vMPerfil = servicioUsuario.asignoDatosAVMPerfil(usuarioSession);
+            bool validoPerfil = servicioUsuario.validarSiExisteFaltanteDeDatos(vMPerfil);
+            if (!validoPerfil)
+            {
+                ViewData.Add("mensajeInfo", "Debe completar sus datos para poder Crear Necesidades");
+            }
+                return View(vMPerfil);
         }
 
         [HttpPost]
@@ -254,14 +251,12 @@ namespace WebCovid19.Controllers
         [LoginFilter]
         public ActionResult ActualizarPerfil(VMPerfil perfil)
         {
-            //toDo: Uso de session para saber a que perfil pertenece el usuario logueado
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    //ToDo: obtener usuario logueado y pasarselo aca
-                    Usuarios usuarioSession = new Usuarios();
-                    return View("Perfil", usuarioSession);
+                    Usuarios usuarioObtenido = servicioUsuario.obtenerUsuarioLogueado(int.Parse(Session["UserId"].ToString()));
+                    return View("Perfil", usuarioObtenido);
                 }
 
                 if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
@@ -273,13 +268,9 @@ namespace WebCovid19.Controllers
                     string pathRelativoImagen = ImagenesUtil.Guardar(Request.Files[0], nombreSignificativo);
                     perfil.Foto = pathRelativoImagen;
                 }
-
-                ServicioUsuario servicioUsuario = new ServicioUsuario();
-
+                int idSession = int.Parse(Session["UserId"].ToString());
                 //Asigno datos obtenidos del formulario a usuario
-                Usuarios usuarioPerfil = servicioUsuario.asignoDatosAUsuarioDelPerfil(perfil);
-                //ToDo: EMAIL DE PRUEBA 
-                usuarioPerfil.Email = "Ivo@gmail.com";
+                Usuarios usuarioPerfil = servicioUsuario.asignoDatosAUsuarioDelPerfil(perfil, idSession);
 
                 bool actualizado = servicioUsuario.completoDatosDeMiPerfil(usuarioPerfil);
 
@@ -297,9 +288,10 @@ namespace WebCovid19.Controllers
                 ModelState.AddModelError("Error: ", ex.Message);
             }
 
-            //ToDo: obtener usuario logueado y pasarselo aca
-            Usuarios usuarioSessionPerfil = new Usuarios();
-            return View("Perfil", usuarioSessionPerfil);
+            //Pasar a la vista los datos del usuario
+            Usuarios usuario = servicioUsuario.obtenerUsuarioLogueado(int.Parse(Session["UserId"].ToString()));
+            VMPerfil vMPerfil = servicioUsuario.asignoDatosAVMPerfil(usuario);
+            return View("Perfil", vMPerfil);
         }
 
         public ActionResult ActivarMiCuenta(string token)
@@ -310,7 +302,6 @@ namespace WebCovid19.Controllers
             {
                 return View();
             }
-            ServicioUsuario servicioUsuario = new ServicioUsuario();
 
             //Validar que el email coincida con el codigo
             bool estado = servicioUsuario.validacionDelCodigoDeVerificacionJuntoAlEmail(token);
@@ -332,7 +323,7 @@ namespace WebCovid19.Controllers
         public ActionResult LikeOrDislike(int idNecesidad)
         {
             ServicioNecesidadValoraciones servicioValoraciones = new ServicioNecesidadValoraciones();
-            int idSession = 3; //ToDo usar session
+            int idSession = int.Parse(Session["UserId"].ToString());
             string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
             bool likeOrDislike = servicioValoraciones.guardarValoracion(idSession, idNecesidad, boton);
             return RedirectToAction("IndexLogueado");
@@ -344,7 +335,6 @@ namespace WebCovid19.Controllers
         {
             ServicioDenuncia servicioDenuncia = new ServicioDenuncia();
             List<Denuncias> denunciasObtenidas = servicioDenuncia.obtenerDenuncias();
-
             return View("Administrador", denunciasObtenidas);
         }
 
@@ -356,9 +346,7 @@ namespace WebCovid19.Controllers
             ServicioDenuncia servicioDenuncia = new ServicioDenuncia();
             //Si es Desestimar obtengo un false, si es Bloquear obtengo un true
             bool estado =  (Request.Form["Desestimar"] != null) ? false : (Request.Form["Bloquear"] != null) ? true : false;
-
             bool evaluada = servicioDenuncia.necesidadEvaluada(idNecesidad, estado);
-            
             if(evaluada)
             {
                 ViewData["mensajeCorrecto"] = "La Denuncia que evaluaste fue guardada con exito";

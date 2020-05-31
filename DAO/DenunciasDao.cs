@@ -1,5 +1,6 @@
 ﻿using DAO.Context;
 using Entidades;
+using Entidades.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace DAO
 {
-    public class DenunciasDao
+    public class DenunciasDao : Crud<Denuncias> //Uso de Generics
     {
-        TpDBContext context = new TpDBContext();
-
         public List<Denuncias> obtenerDenuncias()
         {
             List<Denuncias> listaObtenida = context.Denuncias.Where(o => o.Estado == 1).ToList();
@@ -24,15 +23,15 @@ namespace DAO
             return denunciaObtenida;
         }
 
-        public Denuncias obtenerDenunciaPorId(int idDenuncia)
+        public override Denuncias ObtenerPorID(int idDenuncia)
         {
             Denuncias denunciaObtenida = context.Denuncias.Find(idDenuncia);
             return denunciaObtenida;
         }
 
-        public Denuncias Actualizar(Denuncias denuncia)
+        public override Denuncias Actualizar(Denuncias denuncia)
         {
-            Denuncias denunciaObtenida = obtenerDenunciaPorId(denuncia.IdDenuncia);
+            Denuncias denunciaObtenida = ObtenerPorID(denuncia.IdDenuncia);
             denunciaObtenida.Estado = denuncia.Estado;
             foreach (var item in denunciaObtenida.Necesidades.Denuncias)
             {
@@ -41,5 +40,11 @@ namespace DAO
             context.SaveChanges();
             return denunciaObtenida;
         }
+
+        public override Denuncias Crear(Denuncias generics)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

@@ -1721,6 +1721,9 @@
     <Content Include="Content\Img\error.png" />
     <Content Include="Content\Img\imagenPerfil-Nula.png" />
     <Content Include="Content\Img\itemProducto.png" />
+    <Content Include="Content\Img\logo.jpg" />
+    <Content Include="Content\Img\logoblanco.jpg" />
+    <Content Include="Content\Img\logoVerde.jpg" />
     <Content Include="Content\Img\necesitamosInsumos.jpg" />
     <Content Include="Content\Img\necesitanDinero.jpg" />
     <Content Include="Content\Img\negritten.jpg" />

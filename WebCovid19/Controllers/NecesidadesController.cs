@@ -94,16 +94,6 @@ namespace WebCovid19.Controllers
         }
         //ToDo: ActionResult Monetaria Post. Y crear el servicio y dao correspondiente
        
-        public ActionResult Detalles()
-        {
-            Session["url"] = Request["url"];
-            if (Session["Email"] as string == "")
-            {
-                return RedirectToAction("Login", "Home");
-            }
-            return View();
-        }
-
 
         [HttpPost]
         public ActionResult MisNecesidades(string necesidad)

@@ -5,14 +5,30 @@ using System.Text;
 using System.Threading.Tasks;
 using DAO.Context;
 using Entidades;
+using Entidades.Abstract;
+
 namespace DAO
 {
-    public class NecesidadesDonacionesInsumosDAO
+    public class NecesidadesDonacionesInsumosDAO : Crud<NecesidadesDonacionesInsumos> //Uso de Generics
     {
-        TpDBContext context = new TpDBContext();
+        public override NecesidadesDonacionesInsumos Actualizar(NecesidadesDonacionesInsumos generics)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override NecesidadesDonacionesInsumos Crear(NecesidadesDonacionesInsumos generics)
+        {
+            throw new NotImplementedException();
+        }
+
         public void GuardarInsumo(NecesidadesDonacionesInsumos insumo)
         {
             context.NecesidadesDonacionesInsumos.Add(insumo);
+        }
+
+        public override NecesidadesDonacionesInsumos ObtenerPorID(int generics)
+        {
+            throw new NotImplementedException();
         }
     }
 }

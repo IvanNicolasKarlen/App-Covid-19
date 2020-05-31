@@ -54,7 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdministradorDao.cs" />
     <Compile Include="Context\TpDBContext.cs" />
     <Compile Include="DenunciasDao.cs" />
     <Compile Include="DonacionMonetariaDao.cs" />

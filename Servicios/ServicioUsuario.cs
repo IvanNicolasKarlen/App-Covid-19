@@ -61,13 +61,25 @@ namespace Servicios
 
 
 
-        public Usuarios asignoDatosAUsuarioDelPerfil(VMPerfil perfil)
+        public Usuarios asignoDatosAUsuarioDelPerfil(VMPerfil perfil, int idSession)
         {
             Usuarios usuario = new Usuarios();
-            usuario.Nombre = perfil.Nombre;
-            usuario.Apellido = perfil.Apellido;
+            if (perfil.Nombre != null)
+            {
+                usuario.Nombre = perfil.Nombre;
+            }
+            if(perfil.Apellido!= null)
+            {
+                usuario.Apellido = perfil.Apellido;
+            }
             usuario.Foto = perfil.Foto;
-            usuario.UserName = perfil.Nombre + "." + perfil.Apellido;
+            if(perfil.Nombre != null & perfil.Apellido!= null)
+            {
+                usuario.UserName = perfil.Nombre + "." + perfil.Apellido;
+            }
+            usuario.Email = perfil.Email;
+            usuario.IdUsuario = idSession;
+
             return usuario;
         }
 
@@ -303,6 +315,7 @@ namespace Servicios
             usuarioObtenido.Nombre = usuarioPerfil.Nombre;
             usuarioObtenido.Apellido = usuarioPerfil.Apellido;
             usuarioObtenido.Foto = usuarioPerfil.Foto;
+            usuarioObtenido.UserName = usuarioPerfil.UserName;
 
             List<Usuarios> listaUsuarios = usuarioDao.listadoUsuariosActivos();
 
@@ -328,7 +341,7 @@ namespace Servicios
         public bool completoDatosDeMiPerfil(Usuarios usuarioPerfil)
         {
             //Obtengo el objeto usuario con los datos anteriores para agregarle los nuevos datos
-            Usuarios usuarioObtenido = obtenerUsuarioPorEmail(usuarioPerfil.Email);
+            Usuarios usuarioObtenido = obtenerUsuarioPorID(usuarioPerfil.IdUsuario);
 
             //Agrego los datos faltantes al usuario obtenido de la bd
             Usuarios usuarioActualizado = asignoDatosFaltantesAUsuarioDePerfil(usuarioPerfil, usuarioObtenido);
@@ -351,6 +364,38 @@ namespace Servicios
             {
                 return TipoUsuario.Administrador;
             }
+        }
+
+
+        public Usuarios obtenerUsuarioLogueado(int idSession)
+        {
+            UsuarioDao usuarioDao = new UsuarioDao();
+            Usuarios usuarioObtenido = usuarioDao.ObtenerPorID(idSession);
+            return usuarioObtenido;
+        }
+
+        public VMPerfil asignoDatosAVMPerfil(Usuarios usuarios)
+        {
+            VMPerfil vMPerfil = new VMPerfil()
+            {
+                Apellido = usuarios.Apellido,
+                Email = usuarios.Email,
+                Foto = usuarios.Foto,
+                Nombre = usuarios.Nombre,
+                Username = usuarios.UserName
+            };
+
+            return vMPerfil;
+        }
+
+        public bool validarSiExisteFaltanteDeDatos(VMPerfil vMPerfil)
+        {
+           if(vMPerfil.Username == null | vMPerfil.Nombre == null | vMPerfil.Foto == null |
+               vMPerfil.Email == null | vMPerfil.Apellido == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

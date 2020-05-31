@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DAO
 {
-    public class UsuarioDao : Crud<Usuarios> //ICrud<Usuarios> //Uso de Generics
+    public class UsuarioDao : Crud<Usuarios> //Uso de Generics
     {
         public Usuarios obtenerUsuarioPorEmail(string email)
         {

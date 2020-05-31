@@ -18,21 +18,6 @@ namespace DAO
 
         public override NecesidadesValoraciones Crear(NecesidadesValoraciones necesidadesValoraciones)
         {
-/*
-            //Obtengo Usuario y Necesidad
-            Usuarios usuarioObtenido = context.Usuarios.Find(idUsuario);
-            Necesidades necesidadObtenida = context.Necesidades.Find(idNecesidad);
-
-
-            //Asigno datos al objeto Necesidad Valoraciones
-            NecesidadesValoraciones necesidadesValoraciones = new NecesidadesValoraciones();
-            necesidadesValoraciones.IdUsuario = usuarioObtenido.IdUsuario;
-            necesidadesValoraciones.IdNecesidad = necesidadObtenida.IdNecesidad;
-            necesidadesValoraciones.Usuarios = usuarioObtenido;
-            necesidadesValoraciones.Necesidades = necesidadObtenida;
-            necesidadesValoraciones.Valoracion = "Undefined";
-            */
-
             NecesidadesValoraciones valoracionGuardada = context.NecesidadesValoraciones.Add(necesidadesValoraciones);
             int resultado = context.SaveChanges();
 
@@ -40,9 +25,7 @@ namespace DAO
             {
                 return null;
             }
-
                 return valoracionGuardada;
-            
         }
 
         public List<NecesidadesValoraciones> obtenerValoracionesDelUsuario(int idSession)
@@ -63,14 +46,6 @@ namespace DAO
             valoracionObtenida.Valoracion = valoracionNueva.Valoracion;
             context.SaveChanges();
             return valoracionObtenida;
-        }
-
-
-
-
-
-
-
-        
+        }  
     }
 }
