@@ -15,19 +15,12 @@ namespace Servicios
     public class ServicioUsuario
     {
         UsuarioDao usuarioDao = new UsuarioDao();
-        
-            public Usuarios obtenerUsuarioPorID(int idUsuario)
-            {
-            Usuarios usuarioObtenido = usuarioDao.ObtenerPorID(idUsuario);
-            return usuarioObtenido;
-            }
 
-            public Usuarios obtenerUsuarioPorEmail(string email)
-            {
+        public Usuarios obtenerUsuarioPorEmail(string email)
+        {
             Usuarios usuarioObtenido = usuarioDao.obtenerUsuarioPorEmail(email);
             return usuarioObtenido;
-            }
-
+        }
         public Usuarios asignoDatosAUsuarioDelRegistro(VMRegistro registro)
         {
             Usuarios usuario = new Usuarios()
@@ -44,13 +37,6 @@ namespace Servicios
             return usuario;
         }
 
-        public void CerrarSession()
-        {
-            HttpContext.Current.Session.Clear();
-            HttpContext.Current.Session.Abandon();
-            HttpContext.Current.Session.RemoveAll();
-        }
-
         public Usuarios asignoDatosAUsuarioDelLogin(VMLogin login)
         {
             Usuarios usuario = new Usuarios();
@@ -61,25 +47,13 @@ namespace Servicios
 
 
 
-        public Usuarios asignoDatosAUsuarioDelPerfil(VMPerfil perfil, int idSession)
+        public Usuarios asignoDatosAUsuarioDelPerfil(VMPerfil perfil)
         {
             Usuarios usuario = new Usuarios();
-            if (perfil.Nombre != null)
-            {
-                usuario.Nombre = perfil.Nombre;
-            }
-            if(perfil.Apellido!= null)
-            {
-                usuario.Apellido = perfil.Apellido;
-            }
+            usuario.Nombre = perfil.Nombre;
+            usuario.Apellido = perfil.Apellido;
             usuario.Foto = perfil.Foto;
-            if(perfil.Nombre != null & perfil.Apellido!= null)
-            {
-                usuario.UserName = perfil.Nombre + "." + perfil.Apellido;
-            }
-            usuario.Email = perfil.Email;
-            usuario.IdUsuario = idSession;
-
+            usuario.UserName = perfil.Nombre + "." + perfil.Apellido;
             return usuario;
         }
 
@@ -124,7 +98,7 @@ namespace Servicios
             // Caracteres en UTF - 8 
             email.SubjectEncoding = System.Text.Encoding.UTF8;
             // Cuerpo del mensaje
-            email.Body = " <h1> Bienvenido a nuestro sitio web Ayudar </h1> <p> Para activar tu email: " + usuario.Email + " tenes que ingresar al siguiente enlace: <h3><b>  https://localhost:44303/Usuario/ActivarMiCuenta?token=" + usuario.Token + "  </br> <h4> Equipo Ayudar - 2020 </h4> <br>";
+            email.Body = " <h1> Bienvenido a nuestro sitio web Ayudar </h1> <p> Para activar tu email: " + usuario.Email + " tenes que usar ingresar al siguiente enlace: <h3><b>  https://localhost:44303/Usuario/ActivarMiCuenta?token=" + usuario.Token + "  </br> <h4> Equipo Ayudar - 2020 </h4> <br>";
             // Aca activo que acepte etiquetes html en el mensaje
             email.IsBodyHtml = true;
             // El envio tiene prioridad normal
@@ -221,16 +195,6 @@ namespace Servicios
             return usuarioObtenido;
         }
 
-        public void SetearSession(Usuarios usuario)
-        {
-            TipoUsuario tipoUsuario = tipoDeUsuario(usuario);
-            if (tipoUsuario == TipoUsuario.Administrador)
-            {
-                HttpContext.Current.Session["Admin"] = usuario.IdUsuario;
-            }
-            Usuarios user = obtenerUsuarioPorEmail(usuario.Email);
-            HttpContext.Current.Session["UserId"] = user.IdUsuario;
-        }
 
         public int registrarUsuario(Usuarios usuario)
         {
@@ -240,7 +204,7 @@ namespace Servicios
             Usuarios usuarioObtenido = ValidarCodigoDeActivacion(usuario);
 
             //Save usuario
-            Usuarios usuarioGuardado = usuarioDao.Crear(usuarioObtenido);/***********************/
+            Usuarios usuarioGuardado = usuarioDao.Guardar(usuarioObtenido);/***********************/
 
             if (usuarioGuardado.IdUsuario >= 0)
             {
@@ -282,16 +246,16 @@ namespace Servicios
             if (usuarioConElToken != null)
             {
                 usuarioConElToken.Activo = true;
-                Usuarios usuarioUpdate = usuarioDao.Actualizar(usuarioConElToken);/***********************/
+                int resultado = usuarioDao.Actualizar(usuarioConElToken);/***********************/
 
-                if (usuarioUpdate == null)
+                if (resultado >= 0)
                 {
-                    return false;
+                    return true;
                 }
 
             }
 
-            return true;
+            return false;
         }
 
         public bool actualizoDatosDelPerfilDelUsuario(Usuarios usuario)
@@ -299,13 +263,13 @@ namespace Servicios
             UsuarioDao usuarioDao = new UsuarioDao();
 
             //int resultado = usuarioDao.actualizarDatosDeUsuario(usuario); /***********************/
-            Usuarios usuarioUpdate = usuarioDao.Actualizar(usuario);
-            if (usuarioUpdate == null)
+            int resultado = usuarioDao.Actualizar(usuario);
+            if (resultado >= 0)
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         public Usuarios asignoDatosFaltantesAUsuarioDePerfil(Usuarios usuarioPerfil, Usuarios usuarioObtenido)
@@ -315,7 +279,6 @@ namespace Servicios
             usuarioObtenido.Nombre = usuarioPerfil.Nombre;
             usuarioObtenido.Apellido = usuarioPerfil.Apellido;
             usuarioObtenido.Foto = usuarioPerfil.Foto;
-            usuarioObtenido.UserName = usuarioPerfil.UserName;
 
             List<Usuarios> listaUsuarios = usuarioDao.listadoUsuariosActivos();
 
@@ -341,7 +304,7 @@ namespace Servicios
         public bool completoDatosDeMiPerfil(Usuarios usuarioPerfil)
         {
             //Obtengo el objeto usuario con los datos anteriores para agregarle los nuevos datos
-            Usuarios usuarioObtenido = obtenerUsuarioPorID(usuarioPerfil.IdUsuario);
+            Usuarios usuarioObtenido = obtenerUsuarioPorEmail(usuarioPerfil.Email);
 
             //Agrego los datos faltantes al usuario obtenido de la bd
             Usuarios usuarioActualizado = asignoDatosFaltantesAUsuarioDePerfil(usuarioPerfil, usuarioObtenido);
@@ -364,38 +327,6 @@ namespace Servicios
             {
                 return TipoUsuario.Administrador;
             }
-        }
-
-
-        public Usuarios obtenerUsuarioLogueado(int idSession)
-        {
-            UsuarioDao usuarioDao = new UsuarioDao();
-            Usuarios usuarioObtenido = usuarioDao.ObtenerPorID(idSession);
-            return usuarioObtenido;
-        }
-
-        public VMPerfil asignoDatosAVMPerfil(Usuarios usuarios)
-        {
-            VMPerfil vMPerfil = new VMPerfil()
-            {
-                Apellido = usuarios.Apellido,
-                Email = usuarios.Email,
-                Foto = usuarios.Foto,
-                Nombre = usuarios.Nombre,
-                Username = usuarios.UserName
-            };
-
-            return vMPerfil;
-        }
-
-        public bool validarSiExisteFaltanteDeDatos(VMPerfil vMPerfil)
-        {
-           if(vMPerfil.Username == null | vMPerfil.Nombre == null | vMPerfil.Foto == null |
-               vMPerfil.Email == null | vMPerfil.Apellido == null)
-            {
-                return false;
-            }
-            return true;
         }
     }
 }

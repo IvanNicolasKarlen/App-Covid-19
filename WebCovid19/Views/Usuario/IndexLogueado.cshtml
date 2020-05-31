@@ -1,4 +1,4 @@
-﻿@model Entidades.Views.VMPublicacion
+﻿@model List<Entidades.Necesidades>
 @{
     ViewBag.Title = "IndexLogueado";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
@@ -8,11 +8,14 @@
 <div class="container">
     <div class="card espace">
         <div class="card-body text-center" id="colour-card">
-            Solicitemos ayuda a la gente @Html.ActionLink("Crear una Necesidad", "Crear", "Necesidades", null, new { @class = "btn btn-success text-light ml-3" })
+            Solicitemos ayuda a la gente <button type="button" class="btn btn-success text-light ml-3">Crear una Necesidad</button>
         </div>
     </div>
 
 </div>
 
+
 @Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", Model)
+
+
 

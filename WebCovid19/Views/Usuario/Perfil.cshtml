@@ -1,4 +1,4 @@
-﻿@model Entidades.Views.VMPerfil
+﻿@model Entidades.Usuarios
 
 @{
     ViewBag.Title = "Perfil";
@@ -47,23 +47,30 @@
                         }
                         else
                         {
-                            <img class="rounded-circle border border-white mx-auto d-block  ml-5 mt-5 mb-2" id="imgperfil" src="~/Content/Img/@Model.Foto" />
+                            <img class="rounded-circle border border-white mx-auto d-block  ml-5 mt-5 mb-2" id="imgperfil" src="@Model.Foto" />
                         }
 
 
                         <div class="col-md-12">
                             <div class="card-body">
-                                @if (Model.Username != null)
+                                @if (Model.UserName != null)
                                 {
-                                    <h3 class="text-center">@Model.Username</h3>
+                                    <h3 class="text-center">@Model.UserName</h3>
                                 }
 
 
                                 <div class="input-group mb-3">
                                     <div class="form-group">
-                                       
+                                        @if (Model.Foto != null)
+                                        {
+                                            @Html.ActionLink("Cambiar foto", "IndexLogueado", "Usuario", null, new { @class = "btn btn-danger" })
+                                        }
+                                        else
+                                        {
                                             @Html.TextBoxFor(model => model.Foto, new { type = "file", accept = "image/jpg, image/jpeg, image/png", @class = "form-control-file" })
-                                     </div>
+                                        }
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -90,9 +97,9 @@
                                     else
                                     {
                                         @Html.EditorFor(o => o.Nombre, new { htmlAttributes = new { @class = "form-control disabled", @disabled = "disabled", value = Model.Nombre } })
-                                        <input type="hidden" name="Nombre" value="@Model.Nombre" />
                                     }
 
+                                    @*Para Disabled @Html.EditorFor(o => o.Nombre, new { htmlAttributes = new { @class = "form-control disabled", @disabled="disabled", placeholder="Nombre" } }) *@
                                     <br /> @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                                 </div>
 
@@ -107,7 +114,6 @@
                                     else
                                     {
                                         @Html.EditorFor(o => o.Apellido, new { htmlAttributes = new { @class = "form-control disabled", @disabled = "disabled", value = Model.Apellido } })
-                                         <input type="hidden" name="Apellido" value="@Model.Apellido" />
                                     }
 
                                     <br /> @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
@@ -118,7 +124,6 @@
                                         <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
                                     </div>
                                     @Html.EditorFor(o => o.Email, new { htmlAttributes = new { @class = "form-control disabled", @disabled = "disabled", placeholder = "Email_Logueado@hotmail.com" } })
-                                    <input type="hidden" name="Email" value="@Model.Email" />
                                 </div>
 
 

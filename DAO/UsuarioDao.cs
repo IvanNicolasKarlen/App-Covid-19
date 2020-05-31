@@ -1,13 +1,18 @@
 ﻿using DAO.Context;
 using Entidades;
-using Entidades.Abstract;
+using Entidades.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DAO
 {
-    public class UsuarioDao : Crud<Usuarios> //Uso de Generics
+    public class UsuarioDao : Icrud<Usuarios> //Uso de Generics
     {
+        TpDBContext context = new TpDBContext();
+
         public Usuarios obtenerUsuarioPorEmail(string email)
         {
             Usuarios usuario = context.Usuarios.Where(k => k.Email == email).FirstOrDefault();
@@ -20,12 +25,12 @@ namespace DAO
             return usuario;
         }
 
-        public override Usuarios Crear(Usuarios usuario)
+        public Usuarios Guardar(Usuarios usuario)
         {
             Usuarios usuarioGuardado = context.Usuarios.Add(usuario);
             int valor = context.SaveChanges();
 
-            if (valor >= 0)
+            if(valor >=0)
             {
                 return usuarioGuardado;
             }
@@ -33,9 +38,9 @@ namespace DAO
             {
                 return null;
             }
-
+            
         }
-        public override Usuarios Actualizar(Usuarios usuarioActualizado)
+        public int Actualizar(Usuarios usuarioActualizado)
         {
             Usuarios usuarioObtenido = obtenerUsuarioPorEmail(usuarioActualizado.Email);
             usuarioObtenido.Activo = usuarioActualizado.Activo;
@@ -50,27 +55,22 @@ namespace DAO
             usuarioObtenido.NecesidadesValoraciones = usuarioActualizado.NecesidadesValoraciones;
 
             int result = context.SaveChanges();
-
-            if(result < 0)
-            {
-                return null;
-            }
-            return usuarioObtenido;
+            return result;
         }
 
-        public override Usuarios ObtenerPorID(int idSession)
+        public Usuarios ObtenerPorID(int idSession)
         {
             Usuarios usuarioObtenido = context.Usuarios.Find(idSession);
             return usuarioObtenido;
         }
 
-
+       
         public List<Usuarios> listadoUsuariosActivos()
         {
             List<Usuarios> listadoUsuarios = context.Usuarios.Where(a => a.Activo == true).ToList();
             return listadoUsuarios;
         }
 
-
+        
     }
 }

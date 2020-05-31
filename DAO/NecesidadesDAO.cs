@@ -7,50 +7,73 @@ using Entidades;
 using DAO.Context;
 using System.Security.Cryptography;
 using System.Runtime.CompilerServices;
-using Entidades.Abstract;
 
 namespace DAO
 {
-    public class NecesidadesDAO : Crud<Necesidades>
+    public class NecesidadesDAO
     {
-        public override Necesidades ObtenerPorID(int idNecesidad)
+        TpDBContext context = new TpDBContext();
+
+        public Necesidades BuscarNecesidad(int idNecesidad)
         {
             Necesidades necesidad = context.Necesidades.Find(idNecesidad);
             return necesidad;
         }
-        public override Necesidades Crear(Necesidades necesidadAGuardar)
+        public Necesidades CrearNecesidades(Necesidades necesidadAGuardar)
         {
             Necesidades necesidades = context.Necesidades.Add(necesidadAGuardar);
             context.SaveChanges();
             return necesidades;
         }
 
-        public List<Necesidades> TraerNecesidadesActivasDelUsuario(int idSession)
+        public List<Necesidades> necesidadesActivas(int idSession)
         {
-            List<Necesidades> necesidadesActivas = (from c in context.Necesidades
-                                                    where c.IdUsuarioCreador == idSession
-                                                    where c.Estado == 1
-                                                    where c.FechaFin > DateTime.Now
-                                                    select c).ToList();
+            List<Necesidades> necesidadesActivas = new List<Necesidades>();
+            var necesidadesObtenidas = (from c in context.Necesidades
+                                        where c.IdUsuarioCreador == idSession
+                                        where c.Estado == 1
+                                        where c.FechaFin > DateTime.Now
+                                        select c);
+
+            foreach (var item in necesidadesObtenidas)
+            {
+                necesidadesActivas.Add(item);
+            }
+
             return necesidadesActivas;
         }
 
-        public List<Necesidades> TraerTodasLasNecesidadesDelUsuario(int idSession)
+        public List<Necesidades> necesidadesDelUsuario(int idSession)
         {
-            List<Necesidades> todasLasNecesidadesDelUsuario = (from c in context.Necesidades
+            List<Necesidades> todasLasNecesidadesDelUsuario = new List<Necesidades>();
+            
+            var necesidadesObtenidas = (from c in context.Necesidades
                                         where c.IdUsuarioCreador == idSession
                                         where c.FechaFin > DateTime.Now
-                                        select c).ToList();
+                                        select c);
+
+            foreach (var item in necesidadesObtenidas)
+            {
+                todasLasNecesidadesDelUsuario.Add(item);
+            }
+
 
             return todasLasNecesidadesDelUsuario;
         }
 
-
-        public List<Necesidades> ListarTodasLasNecesidades()
+        public List<Necesidades> listadoNecesidades()
         {
+            //  List < Necesidades > listadoNecesidades = context.Necesidades.Where(o => o.FechaFin > DateTime.Now)
+
+            /*.Where(o=> o.FechaFin.Hour < DateTime.UtcNow.Hour)
+            .Where(o => o.FechaFin.Minute < DateTime.UtcNow.Minute)
+            .Where(o => o.FechaFin.Second < DateTime.UtcNow.Second)
+            .ToList();*/
+
             List<Necesidades> listadoNecesidades = new List<Necesidades>();
 
             var listaObtenida = (from nec in context.Necesidades
+                                // join user in context.Usuarios on nec.IdUsuarioCreador equals user.IdUsuario
                                  where nec.FechaFin > DateTime.Now
                                  select nec);
 
@@ -61,27 +84,5 @@ namespace DAO
 
             return listadoNecesidades;
         }
-
-        public override Necesidades Actualizar(Necesidades necesidadObtenida)
-        {
-            {
-                Necesidades necesidadBd = ObtenerPorID(necesidadObtenida.IdNecesidad);
-
-                necesidadBd.Valoracion = necesidadObtenida.Valoracion;
-                necesidadBd.Descripcion = necesidadObtenida.Descripcion;
-                necesidadBd.Estado = necesidadObtenida.Estado;
-                necesidadBd.Foto = necesidadObtenida.Foto;
-                necesidadBd.Nombre = necesidadObtenida.Nombre;
-                necesidadBd.TelefonoContacto = necesidadObtenida.TelefonoContacto;
-                necesidadBd.NecesidadesValoraciones = necesidadObtenida.NecesidadesValoraciones;
-           
-
-                context.SaveChanges();
-                return necesidadBd;
-            }
-        }
-
-        
-
     }
 }

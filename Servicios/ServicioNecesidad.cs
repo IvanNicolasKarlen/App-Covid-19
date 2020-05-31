@@ -14,50 +14,55 @@ namespace Servicios
         NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
         public Necesidades obtenerNecesidadPorId(int id)
         {
-            return necesidadesDAO.ObtenerPorID(id);
+            return necesidadesDAO.BuscarNecesidad(id);
         }
 
-        public Necesidades buildNecesidad(NecesidadesMetadata necesidadmd, int idUser)
+        //public Necesidades buildNecesidad(VMNecesidad vmnecesidad, int idUser)
+        public Necesidades buildNecesidad(NecesidadesMetadata vmnecesidad, int idUser)
         
         {
             Necesidades necesidades = new Necesidades()
             {
-                Nombre = necesidadmd.Nombre,
-                Descripcion = necesidadmd.Descripcion,
-                TelefonoContacto = necesidadmd.TelefonoContacto,
+                Nombre = vmnecesidad.Nombre,
+                Descripcion = vmnecesidad.Descripcion,
+                TelefonoContacto = vmnecesidad.TelefonoContacto,
                 FechaCreacion = DateTime.Now,
-                FechaFin = necesidadmd.FechaFin,
-                Foto = necesidadmd.Foto,
-                TipoDonacion = (necesidadmd.TipoDonacion == TipoDonacion.Monetaria) ? 1 : 2,
+                FechaFin = vmnecesidad.FechaFin,
+                Foto = vmnecesidad.Foto,
+                TipoDonacion = (vmnecesidad.TipoDonacion == TipoDonacion.Monetaria) ? 1 : 2,
                 IdUsuarioCreador = idUser,
                 Estado = 0,
                 Valoracion = null
             };
 
-            return necesidadesDAO.Crear(necesidades);
+            return necesidadesDAO.CrearNecesidades(necesidades);
         }
-        /// <summary>
-        /// Trae todas las necesidades del usuario en base al estado de las mismas
-        /// </summary>
-        /// <param name="idSession"></param>
-        /// <param name="estadoNecesidad"></param>
-        /// <returns></returns>
-        public List<Necesidades> TraerNecesidadesDelUsuario(int idSession, string estadoNecesidad)
+
+
+
+        public List<Necesidades> necesidadesDelUsuario(int idSession, string necesidad)
         {
-            if (estadoNecesidad == "on")
+            if (necesidad == "on")
             {
-                return necesidadesDAO.TraerNecesidadesActivasDelUsuario(idSession);
+                // Aquellas que fueron creadas por él y
+                //aún no están finalizadas pudiendo recibir donaciones
+                List<Necesidades> necesidadesActivas = necesidadesDAO.necesidadesActivas(idSession);
+                return necesidadesActivas;
             }
             else
             {
-                return necesidadesDAO.TraerTodasLasNecesidadesDelUsuario(idSession);
+                //En caso de que se destilde, se visualizarán
+                //todas las del usuario sin importar si están o no finalizadas.
+                List<Necesidades> todasLasNecesidadesDelUsuario = necesidadesDAO.necesidadesDelUsuario(idSession);
+                return todasLasNecesidadesDelUsuario;
             }
 
         }
 
-        public List<Necesidades> ListarTodasLasNecesidades()
-        {
-            return necesidadesDAO.ListarTodasLasNecesidades();
+            public List<Necesidades> listadoDeNecesidades()
+            {
+                List<Necesidades> listadoNecesidades = necesidadesDAO.listadoNecesidades();
+                return listadoNecesidades;
+            }
         }
-    }
 }

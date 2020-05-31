@@ -1,9 +1,10 @@
-﻿@model Entidades.Views.VMPublicacion
+﻿@model List<Entidades.Necesidades>
 
 @{
     ViewBag.Title = "MisNecesidades";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
 }
+
 
 @Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", Model)
 
