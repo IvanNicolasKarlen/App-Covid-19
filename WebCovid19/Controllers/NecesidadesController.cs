@@ -6,7 +6,7 @@ using Servicios;
 using WebCovid19.Utilities;
 using Entidades.Metadata;
 using WebCovid19.Filters;
-
+using Entidades.Views;
 
 namespace WebCovid19.Controllers
 {
@@ -110,9 +110,17 @@ namespace WebCovid19.Controllers
         {
             int idSession = int.Parse(Session["UserId"].ToString());
             List<Necesidades> necesidadesObtenidas = servicioNecesidad.TraerNecesidadesDelUsuario(idSession, necesidad);
+            ServicioNecesidadValoraciones servNecesidadValoraciones = new ServicioNecesidadValoraciones();
             //Mantener el checkbox seleccionado o no, dependiendo lo que haya elegido
             TempData["estadoCheckbox"] = necesidad;
-            return View(necesidadesObtenidas);
+            List<NecesidadesValoraciones> valoracionesObtenidas = servNecesidadValoraciones.obtenerValoracionesDelUsuario(idSession);
+            VMPublicacion vMPublicacion = new VMPublicacion()
+            {
+                listaNecesidades = necesidadesObtenidas,
+                necesidadesValoraciones = valoracionesObtenidas
+            };
+
+            return View(vMPublicacion);
         }
 
     }

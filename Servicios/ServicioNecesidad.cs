@@ -14,7 +14,7 @@ namespace Servicios
         NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
         public Necesidades obtenerNecesidadPorId(int id)
         {
-            return necesidadesDAO.BuscarNecesidad(id);
+            return necesidadesDAO.ObtenerPorID(id);
         }
 
         public Necesidades buildNecesidad(NecesidadesMetadata necesidadmd, int idUser)
@@ -34,7 +34,7 @@ namespace Servicios
                 Valoracion = null
             };
 
-            return necesidadesDAO.CrearNecesidades(necesidades);
+            return necesidadesDAO.Crear(necesidades);
         }
         /// <summary>
         /// Trae todas las necesidades del usuario en base al estado de las mismas
@@ -42,7 +42,7 @@ namespace Servicios
         /// <param name="idSession"></param>
         /// <param name="estadoNecesidad"></param>
         /// <returns></returns>
-        public List<Necesidades> TraerNecesidadesDelUsuario(int idSession, string estadoNecesidad=null)
+        public List<Necesidades> TraerNecesidadesDelUsuario(int idSession, string estadoNecesidad)
         {
             if (estadoNecesidad == "on")
             {

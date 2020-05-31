@@ -7,19 +7,18 @@ using Entidades;
 using DAO.Context;
 using System.Security.Cryptography;
 using System.Runtime.CompilerServices;
+using Entidades.Abstract;
 
 namespace DAO
 {
-    public class NecesidadesDAO
+    public class NecesidadesDAO : Crud<Necesidades>
     {
-        TpDBContext context = new TpDBContext();
-
-        public Necesidades BuscarNecesidad(int idNecesidad)
+        public override Necesidades ObtenerPorID(int idNecesidad)
         {
             Necesidades necesidad = context.Necesidades.Find(idNecesidad);
             return necesidad;
         }
-        public Necesidades CrearNecesidades(Necesidades necesidadAGuardar)
+        public override Necesidades Crear(Necesidades necesidadAGuardar)
         {
             Necesidades necesidades = context.Necesidades.Add(necesidadAGuardar);
             context.SaveChanges();
@@ -63,10 +62,10 @@ namespace DAO
             return listadoNecesidades;
         }
 
-        public Necesidades Actualizar(Necesidades necesidadObtenida)
+        public override Necesidades Actualizar(Necesidades necesidadObtenida)
         {
             {
-                Necesidades necesidadBd = BuscarNecesidad(necesidadObtenida.IdNecesidad);
+                Necesidades necesidadBd = ObtenerPorID(necesidadObtenida.IdNecesidad);
 
                 necesidadBd.Valoracion = necesidadObtenida.Valoracion;
                 necesidadBd.Descripcion = necesidadObtenida.Descripcion;
@@ -81,6 +80,8 @@ namespace DAO
                 return necesidadBd;
             }
         }
+
+        
 
     }
 }

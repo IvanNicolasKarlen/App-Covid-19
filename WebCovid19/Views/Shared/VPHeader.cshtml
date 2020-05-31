@@ -39,7 +39,7 @@
                 </form>
             </div>
 
-            <div class="col-md-4 ml-5">
+            <div class="col-md-4 ml-1">
                 <ul class="navbar-nav ">
                     <li class="nav-item active my-sm-2">
                         <!-- <a class="nav-link hover text-light" href="#">Inicio</a-->
@@ -55,7 +55,8 @@
 
                         <!--  <a class="nav-link hover text-light" href="#">Crear Necesidad</a>-->
                         @Html.ActionLink("Crear Necesidad", "Crear", "Necesidades", null, new { @class = "nav-link hover text-light" })
-
+                    </li>
+                    <li class="nav-item active my-sm-2">
                         <!-- <a class="nav-link hover text-light" href="#">Acerca de</a>-->
                         @Html.ActionLink("Acerca de", "acerca-de", "Usuario", null, new { @class = "nav-link hover text-light" })
 
@@ -67,7 +68,7 @@
                             <i class="fa fa-user-circle" aria-hidden="true"></i>
                         </button>
 
-                        <ul class="dropdown-menu" role="menu" id="colour">
+                        <ul class="dropdown-menu " role="menu" id="colour">
                             <li>
                                 <a href="" class="text-light">
                                     <svg class="bi bi-person-lines-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

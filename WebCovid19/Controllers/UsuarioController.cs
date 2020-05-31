@@ -22,8 +22,8 @@ namespace WebCovid19.Controllers
             ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
 
             ServicioNecesidadValoraciones servNecesidadValoraciones = new ServicioNecesidadValoraciones();
-            int idSession = 91; //ToDo: Usar session
-            List<Necesidades> todasLasNecesidades = servicioNecesidad.listadoDeNecesidades();
+            int idSession = 3; //ToDo: Usar session
+            List<Necesidades> todasLasNecesidades = servicioNecesidad.ListarTodasLasNecesidades();
             List<NecesidadesValoraciones> valoracionesObtenidas = servNecesidadValoraciones.obtenerValoracionesDelUsuario(idSession);
             VMPublicacion vMPublicacion = new VMPublicacion()
             {
@@ -48,6 +48,8 @@ namespace WebCovid19.Controllers
         {
             VMRegistro registro = new VMRegistro();
             return View(registro);
+
+
         }
 
         [HttpPost]
@@ -330,8 +332,8 @@ namespace WebCovid19.Controllers
         public ActionResult LikeOrDislike(int idNecesidad)
         {
             ServicioNecesidadValoraciones servicioValoraciones = new ServicioNecesidadValoraciones();
-            int idSession = 91; //ToDo usar session
-            string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["DisLike"] != null) ? "Dislike" : null;
+            int idSession = 3; //ToDo usar session
+            string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
             bool likeOrDislike = servicioValoraciones.guardarValoracion(idSession, idNecesidad, boton);
             return RedirectToAction("IndexLogueado");
         }

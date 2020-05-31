@@ -1,32 +1,48 @@
 ﻿using DAO.Context;
 using Entidades;
-using System;
+using Entidades.Abstract;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAO
 {
-    public class NecesidadValoracionesDao
+    public class NecesidadValoracionesDao : Crud<NecesidadesValoraciones>
     {
-        TpDBContext context = new TpDBContext();
+   
 
-        public NecesidadesValoraciones obtenerValoracionPorID(int idValoracion)
+        public override NecesidadesValoraciones ObtenerPorID(int idValoracion)
         {
             NecesidadesValoraciones valoracionObtenida = context.NecesidadesValoraciones.Find(idValoracion);
             return valoracionObtenida;
         }
 
-        public NecesidadesValoraciones Guardar(NecesidadesValoraciones valoracion)
+        public override NecesidadesValoraciones Crear(NecesidadesValoraciones necesidadesValoraciones)
         {
-        NecesidadesValoraciones valoracionGuardada = context.NecesidadesValoraciones.Add(valoracion);
-        int resultado = context.SaveChanges();
-            if(resultado < 0)
+/*
+            //Obtengo Usuario y Necesidad
+            Usuarios usuarioObtenido = context.Usuarios.Find(idUsuario);
+            Necesidades necesidadObtenida = context.Necesidades.Find(idNecesidad);
+
+
+            //Asigno datos al objeto Necesidad Valoraciones
+            NecesidadesValoraciones necesidadesValoraciones = new NecesidadesValoraciones();
+            necesidadesValoraciones.IdUsuario = usuarioObtenido.IdUsuario;
+            necesidadesValoraciones.IdNecesidad = necesidadObtenida.IdNecesidad;
+            necesidadesValoraciones.Usuarios = usuarioObtenido;
+            necesidadesValoraciones.Necesidades = necesidadObtenida;
+            necesidadesValoraciones.Valoracion = "Undefined";
+            */
+
+            NecesidadesValoraciones valoracionGuardada = context.NecesidadesValoraciones.Add(necesidadesValoraciones);
+            int resultado = context.SaveChanges();
+
+            if (resultado < 0)
             {
                 return null;
             }
-        return valoracionGuardada;
+
+                return valoracionGuardada;
+            
         }
 
         public List<NecesidadesValoraciones> obtenerValoracionesDelUsuario(int idSession)
@@ -41,12 +57,20 @@ namespace DAO
             return valoracionObtenida;
         }
 
-        public NecesidadesValoraciones Actualizar(NecesidadesValoraciones valoracionNueva)
+        public override NecesidadesValoraciones Actualizar(NecesidadesValoraciones valoracionNueva)
         {
-            NecesidadesValoraciones valoracionObtenida = obtenerValoracionPorID(valoracionNueva.IdValoracion);
+            NecesidadesValoraciones valoracionObtenida = ObtenerPorID(valoracionNueva.IdValoracion);
             valoracionObtenida.Valoracion = valoracionNueva.Valoracion;
             context.SaveChanges();
             return valoracionObtenida;
         }
+
+
+
+
+
+
+
+        
     }
 }

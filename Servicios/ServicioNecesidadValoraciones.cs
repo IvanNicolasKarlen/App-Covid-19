@@ -12,95 +12,97 @@ namespace Servicios
     {
         public bool guardarValoracion(int idUsuario, int idNecesidad, string botonRecibido)
         {
-            ServicioUsuario servicioUsuario = new ServicioUsuario();
-            ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
-
+            UsuarioDao usuarioDao = new UsuarioDao();
+            NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
             NecesidadValoracionesDao necesidadValoracionesDao = new NecesidadValoracionesDao();
+            NecesidadesValoraciones valoracionObtenidaBD = new NecesidadesValoraciones();
 
-            Usuarios usuarioObtenido = servicioUsuario.obtenerUsuarioPorID(idUsuario);
-            Necesidades necesidadObtenida = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
+            //Obtengo Usuario y Necesidad
+            Usuarios usuarioObtenido = usuarioDao.ObtenerPorID(idUsuario);
+            Necesidades necesidadObtenida = necesidadesDAO.ObtenerPorID(idNecesidad);
 
             //Valido si es que antes le dio Like or Dislike
-           NecesidadesValoraciones necesidadRegistrada = necesidadValoracionesDao.obtenerNecesidadValoracionPor_IDUsuario_e_IdNecesidad(idUsuario, idNecesidad);
+               NecesidadesValoraciones necesidadRegistrada = necesidadValoracionesDao.obtenerNecesidadValoracionPor_IDUsuario_e_IdNecesidad(idUsuario, idNecesidad);
 
-        if (necesidadRegistrada != null)
-         { 
-            if (botonRecibido == "Like")
-            {
-                    if (necesidadRegistrada.IdNecesidad == idNecesidad)
+             if (necesidadRegistrada != null)
+              { 
+                 if (botonRecibido == "Like")
+                 {
+                         if (necesidadRegistrada.IdNecesidad == idNecesidad)
+                         {
+                             if(necesidadRegistrada.Valoracion== "Like") //Si el estado en la BD tenia su MG, se lo remueve para que no quede el boton seleccionado
+                             {
+                                 necesidadRegistrada.Valoracion = "Undefined";
+                                 valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
+
+                                 if(valoracionObtenidaBD == null)
+                                 {
+                                     return false;
+                                 }
+                             }else if (necesidadRegistrada.Valoracion != "Like") //Si el estado en la BD tenia su MG removido, se lo vuelve a poner en MG, para que quede el boton seleccionado
+                             {
+                                 necesidadRegistrada.Valoracion = "Like";
+                                 valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
+
+                                 if (valoracionObtenidaBD == null)
+                                 {
+                                     return false;
+                                 }
+                             }
+
+                         }
+
+                 }else if (botonRecibido == "Dislike")
+                 {
+
+                         if (necesidadRegistrada.IdNecesidad == idNecesidad)
+                         {
+                             if (necesidadRegistrada.Valoracion == "Dislike") //Si el estado en la BD tenia su Dislike, se lo remueve para que no quede el boton seleccionado
+                             {
+                                 necesidadRegistrada.Valoracion = "Undefined";
+                                 valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
+
+                                 if (valoracionObtenidaBD == null)
+                                 {
+                                     return false;
+                                 }
+                             }
+                             else if (necesidadRegistrada.Valoracion != "Dislike") //Si el estado en la BD tenia su MG removido, se lo vuelve a poner en MG, para que quede el boton seleccionado
+                             {
+                                 necesidadRegistrada.Valoracion = "Dislike";
+                                 valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
+
+                                 if (valoracionObtenidaBD == null)
+                                 {
+                                     return false;
+                                 }
+                             }
+                         }
+
+                 }
+                 }
+                 else //Es decir, nunca le habia dado MG a esa publicacion
+                 {
+
+                    //Asigno datos al objeto Necesidad Valoraciones
+                    NecesidadesValoraciones necesidadesValoraciones = new NecesidadesValoraciones();
+                    necesidadesValoraciones.IdUsuario = usuarioObtenido.IdUsuario;
+                    necesidadesValoraciones.IdNecesidad = necesidadObtenida.IdNecesidad;
+                    necesidadesValoraciones.Usuarios = usuarioObtenido;
+                    necesidadesValoraciones.Necesidades = necesidadObtenida;
+                    necesidadesValoraciones.Valoracion = "Undefined";
+
+                    NecesidadesValoraciones valoracionObtenida = necesidadValoracionesDao.Crear(necesidadesValoraciones);
+
+                    if (valoracionObtenida == null)
                     {
-                        if(necesidadRegistrada.Valoracion== "Like") //Si el estado en la BD tenia su MG, se lo remueve para que no quede el boton seleccionado
-                        {
-                            necesidadRegistrada.Valoracion = null;
-                            NecesidadesValoraciones valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
-
-                            if(valoracionObtenidaBD == null)
-                            {
-                                return false;
-                            }
-                        }else if (necesidadRegistrada.Valoracion == null) //Si el estado en la BD tenia su MG removido, se lo vuelve a poner en MG, para que quede el boton seleccionado
-                        {
-                            necesidadRegistrada.Valoracion = "Like";
-                            NecesidadesValoraciones valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
-
-                            if (valoracionObtenidaBD == null)
-                            {
-                                return false;
-                            }
-                        }
-                        
+                        return false;
                     }
-
-            }else if (botonRecibido == "DisLike")
-            {
-                
-                    if (necesidadRegistrada.IdNecesidad == idNecesidad)
-                    {
-                        if (necesidadRegistrada.Valoracion == "Dislike") //Si el estado en la BD tenia su Dislike, se lo remueve para que no quede el boton seleccionado
-                        {
-                            necesidadRegistrada.Valoracion = null;
-                            NecesidadesValoraciones valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
-
-                            if (valoracionObtenidaBD == null)
-                            {
-                                return false;
-                            }
-                        }
-                        else if (necesidadRegistrada.Valoracion == null) //Si el estado en la BD tenia su MG removido, se lo vuelve a poner en MG, para que quede el boton seleccionado
-                        {
-                            necesidadRegistrada.Valoracion = "Dislike";
-                            NecesidadesValoraciones valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
-
-                            if (valoracionObtenidaBD == null)
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                
-            }
-            }
-            else //Es decir, nunca le habia dado MG a esa publicacion
-            {
-
-                //Asigno datos al objeto Necesidad Valoraciones
-                NecesidadesValoraciones necesidadesValoraciones = new NecesidadesValoraciones();
-                necesidadesValoraciones.IdUsuario = usuarioObtenido.IdUsuario;
-                necesidadesValoraciones.IdNecesidad = necesidadObtenida.IdNecesidad;
-                necesidadesValoraciones.Usuarios = usuarioObtenido;
-                necesidadesValoraciones.Necesidades = necesidadObtenida;
-            
-                NecesidadesValoraciones valoracionObtenida = necesidadValoracionesDao.Guardar(necesidadesValoraciones);
-
-                if(valoracionObtenida == null)
-                {
-                    return false;
-                }
-
-            }
-
+                 }
+           
             return true;
         }
+
 
         public List<NecesidadesValoraciones> obtenerValoracionesDelUsuario(int idSession)
         {

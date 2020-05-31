@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\Crud.cs" />
     <Compile Include="Metadata\Necesidades.cs" />
     <Compile Include="Metadata\NecesidadesMetadata.cs" />
     <Compile Include="TipoDonacion.cs" />
@@ -73,13 +74,12 @@
     <Compile Include="Usuarios.cs" />
     <Compile Include="ValidationCustom\CheckValidDate.cs" />
     <Compile Include="ValidationCustom\ValidarSiExisteEmail.cs" />
-    <Compile Include="Interface\ICRUD.cs" />
     <Compile Include="Views\EncriptarPassword.cs" />
     <Compile Include="Views\VMDatosDeVerificacionDeUsuario.cs" />
     <Compile Include="Views\VMDonacionMonetaria.cs" />
     <Compile Include="Views\VMLogin.cs" />
-    <Compile Include="Views\VMNecesidad.cs" />
     <Compile Include="Views\VMPerfil.cs" />
+    <Compile Include="Views\VMPublicacion.cs" />
     <Compile Include="Views\VMReenvioDeEmail.cs" />
     <Compile Include="Views\VMRegistro.cs" />
   </ItemGroup>
@@ -87,7 +87,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
