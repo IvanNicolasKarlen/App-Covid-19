@@ -17,13 +17,6 @@ namespace DAO
             throw new NotImplementedException();
         }
 
-        public void agregarFotoComprobante(VMDonacionMonetaria foto)
-        {
-            //ToDo: Verificar conexion a la bd, xq esto devuelve null
-            context.SaveChanges();
-
-        }
-
         public override DonacionesMonetarias Crear(DonacionesMonetarias generics)
         {
             throw new NotImplementedException();
@@ -32,6 +25,21 @@ namespace DAO
         public override DonacionesMonetarias ObtenerPorID(int generics)
         {
             throw new NotImplementedException();
+        }
+
+        public List<DonacionesMonetarias> ObtenerPorId(int IdDonacionMonetaria)
+        {
+            List<DonacionesMonetarias> listarCantidadNecesariaADonar =
+            context.DonacionesMonetarias.Where(a => a.IdDonacionMonetaria == IdDonacionMonetaria).ToList();
+
+            return listarCantidadNecesariaADonar;
+        }
+
+        public NecesidadesDonacionesMonetarias CantidadSolicitada(int IdNecesidadDonacionMonetaria)
+        {
+            NecesidadesDonacionesMonetarias traerDineroPorId = 
+            context.NecesidadesDonacionesMonetarias.Find(IdNecesidadDonacionMonetaria);
+            return traerDineroPorId;
         }
     }
 }
