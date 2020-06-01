@@ -1,13 +1,19 @@
-﻿@model List<Entidades.Necesidades>
+﻿@model Entidades.Views.VMPublicacion
 
-@if (Model == null)
+@{ 
+    int idSession = 3;
+}
+
+
+@if (Model.listaNecesidades.Count == 0)
 {
     <h1 id="margin-top-header"> No hay necesidades cargadas</h1>
 }
 else
 {
 
-foreach (var necesidad in Model)
+
+foreach (var necesidad in Model.listaNecesidades)
 {
     <div class="container" id="margin-top-header">
         <div class="card" id="card">
@@ -29,7 +35,15 @@ foreach (var necesidad in Model)
                 </div>
 
                 <div class="row">
-                    <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="~/Content/Img/@necesidad.Usuarios.Foto">
+                    @if (@necesidad.Usuarios.Foto == null)
+                    {
+                        <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="~/Content/Img/imagenPerfil-Nula.png">
+                    }
+                    else
+                    {
+                        <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="~/Content/Img/@necesidad.Usuarios.Foto">
+                    }
+
                     <div class="col-md-2">
                         <p class=" text-secondary mt-3"><b>@necesidad.Usuarios.UserName</b></p>
                         <p><span class="fa fa-calendar"></span> @necesidad.Usuarios.FechaCracion</p>
@@ -37,20 +51,54 @@ foreach (var necesidad in Model)
                 </div>
 
             </div>
-            @if (necesidad.Foto.Equals(null))
-            {
-                <img class="card-img-top" src="~/Content/Img/imagenPerfil-Nula.png" id="imagen-necesidad" alt="Card image cap">
-            }
-            else
-            {
-                <img class="card-img-top" src="~/Content/Img/@necesidad.Foto" id="imagen-necesidad" alt="Card image cap">
-            }
+            <img class="card-img-top" src="~/Content/Img/@necesidad.Foto" id="imagen-necesidad" alt="Card image cap">
             <div class="card-body">
-                <div class="float-auto">
-                    <button type="button" class="btn btn-outline-info"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
+                @using (Html.BeginForm("LikeOrDislike", "Usuario", FormMethod.Post, new { @class = "float-auto" }))
+                {
+                    <input type="hidden" name="IdNecesidad" value="@necesidad.IdNecesidad" />
+
+                    if (Model.necesidadesValoraciones.Count == 0)
+                    {
+                        <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                    }
+                    else
+                    {
+                        foreach (var item in Model.necesidadesValoraciones)
+                        {
+                            if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion == "Like")
+                            {
+                                <button type="submit" class="btn btn-success" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                            }
+                        }
+                    }
                     <label> <b class="text-primary">@necesidad.Valoracion%</b> de coincidencias </label>
 
-                    <button type="button" class="btn btn-outline-danger"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+
+
+
+                    if (Model.necesidadesValoraciones.Count == 0)
+                    {
+                        <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+                    }
+                    else
+                    {
+                        foreach (var item in Model.necesidadesValoraciones)
+                        {
+                            if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion == "Dislike")
+                            {
+                                <button type="submit" class="btn btn-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+                            }
+                            else 
+                            {
+                                <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+                            }
+                        }
+                    }
                     <label> No estoy de acuerdo </label>
                     <div class="float-right">
                         @if (necesidad.TipoDonacion == 1)
@@ -63,7 +111,7 @@ foreach (var necesidad in Model)
                         }
 
                     </div>
-                </div>
+                }
 
 
                 <h2 class="card-title text-center">@necesidad.Nombre</h2>
@@ -94,5 +142,6 @@ foreach (var necesidad in Model)
     <!--FIN DE LA PUBLICACION-->
 
 }
+
 
 }

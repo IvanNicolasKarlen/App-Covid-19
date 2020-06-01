@@ -5,9 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using Servicios;
 using Entidades;
+using WebCovid19.Filters;
 
 namespace WebCovid19.Controllers
 {
+    [AdminFilter]
+    [LoginFilter]
     public class DenunciaController : Controller
     {
         public ActionResult Denuncia(int id)

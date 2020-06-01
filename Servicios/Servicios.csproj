@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ServicioNecesidadValoraciones.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicioDenuncia.cs" />
     <Compile Include="ServicioDonacion.cs" />

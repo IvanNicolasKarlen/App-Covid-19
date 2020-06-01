@@ -2,7 +2,15 @@
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_AnonimoLayout.cshtml";
-    string mensajeAdvertencia = (string)ViewData["mensajeAdvertencia"];
+    string mensajeAdvertencia;
+    if (Request["mensaje"]!=null)
+    {
+        mensajeAdvertencia = Request["mensaje"];
+    }
+    else {
+        mensajeAdvertencia = (string)ViewData["mensajeAdvertencia"];
+    }
+
     string mensajeError = (string)ViewData["mensajeError"];
     string mensajeCorrecto = (string)ViewData["mensajeCorrecto"];
 }

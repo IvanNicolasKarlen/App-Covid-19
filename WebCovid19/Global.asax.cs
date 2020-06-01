@@ -36,9 +36,11 @@ namespace WebCovid19
          protected void Session_Start(Object sender, EventArgs e)
         {
             
-            Session["Email"] = String.Empty;
-            Session["url"] = String.Empty;
-          
+            Session["UserId"] = String.Empty;
+            Session["Admin"] = String.Empty;
+            Session["action"] = String.Empty;
+            Session["controller"] = String.Empty;
+
         }
     }
 }

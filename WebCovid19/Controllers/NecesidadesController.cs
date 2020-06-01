@@ -1,16 +1,17 @@
-﻿using Entidades.Views;
-using Entidades;
+﻿using Entidades;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Servicios;
 using WebCovid19.Utilities;
 using Entidades.Metadata;
+using WebCovid19.Filters;
+using Entidades.Views;
 
 namespace WebCovid19.Controllers
 {
+
+    [LoginFilter]
     public class NecesidadesController : Controller
     {
         ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
@@ -21,9 +22,10 @@ namespace WebCovid19.Controllers
             return View();
         }
 
-        public ActionResult Crear()                     /*****CAMBIOS EN LA VISTA, tipada con NECESIDADESMETADATA****/
-        {                                               /***ViewModel Necesidad se puede eliminar***/
-            // VMNecesidad necesidad = new VMNecesidad();
+
+        public ActionResult Crear()
+        { 
+
             NecesidadesMetadata necesidadesMetadata = new NecesidadesMetadata();
             return View(necesidadesMetadata);
         }
@@ -32,8 +34,6 @@ namespace WebCovid19.Controllers
         // public ActionResult Crear(VMNecesidad vmnecesidad)
         public ActionResult Crear(NecesidadesMetadata vmnecesidad)
         {
-            //ToDo: Falta agregar la logica aca
-            //ToDo: Fijarse como subir archivos en el github de la materia. Para tmbn asi no tener q usar javascript para guardar el nombre de la imagen
             if (!ModelState.IsValid)
             {
                 return View();
@@ -42,22 +42,17 @@ namespace WebCovid19.Controllers
             {
                 if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
                 {
-                    //TODO: Agregar validacion para confirmar que el archivo es una imagen
-                    //creo un nombre significativo en este caso apellidonombre pero solo un caracter del nombre, ejemplo BatistutaG
                     string nombreSignificativo = vmnecesidad.Nombre + " " + Session["Email"];
                     //Guardar Imagen
                     string pathRelativoImagen = ImagenesUtil.Guardar(Request.Files[0], nombreSignificativo);
                     vmnecesidad.Foto = pathRelativoImagen;
                 }
-                //ToDo: Agregar el idUsuario. Aca esta hardcodeado. Persistir en la bs la necesidad. Y pasarle por parametro el id a Insumos o Monetarias. Inicializar necesidad como estado=0 (cerrado) y luego de agregar insumo/necesidad, verificar q tenga eso agregado pa cambiar el estado
-
-                Necesidades necesidad = servicioNecesidad.buildNecesidad(vmnecesidad, 2); /******CAMBIOS DENTRO, LE PUSE NECESIDADMETADATA*****/
+                int idUsuario = int.Parse(Session["UserId"].ToString());
+                Necesidades necesidad = servicioNecesidad.buildNecesidad(vmnecesidad, idUsuario); 
                 TempData["idNecesidad"] = necesidad.IdNecesidad;
                 if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")
                 {
-                  
-                    return View("Insumos"); //asi
-
+                    return View("Insumos"); 
                 }
                 else
                 {
@@ -99,29 +94,23 @@ namespace WebCovid19.Controllers
         }
         //ToDo: ActionResult Monetaria Post. Y crear el servicio y dao correspondiente
        
-        public ActionResult Detalles()
-        {
-            Session["url"] = Request["url"];
-            if (Session["Email"] as string == "")
-            {
-                return RedirectToAction("Login", "Home");
-            }
-            return View();
-        }
-
 
         [HttpPost]
         public ActionResult MisNecesidades(string necesidad)
         {
-            ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
-            ServicioUsuario servicioUsuario = new ServicioUsuario();
-           //ToDo: Usar Session real
-            int idSession = 3;
-           
-            List<Necesidades> necesidadesObtenidas = servicioNecesidad.necesidadesDelUsuario(idSession, necesidad);
+            int idSession = int.Parse(Session["UserId"].ToString());
+            List<Necesidades> necesidadesObtenidas = servicioNecesidad.TraerNecesidadesDelUsuario(idSession, necesidad);
+            ServicioNecesidadValoraciones servNecesidadValoraciones = new ServicioNecesidadValoraciones();
             //Mantener el checkbox seleccionado o no, dependiendo lo que haya elegido
             TempData["estadoCheckbox"] = necesidad;
-            return View(necesidadesObtenidas);
+            List<NecesidadesValoraciones> valoracionesObtenidas = servNecesidadValoraciones.obtenerValoracionesDelUsuario(idSession);
+            VMPublicacion vMPublicacion = new VMPublicacion()
+            {
+                listaNecesidades = necesidadesObtenidas,
+                necesidadesValoraciones = valoracionesObtenidas
+            };
+
+            return View(vMPublicacion);
         }
 
     }

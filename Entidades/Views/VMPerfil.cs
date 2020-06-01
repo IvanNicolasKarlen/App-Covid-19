@@ -27,5 +27,7 @@ namespace Entidades.Views
         [Required(ErrorMessage = "Foto de perfil obligatoria")]
         [StringLength(100)]
         public string Foto { get; set; }
+
+        public string Username { get; set; }
     }
 }
