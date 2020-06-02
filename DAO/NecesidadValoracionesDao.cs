@@ -8,16 +8,29 @@ namespace DAO
 {
     public class NecesidadValoracionesDao : Crud<NecesidadesValoraciones>
     {
-   
-
         public override NecesidadesValoraciones ObtenerPorID(int idValoracion)
         {
             NecesidadesValoraciones valoracionObtenida = context.NecesidadesValoraciones.Find(idValoracion);
             return valoracionObtenida;
         }
 
-        public override NecesidadesValoraciones Crear(NecesidadesValoraciones necesidadesValoraciones)
-        {
+        //toDo: Tuve que crear dos metodos CREAR por conflictos de context
+        public NecesidadesValoraciones Crear(Usuarios usuario, Necesidades necesidad)
+        {//toDo: Lo hago de esta manera porque sino me genera error por estar usando dos context distintos
+            UsuarioDao usuarioDao = new UsuarioDao();
+            NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
+
+            Usuarios usuarioBD = context.Usuarios.Find(usuario.IdUsuario);
+            Necesidades necesidadBD = context.Necesidades.Find(necesidad.IdNecesidad);
+
+            NecesidadesValoraciones necesidadesValoraciones = new NecesidadesValoraciones();
+            necesidadesValoraciones.IdUsuario = usuarioBD.IdUsuario;
+            necesidadesValoraciones.IdNecesidad = necesidadBD.IdNecesidad;
+            necesidadesValoraciones.Usuarios = usuarioBD;
+            necesidadesValoraciones.Necesidades = necesidadBD;
+            necesidadesValoraciones.Valoracion = "Undefined";
+
+
             NecesidadesValoraciones valoracionGuardada = context.NecesidadesValoraciones.Add(necesidadesValoraciones);
             int resultado = context.SaveChanges();
 
@@ -25,7 +38,7 @@ namespace DAO
             {
                 return null;
             }
-                return valoracionGuardada;
+            return valoracionGuardada;
         }
 
         public List<NecesidadesValoraciones> obtenerValoracionesDelUsuario(int idSession)
@@ -46,6 +59,24 @@ namespace DAO
             valoracionObtenida.Valoracion = valoracionNueva.Valoracion;
             context.SaveChanges();
             return valoracionObtenida;
-        }  
+        }
+
+        public List<NecesidadesValoraciones> obtenerValoracionesPorIDNecesidad(int idNecesidad)
+        {
+            List<NecesidadesValoraciones> listadoObtenido = context.NecesidadesValoraciones.Where(o => o.IdNecesidad == idNecesidad).ToList();
+            return listadoObtenido;
+        }
+
+        public override NecesidadesValoraciones Crear(NecesidadesValoraciones necesidadesValoraciones)
+        {
+            NecesidadesValoraciones valoracionGuardada = context.NecesidadesValoraciones.Add(necesidadesValoraciones);
+            int resultado = context.SaveChanges();
+
+            if (resultado < 0)
+            {
+                return null;
+            }
+            return valoracionGuardada;
+        }
     }
 }
