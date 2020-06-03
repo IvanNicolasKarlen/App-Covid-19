@@ -87,3 +87,18 @@ D:\Proyectos Visual Studio\Bajado de GIT\App-Covid-19-cf1c448ff3c224c8b8f761352b
 D:\Proyectos Visual Studio\Bajado de GIT\App-Covid-19-cf1c448ff3c224c8b8f761352ba700913f271d82\DAO\obj\Debug\DAO.csproj.CopyComplete
 D:\Proyectos Visual Studio\Bajado de GIT\App-Covid-19-cf1c448ff3c224c8b8f761352ba700913f271d82\DAO\obj\Debug\DAO.dll
 D:\Proyectos Visual Studio\Bajado de GIT\App-Covid-19-cf1c448ff3c224c8b8f761352ba700913f271d82\DAO\obj\Debug\DAO.pdb
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\bin\Debug\DAO.dll.config
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\bin\Debug\DAO.dll
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\bin\Debug\DAO.pdb
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\bin\Debug\Entidades.dll
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\bin\Debug\EntityFramework.dll
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\bin\Debug\EntityFramework.SqlServer.dll
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\bin\Debug\Entidades.pdb
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\bin\Debug\Entidades.dll.config
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\bin\Debug\EntityFramework.xml
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\bin\Debug\EntityFramework.SqlServer.xml
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\obj\Debug\DAO.csprojAssemblyReference.cache
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\obj\Debug\DAO.csproj.CoreCompileInputs.cache
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\obj\Debug\DAO.csproj.CopyComplete
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\obj\Debug\DAO.dll
+D:\Proyecto Covid 19\App 3-6\App-Covid-19\DAO\obj\Debug\DAO.pdb
