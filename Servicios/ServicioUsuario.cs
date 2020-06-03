@@ -1,5 +1,6 @@
 ﻿using DAO;
 using Entidades;
+using Entidades.Enum;
 using Entidades.Views;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace Servicios
                 Password = EncriptarPassword.GetSha256(registro.Password),
                 TipoUsuario = 1,
                 Activo = false,
-                FechaCracion = DateTime.Now,
+                FechaCreacion = DateTime.Now,
                 FechaNacimiento = registro.FechaNacimiento.AddHours(11).AddMinutes(04).AddSeconds(04)
 
             };
