@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entidades
+namespace Entidades.Enum
 {
-    public enum TipoUsuario
+    public enum TipoDonacion
     {
-        Usuario,
-        Administrador
+        Monetaria = 1,
+        Insumos = 2
     }
 }

@@ -11,7 +11,7 @@ namespace DAO.Context
     public partial class TpDBContext : DbContext
     {
         public TpDBContext()
-            : base("name=TpDBContext")
+            : base("name=EntitiesTP")
         {
         }
 

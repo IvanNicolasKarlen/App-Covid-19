@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entidades
+namespace Entidades.Enum
 {
-   public enum TipoEstadoNecesidad
+    public enum TipoUsuario
     {
-        Inactiva = 0,
-        Activa = 1,
-        Finalizada = 2
+        Usuario,
+        Administrador
     }
+
 }

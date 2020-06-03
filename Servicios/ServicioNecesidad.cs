@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using DAO;
 using Entidades;
+using Entidades.Enum;
 using Entidades.Metadata;
 
 namespace Servicios

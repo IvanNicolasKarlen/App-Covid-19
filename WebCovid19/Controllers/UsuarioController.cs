@@ -1,4 +1,5 @@
 ﻿using Entidades;
+using Entidades.Enum;
 using Entidades.Views;
 using Servicios;
 using System;

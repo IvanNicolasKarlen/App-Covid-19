@@ -7,6 +7,7 @@ using WebCovid19.Utilities;
 using Entidades.Metadata;
 using WebCovid19.Filters;
 using Entidades.Views;
+using Entidades.Enum;
 
 namespace WebCovid19.Controllers
 {
@@ -71,7 +72,7 @@ namespace WebCovid19.Controllers
             insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
             return View(insumos);
         }            
-        
+        //TODO: Crear metadata de NecDonInsumos y Monetarias
         [HttpPost]
         public ActionResult Insumos(NecesidadesDonacionesInsumos insumos)
         {

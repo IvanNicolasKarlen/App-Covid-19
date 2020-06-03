@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entidades
+namespace Entidades.Enum
 {
-    public enum TipoDonacion
+    public enum TipoEstadoNecesidad
     {
-        Monetaria = 1,
-        Insumos = 2
+        Inactiva = 0,
+        Activa = 1,
+        Finalizada = 2
     }
 }
