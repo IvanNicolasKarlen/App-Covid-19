@@ -14,33 +14,7 @@ namespace DAO
             return valoracionObtenida;
         }
 
-        //toDo: Tuve que crear dos metodos CREAR por conflictos de context
-        public NecesidadesValoraciones Crear(Usuarios usuario, Necesidades necesidad)
-        {//toDo: Lo hago de esta manera porque sino me genera error por estar usando dos context distintos
-            UsuarioDao usuarioDao = new UsuarioDao();
-            NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
-
-            Usuarios usuarioBD = context.Usuarios.Find(usuario.IdUsuario);
-            Necesidades necesidadBD = context.Necesidades.Find(necesidad.IdNecesidad);
-
-            NecesidadesValoraciones necesidadesValoraciones = new NecesidadesValoraciones();
-            necesidadesValoraciones.IdUsuario = usuarioBD.IdUsuario;
-            necesidadesValoraciones.IdNecesidad = necesidadBD.IdNecesidad;
-            necesidadesValoraciones.Usuarios = usuarioBD;
-            necesidadesValoraciones.Necesidades = necesidadBD;
-            necesidadesValoraciones.Valoracion = "Undefined";
-
-
-            NecesidadesValoraciones valoracionGuardada = context.NecesidadesValoraciones.Add(necesidadesValoraciones);
-            int resultado = context.SaveChanges();
-
-            if (resultado < 0)
-            {
-                return null;
-            }
-            return valoracionGuardada;
-        }
-
+       
         public List<NecesidadesValoraciones> obtenerValoracionesDelUsuario(int idSession)
         {
             List<NecesidadesValoraciones> valoracionesObtenidas = context.NecesidadesValoraciones.Where(o => o.IdUsuario == idSession).ToList();

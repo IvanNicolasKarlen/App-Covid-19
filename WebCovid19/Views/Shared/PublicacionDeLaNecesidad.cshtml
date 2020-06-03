@@ -1,7 +1,7 @@
 ﻿@model Entidades.Views.VMPublicacion
 
 @{
-    int idSession = 3;
+    int idSession = int.Parse(Session["UserId"].ToString()); ;
 }
 
 
@@ -44,11 +44,10 @@ else
                             <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="~/Content/Img/@necesidad.Usuarios.Foto">
                         }
 
-
-                    <div class="col-md-2">
-                        <p class=" text-secondary mt-3"><b>@necesidad.Usuarios.UserName</b></p>
-                        <p><span class="fa fa-calendar"></span> @necesidad.Usuarios.FechaCreacion</p>
-
+                        <div class="col-md-2">
+                            <p class=" text-secondary mt-3"><b>@necesidad.Usuarios.UserName</b></p>
+                            <p><span class="fa fa-calendar"></span> @necesidad.Usuarios.FechaCreacion</p>
+                        </div>
                     </div>
 
                 </div>
@@ -65,18 +64,42 @@ else
                         }
                         else
                         {
-                            foreach (var item in Model.necesidadesValoraciones)
+                            int bandera = 0;
+                            foreach (var item in Model.necesidadesValoraciones)     //3 ... 1... 2
                             {
+
+
                                 if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion == "Like")
                                 {
-                                    <button type="submit" class="btn btn-success" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                                    <button type="submit" class="btn btn-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
                                     break;
                                 }
-                                if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion != "Like")
+                                else if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion != "Like")
                                 {
                                     <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
                                     break;
                                 }
+                                else if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad)
+                                {
+
+                                    <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
+                                    break;
+
+                                }
+                                else
+                                {
+                                    bandera++;
+                                }
+
+                            }
+
+
+                            if (Model.necesidadesValoraciones.Count == bandera)
+                            {
+                                <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                             }
                         }
                         <label> <b class="text-primary">@necesidad.Valoracion%</b> de coincidencias </label>
@@ -90,18 +113,37 @@ else
                         }
                         else
                         {
+                            int bandera = 0;
                             foreach (var item in Model.necesidadesValoraciones)
                             {
                                 if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion == "Dislike")
                                 {
                                     <button type="submit" class="btn btn-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+
                                     break;
                                 }
-                                if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion != "Dislike")
+                                else if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion != "Dislike")
                                 {
                                     <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+
                                     break;
                                 }
+                                else if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad)
+                                {
+                                    <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+
+                                    break;
+                                }
+                                else
+                                {
+                                    bandera++;
+
+                                }
+                            }
+
+                            if (Model.necesidadesValoraciones.Count == bandera)
+                            {
+                                <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                             }
                         }
                         <label> No estoy de acuerdo </label>

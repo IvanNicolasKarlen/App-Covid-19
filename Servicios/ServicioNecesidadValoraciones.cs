@@ -87,15 +87,19 @@ namespace Servicios
             {
 
                 //Asigno datos al objeto Necesidad Valoraciones
-                //NecesidadesValoraciones necesidadesValoraciones = new NecesidadesValoraciones();
-                //necesidadesValoraciones.IdUsuario = usuarioObtenido.IdUsuario;
-                //necesidadesValoraciones.IdNecesidad = necesidadObtenida.IdNecesidad;
-                //necesidadesValoraciones.Usuarios = usuarioObtenido;
+                NecesidadesValoraciones necesidadesValoraciones = new NecesidadesValoraciones();
+                necesidadesValoraciones.IdUsuario = usuarioObtenido.IdUsuario;
+                necesidadesValoraciones.IdNecesidad = necesidadObtenida.IdNecesidad;
+                // necesidadesValoraciones.Usuarios = usuarioObtenido;
                 //necesidadesValoraciones.Necesidades = necesidadObtenida;
-                //necesidadesValoraciones.Valoracion = "Undefined";
+                necesidadesValoraciones.Valoracion = (botonRecibido == "Like") ? "Like" : (botonRecibido == "Dislike") ? "Dislike" : null;
+                   
 
-                //NecesidadesValoraciones valoracionObtenida = necesidadValoracionesDao.Crear(necesidadesValoraciones);
-                NecesidadesValoraciones valoracionObtenida = necesidadValoracionesDao.Crear(usuarioObtenido, necesidadObtenida);
+                NecesidadesValoraciones valoracionObtenida = necesidadValoracionesDao.Crear(necesidadesValoraciones);
+               
+
+
+                  //  NecesidadesValoraciones valoracionObtenida = necesidadValoracionesDao.Crear(usuarioObtenido, necesidadObtenida);
 
                 if (valoracionObtenida == null)
                 {
