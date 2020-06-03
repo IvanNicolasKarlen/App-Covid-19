@@ -7,9 +7,12 @@ using WebCovid19.Content.Utilities;
 using Servicios;
 using Entidades.Views;
 using Entidades;
+using WebCovid19.Filters;
+
 
 namespace WebCovid19.Controllers
 {
+    /*[LoginFilter]*/
     public class DonacionMonetariaController : Controller
     {
         ServicioDonacion servicioDonacion = new ServicioDonacion();
@@ -30,18 +33,15 @@ namespace WebCovid19.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(VMDonacionMonetaria);
-                }
-                Usuarios usuario = new Usuarios();
-
-                //Valido que los datos ingresados estén bien
-                bool montoADonar = servicioDonacion.MontoADonarRecibido(VMDonacionMonetaria);
-
-                if (!montoADonar)
-                {
-                    ViewBag.mensajeError = "La donación minima es de $100";
                     return View();
                 }
+                else
+                {
+
+                    int idUsuario = int.Parse(Session["UserId"].ToString());
+                    DonacionesMonetarias donacionM = servicioDonacion.GuardarDonacionM(VMDonacionMonetaria, idUsuario);
+                }
+
             }
             catch (Exception ex)
             {
@@ -83,43 +83,16 @@ namespace WebCovid19.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult FotoPerfil(VMDonacionMonetaria VMDonacionMonetaria)
-        {
-            if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
-            {
-
-                //creo un nombre significativo en este caso apellidonombre pero solo un caracter del nombre, ejemplo BatistutaG
-                string nombreSignificativo = VMDonacionMonetaria.NombreSignificativoImagen;
-                //Guardar Imagen
-                string pathRelativoImagen = ImagenesUtility.Guardar(Request.Files[0], nombreSignificativo);
-                VMDonacionMonetaria.Foto = pathRelativoImagen;
-            }
-
-
-            TempData["usuarioCreado"] = true;
-
-            return RedirectToAction("Index");
-        }
-
-
-        /*  [HttpGet]
-          public ActionResult VerTotalDeDonacion()
-          {
-              return View();
-          }*/
-
-
         public ActionResult VerTotalDeDonacion()
         {
             /*SUMATORIA TOTAL RECAUDADO*/
-            int IdDonacionMonetaria = 1;
-            decimal Sumatoria = servicioDonacion.TotalRecaudado(IdDonacionMonetaria);
+            int IdNeceDonacionMonetaria = 5;
+            decimal Sumatoria = servicioDonacion.TotalRecaudado(IdNeceDonacionMonetaria);
             ViewBag.Sumatoria = Sumatoria;
             decimal Suma = Sumatoria;
 
             /*PEDIDO DE DONACION*/
-            int IdNecesidadDonacionMonetaria = 9;
+            int IdNecesidadDonacionMonetaria = 5;
             NecesidadesDonacionesMonetarias CantidadSolicitada = servicioDonacion.CantidadSolicitada(IdNecesidadDonacionMonetaria);
             ViewBag.CantidadSolicitada = CantidadSolicitada.Dinero;
             decimal CantSolicitada = CantidadSolicitada.Dinero;
@@ -129,7 +102,5 @@ namespace WebCovid19.Controllers
             ViewBag.Restante = calculo;
             return View();
         }
-
-
     }
 }

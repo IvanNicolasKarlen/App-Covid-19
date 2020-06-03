@@ -17,9 +17,27 @@ namespace DAO
             throw new NotImplementedException();
         }
 
-        public override DonacionesMonetarias Crear(DonacionesMonetarias generics)
+        public override DonacionesMonetarias Crear(DonacionesMonetarias Dinero)
         {
-            throw new NotImplementedException();
+            DonacionesMonetarias donacionesMonetarias = context.DonacionesMonetarias.Add(Dinero);
+            decimal valor = context.SaveChanges();
+
+            if (valor >= 100m)
+            {
+                return donacionesMonetarias;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public DonacionesMonetarias Guardar(DonacionesMonetarias Dinero)
+        {
+            DonacionesMonetarias donacionesMonetarias = context.DonacionesMonetarias.Add(Dinero);
+            context.SaveChanges();
+            return donacionesMonetarias;
+
         }
 
         public override DonacionesMonetarias ObtenerPorID(int generics)
@@ -27,17 +45,17 @@ namespace DAO
             throw new NotImplementedException();
         }
 
-        public List<DonacionesMonetarias> ObtenerPorId(int IdDonacionMonetaria)
+        public List<DonacionesMonetarias> ObtenerPorId(int IdNeceDonacionMonetaria)
         {
             List<DonacionesMonetarias> listarCantidadNecesariaADonar =
-            context.DonacionesMonetarias.Where(a => a.IdDonacionMonetaria == IdDonacionMonetaria).ToList();
+            context.DonacionesMonetarias.Where(a => a.IdNecesidadDonacionMonetaria == IdNeceDonacionMonetaria).ToList();
 
             return listarCantidadNecesariaADonar;
         }
 
         public NecesidadesDonacionesMonetarias CantidadSolicitada(int IdNecesidadDonacionMonetaria)
         {
-            NecesidadesDonacionesMonetarias traerDineroPorId = 
+            NecesidadesDonacionesMonetarias traerDineroPorId =
             context.NecesidadesDonacionesMonetarias.Find(IdNecesidadDonacionMonetaria);
             return traerDineroPorId;
         }
