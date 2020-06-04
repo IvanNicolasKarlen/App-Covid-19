@@ -8,26 +8,13 @@ namespace DAO
 {
     public class NecesidadValoracionesDao : Crud<NecesidadesValoraciones>
     {
-   
-
         public override NecesidadesValoraciones ObtenerPorID(int idValoracion)
         {
             NecesidadesValoraciones valoracionObtenida = context.NecesidadesValoraciones.Find(idValoracion);
             return valoracionObtenida;
         }
 
-        public override NecesidadesValoraciones Crear(NecesidadesValoraciones necesidadesValoraciones)
-        {
-            NecesidadesValoraciones valoracionGuardada = context.NecesidadesValoraciones.Add(necesidadesValoraciones);
-            int resultado = context.SaveChanges();
-
-            if (resultado < 0)
-            {
-                return null;
-            }
-                return valoracionGuardada;
-        }
-
+       
         public List<NecesidadesValoraciones> obtenerValoracionesDelUsuario(int idSession)
         {
             List<NecesidadesValoraciones> valoracionesObtenidas = context.NecesidadesValoraciones.Where(o => o.IdUsuario == idSession).ToList();
@@ -46,6 +33,24 @@ namespace DAO
             valoracionObtenida.Valoracion = valoracionNueva.Valoracion;
             context.SaveChanges();
             return valoracionObtenida;
-        }  
+        }
+
+        public List<NecesidadesValoraciones> obtenerValoracionesPorIDNecesidad(int idNecesidad)
+        {
+            List<NecesidadesValoraciones> listadoObtenido = context.NecesidadesValoraciones.Where(o => o.IdNecesidad == idNecesidad).ToList();
+            return listadoObtenido;
+        }
+
+        public override NecesidadesValoraciones Crear(NecesidadesValoraciones necesidadesValoraciones)
+        {
+            NecesidadesValoraciones valoracionGuardada = context.NecesidadesValoraciones.Add(necesidadesValoraciones);
+            int resultado = context.SaveChanges();
+
+            if (resultado < 0)
+            {
+                return null;
+            }
+            return valoracionGuardada;
+        }
     }
 }

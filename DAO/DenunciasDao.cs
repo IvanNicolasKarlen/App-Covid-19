@@ -33,10 +33,7 @@ namespace DAO
         {
             Denuncias denunciaObtenida = ObtenerPorID(denuncia.IdDenuncia);
             denunciaObtenida.Estado = denuncia.Estado;
-            foreach (var item in denunciaObtenida.Necesidades.Denuncias)
-            {
-                denunciaObtenida.Necesidades.Denuncias.Remove(item);
-            }
+            
             context.SaveChanges();
             return denunciaObtenida;
         }
@@ -46,5 +43,10 @@ namespace DAO
             throw new NotImplementedException();
         }
 
+        public void Eliminar(Denuncias item)
+        {
+            context.Denuncias.Remove(item);
+            context.SaveChanges();
+        }
     }
 }

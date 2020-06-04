@@ -19,7 +19,7 @@ namespace Servicios
         }
 
         public Necesidades buildNecesidad(NecesidadesMetadata necesidadmd, int idUser)
-        
+
         {
             Necesidades necesidades = new Necesidades()
             {
@@ -47,18 +47,74 @@ namespace Servicios
         {
             if (estadoNecesidad == "on")
             {
-                return necesidadesDAO.TraerNecesidadesActivasDelUsuario(idSession);
+                List<Necesidades> necesidadesBD = necesidadesDAO.TraerNecesidadesActivasDelUsuario(idSession);
+                List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
+                return necesidadesReturn;
             }
             else
             {
-                return necesidadesDAO.TraerTodasLasNecesidadesDelUsuario(idSession);
+                List<Necesidades> necesidadesBD = necesidadesDAO.TraerTodasLasNecesidadesDelUsuario(idSession);
+                List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
+                return necesidadesReturn;
+
             }
 
         }
 
         public List<Necesidades> ListarTodasLasNecesidades()
         {
-            return necesidadesDAO.ListarTodasLasNecesidades();
+            List<Necesidades> necesidadesBD = necesidadesDAO.ListarTodasLasNecesidades();
+            List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
+
+            return necesidadesReturn;
+        }
+
+        /// <summary>
+        /// Obtiene un listado de necesidades y calcula los valores de cada necesidad
+        /// </summary>
+        /// <param name="lista"></param>
+        /// <returns>List<Necesidades></returns>
+        public List<Necesidades> AlgoritmoCalculaValoracionDeListadoNecesidades(List<Necesidades> lista)
+        {
+            List<Necesidades> necesidadesReturn = new List<Necesidades>();
+            foreach (var item in lista)
+            {
+                necesidadesReturn.Add(calcularValoracion(item));
+            }
+            return necesidadesReturn;
+        }
+
+        /// <summary>
+        /// Algoritmo que calcula la valoracion de la necesidad
+        /// </summary>
+        /// <param name="necesidad"></param>
+        /// <returns>Necesidades</returns>
+        public Necesidades calcularValoracion(Necesidades necesidad)
+        {
+            ServicioNecesidadValoraciones servicioNecesidadValoraciones = new ServicioNecesidadValoraciones();
+            List<NecesidadesValoraciones> valoracionesObtenidas = servicioNecesidadValoraciones.obtenerValoracionesPorIDNecesidad(necesidad.IdNecesidad);
+            decimal cantidadLikes = 0;
+            decimal cantidadDeVotaciones = valoracionesObtenidas.Count;
+
+            foreach (var item in valoracionesObtenidas)
+            {
+                if (item.Valoracion == "Like")
+                {
+                    cantidadLikes++;
+                }
+            }
+
+            decimal valoracion = cantidadLikes * cantidadDeVotaciones / 100;
+
+            necesidad.Valoracion = valoracion;
+
+            NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
+            Necesidades necesidadBD = necesidadesDAO.Actualizar(necesidad);
+            if (necesidadBD == null)
+            {
+                return null;
+            }
+            return necesidadBD;
         }
     }
 }

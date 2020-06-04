@@ -28,6 +28,17 @@ namespace WebCovid19.App_Start
             bundles.Add(new StyleBundle("~/bundles/css/font-awesome")
                 .Include(
                 "~/Content/fonts/Linearicons/font-awesome.min.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/fonts/Linearicons")
+         .Include(
+               "~/Content/fonts/Linearicons/font-awesome.min.css",
+                      "~/Content/fonts/Linearicons/icon-font.min.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/fonts/Font-Awesome-min")
+                .Include(
+                "~/Content/fonts/font-awesome.min.css"));
+
+
             /************************************* Scripts BUNDLE ***************************************/
             bundles.Add(new ScriptBundle("~/bundles/Scripts/umdJS")
                .IncludeDirectory(

@@ -51,41 +51,44 @@ namespace Servicios
         {
             ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
             NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
-            Necesidades necesidadObtenida = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
 
-            if (estado) //True es para dejarla Inactiva a la necesidad
+            if (estado) //True es para dejarla bloqueada/Inactiva a la Necesidad
             {
-                necesidadObtenida.Estado = 0;
-                Necesidades necesidadActualizada = necesidadesDAO.Actualizar(necesidadObtenida);
-
-                Denuncias denunciaObtenida = denunciasDao.obtenerDenunciaPorIdNecesidad(necesidadObtenida.IdNecesidad);
-                denunciaObtenida.Estado = 0;
+                Denuncias denunciaObtenida = denunciasDao.obtenerDenunciaPorIdNecesidad(idNecesidad);
+                if (denunciaObtenida == null)
+                {
+                    return false;
+                }
+                
+                //Pongo la necesidad en estado inactivo
+                denunciaObtenida.Necesidades.Estado = 0;
+                //Actualizo el estado
                 Denuncias denunciaActualizada = denunciasDao.Actualizar(denunciaObtenida);
+                //Elimino la denuncia realizada
+                denunciasDao.Eliminar(denunciaObtenida);
 
-                if (necesidadActualizada == null)
-                {
-                    return false;
+                if (denunciaActualizada == null)
+                    {
+                        return false;
+                    }
+                
+
+
                 }
-                else if (denunciaActualizada == null)
-                {
-                    return false;
-                }
-            }
             else //Al ser false, esta necesidad no le deberia volver a aparecer al Administrador
             {
-                Denuncias denunciaObtenida = denunciasDao.obtenerDenunciaPorIdNecesidad(necesidadObtenida.IdNecesidad);
-                denunciaObtenida.Estado = 0;
-                denunciaObtenida.Necesidades.Denuncias = null; //ToDo: Ver porque me devuelve null en necesidades dentro de Denuncia
-                Denuncias denunciaActualizada = denunciasDao.Actualizar(denunciaObtenida);
-
-                if(denunciaActualizada == null)
+                Denuncias denunciaObtenida = denunciasDao.obtenerDenunciaPorIdNecesidad(idNecesidad);
+                if (denunciaObtenida == null)
                 {
                     return false;
                 }
+
+                    denunciasDao.Eliminar(denunciaObtenida);
+                
             }
 
 
-            return true;
+                return true;
         }
     }
 }
