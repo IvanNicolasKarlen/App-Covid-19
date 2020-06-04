@@ -71,7 +71,7 @@ namespace WebCovid19.Controllers
 
                 //Validar si el email es un email nuevo o si ya fue registrado
                 TipoEmail emailIngresado = servicioUsuario.ValidoEstadoEmail(usuario);
-               
+
                 //Esta condicion es por si se le envie la activacion, elimina el mensaje, y quiere recuperar su activacion.
                 if (emailIngresado == TipoEmail.EmailNuevo)
                 {
@@ -201,8 +201,8 @@ namespace WebCovid19.Controllers
 
                     //seteo de session
                     servicioUsuario.SetearSession(usuario);
-                  //Lo lleva a la vista a donde queria ir
-                    return RedirectToAction("AsignarRuta",usuario);
+                    //Lo lleva a la vista a donde queria ir
+                    return RedirectToAction("AsignarRuta", usuario);
                 }
             }
             catch (Exception ex)
@@ -217,7 +217,7 @@ namespace WebCovid19.Controllers
         [ValidarPeticionFilter]
         public ActionResult AsignarRuta(Usuarios u)
         {
-           
+
             //Validar si es un Usuario o un Administrador
             TipoUsuario tipoUsuario = servicioUsuario.tipoDeUsuario(u);
             if (tipoUsuario == TipoUsuario.Usuario)
@@ -235,7 +235,7 @@ namespace WebCovid19.Controllers
         [LoginFilter]
         public ActionResult Perfil()
         {
-            
+
             int idSession = int.Parse(Session["UserId"].ToString());
             Usuarios usuarioSession = servicioUsuario.obtenerUsuarioPorID(idSession);
             VMPerfil vMPerfil = servicioUsuario.asignoDatosAVMPerfil(usuarioSession);
@@ -244,7 +244,7 @@ namespace WebCovid19.Controllers
             {
                 ViewData.Add("mensajeInfo", "Debe completar sus datos para poder Crear Necesidades");
             }
-                return View(vMPerfil);
+            return View(vMPerfil);
         }
 
         [HttpPost]
@@ -254,7 +254,7 @@ namespace WebCovid19.Controllers
         {
             try
             {
-                if (!ModelState.IsValid )
+                if (!ModelState.IsValid)
                 {
                     int idSessionUsuario = int.Parse(Session["UserId"].ToString());
                     Usuarios usuarioSession = servicioUsuario.obtenerUsuarioPorID(idSessionUsuario);
@@ -353,9 +353,9 @@ namespace WebCovid19.Controllers
         {
             ServicioDenuncia servicioDenuncia = new ServicioDenuncia();
             //Si es Desestimar obtengo un false, si es Bloquear obtengo un true
-            bool estado =  (Request.Form["Desestimar"] != null) ? false : (Request.Form["Bloquear"] != null) ? true : false;
+            bool estado = (Request.Form["Desestimar"] != null) ? false : (Request.Form["Bloquear"] != null) ? true : false;
             bool evaluada = servicioDenuncia.necesidadEvaluada(idNecesidad, estado);
-            if(evaluada)
+            if (evaluada)
             {
                 ViewData["mensajeCorrecto"] = "La Denuncia que evaluaste fue guardada con exito";
             }
@@ -367,7 +367,7 @@ namespace WebCovid19.Controllers
             List<Denuncias> denunciasObtenidas = servicioDenuncia.obtenerDenuncias();
             return View("Administrador", denunciasObtenidas);
         }
-            
+
 
         [LoginFilter]
 
