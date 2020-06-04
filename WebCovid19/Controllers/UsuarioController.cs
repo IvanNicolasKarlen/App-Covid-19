@@ -19,7 +19,7 @@ namespace WebCovid19.Controllers
         }
 
         [LoginFilter]
-        public ActionResult IndexLogueado()
+        public ActionResult Home()
         {
             ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
 
@@ -222,7 +222,7 @@ namespace WebCovid19.Controllers
             TipoUsuario tipoUsuario = servicioUsuario.tipoDeUsuario(u);
             if (tipoUsuario == TipoUsuario.Usuario)
             {
-                return RedirectToAction("IndexLogueado");
+                return RedirectToAction("Home");
             }
             else
             {
@@ -334,7 +334,7 @@ namespace WebCovid19.Controllers
             int idSession = int.Parse(Session["UserId"].ToString());
             string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
             bool likeOrDislike = servicioValoraciones.guardarValoracion(idSession, idNecesidad, boton);
-            return RedirectToAction("IndexLogueado");
+            return RedirectToAction("Home");
         }
 
 
