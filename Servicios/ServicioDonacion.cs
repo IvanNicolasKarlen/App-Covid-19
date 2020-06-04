@@ -13,18 +13,9 @@ namespace Servicios
 
         DonacionMonetariaDao DonacionMonetariaDao = new DonacionMonetariaDao();
 
-        public bool MontoADonarRecibido(VMDonacionMonetaria vmdonacionMonetaria)
+        public decimal TotalRecaudado(int IdNeceDonacionMonetaria)
         {
-            if (vmdonacionMonetaria.Dinero < 100)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public decimal TotalRecaudado(int IdDonacionMonetaria)
-        {
-            List<DonacionesMonetarias> lista = DonacionMonetariaDao.ObtenerPorId(IdDonacionMonetaria);
+            List<DonacionesMonetarias> lista = DonacionMonetariaDao.ObtenerPorId(IdNeceDonacionMonetaria);
 
             decimal sumatoria = lista.Sum(item => item.Dinero);
             return sumatoria;
@@ -41,5 +32,22 @@ namespace Servicios
             decimal calculo = CantSolicitada - Suma;
             return calculo;
         }
+
+        //ToDo: No va harcodeado el id de necesidadDonacionMonetaria, y idusuario
+        public DonacionesMonetarias GuardarDonacionM(VMDonacionMonetaria VMDonacionMonetaria, int idUsuario)
+        {
+            DonacionesMonetarias donacionM = new DonacionesMonetarias()
+            {
+                Dinero = VMDonacionMonetaria.Dinero,
+                IdNecesidadDonacionMonetaria = 5,
+                IdUsuario = idUsuario,
+                FechaCreacion = DateTime.Now,
+                ArchivoTransferencia = ""
+            };
+
+            return DonacionMonetariaDao.Guardar(donacionM);
+
+        }
+
     }
 }
