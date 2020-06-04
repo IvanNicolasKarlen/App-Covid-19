@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Entidades;
 using DAO.Abstract;
+using System.Data.Entity.Validation;
 
 namespace DAO
 {
@@ -69,9 +70,23 @@ namespace DAO
                 necesidadBd.Nombre = necesidadObtenida.Nombre;
                 necesidadBd.TelefonoContacto = necesidadObtenida.TelefonoContacto;
                 necesidadBd.NecesidadesValoraciones = necesidadObtenida.NecesidadesValoraciones;
-           
 
-                context.SaveChanges();
+
+                try
+                {
+
+                    context.SaveChanges();
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                        }
+                    }
+                }
                 return necesidadBd;
             }
         }
