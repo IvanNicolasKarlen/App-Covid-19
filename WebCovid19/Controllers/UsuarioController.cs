@@ -250,14 +250,21 @@ namespace WebCovid19.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [LoginFilter]
-        public ActionResult ActualizarPerfil(VMPerfil perfil)
+        public ActionResult Perfil(VMPerfil perfil)
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (!ModelState.IsValid )
                 {
-                    Usuarios usuarioObtenido = servicioUsuario.obtenerUsuarioLogueado(int.Parse(Session["UserId"].ToString()));
-                    return View("Perfil", usuarioObtenido);
+                    int idSessionUsuario = int.Parse(Session["UserId"].ToString());
+                    Usuarios usuarioSession = servicioUsuario.obtenerUsuarioPorID(idSessionUsuario);
+                    VMPerfil vmPerfil = servicioUsuario.asignoDatosAVMPerfil(usuarioSession);
+                    bool validoPerfil = servicioUsuario.validarSiExisteFaltanteDeDatos(vmPerfil);
+                    if (!validoPerfil)
+                    {
+                        ViewData.Add("mensajeError", "Debe completar todos los campos");
+                    }
+                    return View(vmPerfil);
                 }
 
                 if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)

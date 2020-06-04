@@ -75,20 +75,6 @@ else
 
                                     break;
                                 }
-                                else if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion != "Like")
-                                {
-                                    <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
-
-                                    break;
-                                }
-                                else if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad)
-                                {
-
-                                    <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
-
-                                    break;
-
-                                }
                                 else
                                 {
                                     bandera++;
@@ -119,18 +105,6 @@ else
                                 if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion == "Dislike")
                                 {
                                     <button type="submit" class="btn btn-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
-
-                                    break;
-                                }
-                                else if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion != "Dislike")
-                                {
-                                    <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
-
-                                    break;
-                                }
-                                else if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad)
-                                {
-                                    <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
 
                                     break;
                                 }
