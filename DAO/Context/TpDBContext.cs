@@ -1,16 +1,17 @@
 
-namespace WebCovid19
+namespace DAO.Context
 {
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System;
     using System.Data.Entity.Infrastructure;
+    using Entidades;
 
     public partial class TpDBContext : DbContext
     {
         public TpDBContext()
-            : base("name=TpDBContext")
+            : base("name=EntitiesTP")
         {
         }
 

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace WebCovid19.Models.Views
+namespace Entidades.Views
 {
     public class VMPerfil
     {
@@ -18,11 +18,6 @@ namespace WebCovid19.Models.Views
         [StringLength(50)]
         public string Apellido { get; set; }
 
-        [Display(Name = "Fecha de nacimiento")]
-        [Required(ErrorMessage = "Fecha de nacimiento obligatoria")]
-        [CheckValidDate]
-        public DateTime FechaNacimiento { get; set; }
-
         [Display(Name = "Email")]
         [EmailAddress(ErrorMessage = "Formato de Email erroneo")]
         [StringLength(50, ErrorMessage = "Email demaciado largo")]
@@ -32,5 +27,7 @@ namespace WebCovid19.Models.Views
         [Required(ErrorMessage = "Foto de perfil obligatoria")]
         [StringLength(100)]
         public string Foto { get; set; }
+
+        public string Username { get; set; }
     }
 }

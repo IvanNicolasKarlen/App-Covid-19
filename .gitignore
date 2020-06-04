@@ -3,8 +3,6 @@
 Entidades/bin/Debug/Entidades.dll
 *.cache
 Entidades/obj/Debug/Entidades.csproj.FileListAbsolute.txt
-*.pdb
-*.dll
 Servicios/obj/Debug/Servicios.csproj.FileListAbsolute.txt
 Servicios/obj/Debug/Servicios.csproj.CopyComplete
 .vs/TPWeb3_20201C/config/applicationhost.config

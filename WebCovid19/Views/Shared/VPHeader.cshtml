@@ -1,4 +1,8 @@
-﻿<div class="container mb-5">
+﻿@{ 
+    string estadoCheckbox = (string)TempData["estadoCheckbox"];
+}
+
+<div class="container mb-5">
     <!-- Definición del menú -->
     <nav class=" shadow-lg navbar navbar-expand-md  fixed-top position-fixed mb-5" id="colour" >
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#miNavbar"
@@ -10,15 +14,23 @@
 
         <div class="collapse navbar-collapse" id="miNavbar">
             <img class="border border-white" id="image-perfil" src="~/Content/Img/logo2.png">
+         
+            @using (Html.BeginForm("MisNecesidades", "Necesidades", FormMethod.Post, new {@class= "col-md-3 ml-4" }))
+            {
+        <div class="form-check">
+            @if (estadoCheckbox == "on")
+            {
+                <input type="checkbox" class="form-check-input my-lg-2" name="necesidad" checked>
+            }
+            else
+            {
+                <input type="checkbox" class="form-check-input my-lg-2" name="necesidad">
+            }
+            <label class="form-check-label text-light">Necesidades activas</label>
+            <button type="submit" class="btn btn-outline-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+        </div>
+            }
 
-
-            <div class="col-md-3 ml-4">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input my-lg-2" id="exampleCheck1">
-                    <label class="form-check-label text-light " for="exampleCheck1">Necesidades activas</label>
-                    <button type="submit" class="btn btn-outline-primary"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-                </div>
-            </div>
 
             <div class="col-md-4">
                 <form class="form-inline my-2 my-lg-0">
@@ -27,24 +39,28 @@
                 </form>
             </div>
 
-            <div class="col-md-4 ml-5">
+            <div class="col-md-4 ml-1">
                 <ul class="navbar-nav ">
                     <li class="nav-item active my-sm-2">
                         <!-- <a class="nav-link hover text-light" href="#">Inicio</a-->
-                        @Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "nav-link hover text-light" })
-
-                    </li>
-                    <li class="nav-item active my-sm-2">
-                        <!--  <a class="nav-link hover text-light" href="#">Crear Necesidad</a>-->
-                        @Html.ActionLink("Crear Necesidad", "Crear", "Necesidades", null, new { @class = "nav-link hover text-light" })
+                        @Html.ActionLink("Inicio", "Index", "Usuario", null, new { @class = "nav-link hover text-light" })
 
                     </li>
                     <li class="nav-item active my-sm-2">
                         <!-- <a class="nav-link hover text-light" href="#">Acerca de</a>-->
-                        @Html.ActionLink("Acerca de", "Index", "Home", null, new { @class = "nav-link hover text-light" })
+                        @Html.ActionLink("Home", "IndexLogueado", "Usuario", null, new { @class = "nav-link hover text-light" })
 
                     </li>
+                    <li class="nav-item active my-sm-2">
 
+                        <!--  <a class="nav-link hover text-light" href="#">Crear Necesidad</a>-->
+                        @Html.ActionLink("Crear Necesidad", "Crear", "Necesidades", null, new { @class = "nav-link hover text-light" })
+                    </li>
+                    <li class="nav-item active my-sm-2">
+                        <!-- <a class="nav-link hover text-light" href="#">Acerca de</a>-->
+                        @Html.ActionLink("Acerca de", "acerca-de", "Usuario", null, new { @class = "nav-link hover text-light" })
+
+                    </li>
 
                     <div class="btn-group">
                         <button class="btn btn-outline-primary btn-rounded my-4 my-sm-2 dropdown-toggle"
@@ -52,14 +68,14 @@
                             <i class="fa fa-user-circle" aria-hidden="true"></i>
                         </button>
 
-                        <ul class="dropdown-menu" role="menu" id="colour">
+                        <ul class="dropdown-menu " role="menu" id="colour">
                             <li>
                                 <a href="" class="text-light">
                                     <svg class="bi bi-person-lines-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 100-6 3 3 0 000 6zm7 1.5a.5.5 0 01.5-.5h2a.5.5 0 010 1h-2a.5.5 0 01-.5-.5zm-2-3a.5.5 0 01.5-.5h4a.5.5 0 010 1h-4a.5.5 0 01-.5-.5zm0-3a.5.5 0 01.5-.5h4a.5.5 0 010 1h-4a.5.5 0 01-.5-.5zm2 9a.5.5 0 01.5-.5h2a.5.5 0 010 1h-2a.5.5 0 01-.5-.5z" clip-rule="evenodd" />
                                     </svg>
 
-                                    @Html.ActionLink("Log in", "Login", "Home", null, new { @class = "hover", id = "link" })
+                                    @Html.ActionLink("Log in", "Login", "Usuario", null, new { @class = "hover", id = "link" })
 
                                 </a>
                             </li>
@@ -68,7 +84,7 @@
                                     <svg class="bi bi-person-lines-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 100-6 3 3 0 000 6zm7 1.5a.5.5 0 01.5-.5h2a.5.5 0 010 1h-2a.5.5 0 01-.5-.5zm-2-3a.5.5 0 01.5-.5h4a.5.5 0 010 1h-4a.5.5 0 01-.5-.5zm0-3a.5.5 0 01.5-.5h4a.5.5 0 010 1h-4a.5.5 0 01-.5-.5zm2 9a.5.5 0 01.5-.5h2a.5.5 0 010 1h-2a.5.5 0 01-.5-.5z" clip-rule="evenodd" />
                                     </svg>
-                                    @Html.ActionLink("Registrarme", "Registro", "Home", null, new { @class = "hover", id = "link" })
+                                    @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = "hover", id = "link" })
                                 </a>
                             </li>
                             <li>
@@ -84,19 +100,19 @@
                                     <svg class="bi bi-exclamation-octagon-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M11.46.146A.5.5 0 0011.107 0H4.893a.5.5 0 00-.353.146L.146 4.54A.5.5 0 000 4.893v6.214a.5.5 0 00.146.353l4.394 4.394a.5.5 0 00.353.146h6.214a.5.5 0 00.353-.146l4.394-4.394a.5.5 0 00.146-.353V4.893a.5.5 0 00-.146-.353L11.46.146zM8 4a.905.905 0 00-.9.995l.35 3.507a.552.552 0 001.1 0l.35-3.507A.905.905 0 008 4zm.002 6a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
                                     </svg>
-                                    @Html.ActionLink("Denuncias (Admin)", "Administrador", "Home", null, new { @class = "hover", id = "link" })
+                                    @Html.ActionLink("Denuncias (Admin)", "Administrador", "Usuario", null, new { @class = "hover", id = "link" })
 
                                 </a>
                             </li>
                             <li class="divider"></li>
-                            @if (Session["Email"] as string != "")
+                            @if (Session["UserId"] as string != "")
                             {
-                            <li>
-                                <a href="" class="text-light">
-                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                    @Html.ActionLink("Salir", "Salir", "Usuario", null, new { @class = "hover", id = "link" })
-                                </a>
-                            </li>
+                                <li>
+                                    <a href="" class="text-light">
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                        @Html.ActionLink("Salir", "Salir", "Usuario", null, new { @class = "hover", id = "link" })
+                                    </a>
+                                </li>
                             }
 
                         </ul>

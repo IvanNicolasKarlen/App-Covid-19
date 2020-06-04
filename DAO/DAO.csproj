@@ -54,10 +54,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\Crud.cs" />
     <Compile Include="Context\TpDBContext.cs" />
+    <Compile Include="DenunciasDao.cs" />
     <Compile Include="DonacionMonetariaDao.cs" />
     <Compile Include="NecesidadesDAO.cs" />
+    <Compile Include="NecesidadesDonacionesInsumosDAO.cs" />
+    <Compile Include="NecesidadesDonacionesMonetariasDAO.cs" />
+    <Compile Include="NecesidadValoracionesDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsuarioDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Entidades.ValidationCustom;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace WebCovid19.Models.Views
+namespace Entidades.Views
 {
     public class VMRegistro
     {
@@ -12,6 +13,7 @@ namespace WebCovid19.Models.Views
         [Required(ErrorMessage = " Email es obligatorio")]
         [EmailAddress(ErrorMessage = "Formato de Email erroneo")]
         [StringLength(50, ErrorMessage = "Email demaciado largo")]
+   
         public string Email { get; set; }
 
         [Display(Name = "Clave")]
@@ -29,6 +31,7 @@ namespace WebCovid19.Models.Views
         [Display(Name = "Fecha de nacimiento")]
         [Required(ErrorMessage = "Fecha de nacimiento obligatoria")]
         [CheckValidDate]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaNacimiento { get; set; }
     }
 }

@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebCovid19.Services;
+using Servicios;
+using Entidades;
+using WebCovid19.Filters;
 
 namespace WebCovid19.Controllers
 {
+    [AdminFilter]
+    [LoginFilter]
     public class DenunciaController : Controller
     {
-        public ActionResult Denuncia(int? id)
+        public ActionResult Denuncia(int id)
         {
             Denuncias denuncia = new Denuncias();
             ServicioNecesidad servicioNecesidad = new ServicioNecesidad();

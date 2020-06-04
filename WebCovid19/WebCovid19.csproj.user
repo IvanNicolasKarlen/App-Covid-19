@@ -19,6 +19,7 @@
     <WebStackScaffolding_LayoutPageFile>~/Views/Shared/_NecesidadesLayout.cshtml</WebStackScaffolding_LayoutPageFile>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_DbContextTypeFullName>WebCovid19.TpDBContext</WebStackScaffolding_DbContextTypeFullName>
+    <ActiveDebugTarget />
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

@@ -43,6 +43,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,30 +53,96 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TipoDonacion.cs" />
-    <Compile Include="Denuncias.cs" />
-    <Compile Include="DonacionesInsumos.cs" />
-    <Compile Include="DonacionesMonetarias.cs" />
-    <Compile Include="MotivoDenuncia.cs" />
-    <Compile Include="Necesidades.cs" />
-    <Compile Include="NecesidadesDonacionesInsumos.cs" />
-    <Compile Include="NecesidadesDonacionesMonetarias.cs" />
-    <Compile Include="NecesidadesReferencias.cs" />
-    <Compile Include="NecesidadesValoraciones.cs" />
+    <Compile Include="Denuncias.cs">
+      <DependentUpon>ModelTP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DonacionesInsumos.cs">
+      <DependentUpon>ModelTP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DonacionesMonetarias.cs">
+      <DependentUpon>ModelTP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enum\TipoDonacion.cs" />
+    <Compile Include="Enum\TipoEmail.cs" />
+    <Compile Include="Enum\TipoEstadoNecesidad.cs" />
+    <Compile Include="Enum\TipoUsuario.cs" />
+    <Compile Include="Metadata\Necesidades.cs" />
+    <Compile Include="Metadata\NecesidadesMetadata.cs" />
+    <Compile Include="ModelTP.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTP.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelTP.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelTP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTP.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="MotivoDenuncia.cs">
+      <DependentUpon>ModelTP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Necesidades.cs">
+      <DependentUpon>ModelTP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NecesidadesDonacionesInsumos.cs">
+      <DependentUpon>ModelTP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NecesidadesDonacionesMonetarias.cs">
+      <DependentUpon>ModelTP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NecesidadesReferencias.cs">
+      <DependentUpon>ModelTP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NecesidadesValoraciones.cs">
+      <DependentUpon>ModelTP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TipoEmail.cs" />
-    <Compile Include="Usuarios.cs" />
-    <Compile Include="Views\CheckValidDate.cs" />
+    <Compile Include="Usuarios.cs">
+      <DependentUpon>ModelTP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ValidationCustom\CheckValidDate.cs" />
+    <Compile Include="Views\EncriptarPassword.cs" />
     <Compile Include="Views\VMDatosDeVerificacionDeUsuario.cs" />
     <Compile Include="Views\VMDonacionMonetaria.cs" />
     <Compile Include="Views\VMLogin.cs" />
-    <Compile Include="Views\VMNecesidad.cs" />
     <Compile Include="Views\VMPerfil.cs" />
+    <Compile Include="Views\VMPublicacion.cs" />
+    <Compile Include="Views\VMReenvioDeEmail.cs" />
     <Compile Include="Views\VMRegistro.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="ModelTP.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelTP.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ModelTP.edmx.diagram">
+      <DependentUpon>ModelTP.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ModelTP.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelTP.edmx</DependentUpon>
+      <LastGenOutput>ModelTP.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelTP.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelTP.edmx</DependentUpon>
+      <LastGenOutput>ModelTP.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

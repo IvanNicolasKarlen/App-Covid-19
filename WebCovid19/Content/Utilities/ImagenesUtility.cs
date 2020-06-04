@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+<<<<<<< HEAD
 using WebCovid19.Models.Views;
+=======
+using Entidades.Views;
+>>>>>>> master
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Configuration;

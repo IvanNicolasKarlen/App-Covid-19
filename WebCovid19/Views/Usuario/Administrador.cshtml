@@ -1,0 +1,129 @@
+﻿@model List<Entidades.Denuncias>
+@{
+    ViewBag.Title = "Administrador";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    string mensajeCorrecto = (string)ViewData["mensajeCorrecto"];
+    string mensajeError = (string)ViewData["mensajeError"];
+}
+
+<div class="text-center mt.5" id="margin-top-header">
+    <h1>Gestion de Denuncias</h1>
+</div>
+
+
+<div class="col-md-12">
+    <div class="col-md-4 mt-4 mb-3 float-left">
+
+
+@if (Model.Count == 0)
+{
+    <h1 class="text-center">No se preocupe, todavia no hay denuncias para gestionar.</h1>
+}
+else
+{
+
+    if (mensajeCorrecto != null)
+    {
+        <div class="p-3 mb-2 bg-success text-white">@mensajeCorrecto</div>
+    }
+    if (mensajeError != null)
+    {
+        <div class="p-3 mb-2 bg-danger text-white">@mensajeError</div>
+    }
+
+
+    foreach (var denuncia in Model.OrderByDescending(o => o.FechaCreacion))
+    {
+        using (Html.BeginForm("DenunciaEvaluada", "Usuario", FormMethod.Post, new { @class= "col-md-12" }))
+        {
+
+        <div class="col-md-4 mt-4 mb-3 float-left">
+
+                    <div class="card" id="card">
+                        <img class="mx-auto d-block  ml-5 mt- mb-2" id="imgperfil-denuncia" src="~/Content/Img/@denuncia.Necesidades.Foto" />
+                    </div>
+                </div>
+
+                <div class="col-md-12 mt-3" id="margin-top-header">
+                    <div class="card" id="card">
+                        <div class="col-md-12">
+
+                            <div class="card-body mt-2">
+                                <h2 class="text-center col-md-12">@denuncia.Necesidades.Nombre</h2>
+
+                                <div class="input-group mb-3 text-center">
+
+                                    <div class="col-md-6 text-center">
+                                        <b>Usuario</b>
+                                        <div class="col-md-12 text-center">
+                                            <p>@denuncia.Usuarios.UserName</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 text-center">
+                                        <b>Descripcion</b>
+                                        <div class="col-md-12 text-center">
+                                            <p> @denuncia.Necesidades.Descripcion</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <b>Motivo de denuncia:</b>
+                                        <div class="col-md-12 text-center">
+
+
+                                            @switch (@denuncia.IdMotivo)
+                                            {
+                                                case 1:<h4 class="text-danger ">Fraude</h4>
+                                                    break;
+                                                case 2:<h4 class="text-danger ">Indebida</h4>
+                                                    break;
+                                                case 3:<h4 class="text-danger ">Violación de derechos</h4>
+                                                    break;
+                                                case 4:<h4 class="text-danger ">Contiene información política</h4>
+                                                    break;
+                                            }
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <b>Fecha de creacion: </b>
+                                        <div class="col-md-12 text-center">
+                                            <p><span class="fa fa-calendar"></span> @denuncia.FechaCreacion</p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <b>Comentario acerca de la denuncia: </b>
+                                        <div class="col-md-12 text-center">
+                                            <p><i class="fa fa-user-circle" aria-hidden="true"></i> @denuncia.Comentarios</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <b>Detalles de la necesidad</b><br>
+
+                                        <div class="form-row text-center">
+                                            <div class="col-12">
+                                                <button class="btn btn-warning text-light float-auto">Detalles</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="idNecesidad" value="@denuncia.Necesidades.IdNecesidad" />
+                            <div class="col-md-12 btn-group mb-3">
+                                <button type="submit" name="Desestimar" class="btn btn-danger">Desestimar</button>
+                                <button type="submit" name="Bloquear" class="btn btn-success ml-2">Bloquear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        }
+
+    }
+
+}

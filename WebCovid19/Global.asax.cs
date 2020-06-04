@@ -13,9 +13,11 @@ namespace WebCovid19
     {
         protected void Application_Start()
         {
+          
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
         }
 
         protected void Application_Error(object sender, EventArgs e)
@@ -33,9 +35,12 @@ namespace WebCovid19
         //ToDo: Sirve para verificar que esas variables de session no sean nulas, pero no soluciona todo el problema de tener que validar q no este vacio en cada services
          protected void Session_Start(Object sender, EventArgs e)
         {
-            Session["Email"] = String.Empty;
-            Session["url"] = String.Empty;
-          
+            
+            Session["UserId"] = String.Empty;
+            Session["Admin"] = String.Empty;
+            Session["action"] = String.Empty;
+            Session["controller"] = String.Empty;
+
         }
     }
 }
