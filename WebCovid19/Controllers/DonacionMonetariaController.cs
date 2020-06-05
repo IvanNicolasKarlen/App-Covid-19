@@ -8,7 +8,7 @@ using Servicios;
 using Entidades.Views;
 using Entidades;
 using WebCovid19.Filters;
-
+using WebCovid19.Utilities;
 
 namespace WebCovid19.Controllers
 {
@@ -54,18 +54,31 @@ namespace WebCovid19.Controllers
         [HttpGet]
         public ActionResult SeleccionComprobanteDePago()
         {
-            return View();
+            VMComprobantePago VMComprobantePago = new VMComprobantePago();
+            return View(VMComprobantePago);
         }
 
 
         [HttpPost]
-        public ActionResult SeleccionComprobanteDePago(DonacionesMonetarias donacionesMonetarias)
+        public ActionResult SeleccionComprobanteDePago(VMComprobantePago VMComprobantePago)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(donacionesMonetarias);
+                    return View();
+                }
+                else
+                {
+                    if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
+                    {
+
+                        int idUsuario = int.Parse(Session["UserId"].ToString());
+                        string nombreSignificativo = idUsuario + " " + Session["Email"];
+                        //Guardar Imagen
+                        string pathRelativoImagen = ImagenesUtil.Guardar(Request.Files[0], nombreSignificativo);
+                        VMComprobantePago.ArchivoTransferencia = pathRelativoImagen;
+                    }
                 }
             }
             catch (Exception ex)
