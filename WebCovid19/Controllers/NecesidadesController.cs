@@ -17,6 +17,7 @@ namespace WebCovid19.Controllers
     {
         ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
         ServicioNecesidadesInsumos servicioInsumo = new ServicioNecesidadesInsumos();
+        ServicioNecesidadesMonetarias servicioMonetaria = new ServicioNecesidadesMonetarias();
         // GET: Necesidades
         public ActionResult Index()
         {
@@ -32,7 +33,6 @@ namespace WebCovid19.Controllers
         }
 
         [HttpPost]
-        // public ActionResult Crear(VMNecesidad vmnecesidad)
         public ActionResult Crear(NecesidadesMetadata vmnecesidad)
         {
             if (!ModelState.IsValid)
@@ -66,15 +66,15 @@ namespace WebCovid19.Controllers
         [HttpGet]
         public ActionResult Insumos()
         {
-            NecesidadesDonacionesInsumos insumos = new NecesidadesDonacionesInsumos();
+            NecesidadesDonacionesInsumosMetadata insumos = new NecesidadesDonacionesInsumosMetadata();
             string s = TempData["idNecesidad"].ToString();
             int idNecesidad = int.Parse(s);
             insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
             return View(insumos);
         }            
-        //TODO: Crear metadata de NecDonInsumos y Monetarias
+
         [HttpPost]
-        public ActionResult Insumos(NecesidadesDonacionesInsumos insumos)
+        public ActionResult Insumos(NecesidadesDonacionesInsumosMetadata insumos)
         {
             if (!ModelState.IsValid)
             {
@@ -93,8 +93,17 @@ namespace WebCovid19.Controllers
             monetaria.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
             return View(monetaria);
         }
-        //ToDo: ActionResult Monetaria Post. Y crear el servicio y dao correspondiente
-       
+
+        public ActionResult Monetarias(NecesidadesDonacionesMonetariasMetadata monetarias)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["idNecesidad"] = monetarias.Necesidades.IdNecesidad;
+                return View();
+            }
+            servicioMonetaria.GuardarMonetarias(monetarias);
+            return View();
+        }
 
         [HttpPost]
         public ActionResult MisNecesidades(string necesidad)

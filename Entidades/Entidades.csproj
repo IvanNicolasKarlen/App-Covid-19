@@ -66,6 +66,10 @@
     <Compile Include="Enum\TipoEmail.cs" />
     <Compile Include="Enum\TipoEstadoNecesidad.cs" />
     <Compile Include="Enum\TipoUsuario.cs" />
+    <Compile Include="Metadata\NecesidadesDonacionesMonetariasMetadata.cs" />
+    <Compile Include="Metadata\NecesidadesDonacionesInsumosMetadata.cs" />
+    <Compile Include="Metadata\NecesidadesDonacionesMonetarias.cs" />
+    <Compile Include="Metadata\NecesidadesDonacionesInsumos.cs" />
     <Compile Include="Metadata\Necesidades.cs" />
     <Compile Include="Metadata\NecesidadesMetadata.cs" />
     <Compile Include="ModelTP.Context.cs">

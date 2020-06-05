@@ -5,14 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using Entidades;
 using DAO;
+using Entidades.Metadata;
+
 namespace Servicios
 {
     public class ServicioNecesidadesInsumos
     {
         NecesidadesDonacionesInsumosDAO insumosDAO = new NecesidadesDonacionesInsumosDAO();
-        public void GuardarInsumos(NecesidadesDonacionesInsumos insumo)
+        public void GuardarInsumos(NecesidadesDonacionesInsumosMetadata insumoMeta)
         {
-            insumosDAO.GuardarInsumo(insumo);
+            NecesidadesDonacionesInsumos insumo = new NecesidadesDonacionesInsumos()
+            {
+                IdNecesidad = insumoMeta.IdNecesidad,
+                Necesidades = insumoMeta.Necesidades,
+                Nombre = insumoMeta.Nombre,
+                Cantidad = insumoMeta.Cantidad
+            };
+            insumosDAO.Crear(insumo);
         }
     }
 }

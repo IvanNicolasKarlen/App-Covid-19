@@ -7,21 +7,34 @@ using DAO.Abstract;
 using Entidades;
 namespace DAO
 {
-    class NecesidadesDonacionesMonetariasDAO : Crud<NecesidadesDonacionesMonetarias>
+    public class NecesidadesDonacionesMonetariasDAO : Crud<NecesidadesDonacionesMonetarias>
     {
         public override NecesidadesDonacionesMonetarias Actualizar(NecesidadesDonacionesMonetarias generics)
         {
-            throw new NotImplementedException();
+            NecesidadesDonacionesMonetarias monetaria = ObtenerPorID(generics.IdNecesidadDonacionMonetaria);
+            monetaria = generics;
+            if(context.Entry(monetaria).State == System.Data.Entity.EntityState.Modified)
+            {
+                context.SaveChanges();
+                return monetaria;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         public override NecesidadesDonacionesMonetarias Crear(NecesidadesDonacionesMonetarias generics)
         {
-            throw new NotImplementedException();
+           NecesidadesDonacionesMonetarias monetaria =  context.NecesidadesDonacionesMonetarias.Add(generics);
+            context.SaveChanges();
+            return monetaria;
         }
 
         public override NecesidadesDonacionesMonetarias ObtenerPorID(int id)
         {
-            throw new NotImplementedException();
+            return context.NecesidadesDonacionesMonetarias.Find(id);
         }
     }
 }

@@ -8,22 +8,30 @@ namespace DAO
     {
         public override NecesidadesDonacionesInsumos Actualizar(NecesidadesDonacionesInsumos generics)
         {
-            throw new NotImplementedException();
+            NecesidadesDonacionesInsumos insumo = ObtenerPorID(generics.IdNecesidadDonacionInsumo);
+            insumo = generics;
+            if (context.Entry(insumo).State == System.Data.Entity.EntityState.Modified)
+            {
+                context.SaveChanges();
+                return insumo;
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         public override NecesidadesDonacionesInsumos Crear(NecesidadesDonacionesInsumos generics)
         {
-            throw new NotImplementedException();
+            NecesidadesDonacionesInsumos insumo = context.NecesidadesDonacionesInsumos.Add(generics);
+            context.SaveChanges();
+            return insumo;
         }
 
-        public void GuardarInsumo(NecesidadesDonacionesInsumos insumo)
+        public override NecesidadesDonacionesInsumos ObtenerPorID(int id)
         {
-            context.NecesidadesDonacionesInsumos.Add(insumo);
-        }
-
-        public override NecesidadesDonacionesInsumos ObtenerPorID(int generics)
-        {
-            throw new NotImplementedException();
+            return context.NecesidadesDonacionesInsumos.Find(id);
         }
     }
 }
