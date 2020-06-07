@@ -33,6 +33,7 @@ namespace WebCovid19.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Crear(NecesidadesMetadata vmnecesidad)
         {
             if (!ModelState.IsValid)
@@ -53,11 +54,11 @@ namespace WebCovid19.Controllers
                 TempData["idNecesidad"] = necesidad.IdNecesidad;
                 if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")
                 {
-                    return View("Insumos"); 
+                    return View("Insumos");
                 }
                 else
                 {
-                    return RedirectToAction("Monetaria", "Necesidades", necesidad.IdNecesidad);
+                    return View("Monetaria");
                 }
             }
 
@@ -74,6 +75,7 @@ namespace WebCovid19.Controllers
         }            
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Insumos(NecesidadesDonacionesInsumosMetadata insumos)
         {
             if (!ModelState.IsValid)
@@ -85,6 +87,7 @@ namespace WebCovid19.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult Monetaria()
         {   
             NecesidadesDonacionesMonetarias monetaria = new NecesidadesDonacionesMonetarias();
@@ -93,8 +96,9 @@ namespace WebCovid19.Controllers
             monetaria.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
             return View(monetaria);
         }
-
-        public ActionResult Monetarias(NecesidadesDonacionesMonetariasMetadata monetarias)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Monetaria(NecesidadesDonacionesMonetariasMetadata monetarias)
         {
             if (!ModelState.IsValid)
             {
