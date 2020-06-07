@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="ValidationCustom\CheckValidDate.cs" />
     <Compile Include="Views\EncriptarPassword.cs" />
+    <Compile Include="Views\VMComprobantePago.cs" />
     <Compile Include="Views\VMDatosDeVerificacionDeUsuario.cs" />
     <Compile Include="Views\VMDonacionMonetaria.cs" />
     <Compile Include="Views\VMLogin.cs" />

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DAO.Abstract;
 using Entidades;
 
@@ -27,6 +29,12 @@ namespace DAO
             NecesidadesDonacionesInsumos insumo = context.NecesidadesDonacionesInsumos.Add(generics);
             context.SaveChanges();
             return insumo;
+        }
+
+        public NecesidadesDonacionesInsumos ObtenerPorIDNecesidad(int idNecesidad)
+        {
+            NecesidadesDonacionesInsumos obtenido= context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidad == idNecesidad).FirstOrDefault();
+            return obtenido;
         }
 
         public override NecesidadesDonacionesInsumos ObtenerPorID(int id)

@@ -32,6 +32,11 @@ namespace DAO
             return monetaria;
         }
 
+        public NecesidadesDonacionesMonetarias obtenerPorIdNecesidad(int idNecesidad)
+        {
+            return context.NecesidadesDonacionesMonetarias.Where(o=> o.IdNecesidad == idNecesidad).FirstOrDefault();
+        }
+
         public override NecesidadesDonacionesMonetarias ObtenerPorID(int id)
         {
             return context.NecesidadesDonacionesMonetarias.Find(id);

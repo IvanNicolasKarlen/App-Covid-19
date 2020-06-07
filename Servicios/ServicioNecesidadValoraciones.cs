@@ -10,12 +10,11 @@ namespace Servicios
 {
     public class ServicioNecesidadValoraciones
     {
+        UsuarioDao usuarioDao = new UsuarioDao();
+        NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
+        NecesidadValoracionesDao necesidadValoracionesDao = new NecesidadValoracionesDao();
         public bool guardarValoracion(int idUsuario, int idNecesidad, string botonRecibido)
         {
-            UsuarioDao usuarioDao = new UsuarioDao();
-            NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
-            NecesidadValoracionesDao necesidadValoracionesDao = new NecesidadValoracionesDao();
-
             //Obtengo Usuario y Necesidad
             Usuarios usuarioObtenido = usuarioDao.ObtenerPorID(idUsuario);
             Necesidades necesidadObtenida = necesidadesDAO.ObtenerPorID(idNecesidad);
@@ -125,9 +124,15 @@ namespace Servicios
 
         public List<NecesidadesValoraciones> obtenerValoracionesDelUsuario(int idSession)
         {
-            NecesidadValoracionesDao necesidadValoracionesDao = new NecesidadValoracionesDao();
+
             List<NecesidadesValoraciones> valoracionesDelUsuario = necesidadValoracionesDao.obtenerValoracionesDelUsuario(idSession);
             return valoracionesDelUsuario;
+        }
+
+        public List<NecesidadesValoraciones> obtenerValoracionPorIdNecesidad( int idNecesidad)
+        {
+            return necesidadValoracionesDao.obtenerValoracionPorIdNecesidad( idNecesidad);
+
         }
     }
 }

@@ -1,0 +1,131 @@
+﻿@model Entidades.Views.VMPublicacion
+@{
+    ViewBag.Title = "NecesidadDonacionInsumos";
+    int idSession = int.Parse(Session["UserId"].ToString());
+}
+
+
+    <div class="card" id="margin-top-header">
+        <div class="card" id="card-circle">
+            <div class="col-md-12">
+                <div class="float-right">
+
+                    <p class="card-text text-secondary mt-4"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> @Model.necesidadesDonacionesInsumos.Necesidades.FechaFin</p>
+                </div>
+                <div class="row">
+                    @if (@Model.necesidadesDonacionesInsumos.Necesidades.Usuarios.Foto == null)
+                    {
+                        <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="~/Content/Img/imagenPerfil-Nula.png">
+
+                    }
+                    else
+                    {
+                        <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="~/Content/Img/@Model.necesidadesDonacionesInsumos.Necesidades.Usuarios.Foto">
+
+                    }
+                    <div class="col-md-4">
+                        <p class=" text-secondary mt-3"><b>@Model.necesidadesDonacionesInsumos.Necesidades.Usuarios.UserName</b></p>
+                        <p><span class="fa fa-calendar"></span> @Model.necesidadesDonacionesInsumos.Necesidades.FechaCreacion</p>
+                    </div>
+                </div>
+                <div class="col-md-12 ">
+                    <div class="col-md-6 float-left">
+                        <div class="col-md-12">
+                            <div class="card-body float-auto">
+                                <h2 class="text-center">@Model.necesidadesDonacionesInsumos.Necesidades.Nombre</h2>
+                                <div class="col-md-12 text-center m-auto">
+                                    <i>@Model.necesidadesDonacionesInsumos.Necesidades.Descripcion</i>
+                                </div>
+                                <div class="col-md-12 mb-3 mt-3 float-left">
+
+                                    <h3> Total faltante: <b>@Model.necesidadesDonacionesInsumos.DonacionesInsumos.Count elementos</b></h3>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12 btn-group mt-4 mb-3">
+                                <button type="button" class="btn btn-danger">En otro momento</button>
+                                <button type="button" class="btn btn-success ml-2">Donar Insumos</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-3 mb-3 float-right">
+
+                        <img class="card-img-top" src="~/Content/Img/@Model.necesidadesDonacionesInsumos.Necesidades.Foto" id="imagen-detalle" alt="Card image cap">
+
+
+                        @using (Html.BeginForm("DetalleNecesidad", "Necesidades", FormMethod.Post, new { @class = "float-auto " }))
+                        {
+                            <input type="hidden" name="IdNecesidad" value="@Model.necesidadesDonacionesInsumos.Necesidades.IdNecesidad" />
+
+                            if (Model.necesidadesValoraciones.Count == 0)
+                            {
+                                <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                            }
+                            else
+                            {
+                                int bandera = 0;
+                                foreach (var necesidadesValoraciones in Model.necesidadesValoraciones)     //3 ... 1... 2
+                                {
+
+
+                                    if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.necesidadesDonacionesInsumos.Necesidades.IdNecesidad & necesidadesValoraciones.Valoracion == "Like")
+                                    {
+                                        <button type="submit" class="btn btn-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        bandera++;
+                                    }
+
+                                }
+
+
+                                if (Model.necesidadesValoraciones.Count == bandera)
+                                {
+                                    <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                                }
+                            }
+                            <label> <b class="text-primary">@Model.necesidadesDonacionesInsumos.Necesidades.Valoracion%</b> de coincidencias </label>
+
+
+
+                            if (Model.necesidadesValoraciones.Count == 0)
+                            {
+                                <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+                            }
+                            else
+                            {
+                                int bandera = 0;
+                                foreach (var necesidadesValoraciones in Model.necesidadesValoraciones)
+                                {
+                                    if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.necesidadesDonacionesInsumos.Necesidades.IdNecesidad & necesidadesValoraciones.Valoracion == "Dislike")
+                                    {
+                                        <button type="submit" class="btn btn-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        bandera++;
+
+                                    }
+                                }
+
+                                if (Model.necesidadesValoraciones.Count == bandera)
+                                {
+                                    <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                                }
+                                <label> No estoy de acuerdo </label>
+                            }
+                        }
+                    </div>
+
+                    </div>
+                </div>
+        </div>
+   </div>
+
+

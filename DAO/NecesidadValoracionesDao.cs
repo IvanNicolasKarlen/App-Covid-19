@@ -52,5 +52,11 @@ namespace DAO
             }
             return valoracionGuardada;
         }
+
+        public List<NecesidadesValoraciones> obtenerValoracionPorIdNecesidad(int idNecesidad)
+        {
+            List<NecesidadesValoraciones> valoracionDB = context.NecesidadesValoraciones.Where(o => o.IdNecesidad == idNecesidad).ToList();
+            return valoracionDB;
+        }
     }
 }

@@ -1870,6 +1870,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ImagenesUtil.cs" />
+    <Compile Include="Utilities\LikeOrDislike.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -1903,7 +1904,7 @@
     <Content Include="Views\Shared\_AnonimoLayout.cshtml" />
     <Content Include="Views\Shared\_BaseLayout.cshtml" />
     <Content Include="Views\Shared\_NecesidadesLayout.cshtml" />
-    <Content Include="Views\NecesidadDonacionInsumos\NecesidadDonacionInsumos.cshtml" />
+    <Content Include="Views\Shared\NecesidadDonacionInsumos.cshtml" />
     <Content Include="Views\NecesidadesDonacionesMonetarias\NecesidadesDonacionesMonetarias.cshtml" />
     <Content Include="Views\DonacionMonetaria\GraciasPorDonarMonetariamente.cshtml" />
     <Content Include="Views\DonacionMonetaria\SeleccionComprobanteDePago.cshtml" />
@@ -1922,6 +1923,9 @@
     <Content Include="Views\Usuario\acerca-de.cshtml" />
     <Content Include="Views\Shared\PublicacionDeLaNecesidad.cshtml" />
     <Content Include="Views\DonacionMonetaria\VerTotalDeDonacion.cshtml" />
+    <Content Include="Views\Necesidades\DetalleNecesidad.cshtml" />
+    <Content Include="Views\Shared\PublicacionInsumos.cshtml" />
+    <Content Include="Views\Shared\NecesidadDonacionMonetaria.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1932,6 +1936,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Js\" />
+    <Folder Include="Views\NecesidadDonacionInsumos\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

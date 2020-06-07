@@ -1,0 +1,17 @@
+﻿@model Entidades.Views.VMPublicacion
+@{
+    ViewBag.Title = "DetalleNecesidad";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    int idSession = int.Parse(Session["UserId"].ToString());
+}
+
+<h2>Detalle de la Necesidad</h2>
+
+@if (Model.necesidadesDonacionesInsumos.Necesidades != null)
+{
+    @Html.Partial("~/Views/Shared/NecesidadDonacionInsumos.cshtml", Model)
+}
+else if (Model.necesidadesDonacionesMonetarias.Necesidades != null)
+{
+    @Html.Partial("~/Views/Shared/NecesidadDonacionMonetaria.cshtml", Model)
+}

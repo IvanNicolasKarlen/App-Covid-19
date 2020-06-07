@@ -144,7 +144,9 @@ else
                     <div class="text-center">
                         @Html.ActionLink("Editar", "", "", null, new { @class = "btn btn-primary" })
 
-                        @Html.ActionLink("Más detalles", "NecesidadDonacionInsumos", "NecesidadDonacionInsumos", null, new { @class = "btn btn-info" })
+                        <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a> 
+                       
+                        
                         @if (necesidad.Usuarios.Nombre == null & necesidad.Usuarios.Apellido == null)
                         {
                             @Html.ActionLink("Ayudar", "NecesidadDonacionInsumos", "NecesidadDonacionInsumos", null, new { @class = "btn btn-primary" })

@@ -23,5 +23,12 @@ namespace Servicios
             };
             insumosDAO.Crear(insumo);
         }
+
+        public NecesidadesDonacionesInsumos obtenerPorIdNecesidad(int idNecesidad)
+        {
+             NecesidadesDonacionesInsumos necInsumos = insumosDAO.ObtenerPorIDNecesidad(idNecesidad);
+            return necInsumos;
+        }
+
     }
 }

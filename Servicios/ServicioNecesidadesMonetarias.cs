@@ -23,5 +23,10 @@ namespace Servicios
             };
             MonetariasDAO.Crear(monetaria);
         }
+
+        public NecesidadesDonacionesMonetarias obtenerPorIdNecesidad(int idNecesidad)
+        {
+            return MonetariasDAO.obtenerPorIdNecesidad(idNecesidad);
+        }
     }
 }

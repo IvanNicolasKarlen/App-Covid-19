@@ -330,10 +330,10 @@ namespace WebCovid19.Controllers
 
         public ActionResult LikeOrDislike(int idNecesidad)
         {
-            ServicioNecesidadValoraciones servicioValoraciones = new ServicioNecesidadValoraciones();
             int idSession = int.Parse(Session["UserId"].ToString());
             string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
-            bool likeOrDislike = servicioValoraciones.guardarValoracion(idSession, idNecesidad, boton);
+            LikeOrDislike likeOrDislike = new LikeOrDislike();
+            bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad);
             return RedirectToAction("Home");
         }
 

@@ -1,0 +1,148 @@
+﻿@model Entidades.Views.VMPublicacion
+
+@{ 
+    ViewBag.Title = "NecesidadDonacionInsumos";
+    int idSession = int.Parse(Session["UserId"].ToString());
+}
+
+
+
+<div class="card" id="card-circle">
+    <div class="col-md-12">
+        <div class="float-right">
+
+            <p class="card-text text-secondary mt-5"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span>@Model.necesidadesDonacionesMonetarias.Necesidades.FechaFin</p>
+        </div>
+
+
+
+        <div class="row">
+            @if (@Model.necesidadesDonacionesMonetarias.Necesidades.Usuarios.Foto == null)
+            {
+                <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="~/Content/Img/imagenPerfil-Nula.png">
+            }
+            else
+            {
+                <img class="card-img-top" src="~/Content/Img/@Model.necesidadesDonacionesMonetarias.Necesidades.Usuarios.Foto" id="imagen-detalle" alt="Card image cap">
+            }
+            <div class="col-md-2">
+                <p class=" text-secondary mt-3"><b>@Model.necesidadesDonacionesMonetarias.Necesidades.Usuarios.UserName</b></p>
+                <p><span class="fa fa-calendar"></span>@Model.necesidadesDonacionesMonetarias.Necesidades.FechaCreacion</p>
+
+
+
+            </div>
+        </div>
+
+        <div class="col-md-12 ">
+            <div class="col-md-5 mt-3 mb-3 float-left">
+                    <img class="card-img-top" src="~/Content/Img/@Model.necesidadesDonacionesMonetarias.Necesidades.Foto" id="imagen-detalle" alt="Card image cap">
+             
+            <div class="float-auto ml-4 mt-2">
+
+                @using (Html.BeginForm("DetalleNecesidad", "Necesidades", FormMethod.Post, new { @class = "float-auto ml-4" }))
+                {
+                    <input type="hidden" name="IdNecesidad" value="@Model.necesidadesDonacionesMonetarias.Necesidades.IdNecesidad" />
+
+                    if (Model.necesidadesValoraciones.Count == 0)
+                    {
+                        <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                    }
+                    else
+                    {
+                        int bandera = 0;
+                        foreach (var necesidadesValoraciones in Model.necesidadesValoraciones)     //3 ... 1... 2
+                        {
+
+
+                            if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.necesidadesDonacionesMonetarias.Necesidades.IdNecesidad & necesidadesValoraciones.Valoracion == "Like")
+                            {
+                                <button type="submit" class="btn btn-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
+                                break;
+                            }
+                            else
+                            {
+                                bandera++;
+                            }
+
+                        }
+
+
+                        if (Model.necesidadesValoraciones.Count == bandera)
+                        {
+                            <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                        }
+                    }
+                    <label> <b class="text-primary">@Model.necesidadesDonacionesMonetarias.Necesidades.Valoracion%</b> de coincidencias </label>
+
+
+
+                    if (Model.necesidadesValoraciones.Count == 0)
+                    {
+                        <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+                    }
+                    else
+                    {
+                        int bandera = 0;
+                        foreach (var necesidadesValoraciones in Model.necesidadesValoraciones)
+                        {
+                            if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.necesidadesDonacionesMonetarias.Necesidades.IdNecesidad & necesidadesValoraciones.Valoracion == "Dislike")
+                            {
+                                <button type="submit" class="btn btn-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+
+                                break;
+                            }
+                            else
+                            {
+                                bandera++;
+
+                            }
+                        }
+
+                        if (Model.necesidadesValoraciones.Count == bandera)
+                        {
+                            <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                        }
+                        <label> Votar en contra </label>
+                    }
+                }
+
+            </div>
+            </div>
+
+
+
+
+            <div class="col-md-7 float-right">
+
+                <div class="col-md-12">
+                    <div class="card-body float-auto">
+                        <h2 class="text-center">@Model.necesidadesDonacionesMonetarias.Necesidades.Nombre</h2>
+
+                        <div class="col-md-8 text-center m-auto">
+                            <i>@Model.necesidadesDonacionesMonetarias.Necesidades.Descripcion</i>
+                        </div>
+
+
+
+                        <div class="col-md-12 mb-3 mt-3 text-center">
+
+                            <h3><img src="img/dinero.png" id="icons" alt=""> Total restante: <b>$@Model.necesidadesDonacionesMonetarias.Dinero</b></h3>
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-12 btn-group mt-4 mb-3">
+                        <button type="button" class="btn btn-danger">En otro momento</button>
+                        <button type="button" class="btn btn-success ml-2">Donar Dinero</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

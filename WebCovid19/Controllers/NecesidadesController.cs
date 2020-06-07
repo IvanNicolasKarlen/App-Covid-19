@@ -18,6 +18,8 @@ namespace WebCovid19.Controllers
         ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
         ServicioNecesidadesInsumos servicioInsumo = new ServicioNecesidadesInsumos();
         ServicioNecesidadesMonetarias servicioMonetaria = new ServicioNecesidadesMonetarias();
+        ServicioNecesidadValoraciones servicioNecesidadValoraciones = new ServicioNecesidadValoraciones();
+   
         // GET: Necesidades
         public ActionResult Index()
         {
@@ -123,5 +125,34 @@ namespace WebCovid19.Controllers
             return View(vMPublicacion);
         }
 
+        [LoginFilter]
+        public ActionResult DetalleNecesidad(int idNecesidad)
+        {
+            int idSession = int.Parse(Session["UserId"].ToString());
+            /**************************************************/
+            string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
+            LikeOrDislike likeOrDislike = new LikeOrDislike();
+            bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad);
+
+
+            /*************************************************/
+            VMPublicacion vMPublicacion = new VMPublicacion();
+            Necesidades necesidadObtenida = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
+            List<NecesidadesValoraciones> valoracionesObtenidas = servicioNecesidadValoraciones.obtenerValoracionPorIdNecesidad(idNecesidad);
+
+            if (necesidadObtenida.TipoDonacion == 1)//Dinero
+            {
+                NecesidadesDonacionesMonetarias necDonacionObtenida = servicioMonetaria.obtenerPorIdNecesidad(idNecesidad);
+                vMPublicacion.necesidadesDonacionesMonetarias = necDonacionObtenida;
+            }
+            else if(necesidadObtenida.TipoDonacion == 2)//Insumos
+            {
+                NecesidadesDonacionesInsumos insumosObtenidos = servicioInsumo.obtenerPorIdNecesidad(idNecesidad);
+                vMPublicacion.necesidadesDonacionesInsumos = insumosObtenidos;
+            }
+
+            vMPublicacion.necesidadesValoraciones = valoracionesObtenidas;
+            return View(vMPublicacion);
+        }
     }
 }
