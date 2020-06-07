@@ -125,9 +125,9 @@ namespace WebCovid19.Controllers
             return View(vMPublicacion);
         }
 
-        [LoginFilter]
+        [LoginFilter]//toDo: Probar que funcione bien del todo este action.
         public ActionResult DetalleNecesidad(int idNecesidad)
-        {
+        { 
             int idSession = int.Parse(Session["UserId"].ToString());
             /***************************** Like or Dislike *************************/
             /*Si recibe un Like or dislike desde la vista DetalleNecesidad viene para acá*/
