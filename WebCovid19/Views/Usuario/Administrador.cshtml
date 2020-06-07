@@ -32,7 +32,7 @@
             <div class="p-3 mb-2 bg-danger text-white">@mensajeError</div>
         }
 
-        foreach (var denuncia in Model.OrderByDescending(o => o.FechaCreacion))
+        foreach (var denuncia in Model.OrderBy(o => o.FechaCreacion))
         {
             using (Html.BeginForm("DenunciaEvaluada", "Usuario", FormMethod.Post, new { @class = "col-md-12" }))
             {
