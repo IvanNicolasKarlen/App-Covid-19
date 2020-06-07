@@ -129,13 +129,16 @@ namespace WebCovid19.Controllers
         public ActionResult DetalleNecesidad(int idNecesidad)
         {
             int idSession = int.Parse(Session["UserId"].ToString());
-            /**************************************************/
-            string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
-            LikeOrDislike likeOrDislike = new LikeOrDislike();
-            bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad);
-
-
-            /*************************************************/
+            /***************************** Like or Dislike *************************/
+            /*Si recibe un Like or dislike desde la vista DetalleNecesidad viene para acá*/
+           if(Request.Form["Like"]!=null | (Request.Form["Dislike"] != null))
+            {
+                string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
+                LikeOrDislike likeOrDislike = new LikeOrDislike();
+                bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad);
+            }
+            
+            /**********************************************************************/
             VMPublicacion vMPublicacion = new VMPublicacion();
             Necesidades necesidadObtenida = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
             List<NecesidadesValoraciones> valoracionesObtenidas = servicioNecesidadValoraciones.obtenerValoracionPorIdNecesidad(idNecesidad);

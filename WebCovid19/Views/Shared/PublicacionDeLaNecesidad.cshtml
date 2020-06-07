@@ -1,7 +1,7 @@
 ﻿@model Entidades.Views.VMPublicacion
 
 @{
-    int idSession = int.Parse(Session["UserId"].ToString()); 
+    int idSession = int.Parse(Session["UserId"].ToString());
 }
 
 
@@ -144,9 +144,9 @@ else
                     <div class="text-center">
                         @Html.ActionLink("Editar", "", "", null, new { @class = "btn btn-primary" })
 
-                        <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a> 
-                       
-                        
+                        <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
+
+
                         @if (necesidad.Usuarios.Nombre == null & necesidad.Usuarios.Apellido == null)
                         {
                             @Html.ActionLink("Ayudar", "NecesidadDonacionInsumos", "NecesidadDonacionInsumos", null, new { @class = "btn btn-primary" })
@@ -165,6 +165,5 @@ else
         <!--FIN DE LA PUBLICACION-->
 
     }
-
 
 }
