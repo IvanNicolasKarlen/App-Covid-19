@@ -54,13 +54,13 @@ namespace WebCovid19.Controllers
         [HttpGet]
         public ActionResult SeleccionComprobanteDePago()
         {
-            VMComprobantePago VMComprobantePago = new VMComprobantePago();
-            return View(VMComprobantePago);
+            VMComprobantePago vmComprobantePago = new VMComprobantePago();
+            return View(vmComprobantePago);
         }
 
 
         [HttpPost]
-        public ActionResult SeleccionComprobanteDePago(VMComprobantePago VMComprobantePago)
+        public ActionResult SeleccionComprobanteDePago(VMComprobantePago vmComprobantePago)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace WebCovid19.Controllers
                         string nombreSignificativo = idUsuario + " " + Session["Email"];
                         //Guardar Imagen
                         string pathRelativoImagen = ImagenesUtil.Guardar(Request.Files[0], nombreSignificativo);
-                        VMComprobantePago.ArchivoTransferencia = pathRelativoImagen;
+                        vmComprobantePago.ArchivoTransferencia = pathRelativoImagen;
                     }
                 }
             }
