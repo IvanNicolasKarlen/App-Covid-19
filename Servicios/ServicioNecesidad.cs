@@ -14,11 +14,13 @@ namespace Servicios
     public class ServicioNecesidad
     {
         NecesidadesDAO necesidadesDAO;
+        TpDBContext contexto;
       //  ServicioNecesidadValoraciones servicioNecesidadValoraciones;
         public ServicioNecesidad(TpDBContext context)
         {
              necesidadesDAO = new NecesidadesDAO(context);
-           // servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
+            contexto = context;
+            // servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
         }
 
         public Necesidades obtenerNecesidadPorId(int id)
@@ -59,14 +61,14 @@ namespace Servicios
             if (estadoNecesidad == "on")
             {
                 List<Necesidades> necesidadesBD = necesidadesDAO.TraerNecesidadesActivasDelUsuario(idSession);
-                List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
-                return necesidadesReturn;
+              //  List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
+                return necesidadesBD;
             }
             else
             {
                 List<Necesidades> necesidadesBD = necesidadesDAO.TraerTodasLasNecesidadesDelUsuario(idSession);
-                List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
-                return necesidadesReturn;
+               // List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
+                return necesidadesBD;
 
             }
 
@@ -75,9 +77,9 @@ namespace Servicios
         public List<Necesidades> ListarTodasLasNecesidades()
         {
             List<Necesidades> necesidadesBD = necesidadesDAO.ListarTodasLasNecesidades();
-            List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
+            //List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
 
-            return necesidadesReturn;
+            return necesidadesBD;
         }
 
         /// <summary>
@@ -102,13 +104,12 @@ namespace Servicios
         /// <returns>Necesidades</returns>
         public Necesidades calcularValoracion(Necesidades necesidad)
         {
+            ServicioNecesidadValoraciones servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(contexto);
            
-          //  List<NecesidadesValoraciones> valoracionesObtenidas = servicioNecesidadValoraciones.obtenerValoracionesPorIDNecesidad(necesidad.IdNecesidad);
+            List<NecesidadesValoraciones> valoracionesObtenidas = servicioNecesidadValoraciones.obtenerValoracionesPorIDNecesidad(necesidad.IdNecesidad);
             decimal cantidadLikes = 0;
-            //  decimal cantidadDeVotaciones = valoracionesObtenidas.Count;
-            //toDo: este comentario el de arriba estaba bien, probando linea siguiente
-            decimal cantidadDeVotaciones =  necesidad.NecesidadesValoraciones.Count;
-
+            decimal cantidadDeVotaciones = valoracionesObtenidas.Count;
+            decimal resultado = 0;
 
          //   foreach (var item in valoracionesObtenidas)
            foreach(var item in necesidad.NecesidadesValoraciones)
@@ -117,13 +118,14 @@ namespace Servicios
                 {
                     cantidadLikes++;
                 }
+                resultado = (cantidadLikes / cantidadDeVotaciones * 100);
             }
 
-            decimal valoracion = cantidadLikes * cantidadDeVotaciones / 100;
+            necesidad.Valoracion = Math.Round(resultado, 2);
 
-            necesidad.Valoracion = valoracion;
+           // necesidad.Valoracion = valoracion;
 
-            
+
             Necesidades necesidadBD = necesidadesDAO.Actualizar(necesidad);
             if (necesidadBD == null)
             {
@@ -136,12 +138,13 @@ namespace Servicios
         {
             List<Necesidades> listadoNecesidades = necesidadesDAO.ListarTodasLasNecesidadesActivas();
             List<Necesidades> necesidadesMasValoradas = new List<Necesidades>();
+            int cantidad = (listadoNecesidades.Count >= 5) ? 5 : listadoNecesidades.Count;
 
             foreach (var item in listadoNecesidades.OrderByDescending(n => n.Valoracion).ToList())
             {
                 necesidadesMasValoradas.Add(item);
 
-                if (necesidadesMasValoradas.Count == 5)
+                if (necesidadesMasValoradas.Count == cantidad)
                 {
                     break;
                 }

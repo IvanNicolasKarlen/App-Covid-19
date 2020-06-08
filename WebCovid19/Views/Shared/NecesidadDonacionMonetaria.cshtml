@@ -44,14 +44,14 @@
                     {
                         <input type="hidden" name="IdNecesidad" value="@Model.necesidadesDonacionesMonetarias.Necesidades.IdNecesidad" />
 
-                        if (Model.necesidadesValoraciones.Count == 0)
+                        if (Model.necesidad.NecesidadesValoraciones.Count == 0)
                         {
                             <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                         }
                         else
                         {
                             int bandera = 0;
-                            foreach (var necesidadesValoraciones in Model.necesidadesValoraciones)     //3 ... 1... 2
+                            foreach (var necesidadesValoraciones in Model.necesidad.NecesidadesValoraciones)     //3 ... 1... 2
                             {
 
 
@@ -69,7 +69,7 @@
                             }
 
 
-                            if (Model.necesidadesValoraciones.Count == bandera)
+                            if (Model.necesidad.NecesidadesValoraciones.Count == bandera)
                             {
                                 <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                             }
@@ -78,14 +78,14 @@
 
 
 
-                        if (Model.necesidadesValoraciones.Count == 0)
+                        if (Model.necesidad.NecesidadesValoraciones.Count == 0)
                         {
                             <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
                         }
                         else
                         {
                             int bandera = 0;
-                            foreach (var necesidadesValoraciones in Model.necesidadesValoraciones)
+                            foreach (var necesidadesValoraciones in Model.necesidad.NecesidadesValoraciones)
                             {
                                 if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.necesidadesDonacionesMonetarias.Necesidades.IdNecesidad & necesidadesValoraciones.Valoracion == "Dislike")
                                 {
@@ -100,7 +100,7 @@
                                 }
                             }
 
-                            if (Model.necesidadesValoraciones.Count == bandera)
+                            if (Model.necesidad.NecesidadesValoraciones.Count == bandera)
                             {
                                 <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                             }

@@ -127,14 +127,9 @@ namespace WebCovid19.Controllers
             
             //Mantener el checkbox seleccionado o no, dependiendo lo que haya elegido
             TempData["estadoCheckbox"] = necesidad;
-            List<NecesidadesValoraciones> valoracionesObtenidas = servicioNecesidadValoraciones.obtenerValoracionesDelUsuario(idSession);
-            VMPublicacion vMPublicacion = new VMPublicacion()
-            {
-                listaNecesidades = necesidadesObtenidas,
-                necesidadesValoraciones = valoracionesObtenidas
-            };
+            
 
-            return View(vMPublicacion);
+            return View(necesidadesObtenidas);
         }
 
         [LoginFilter]//toDo: Probar que funcione bien del todo este action.
@@ -162,11 +157,10 @@ namespace WebCovid19.Controllers
             }
             else if(necesidadObtenida.TipoDonacion == 2)//Insumos
             {
-                NecesidadesDonacionesInsumos insumosObtenidos = servicioInsumo.obtenerPorIdNecesidad(idNecesidad);
+               NecesidadesDonacionesInsumos insumosObtenidos = servicioInsumo.obtenerPorIdNecesidad(idNecesidad);
                 vMPublicacion.necesidadesDonacionesInsumos = insumosObtenidos;
             }
-
-            vMPublicacion.necesidadesValoraciones = valoracionesObtenidas;
+            vMPublicacion.necesidad = necesidadObtenida;
             return View(vMPublicacion);
         }
     }

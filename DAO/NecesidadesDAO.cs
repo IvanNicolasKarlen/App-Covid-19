@@ -69,7 +69,7 @@ namespace DAO
             {
                 Necesidades necesidadBd = ObtenerPorID(necesidadObtenida.IdNecesidad);
 
-                necesidadBd.Valoracion = necesidadObtenida.Valoracion;
+                necesidadBd.Valoracion = (decimal)necesidadObtenida.Valoracion;
                 necesidadBd.Descripcion = necesidadObtenida.Descripcion;
                 necesidadBd.Estado = necesidadObtenida.Estado;
                 necesidadBd.Foto = necesidadObtenida.Foto;

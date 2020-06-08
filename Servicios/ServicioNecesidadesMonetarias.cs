@@ -38,10 +38,7 @@ namespace Servicios
         public NecesidadesDonacionesMonetarias obtenerPorIdNecesidad(int idNecesidad)
         {
             Necesidades necesidadBD = necesidadesDAO.ObtenerPorID(idNecesidad);
-            Necesidades necesidadValoracion = servicioNecesidad.calcularValoracion(necesidadBD);
-            Necesidades necesidadActualizada = necesidadesDAO.Actualizar(necesidadValoracion);
-            NecesidadesDonacionesMonetarias monetariasDAO = MonetariasDAO.obtenerPorIdNecesidad(necesidadActualizada.IdNecesidad);
-            monetariasDAO.Necesidades.Valoracion = necesidadValoracion.Valoracion;
+            NecesidadesDonacionesMonetarias monetariasDAO = MonetariasDAO.obtenerPorIdNecesidad(necesidadBD.IdNecesidad);
             return monetariasDAO;
         }
     }

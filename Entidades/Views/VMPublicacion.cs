@@ -8,8 +8,7 @@ namespace Entidades.Views
 {
     public class VMPublicacion
     {
-        public List<Necesidades> listaNecesidades = new List<Necesidades>();
-        public List<NecesidadesValoraciones> necesidadesValoraciones = new List<NecesidadesValoraciones>();
+        public Necesidades necesidad = new Necesidades();
         public NecesidadesDonacionesInsumos necesidadesDonacionesInsumos = new NecesidadesDonacionesInsumos();
         public NecesidadesDonacionesMonetarias necesidadesDonacionesMonetarias = new NecesidadesDonacionesMonetarias();
     }

@@ -39,14 +39,8 @@ namespace Servicios
         {   
             //Obtengo mediante el id
             Necesidades necesidadBD = necesidadesDAO.ObtenerPorID(idNecesidad);
-            //Calculo la valoracion
-            Necesidades necesidadValoracion = servicioNecesidad.calcularValoracion(necesidadBD);
-            //Se actualiza con la nueva valoracion
-            Necesidades necesidadActualizada = necesidadesDAO.Actualizar(necesidadValoracion);
             //Se obtienen las donaciones insumos
-            NecesidadesDonacionesInsumos necInsumos = insumosDAO.ObtenerPorIDNecesidad(necesidadActualizada.IdNecesidad);
-            //Se asigna la valoracion para mostrar en la vista
-            necInsumos.Necesidades.Valoracion = necesidadValoracion.Valoracion;
+            NecesidadesDonacionesInsumos necInsumos = insumosDAO.ObtenerPorIDNecesidad(necesidadBD.IdNecesidad);
             return necInsumos;
         }
 

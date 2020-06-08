@@ -21,9 +21,9 @@ namespace WebCovid19.Controllers
         public UsuarioController()
         {
             TpDBContext context = new TpDBContext();
-             servNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
-             servicioNecesidad = new ServicioNecesidad(context);
-             servicioDenuncia = new ServicioDenuncia(context);
+            servNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
+            servicioNecesidad = new ServicioNecesidad(context);
+            servicioDenuncia = new ServicioDenuncia(context);
             servicioUsuario = new ServicioUsuario(context);
             servicioValoraciones = new ServicioNecesidadValoraciones(context);
         }
@@ -37,21 +37,9 @@ namespace WebCovid19.Controllers
         [LoginFilter]
         public ActionResult Home()
         {
-            
-
-           int idSession = int.Parse(Session["UserId"].ToString());
+            int idSession = int.Parse(Session["UserId"].ToString());
             List<Necesidades> todasLasNecesidades = servicioNecesidad.ListarTodasLasNecesidades();
-            List<NecesidadesValoraciones> valoracionesObtenidas = servNecesidadValoraciones.obtenerValoracionesDelUsuario(idSession);
-            VMPublicacion vMPublicacion = new VMPublicacion()
-            {
-                listaNecesidades = todasLasNecesidades,
-                necesidadesValoraciones = valoracionesObtenidas
-            };
-
-            // return View(todasLasNecesidades);
-            return View(vMPublicacion);
-
-
+            return View(todasLasNecesidades);
         }
 
         public ActionResult Salir()
@@ -64,8 +52,6 @@ namespace WebCovid19.Controllers
         {
             VMRegistro registro = new VMRegistro();
             return View(registro);
-
-
         }
 
         [HttpPost]
@@ -134,7 +120,7 @@ namespace WebCovid19.Controllers
             }
             try
             {
-                
+
                 Usuarios usuarioObtenido = new Usuarios();
                 usuarioObtenido.Email = emailRecibido.Email;
 
@@ -356,17 +342,16 @@ namespace WebCovid19.Controllers
         [AdminFilter]
         public ActionResult Administrador()
         {
-            
             List<Denuncias> denunciasObtenidas = servicioDenuncia.obtenerDenuncias();
             return View("Administrador", denunciasObtenidas);
         }
 
-       
+
 
         [HttpPost]
         public ActionResult DenunciaEvaluada(int idNecesidad)
         {
-            
+
             //Si es Desestimar obtengo un false, si es Bloquear obtengo un true
             bool estado = (Request.Form["Desestimar"] != null) ? false : (Request.Form["Bloquear"] != null) ? true : false;
             bool evaluada = servicioDenuncia.necesidadEvaluada(idNecesidad, estado);
