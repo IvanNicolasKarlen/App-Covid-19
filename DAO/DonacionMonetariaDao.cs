@@ -12,6 +12,11 @@ namespace DAO
 {
     public class DonacionMonetariaDao : Crud<DonacionesMonetarias> //Uso de Generics
     {
+        public DonacionMonetariaDao(TpDBContext context) : base(context)
+        {
+
+        }
+
         public override DonacionesMonetarias Actualizar(DonacionesMonetarias generics)
         {
             throw new NotImplementedException();

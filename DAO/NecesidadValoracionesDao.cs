@@ -8,6 +8,10 @@ namespace DAO
 {
     public class NecesidadValoracionesDao : Crud<NecesidadesValoraciones>
     {
+        public NecesidadValoracionesDao(TpDBContext context) : base (context)
+        {
+
+        }
         public override NecesidadesValoraciones ObtenerPorID(int idValoracion)
         {
             NecesidadesValoraciones valoracionObtenida = context.NecesidadesValoraciones.Find(idValoracion);

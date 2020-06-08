@@ -5,14 +5,21 @@ using System.Web;
 using Entidades;
 using Entidades.Views;
 using DAO;
+using DAO.Context;
 
 namespace Servicios
 {
     public class ServicioDonacion
     {
 
-        DonacionMonetariaDao DonacionMonetariaDao = new DonacionMonetariaDao();
+        DonacionMonetariaDao DonacionMonetariaDao ;
 
+        public ServicioDonacion(TpDBContext context)
+        {
+            DonacionMonetariaDao = new DonacionMonetariaDao(context);
+        }
+
+       
         public decimal TotalRecaudado(int IdNeceDonacionMonetaria)
         {
             List<DonacionesMonetarias> lista = DonacionMonetariaDao.ObtenerPorId(IdNeceDonacionMonetaria);

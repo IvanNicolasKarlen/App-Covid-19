@@ -1,4 +1,5 @@
 ﻿using DAO;
+using DAO.Context;
 using Entidades;
 using Entidades.Views;
 using System;
@@ -14,7 +15,16 @@ namespace Servicios
 {
     public class ServicioDenuncia
     {
-        DenunciasDao denunciasDao = new DenunciasDao();
+        DenunciasDao denunciasDao;
+        ServicioNecesidad servicioNecesidad;
+        NecesidadesDAO necesidadesDAO;
+        public ServicioDenuncia(TpDBContext context)
+        {
+            denunciasDao = new DenunciasDao(context);
+            servicioNecesidad = new ServicioNecesidad(context);
+            necesidadesDAO = new NecesidadesDAO(context);
+        }
+
 
         /// <summary>
         /// Guardar la denuncia y validar si es necesario enviarselo al Admin o no
@@ -49,8 +59,7 @@ namespace Servicios
 
         public bool necesidadEvaluada(int idNecesidad, bool estado)
         {
-            ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
-            NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
+         
 
             if (estado) //True es para dejarla bloqueada/Inactiva a la Necesidad
             {

@@ -4,11 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAO.Abstract;
+using DAO.Context;
 using Entidades;
 namespace DAO
 {
     public class NecesidadesDonacionesMonetariasDAO : Crud<NecesidadesDonacionesMonetarias>
     {
+        public NecesidadesDonacionesMonetariasDAO (TpDBContext context) : base(context)
+        {
+
+        }
         public override NecesidadesDonacionesMonetarias Actualizar(NecesidadesDonacionesMonetarias generics)
         {
             NecesidadesDonacionesMonetarias monetaria = ObtenerPorID(generics.IdNecesidadDonacionMonetaria);

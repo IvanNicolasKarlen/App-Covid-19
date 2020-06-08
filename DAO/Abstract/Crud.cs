@@ -9,14 +9,14 @@ namespace DAO.Abstract
 {
     public abstract class Crud<T> where T : class
     {
-        public Crud()
-        {
-                this.context = new TpDBContext();
-        }
-
-        public readonly TpDBContext context;
+        public static TpDBContext context;
         
 
+    public Crud(TpDBContext contexto)
+    {
+        context = contexto;
+            
+    }
         public abstract T Crear(T generics);
         public abstract T Actualizar(T generics);
         public abstract T ObtenerPorID(int id);

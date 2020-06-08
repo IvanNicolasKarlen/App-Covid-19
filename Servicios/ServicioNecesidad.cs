@@ -7,12 +7,20 @@ using DAO;
 using Entidades;
 using Entidades.Enum;
 using Entidades.Metadata;
+using DAO.Context;
 
 namespace Servicios
 {
     public class ServicioNecesidad
     {
-        NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
+        NecesidadesDAO necesidadesDAO;
+      //  ServicioNecesidadValoraciones servicioNecesidadValoraciones;
+        public ServicioNecesidad(TpDBContext context)
+        {
+             necesidadesDAO = new NecesidadesDAO(context);
+           // servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
+        }
+
         public Necesidades obtenerNecesidadPorId(int id)
         {
             return necesidadesDAO.ObtenerPorID(id);
@@ -37,6 +45,9 @@ namespace Servicios
 
             return necesidadesDAO.Crear(necesidades);
         }
+
+        
+
         /// <summary>
         /// Trae todas las necesidades del usuario en base al estado de las mismas
         /// </summary>
@@ -91,12 +102,16 @@ namespace Servicios
         /// <returns>Necesidades</returns>
         public Necesidades calcularValoracion(Necesidades necesidad)
         {
-            ServicioNecesidadValoraciones servicioNecesidadValoraciones = new ServicioNecesidadValoraciones();
-            List<NecesidadesValoraciones> valoracionesObtenidas = servicioNecesidadValoraciones.obtenerValoracionesPorIDNecesidad(necesidad.IdNecesidad);
+           
+          //  List<NecesidadesValoraciones> valoracionesObtenidas = servicioNecesidadValoraciones.obtenerValoracionesPorIDNecesidad(necesidad.IdNecesidad);
             decimal cantidadLikes = 0;
-            decimal cantidadDeVotaciones = valoracionesObtenidas.Count;
+            //  decimal cantidadDeVotaciones = valoracionesObtenidas.Count;
+            //toDo: este comentario el de arriba estaba bien, probando linea siguiente
+            decimal cantidadDeVotaciones =  necesidad.NecesidadesValoraciones.Count;
 
-            foreach (var item in valoracionesObtenidas)
+
+         //   foreach (var item in valoracionesObtenidas)
+           foreach(var item in necesidad.NecesidadesValoraciones)
             {
                 if (item.Valoracion == "Like")
                 {
@@ -108,13 +123,31 @@ namespace Servicios
 
             necesidad.Valoracion = valoracion;
 
-            NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
+            
             Necesidades necesidadBD = necesidadesDAO.Actualizar(necesidad);
             if (necesidadBD == null)
             {
                 return null;
             }
             return necesidadBD;
+        }
+
+        public List<Necesidades> obtener5NecesidadesMasValoradas()
+        {
+            List<Necesidades> listadoNecesidades = necesidadesDAO.ListarTodasLasNecesidadesActivas();
+            List<Necesidades> necesidadesMasValoradas = new List<Necesidades>();
+
+            foreach (var item in listadoNecesidades.OrderByDescending(n => n.Valoracion).ToList())
+            {
+                necesidadesMasValoradas.Add(item);
+
+                if (necesidadesMasValoradas.Count == 5)
+                {
+                    break;
+                }
+            }
+
+            return necesidadesMasValoradas;
         }
     }
 }

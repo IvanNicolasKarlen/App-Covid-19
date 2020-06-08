@@ -4,11 +4,17 @@ using System.Linq;
 using Entidades;
 using DAO.Abstract;
 using System.Data.Entity.Validation;
+using DAO.Context;
 
 namespace DAO
 {
     public class NecesidadesDAO : Crud<Necesidades>
     {
+
+        public NecesidadesDAO(TpDBContext context) :base(context)
+        {
+            
+        }
         public override Necesidades ObtenerPorID(int idNecesidad)
         {
             Necesidades necesidad = context.Necesidades.Find(idNecesidad);
@@ -91,7 +97,22 @@ namespace DAO
             }
         }
 
-        
 
+        public List<Necesidades> ListarTodasLasNecesidadesActivas()
+        {
+            List<Necesidades> listadoNecesidades = new List<Necesidades>();
+
+            var listaObtenida = (from nec in context.Necesidades
+                                 where nec.FechaFin > DateTime.Now
+                                 where nec.Estado == 1
+                                 select nec);
+
+            foreach (var item in listaObtenida)
+            {
+                listadoNecesidades.Add(item);
+            }
+
+            return listadoNecesidades;
+        }
     }
 }

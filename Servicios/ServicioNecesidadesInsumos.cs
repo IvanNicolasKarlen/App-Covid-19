@@ -6,14 +6,23 @@ using System.Threading.Tasks;
 using Entidades;
 using DAO;
 using Entidades.Metadata;
+using DAO.Context;
 
 namespace Servicios
 {
     public class ServicioNecesidadesInsumos
     {
-        NecesidadesDonacionesInsumosDAO insumosDAO = new NecesidadesDonacionesInsumosDAO();
-        NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
-        ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
+        NecesidadesDonacionesInsumosDAO insumosDAO;
+        NecesidadesDAO necesidadesDAO;
+        ServicioNecesidad servicioNecesidad;
+
+        public ServicioNecesidadesInsumos(TpDBContext context)
+        {
+             insumosDAO = new NecesidadesDonacionesInsumosDAO(context);
+             necesidadesDAO = new NecesidadesDAO(context);
+             servicioNecesidad = new ServicioNecesidad(context);
+        }
+
         public void GuardarInsumos(NecesidadesDonacionesInsumosMetadata insumoMeta)
         {
             NecesidadesDonacionesInsumos insumo = new NecesidadesDonacionesInsumos()
