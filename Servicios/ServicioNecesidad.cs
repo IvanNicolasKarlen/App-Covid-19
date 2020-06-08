@@ -116,5 +116,32 @@ namespace Servicios
             }
             return necesidadBD;
         }
+
+        /// <summary>
+        /// Divide en cada espacio con Split, el string ingresado en el buscador
+        /// para luego buscar por cada palabra ingresada
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public List<Necesidades> Buscar(string input)
+        {
+            int idUser =  int.Parse(HttpContext.Current.Session["UserId"].ToString());
+            List<Necesidades> necesidades = new List<Necesidades>();
+            char delimitador = ' ';
+            string[] valores = input.Split(delimitador);
+
+            foreach (var item in valores)
+            {
+                var necesidadesObtenidas = necesidadesDAO.Buscar(item, idUser);
+                foreach (var itemObtenida in necesidadesObtenidas)
+                {
+                    if (!necesidades.Contains(itemObtenida))
+                    {
+                        necesidades.Add(itemObtenida);
+                    }
+                }
+            }
+            return necesidades;
+        }
     }
 }

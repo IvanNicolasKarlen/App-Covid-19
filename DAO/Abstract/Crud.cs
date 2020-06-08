@@ -8,14 +8,19 @@ using System.Threading.Tasks;
 namespace DAO.Abstract
 {
     public abstract class Crud<T> where T : class
-    {
+    { 
+        public static TpDBContext context;
+        
         public Crud()
         {
-                this.context = new TpDBContext();
+            if (context == null)
+            {
+                  context = new TpDBContext();
+            }
+              
         }
 
-        public readonly TpDBContext context;
-        
+      
 
         public abstract T Crear(T generics);
         public abstract T Actualizar(T generics);
