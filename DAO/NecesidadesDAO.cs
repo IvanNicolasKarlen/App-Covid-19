@@ -114,15 +114,15 @@ namespace DAO
         /// <returns></returns>
         public List<Necesidades> Buscar(string input, int idUser)
         {
-          List<Necesidades> necesidadesObtenidas =
-            (
-            from necesidad in context.Necesidades.Include("Usuarios")
-            where necesidad.Usuarios.Nombre.Contains(input) || necesidad.Nombre.Contains(input)
-            where !necesidad.IdUsuarioCreador.Equals(idUser)
-            select necesidad
-            ).OrderBy(o => o.FechaFin).ThenByDescending(o => o.Valoracion).ToList();
+            List<Necesidades> necesidadesObtenidas =
+              (
+              from necesidad in context.Necesidades.Include("Usuarios")
+              where necesidad.Usuarios.Nombre.Contains(input) || necesidad.Nombre.Contains(input)
+              where !necesidad.IdUsuarioCreador.Equals(idUser)
+              select necesidad
+              ).OrderBy(o => o.FechaFin).ThenByDescending(o => o.Valoracion).ToList();
             return necesidadesObtenidas;
-
+        }
 
         public List<Necesidades> ListarTodasLasNecesidadesActivas()
         {
