@@ -8,6 +8,7 @@ using Entidades.Metadata;
 using WebCovid19.Filters;
 using Entidades.Views;
 using Entidades.Enum;
+using DAO.Context;
 
 namespace WebCovid19.Controllers
 {
@@ -15,11 +16,22 @@ namespace WebCovid19.Controllers
     [LoginFilter]
     public class NecesidadesController : Controller
     {
-        ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
-        ServicioNecesidadesInsumos servicioInsumo = new ServicioNecesidadesInsumos();
-        ServicioNecesidadesMonetarias servicioMonetaria = new ServicioNecesidadesMonetarias();
-        ServicioNecesidadValoraciones servicioNecesidadValoraciones = new ServicioNecesidadValoraciones();
-   
+        ServicioNecesidad servicioNecesidad;
+        ServicioNecesidadesInsumos servicioInsumo;
+        ServicioNecesidadesMonetarias servicioMonetaria;
+        ServicioNecesidadValoraciones servicioNecesidadValoraciones;
+
+        public NecesidadesController()
+        {
+            TpDBContext context = new TpDBContext();
+             servicioNecesidad = new ServicioNecesidad(context);
+             servicioInsumo = new ServicioNecesidadesInsumos(context);
+             servicioMonetaria = new ServicioNecesidadesMonetarias(context);
+             servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
+
+        }
+
+
         // GET: Necesidades
         public ActionResult Index()
         {
@@ -35,7 +47,6 @@ namespace WebCovid19.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Crear(NecesidadesMetadata vmnecesidad)
         {
             if (!ModelState.IsValid)
@@ -56,11 +67,11 @@ namespace WebCovid19.Controllers
                 TempData["idNecesidad"] = necesidad.IdNecesidad;
                 if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")
                 {
-                    return View("Insumos");
+                    return View("Insumos"); 
                 }
                 else
                 {
-                    return View("Monetaria");
+                    return RedirectToAction("Monetaria", "Necesidades", necesidad.IdNecesidad);
                 }
             }
 
@@ -77,7 +88,6 @@ namespace WebCovid19.Controllers
         }            
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Insumos(NecesidadesDonacionesInsumosMetadata insumos)
         {
             if (!ModelState.IsValid)
@@ -89,7 +99,6 @@ namespace WebCovid19.Controllers
             return View();
         }
 
-        [HttpGet]
         public ActionResult Monetaria()
         {   
             NecesidadesDonacionesMonetarias monetaria = new NecesidadesDonacionesMonetarias();
@@ -98,9 +107,8 @@ namespace WebCovid19.Controllers
             monetaria.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
             return View(monetaria);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Monetaria(NecesidadesDonacionesMonetariasMetadata monetarias)
+
+        public ActionResult Monetarias(NecesidadesDonacionesMonetariasMetadata monetarias)
         {
             if (!ModelState.IsValid)
             {
@@ -116,17 +124,12 @@ namespace WebCovid19.Controllers
         {
             int idSession = int.Parse(Session["UserId"].ToString());
             List<Necesidades> necesidadesObtenidas = servicioNecesidad.TraerNecesidadesDelUsuario(idSession, necesidad);
-            ServicioNecesidadValoraciones servNecesidadValoraciones = new ServicioNecesidadValoraciones();
+            
             //Mantener el checkbox seleccionado o no, dependiendo lo que haya elegido
             TempData["estadoCheckbox"] = necesidad;
-            List<NecesidadesValoraciones> valoracionesObtenidas = servNecesidadValoraciones.obtenerValoracionesDelUsuario(idSession);
-            VMPublicacion vMPublicacion = new VMPublicacion()
-            {
-                listaNecesidades = necesidadesObtenidas,
-                necesidadesValoraciones = valoracionesObtenidas
-            };
+            
 
-            return View(vMPublicacion);
+            return View(necesidadesObtenidas);
         }
 
         [LoginFilter]//toDo: Probar que funcione bien del todo este action.
@@ -139,7 +142,7 @@ namespace WebCovid19.Controllers
             {
                 string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
                 LikeOrDislike likeOrDislike = new LikeOrDislike();
-                bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad);
+                bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad, servicioNecesidadValoraciones);
             }
             
             /**********************************************************************/
@@ -154,11 +157,10 @@ namespace WebCovid19.Controllers
             }
             else if(necesidadObtenida.TipoDonacion == 2)//Insumos
             {
-                NecesidadesDonacionesInsumos insumosObtenidos = servicioInsumo.obtenerPorIdNecesidad(idNecesidad);
+               NecesidadesDonacionesInsumos insumosObtenidos = servicioInsumo.obtenerPorIdNecesidad(idNecesidad);
                 vMPublicacion.necesidadesDonacionesInsumos = insumosObtenidos;
             }
-
-            vMPublicacion.necesidadesValoraciones = valoracionesObtenidas;
+            vMPublicacion.necesidad = necesidadObtenida;
             return View(vMPublicacion);
         }
 

@@ -8,10 +8,15 @@ namespace DAO
 {
     public class UsuarioDao : Crud<Usuarios> //Uso de Generics
     {
+
+        public UsuarioDao(TpDBContext context) : base (context)
+        {
+
+        }
         public Usuarios obtenerUsuarioPorEmail(string email)
         {
             Usuarios usuario = context.Usuarios.Where(k => k.Email == email).FirstOrDefault();
-            return usuario;
+            return usuario; 
         }
 
         public Usuarios obtenerUsuarioPorCodigoDeActivacion(string token)

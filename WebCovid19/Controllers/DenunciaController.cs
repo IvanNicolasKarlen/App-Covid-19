@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Servicios;
 using Entidades;
 using WebCovid19.Filters;
+using DAO.Context;
 
 namespace WebCovid19.Controllers
 {
@@ -13,10 +14,20 @@ namespace WebCovid19.Controllers
     [LoginFilter]
     public class DenunciaController : Controller
     {
+        ServicioNecesidad servicioNecesidad;
+        ServicioDenuncia servicioDenuncia;
+
+        public DenunciaController()
+        {
+            TpDBContext context = new TpDBContext();
+            servicioNecesidad = new ServicioNecesidad(context);
+            servicioDenuncia = new ServicioDenuncia(context);
+        }
+
         public ActionResult Denuncia(int id)
         {
             Denuncias denuncia = new Denuncias();
-            ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
+          
 
             //Obtener los motivos de las denuncias para el select
             //List<MotivoDenuncia> motivoDenuncias = servicioMotivoDenuncia.obtenerMotivos();
@@ -37,8 +48,6 @@ namespace WebCovid19.Controllers
                 {
                     return View();
                 }
-
-                ServicioDenuncia servicioDenuncia = new ServicioDenuncia();
 
                 bool denunciaRegistrada = servicioDenuncia.guardarDenuncia(denuncia);
 

@@ -9,14 +9,20 @@ using Entidades.Views;
 using Entidades;
 using WebCovid19.Filters;
 using WebCovid19.Utilities;
+using DAO.Context;
 
 namespace WebCovid19.Controllers
 {
     /*[LoginFilter]*/
     public class DonacionMonetariaController : Controller
     {
-        ServicioDonacion servicioDonacion = new ServicioDonacion();
+        ServicioDonacion servicioDonacion;
 
+        public DonacionMonetariaController()
+        {
+            TpDBContext context = new TpDBContext();
+            servicioDonacion = new ServicioDonacion(context);
+        }
 
         [HttpGet]
         public ActionResult DonacionMonetaria()
@@ -54,13 +60,13 @@ namespace WebCovid19.Controllers
         [HttpGet]
         public ActionResult SeleccionComprobanteDePago()
         {
-            VMComprobantePago vmComprobantePago = new VMComprobantePago();
-            return View(vmComprobantePago);
+            VMComprobantePago VMComprobantePago = new VMComprobantePago();
+            return View(VMComprobantePago);
         }
 
 
         [HttpPost]
-        public ActionResult SeleccionComprobanteDePago(VMComprobantePago vmComprobantePago)
+        public ActionResult SeleccionComprobanteDePago(VMComprobantePago VMComprobantePago)
         {
             try
             {
@@ -77,7 +83,7 @@ namespace WebCovid19.Controllers
                         string nombreSignificativo = idUsuario + " " + Session["Email"];
                         //Guardar Imagen
                         string pathRelativoImagen = ImagenesUtil.Guardar(Request.Files[0], nombreSignificativo);
-                        vmComprobantePago.ArchivoTransferencia = pathRelativoImagen;
+                        VMComprobantePago.ArchivoTransferencia = pathRelativoImagen;
                     }
                 }
             }

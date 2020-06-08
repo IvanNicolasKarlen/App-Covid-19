@@ -1,11 +1,11 @@
-﻿@model Entidades.Views.VMPublicacion
+﻿@model List<Entidades.Necesidades>
 
 @{
     int idSession = int.Parse(Session["UserId"].ToString());
 }
 
 
-@if (Model.listaNecesidades.Count == 0)
+@if (Model.Count == 0)
 {
     <h1 id="margin-top-header"> No hay necesidades cargadas</h1>
 }
@@ -13,7 +13,7 @@ else
 {
 
 
-    foreach (var necesidad in Model.listaNecesidades)
+    foreach (var necesidad in Model)
     {
         <div class="container" id="margin-top-header">
             <div class="card" id="card">
@@ -58,14 +58,15 @@ else
                     {
                         <input type="hidden" name="IdNecesidad" value="@necesidad.IdNecesidad" />
 
-                        if (Model.necesidadesValoraciones.Count == 0)
+                        if (Model.Count == 0)
                         {
                             <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                         }
                         else
                         {
                             int bandera = 0;
-                            foreach (var item in Model.necesidadesValoraciones)     //3 ... 1... 2
+                           
+                            foreach (var item in necesidad.NecesidadesValoraciones)     //3 ... 1... 2
                             {
 
 
@@ -83,7 +84,8 @@ else
                             }
 
 
-                            if (Model.necesidadesValoraciones.Count == bandera)
+                            // if (Model.necesidadesValoraciones.Count == bandera)
+                            if (necesidad.NecesidadesValoraciones.Count == bandera)
                             {
                                 <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                             }
@@ -93,14 +95,16 @@ else
 
 
 
-                        if (Model.necesidadesValoraciones.Count == 0)
+                        // if (Model.necesidadesValoraciones.Count == 0)
+                        if (necesidad.NecesidadesValoraciones.Count == 0)
                         {
                             <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
                         }
                         else
                         {
                             int bandera = 0;
-                            foreach (var item in Model.necesidadesValoraciones)
+                            // foreach (var item in Model.necesidadesValoraciones)
+                            foreach (var item in necesidad.NecesidadesValoraciones)
                             {
                                 if (item.IdUsuario == idSession & item.IdNecesidad == necesidad.IdNecesidad & item.Valoracion == "Dislike")
                                 {
@@ -115,7 +119,8 @@ else
                                 }
                             }
 
-                            if (Model.necesidadesValoraciones.Count == bandera)
+                            //if (Model.necesidadesValoraciones.Count == bandera)
+                            if (necesidad.NecesidadesValoraciones.Count == bandera)
                             {
                                 <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                             }
@@ -142,21 +147,31 @@ else
 
                     <p class="card-text text-secondary"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> @necesidad.FechaFin</p>
                     <div class="text-center">
-                        @Html.ActionLink("Editar", "", "", null, new { @class = "btn btn-primary" })
-
-                        <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
-
-
-                        @if (necesidad.Usuarios.Nombre == null & necesidad.Usuarios.Apellido == null)
+                        @if (necesidad.IdUsuarioCreador == idSession)
                         {
-                            @Html.ActionLink("Ayudar", "NecesidadDonacionInsumos", "NecesidadDonacionInsumos", null, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Editar", "", "", null, new { @class = "btn btn-primary" })
 
+                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
                         }
                         else
                         {
-                            @Html.ActionLink("Ayudar a " + necesidad.Usuarios.Nombre + " " + necesidad.Usuarios.Apellido, "NecesidadDonacionInsumos", "NecesidadDonacionInsumos", null, new { @class = "btn btn-success" })
+                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
 
+                            if (necesidad.Usuarios.Nombre == null & necesidad.Usuarios.Apellido == null)
+                            {
+                                @Html.ActionLink("Ayudar", "NecesidadDonacionInsumos", "NecesidadDonacionInsumos", null, new { @class = "btn btn-primary" })
+
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Ayudar a " + necesidad.Usuarios.Nombre + " " + necesidad.Usuarios.Apellido, "NecesidadDonacionInsumos", "NecesidadDonacionInsumos", null, new { @class = "btn btn-success" })
+
+                            }
                         }
+
+
+
+
 
                     </div>
                 </div>

@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using DAO.Abstract;
+using DAO.Context;
 using Entidades;
 
 namespace DAO
 {
     public class NecesidadesDonacionesInsumosDAO : Crud<NecesidadesDonacionesInsumos> //Uso de Generics
     {
+
+        public NecesidadesDonacionesInsumosDAO(TpDBContext context) : base(context)
+        {
+
+        }
+
         public override NecesidadesDonacionesInsumos Actualizar(NecesidadesDonacionesInsumos generics)
         {
             NecesidadesDonacionesInsumos insumo = ObtenerPorID(generics.IdNecesidadDonacionInsumo);

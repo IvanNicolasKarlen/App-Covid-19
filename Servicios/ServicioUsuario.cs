@@ -1,4 +1,5 @@
 ﻿using DAO;
+using DAO.Context;
 using Entidades;
 using Entidades.Enum;
 using Entidades.Views;
@@ -15,8 +16,13 @@ namespace Servicios
 {
     public class ServicioUsuario
     {
-        UsuarioDao usuarioDao = new UsuarioDao();
-        
+        UsuarioDao usuarioDao;
+     
+        public ServicioUsuario(TpDBContext context)
+        {
+            usuarioDao = new UsuarioDao(context);
+        }
+
             public Usuarios obtenerUsuarioPorID(int idUsuario)
             {
             Usuarios usuarioObtenido = usuarioDao.ObtenerPorID(idUsuario);
@@ -199,12 +205,12 @@ namespace Servicios
         public Usuarios ValidarCodigoDeActivacion(Usuarios usuario)
         {
             bool existeCodigo = true;
-            UsuarioDao usuarioDao = new UsuarioDao();
+            
             Usuarios usuarioObtenido = new Usuarios();
-            ServicioUsuario servicioUsuario = new ServicioUsuario();
+          
             do
             {
-                usuario.Token = servicioUsuario.CodigoDeActivacion();
+                usuario.Token = CodigoDeActivacion();
 
                 usuarioObtenido = usuarioDao.obtenerUsuarioPorCodigoDeActivacion(usuario.Token);
 
@@ -235,7 +241,6 @@ namespace Servicios
 
         public int registrarUsuario(Usuarios usuario)
         {
-            UsuarioDao usuarioDao = new UsuarioDao();
 
             //Validamos que se cree un codigo unico para cada usuario y que no se repita
             Usuarios usuarioObtenido = ValidarCodigoDeActivacion(usuario);
@@ -256,7 +261,6 @@ namespace Servicios
 
         public string validoQueExistaEsteUsuario(Usuarios usuario)
         {
-            UsuarioDao usuarioDao = new UsuarioDao();
 
             Usuarios usuarioObtenido = usuarioDao.obtenerUsuarioPorEmail(usuario.Email);
             if (usuarioObtenido == null)
@@ -274,7 +278,6 @@ namespace Servicios
 
         public bool validacionDelCodigoDeVerificacionJuntoAlEmail(string token)
         {
-            UsuarioDao usuarioDao = new UsuarioDao();
 
             Usuarios usuarioConElToken = usuarioDao.obtenerUsuarioPorCodigoDeActivacion(token);
 
@@ -297,7 +300,6 @@ namespace Servicios
 
         public bool actualizoDatosDelPerfilDelUsuario(Usuarios usuario)
         {
-            UsuarioDao usuarioDao = new UsuarioDao();
 
             //int resultado = usuarioDao.actualizarDatosDeUsuario(usuario); /***********************/
             Usuarios usuarioUpdate = usuarioDao.Actualizar(usuario);
@@ -311,7 +313,6 @@ namespace Servicios
 
         public Usuarios asignoDatosFaltantesAUsuarioDePerfil(Usuarios usuarioPerfil, Usuarios usuarioObtenido)
         {
-            UsuarioDao usuarioDao = new UsuarioDao();
 
             usuarioObtenido.Nombre = usuarioPerfil.Nombre;
             usuarioObtenido.Apellido = usuarioPerfil.Apellido;
@@ -370,7 +371,6 @@ namespace Servicios
 
         public Usuarios obtenerUsuarioLogueado(int idSession)
         {
-            UsuarioDao usuarioDao = new UsuarioDao();
             Usuarios usuarioObtenido = usuarioDao.ObtenerPorID(idSession);
             return usuarioObtenido;
         }

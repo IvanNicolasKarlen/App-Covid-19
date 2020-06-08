@@ -1,4 +1,5 @@
 ﻿using DAO;
+using DAO.Context;
 using Entidades;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,19 @@ namespace Servicios
 {
     public class ServicioNecesidadValoraciones
     {
-        UsuarioDao usuarioDao = new UsuarioDao();
-        NecesidadesDAO necesidadesDAO = new NecesidadesDAO();
-        NecesidadValoracionesDao necesidadValoracionesDao = new NecesidadValoracionesDao();
+        UsuarioDao usuarioDao;
+        NecesidadesDAO necesidadesDAO;
+        NecesidadValoracionesDao necesidadValoracionesDao;
+        ServicioNecesidad servicioNecesidad;
+
+        public ServicioNecesidadValoraciones(TpDBContext context)
+        {
+            usuarioDao = new UsuarioDao(context);
+            necesidadesDAO = new NecesidadesDAO(context);
+            necesidadValoracionesDao = new NecesidadValoracionesDao(context);
+            servicioNecesidad = new ServicioNecesidad(context);
+
+        }
         public bool guardarValoracion(int idUsuario, int idNecesidad, string botonRecibido)
         {
             //Obtengo Usuario y Necesidad
@@ -34,6 +45,10 @@ namespace Servicios
                             necesidadRegistrada.Valoracion = "Undefined";
                             valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
 
+                            necesidadObtenida.NecesidadesValoraciones.Add(valoracionObtenidaBD);
+                            Necesidades necesidadNueva = servicioNecesidad.calcularValoracion(necesidadObtenida);
+
+
                             if (valoracionObtenidaBD == null)
                             {
                                 return false;
@@ -44,6 +59,9 @@ namespace Servicios
                             necesidadRegistrada.Valoracion = "Like";
                             valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
 
+                            necesidadObtenida.NecesidadesValoraciones.Add(valoracionObtenidaBD);
+                            Necesidades necesidadNueva = servicioNecesidad.calcularValoracion(necesidadObtenida);
+
                             if (valoracionObtenidaBD == null)
                             {
                                 return false;
@@ -53,7 +71,8 @@ namespace Servicios
                     }
 
                 }
-                else if (botonRecibido == "Dislike")
+                
+                if (botonRecibido == "Dislike")
                 {
 
                     if (necesidadRegistrada.IdNecesidad == idNecesidad)
@@ -62,6 +81,10 @@ namespace Servicios
                         {
                             necesidadRegistrada.Valoracion = "Undefined";
                             valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
+
+                        
+                            necesidadObtenida.NecesidadesValoraciones.Add(valoracionObtenidaBD);
+                            Necesidades necesidadNueva = servicioNecesidad.calcularValoracion(necesidadObtenida);
 
                             if (valoracionObtenidaBD == null)
                             {
@@ -72,6 +95,10 @@ namespace Servicios
                         {
                             necesidadRegistrada.Valoracion = "Dislike";
                             valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
+
+                   
+                            necesidadObtenida.NecesidadesValoraciones.Add(valoracionObtenidaBD);
+                            Necesidades necesidadNueva = servicioNecesidad.calcularValoracion(necesidadObtenida);
 
                             if (valoracionObtenidaBD == null)
                             {
@@ -89,35 +116,25 @@ namespace Servicios
                 NecesidadesValoraciones necesidadesValoraciones = new NecesidadesValoraciones();
                 necesidadesValoraciones.IdUsuario = usuarioObtenido.IdUsuario;
                 necesidadesValoraciones.IdNecesidad = necesidadObtenida.IdNecesidad;
-                // necesidadesValoraciones.Usuarios = usuarioObtenido;
-                //necesidadesValoraciones.Necesidades = necesidadObtenida;
                 necesidadesValoraciones.Valoracion = (botonRecibido == "Like") ? "Like" : (botonRecibido == "Dislike") ? "Dislike" : null;
-                   
 
                 NecesidadesValoraciones valoracionObtenida = necesidadValoracionesDao.Crear(necesidadesValoraciones);
-               
-
-
-                  //  NecesidadesValoraciones valoracionObtenida = necesidadValoracionesDao.Crear(usuarioObtenido, necesidadObtenida);
-
                 if (valoracionObtenida == null)
                 {
                     return false;
                 }
-            }
-            ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
 
-            Necesidades necesidadValorada = servicioNecesidad.calcularValoracion(necesidadObtenida);
-            if (necesidadValorada == null)
-            {
-                return false;
+                necesidadObtenida.NecesidadesValoraciones.Add(valoracionObtenida);
+                Necesidades necesidadNueva = servicioNecesidad.calcularValoracion(necesidadObtenida);
             }
+
+            
             return true;
         }
 
         public List<NecesidadesValoraciones> obtenerValoracionesPorIDNecesidad(int idNecesidad)
         {
-            NecesidadValoracionesDao necesidadValoracionesDao = new NecesidadValoracionesDao();
+
             List<NecesidadesValoraciones> valoracionesDelaNecesidad = necesidadValoracionesDao.obtenerValoracionesPorIDNecesidad(idNecesidad);
             return valoracionesDelaNecesidad;
         }
@@ -129,9 +146,9 @@ namespace Servicios
             return valoracionesDelUsuario;
         }
 
-        public List<NecesidadesValoraciones> obtenerValoracionPorIdNecesidad( int idNecesidad)
+        public List<NecesidadesValoraciones> obtenerValoracionPorIdNecesidad(int idNecesidad)
         {
-            return necesidadValoracionesDao.obtenerValoracionPorIdNecesidad( idNecesidad);
+            return necesidadValoracionesDao.obtenerValoracionPorIdNecesidad(idNecesidad);
 
         }
     }

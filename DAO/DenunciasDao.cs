@@ -11,6 +11,10 @@ namespace DAO
 {
     public class DenunciasDao : Crud<Denuncias> //Uso de Generics
     {
+        public DenunciasDao(TpDBContext context) : base (context)
+        {
+
+        }
         public List<Denuncias> obtenerDenuncias()
         {
             List<Denuncias> listaObtenida = context.Denuncias.Where(o => o.Estado == 1).ToList();

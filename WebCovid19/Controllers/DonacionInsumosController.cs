@@ -5,11 +5,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Entidades;
+using DAO.Context;
 
 namespace WebCovid19.Controllers
 {
     public class DonacionInsumosController : Controller
     {
+
+        ServicioDonacionInsumo servicioDonacionInsumo;
+        public DonacionInsumosController()
+        {
+            TpDBContext context = new TpDBContext();
+            servicioDonacionInsumo = new ServicioDonacionInsumo(context);
+        }
+
         [HttpGet]
         public ActionResult DonacionInsumos()
         {
@@ -27,7 +36,7 @@ namespace WebCovid19.Controllers
                     return View(DonacionesInsumos);
                 }
 
-                ServicioDonacionInsumo servicioDonacionInsumo = new ServicioDonacionInsumo();
+                
 
                 //Valido que los datos ingresados estén bien
                 bool cantidadIngresada = servicioDonacionInsumo.CantidadMinimaDeInsumo(DonacionesInsumos);

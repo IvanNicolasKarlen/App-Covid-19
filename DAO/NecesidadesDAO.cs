@@ -4,13 +4,22 @@ using System.Linq;
 using Entidades;
 using DAO.Abstract;
 using System.Data.Entity.Validation;
+
 using System.Net.Http;
 using System.Diagnostics.Eventing.Reader;
+
+using DAO.Context;
+
 
 namespace DAO
 {
     public class NecesidadesDAO : Crud<Necesidades>
     {
+
+        public NecesidadesDAO(TpDBContext context) :base(context)
+        {
+            
+        }
         public override Necesidades ObtenerPorID(int idNecesidad)
         {
             Necesidades necesidad = context.Necesidades.Find(idNecesidad);
@@ -65,7 +74,7 @@ namespace DAO
             {
                 Necesidades necesidadBd = ObtenerPorID(necesidadObtenida.IdNecesidad);
 
-                necesidadBd.Valoracion = necesidadObtenida.Valoracion;
+                necesidadBd.Valoracion = (decimal)necesidadObtenida.Valoracion;
                 necesidadBd.Descripcion = necesidadObtenida.Descripcion;
                 necesidadBd.Estado = necesidadObtenida.Estado;
                 necesidadBd.Foto = necesidadObtenida.Foto;
@@ -93,6 +102,7 @@ namespace DAO
             }
         }
 
+
         /// <summary>
         /// Buscar necesidades en relación al nombre de las necesidades existentes o bien según el nombre del
         /// usuario creador. Ordenado por fecha más cercana de cierre de necesidad y, luego,
@@ -112,6 +122,24 @@ namespace DAO
             select necesidad
             ).OrderBy(o => o.FechaFin).ThenByDescending(o => o.Valoracion).ToList();
             return necesidadesObtenidas;
+
+
+        public List<Necesidades> ListarTodasLasNecesidadesActivas()
+        {
+            List<Necesidades> listadoNecesidades = new List<Necesidades>();
+
+            var listaObtenida = (from nec in context.Necesidades
+                                 where nec.FechaFin > DateTime.Now
+                                 where nec.Estado == 1
+                                 select nec);
+
+            foreach (var item in listaObtenida)
+            {
+                listadoNecesidades.Add(item);
+            }
+
+            return listadoNecesidades;
+
         }
     }
 }

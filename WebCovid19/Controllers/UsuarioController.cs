@@ -1,4 +1,5 @@
-﻿using Entidades;
+﻿using DAO.Context;
+using Entidades;
 using Entidades.Enum;
 using Entidades.Views;
 using Servicios;
@@ -12,31 +13,33 @@ namespace WebCovid19.Controllers
 {
     public class UsuarioController : Controller
     {
-        ServicioUsuario servicioUsuario = new ServicioUsuario();
+        ServicioUsuario servicioUsuario;
+        ServicioNecesidadValoraciones servNecesidadValoraciones;
+        ServicioNecesidad servicioNecesidad;
+        ServicioDenuncia servicioDenuncia;
+        ServicioNecesidadValoraciones servicioValoraciones;
+        public UsuarioController()
+        {
+            TpDBContext context = new TpDBContext();
+            servNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
+            servicioNecesidad = new ServicioNecesidad(context);
+            servicioDenuncia = new ServicioDenuncia(context);
+            servicioUsuario = new ServicioUsuario(context);
+            servicioValoraciones = new ServicioNecesidadValoraciones(context);
+        }
+
         public ActionResult Index()
         {
-            return View();
+            List<Necesidades> listaNecesidades = servicioNecesidad.obtener5NecesidadesMasValoradas();
+            return View(listaNecesidades);
         }
 
         [LoginFilter]
         public ActionResult Home()
         {
-            ServicioNecesidad servicioNecesidad = new ServicioNecesidad();
-
-            ServicioNecesidadValoraciones servNecesidadValoraciones = new ServicioNecesidadValoraciones();
             int idSession = int.Parse(Session["UserId"].ToString());
             List<Necesidades> todasLasNecesidades = servicioNecesidad.ListarTodasLasNecesidades();
-            List<NecesidadesValoraciones> valoracionesObtenidas = servNecesidadValoraciones.obtenerValoracionesDelUsuario(idSession);
-            VMPublicacion vMPublicacion = new VMPublicacion()
-            {
-                listaNecesidades = todasLasNecesidades,
-                necesidadesValoraciones = valoracionesObtenidas
-            };
-
-            // return View(todasLasNecesidades);
-            return View(vMPublicacion);
-
-
+            return View(todasLasNecesidades);
         }
 
         public ActionResult Salir()
@@ -49,8 +52,6 @@ namespace WebCovid19.Controllers
         {
             VMRegistro registro = new VMRegistro();
             return View(registro);
-
-
         }
 
         [HttpPost]
@@ -119,7 +120,7 @@ namespace WebCovid19.Controllers
             }
             try
             {
-                ServicioUsuario servicioUsuario = new ServicioUsuario();
+
                 Usuarios usuarioObtenido = new Usuarios();
                 usuarioObtenido.Email = emailRecibido.Email;
 
@@ -333,7 +334,7 @@ namespace WebCovid19.Controllers
             int idSession = int.Parse(Session["UserId"].ToString());
             string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
             LikeOrDislike likeOrDislike = new LikeOrDislike();
-            bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad);
+            bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad, servicioValoraciones);
             return RedirectToAction("Home");
         }
 
@@ -341,7 +342,6 @@ namespace WebCovid19.Controllers
         [AdminFilter]
         public ActionResult Administrador()
         {
-            ServicioDenuncia servicioDenuncia = new ServicioDenuncia();
             List<Denuncias> denunciasObtenidas = servicioDenuncia.obtenerDenuncias();
             return View("Administrador", denunciasObtenidas);
         }
@@ -351,7 +351,7 @@ namespace WebCovid19.Controllers
         [HttpPost]
         public ActionResult DenunciaEvaluada(int idNecesidad)
         {
-            ServicioDenuncia servicioDenuncia = new ServicioDenuncia();
+
             //Si es Desestimar obtengo un false, si es Bloquear obtengo un true
             bool estado = (Request.Form["Desestimar"] != null) ? false : (Request.Form["Bloquear"] != null) ? true : false;
             bool evaluada = servicioDenuncia.necesidadEvaluada(idNecesidad, estado);
