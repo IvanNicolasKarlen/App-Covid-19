@@ -4,7 +4,12 @@ using System.Linq;
 using Entidades;
 using DAO.Abstract;
 using System.Data.Entity.Validation;
+
+using System.Net.Http;
+using System.Diagnostics.Eventing.Reader;
+
 using DAO.Context;
+
 
 namespace DAO
 {
@@ -40,9 +45,9 @@ namespace DAO
         public List<Necesidades> TraerTodasLasNecesidadesDelUsuario(int idSession)
         {
             List<Necesidades> todasLasNecesidadesDelUsuario = (from c in context.Necesidades
-                                        where c.IdUsuarioCreador == idSession
-                                        where c.FechaFin > DateTime.Now
-                                        select c).ToList();
+                                                               where c.IdUsuarioCreador == idSession
+                                                               where c.FechaFin > DateTime.Now
+                                                               select c).ToList();
 
             return todasLasNecesidadesDelUsuario;
         }
@@ -98,6 +103,27 @@ namespace DAO
         }
 
 
+        /// <summary>
+        /// Buscar necesidades en relación al nombre de las necesidades existentes o bien según el nombre del
+        /// usuario creador. Ordenado por fecha más cercana de cierre de necesidad y, luego,
+        /// por mayor valoración de la necesidad.El resultado de la búsqueda no deberá incluir sus propias
+        /// necesidades
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        public List<Necesidades> Buscar(string input, int idUser)
+        {
+            List<Necesidades> necesidadesObtenidas =
+              (
+              from necesidad in context.Necesidades.Include("Usuarios")
+              where necesidad.Usuarios.Nombre.Contains(input) || necesidad.Nombre.Contains(input)
+              where !necesidad.IdUsuarioCreador.Equals(idUser)
+              select necesidad
+              ).OrderBy(o => o.FechaFin).ThenByDescending(o => o.Valoracion).ToList();
+            return necesidadesObtenidas;
+        }
+
         public List<Necesidades> ListarTodasLasNecesidadesActivas()
         {
             List<Necesidades> listadoNecesidades = new List<Necesidades>();
@@ -113,6 +139,7 @@ namespace DAO
             }
 
             return listadoNecesidades;
+
         }
     }
 }
