@@ -151,18 +151,24 @@ namespace WebCovid19.Controllers
             return View(vMPublicacion);
         }
 
-        public string Buscar()
-        {
-            string input = Request["buscar"];
-            List<Necesidades> necesidadesEncontradas = servicioNecesidad.Buscar(input);
-            return input;
-        }
 
         [LoginFilter]
         public ActionResult Home(string necesidad)
         {
+            List<Necesidades> todasLasNecesidades;
             int idSession = int.Parse(Session["UserId"].ToString());
-            List<Necesidades> todasLasNecesidades = servicioNecesidad.TraerNecesidadesQueNoSonDelUsuario(idSession);
+            if (!string.IsNullOrEmpty(Request["buscar"]))
+            {
+                todasLasNecesidades = servicioNecesidad.Buscar(Request["buscar"]);
+                if (todasLasNecesidades.Count == 0)
+                {
+                    ViewBag.Resultado = "No se encontraron resultados para tu búsqueda";
+                }
+            }
+            else
+            {
+                todasLasNecesidades = servicioNecesidad.TraerNecesidadesQueNoSonDelUsuario(idSession);
+            }
             List<Necesidades> necesidadesDelUser = servicioNecesidad.TraerNecesidadesDelUsuario(idSession, necesidad);
             //Mantener el checkbox seleccionado o no, dependiendo lo que haya elegido
             TempData["estadoCheckbox"] = necesidad;
