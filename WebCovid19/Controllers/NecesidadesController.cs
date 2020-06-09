@@ -163,5 +163,20 @@ namespace WebCovid19.Controllers
             vMPublicacion.necesidad = necesidadObtenida;
             return View(vMPublicacion);
         }
+
+        public string Buscar()
+        {
+            string input = Request["buscar"];
+            List<Necesidades> necesidadesEncontradas = servicioNecesidad.Buscar(input);
+            return input;
+        }
+
+        [LoginFilter]
+        public ActionResult Home()
+        {
+            int idSession = int.Parse(Session["UserId"].ToString());
+            List<Necesidades> todasLasNecesidades = servicioNecesidad.ListarTodasLasNecesidades();
+            return View(todasLasNecesidades);
+        }
     }
 }

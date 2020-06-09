@@ -34,13 +34,7 @@ namespace WebCovid19.Controllers
             return View(listaNecesidades);
         }
 
-        [LoginFilter]
-        public ActionResult Home()
-        {
-            int idSession = int.Parse(Session["UserId"].ToString());
-            List<Necesidades> todasLasNecesidades = servicioNecesidad.ListarTodasLasNecesidades();
-            return View(todasLasNecesidades);
-        }
+      
 
         public ActionResult Salir()
         {
@@ -223,7 +217,7 @@ namespace WebCovid19.Controllers
             TipoUsuario tipoUsuario = servicioUsuario.tipoDeUsuario(u);
             if (tipoUsuario == TipoUsuario.Usuario)
             {
-                return RedirectToAction("Home");
+                return RedirectToAction("Home","Necesidades");
             }
             else
             {
@@ -336,7 +330,7 @@ namespace WebCovid19.Controllers
             string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
             LikeOrDislike likeOrDislike = new LikeOrDislike();
             bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad, servicioValoraciones);
-            return RedirectToAction("Home");
+            return RedirectToAction("Home" , "Necesidades");
         }
 
 
