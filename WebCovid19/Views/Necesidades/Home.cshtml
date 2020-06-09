@@ -2,17 +2,30 @@
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    List<Entidades.Necesidades> necesidadesDelUser = ViewBag.necesidadesDelUser;
 }
-
-
-<div class="container">
-    <div class="card espace">
-        <div class="card-body text-center" id="colour-card">
-            Solicitemos ayuda a la gente @Html.ActionLink("Crear una Necesidad", "Crear", "Necesidades", null, new { @class = "btn btn-success text-light ml-3" })
+<p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
+        Mostrar/Ocultar Mis Necesidades
+    </a>
+</p>
+<div class="collapse show" id="collapseExample">
+    <div class="card card-body">
+        <div class="section-headline text-center">
+            <h2 class="font-weight-light">Mis Necesidades</h2>
         </div>
+        @*Necesidades del usuario logueado*@
+        @Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", necesidadesDelUser)
     </div>
-
+    <div class="card card-body">
+        <p>Fin de la lista de Mis Necesidades</p>
+    </div>
 </div>
 
+<div class="section-headline text-center">
+    <h2 class="font-weight-light">Necesidades que están esperando tu ayuda</h2>
+</div>
+
+@*Todas las necesidades menos la del usuario logueado*@
 @Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", Model)
 

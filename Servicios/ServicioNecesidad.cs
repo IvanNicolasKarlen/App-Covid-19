@@ -181,6 +181,12 @@ namespace Servicios
                 return necesidadesMasValoradas;
 
             }
+
+        public List<Necesidades> TraerNecesidadesQueNoSonDelUsuario(int idSession)
+        {
+            List<Necesidades> necesidadesBD = necesidadesDAO.TraerNecesidadesQueNoSonDelUsuario(idSession);
+            return necesidadesBD;
         }
+    }
     }
 
