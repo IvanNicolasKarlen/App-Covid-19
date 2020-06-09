@@ -170,5 +170,14 @@ namespace WebCovid19.Controllers
             List<Necesidades> necesidadesEncontradas = servicioNecesidad.Buscar(input);
             return input;
         }
+
+        [LoginFilter]
+        public ActionResult Home()
+        {
+            int idSession = int.Parse(Session["UserId"].ToString());
+            List<Necesidades> todasLasNecesidades = servicioNecesidad.ListarTodasLasNecesidades();
+            return View(todasLasNecesidades);
+        }
+
     }
 }
