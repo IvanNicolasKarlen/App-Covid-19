@@ -1,17 +1,12 @@
-﻿@model List<Entidades.Necesidades>
+@model List<Entidades.Necesidades>
 
 @{
     int idSession = int.Parse(Session["UserId"].ToString());
 }
 
-@if (Model.Count == 0)
-{
-    <h1 id="margin-top-header"> No hay necesidades cargadas</h1>
-}
-else
-{
 
-    foreach (var necesidad in Model)
+
+    @foreach (var necesidad in Model)
     {
         <div class="container" id="margin-top-header">
             <div class="card" id="card">
@@ -179,4 +174,3 @@ else
 
     }
 
-}
