@@ -131,14 +131,14 @@
                     @if (Model.necesidadesDonacionesMonetarias.Necesidades.IdUsuarioCreador == idSession)
                     {
                         <div class="col-md-12 btn-group mt-4 mb-3">
-                            @Html.ActionLink("Regresar a Home", "Home", "Usuario", "", new { @class = "btn btn-danger" })
+                            @Html.ActionLink("Regresar a Home", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
                             <button type="button" class="btn btn-info ml-2">Editar</button>
                         </div>
                     }
                     else
                     {
                         <div class="col-md-12 btn-group mt-4 mb-3">
-                            @Html.ActionLink("En otro momento", "Home", "Usuario", "", new { @class = "btn btn-danger" })
+                            @Html.ActionLink("En otro momento", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
                             <button type="button" class="btn btn-success ml-2">Donar Dinero</button>
                         </div>
                     }

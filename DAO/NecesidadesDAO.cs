@@ -142,5 +142,23 @@ namespace DAO
             return listadoNecesidades;
 
         }
+
+        public List<Necesidades> TraerNecesidadesQueNoSonDelUsuario(int idSession)
+        {
+            List<Necesidades> listaNecesidades = new List<Necesidades>();
+
+            var listaObtenida = (from nec in context.Necesidades
+                                 where nec.FechaFin > DateTime.Now
+                                 where nec.Estado == 1
+                                 where nec.IdUsuarioCreador != idSession
+                                 select nec);
+
+            foreach (var item in listaObtenida)
+            {
+                listaNecesidades.Add(item);
+            }
+
+            return listaNecesidades;
+        }
     }
 }

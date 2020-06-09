@@ -119,19 +119,6 @@ namespace WebCovid19.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult MisNecesidades(string necesidad)
-        {
-            int idSession = int.Parse(Session["UserId"].ToString());
-            List<Necesidades> necesidadesObtenidas = servicioNecesidad.TraerNecesidadesDelUsuario(idSession, necesidad);
-            
-            //Mantener el checkbox seleccionado o no, dependiendo lo que haya elegido
-            TempData["estadoCheckbox"] = necesidad;
-            
-
-            return View(necesidadesObtenidas);
-        }
-
         [LoginFilter]//toDo: Probar que funcione bien del todo este action.
         public ActionResult DetalleNecesidad(int idNecesidad)
         { 
@@ -172,10 +159,15 @@ namespace WebCovid19.Controllers
         }
 
         [LoginFilter]
-        public ActionResult Home()
+        public ActionResult Home(string necesidad)
         {
             int idSession = int.Parse(Session["UserId"].ToString());
-            List<Necesidades> todasLasNecesidades = servicioNecesidad.ListarTodasLasNecesidades();
+            List<Necesidades> todasLasNecesidades = servicioNecesidad.TraerNecesidadesQueNoSonDelUsuario(idSession);
+            List<Necesidades> necesidadesDelUser = servicioNecesidad.TraerNecesidadesDelUsuario(idSession, necesidad);
+            //Mantener el checkbox seleccionado o no, dependiendo lo que haya elegido
+            TempData["estadoCheckbox"] = necesidad;
+
+            ViewBag.necesidadesDelUser = necesidadesDelUser;
             return View(todasLasNecesidades);
         }
 
