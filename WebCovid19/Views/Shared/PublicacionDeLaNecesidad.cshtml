@@ -37,11 +37,11 @@ else
                     <div class="row">
                         @if (necesidad.Usuarios.Foto == null)
                         {
-                            <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="~/Content/Img/imagenPerfil-Nula.png">
+                            <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="/Imagenes/imagenPerfil-Nula.png">
                         }
                         else
                         {
-                            <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="~/Content/Img/@necesidad.Usuarios.Foto">
+                            <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="@necesidad.Usuarios.Foto">
                         }
 
                         <div class="col-md-2">
@@ -51,7 +51,7 @@ else
                     </div>
 
                 </div>
-                <img class="card-img-top" src="~/Content/Img/@necesidad.Foto" id="imagen-necesidad" alt="Card image cap">
+                <img class="card-img-top" src="@necesidad.Foto" id="imagen-necesidad" alt="Card image cap">
                 <div class="card-body">
 
                     @using (Html.BeginForm("LikeOrDislike", "Usuario", FormMethod.Post, new { @class = "float-auto" }))

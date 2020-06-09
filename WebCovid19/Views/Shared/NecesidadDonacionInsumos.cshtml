@@ -15,12 +15,12 @@
             <div class="row">
                 @if (@Model.necesidadesDonacionesInsumos.Necesidades.Usuarios.Foto == null)
                 {
-                    <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="~/Content/Img/imagenPerfil-Nula.png">
+                    <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="/Imagenes/imagenPerfil-Nula.png">
 
                 }
                 else
                 {
-                    <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="~/Content/Img/@Model.necesidadesDonacionesInsumos.Necesidades.Usuarios.Foto">
+                    <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="@Model.necesidadesDonacionesInsumos.Necesidades.Usuarios.Foto">
                 }
                 <div class="col-md-4">
                     <p class=" text-secondary mt-3"><b>@Model.necesidadesDonacionesInsumos.Necesidades.Usuarios.UserName</b></p>
@@ -63,7 +63,7 @@
 
                 <div class="col-md-6 mt-3 mb-3 float-right">
 
-                    <img class="card-img-top" src="~/Content/Img/@Model.necesidadesDonacionesInsumos.Necesidades.Foto" id="imagen-detalle" alt="Card image cap">
+                    <img class="card-img-top" src="@Model.necesidadesDonacionesInsumos.Necesidades.Foto" id="imagen-detalle" alt="Card image cap">
 
 
                     @using (Html.BeginForm("DetalleNecesidad", "Necesidades", FormMethod.Post, new { @class = "float-auto ml-5" }))

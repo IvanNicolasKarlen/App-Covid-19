@@ -19,11 +19,11 @@
         <div class="row">
             @if (@Model.necesidadesDonacionesMonetarias.Necesidades.Usuarios.Foto == null)
             {
-                <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="~/Content/Img/imagenPerfil-Nula.png">
+                <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="/Imagenes/imagenPerfil-Nula.png">
             }
             else
             {
-                <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="~/Content/Img/@Model.necesidadesDonacionesMonetarias.Necesidades.Usuarios.Foto">
+                <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil" src="@Model.necesidadesDonacionesMonetarias.Necesidades.Usuarios.Foto">
             }
             <div class="col-md-4">
                 <p class=" text-secondary mt-3"><b>@Model.necesidadesDonacionesMonetarias.Necesidades.Usuarios.UserName</b></p>
@@ -36,7 +36,7 @@
 
         <div class="col-md-12 ">
             <div class="col-md-5 mt-3 mb-3 float-left">
-                <img class="card-img-top" src="~/Content/Img/@Model.necesidadesDonacionesMonetarias.Necesidades.Foto" id="imagen-detalle" alt="Card image cap">
+                <img class="card-img-top" src="@Model.necesidadesDonacionesMonetarias.Necesidades.Foto" id="imagen-detalle" alt="Card image cap">
 
                 <div class="float-auto ml-4 mt-2">
 

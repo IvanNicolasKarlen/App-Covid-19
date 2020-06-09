@@ -1728,6 +1728,7 @@
     <Content Include="Content\Img\necesitanDinero.jpg" />
     <Content Include="Content\Img\negritten.jpg" />
     <Content Include="Global.asax" />
+    <Content Include="Imagenes\11-JfOBk.jpg" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />

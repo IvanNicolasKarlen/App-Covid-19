@@ -11,7 +11,7 @@
 
 
 
-@using (Html.BeginForm("Perfil", "Usuario", FormMethod.Post))
+@using (Html.BeginForm("Perfil", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -47,9 +47,9 @@
                         }
                         else
                         {
-                            <img class="rounded-circle border border-white mx-auto d-block  ml-5 mt-5 mb-2" id="imgperfil" src="~/Content/Img/@Model.Foto" />
+                            <img class="rounded-circle border border-white mx-auto d-block  ml-5 mt-5 mb-2" id="imgperfil" src="@Model.Foto" />
                         }
-
+     
 
                         <div class="col-md-12">
                             <div class="card-body">

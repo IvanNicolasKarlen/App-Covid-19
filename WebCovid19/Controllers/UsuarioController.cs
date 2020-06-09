@@ -272,7 +272,8 @@ namespace WebCovid19.Controllers
                 {
                     //TODO: Agregar validacion para confirmar que el archivo es una imagen - UsuarioController
                     //creo un nombre significativo en este caso apellidonombre pero solo un caracter del nombre, ejemplo BatistutaG
-                    string nombreSignificativo = perfil.Apellido + perfil.Nombre + Session["Email"];
+                    int idUsuario = int.Parse(Session["UserId"].ToString());
+                    string nombreSignificativo = idUsuario + " " + Session["Email"];
                     //Guardar Imagen
                     string pathRelativoImagen = ImagenesUtil.Guardar(Request.Files[0], nombreSignificativo);
                     perfil.Foto = pathRelativoImagen;
