@@ -3,29 +3,52 @@
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
     List<Entidades.Necesidades> necesidadesDelUser = ViewBag.necesidadesDelUser;
+
 }
 <p>
     <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
         Mostrar/Ocultar Mis Necesidades
     </a>
 </p>
+
 <div class="collapse show" id="collapseExample">
     <div class="card card-body">
         <div class="section-headline text-center">
             <h2 class="font-weight-light">Mis Necesidades</h2>
         </div>
-        @*Necesidades del usuario logueado*@
-        @Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", necesidadesDelUser)
-    </div>
+        @if (necesidadesDelUser.Count == 0)
+        {
+            <h1 id="margin-top-header"> No hay necesidades cargadas</h1>
+        }
+        else
+        {
+            @*Necesidades del usuario logueado*@
+            @Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", necesidadesDelUser)
+        }
+        </div>
     <div class="card card-body">
         <p>Fin de la lista de Mis Necesidades</p>
     </div>
 </div>
 
+
 <div class="section-headline text-center">
     <h2 class="font-weight-light">Necesidades que están esperando tu ayuda</h2>
 </div>
 
-@*Todas las necesidades menos la del usuario logueado*@
-@Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", Model)
+@if (ViewBag.Resultado != null)
+{
+    <h1>@ViewBag.Resultado</h1>
+}
+else
+if (Model.Count == 0)
+{
+    <h1 id="margin-top-header"> No hay necesidades cargadas</h1>
+}
+else
+{
+
+    @*Todas las necesidades menos la del usuario logueado*@
+    @Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", Model)
+}
 
