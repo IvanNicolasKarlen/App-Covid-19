@@ -179,7 +179,12 @@ namespace WebCovid19.Controllers
 
                 //Validar si existe este usuario         
                 string usuarioExistente = servicioUsuario.validoQueExistaEsteUsuario(usuario);
-                if (usuarioExistente == "incorrecto")
+                if (usuarioExistente == null)
+                {
+                    ViewData.Add("mensajeError", "No existe ese email, debera registrarse primero");
+                    return View();
+                }
+                else if (usuarioExistente == "incorrecto")
                 {
                     ViewData.Add("mensajeError", "La contraseña ha sido incorrecta");
                     return View();
