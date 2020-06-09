@@ -59,6 +59,7 @@ namespace DAO
 
             var listaObtenida = (from nec in context.Necesidades
                                  where nec.FechaFin > DateTime.Now
+                                 where nec.Estado == 1
                                  select nec);
 
             foreach (var item in listaObtenida)

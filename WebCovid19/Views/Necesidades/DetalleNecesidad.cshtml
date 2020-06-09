@@ -15,3 +15,7 @@ else if (Model.necesidadesDonacionesMonetarias.Necesidades != null)
 {
     @Html.Partial("~/Views/Shared/NecesidadDonacionMonetaria.cshtml", Model)
 }
+else if (Model.necesidadesDonacionesMonetarias == null)
+{
+<h1>No hay tipo de donacion</h1>
+}
