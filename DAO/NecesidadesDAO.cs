@@ -45,7 +45,7 @@ namespace DAO
         public List<Necesidades> TraerTodasLasNecesidadesDelUsuario(int idSession)
         {
             List<Necesidades> todasLasNecesidadesDelUsuario = (from c in context.Necesidades
-                                                               where c.IdUsuarioCreador == idSession
+                                                               where c.IdUsuarioCreador.Equals(idSession)
                                                                where c.FechaFin > DateTime.Now
                                                                select c).ToList();
 
@@ -150,7 +150,7 @@ namespace DAO
             var listaObtenida = (from nec in context.Necesidades
                                  where nec.FechaFin > DateTime.Now
                                  where nec.Estado == 1
-                                 where nec.IdUsuarioCreador != idSession
+                                 where !nec.IdUsuarioCreador.Equals(idSession)
                                  select nec);
 
             foreach (var item in listaObtenida)

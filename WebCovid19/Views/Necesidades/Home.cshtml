@@ -3,6 +3,7 @@
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
     List<Entidades.Necesidades> necesidadesDelUser = ViewBag.necesidadesDelUser;
+    var estadoCollapse = "collapse show";
 
 }
 <p>
@@ -11,7 +12,11 @@
     </a>
 </p>
 
-<div class="collapse show" id="collapseExample">
+@if (ViewBag.ResultadoBusqueda != null)
+{
+    estadoCollapse = "collapse";
+}
+<div class="@estadoCollapse" id="collapseExample">
     <div class="card card-body">
         <div class="section-headline text-center">
             <h2 class="font-weight-light">Mis Necesidades</h2>
@@ -25,7 +30,7 @@
             @*Necesidades del usuario logueado*@
             @Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", necesidadesDelUser)
         }
-        </div>
+    </div>
     <div class="card card-body">
         <p>Fin de la lista de Mis Necesidades</p>
     </div>
@@ -36,9 +41,9 @@
     <h2 class="font-weight-light">Necesidades que están esperando tu ayuda</h2>
 </div>
 
-@if (ViewBag.Resultado != null)
+@if (ViewBag.ResultadoBusqueda == false)
 {
-    <h1>@ViewBag.Resultado</h1>
+    <h2>No se encontraron resultados para tu búsqueda</h2>
 }
 else
 if (Model.Count == 0)
@@ -47,6 +52,10 @@ if (Model.Count == 0)
 }
 else
 {
+    if (ViewBag.ResultadoBusqueda == true)
+    {
+        <h2>Resultados de la búsqueda:</h2>
+    }
 
     @*Todas las necesidades menos la del usuario logueado*@
     @Html.Partial("~/Views/Shared/PublicacionDeLaNecesidad.cshtml", Model)

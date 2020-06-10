@@ -159,10 +159,11 @@ namespace WebCovid19.Controllers
             int idSession = int.Parse(Session["UserId"].ToString());
             if (!string.IsNullOrEmpty(Request["buscar"]))
             {
+                ViewBag.ResultadoBusqueda = true;
                 todasLasNecesidades = servicioNecesidad.Buscar(Request["buscar"]);
                 if (todasLasNecesidades.Count == 0)
                 {
-                    ViewBag.Resultado = "No se encontraron resultados para tu búsqueda";
+                    ViewBag.ResultadoBusqueda = false;
                 }
             }
             else
