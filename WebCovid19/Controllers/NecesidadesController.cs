@@ -17,16 +17,12 @@ namespace WebCovid19.Controllers
     public class NecesidadesController : Controller
     {
         ServicioNecesidad servicioNecesidad;
-        ServicioNecesidadesInsumos servicioInsumo;
-        ServicioNecesidadesMonetarias servicioMonetaria;
         ServicioNecesidadValoraciones servicioNecesidadValoraciones;
 
         public NecesidadesController()
         {
             TpDBContext context = new TpDBContext();
              servicioNecesidad = new ServicioNecesidad(context);
-             servicioInsumo = new ServicioNecesidadesInsumos(context);
-             servicioMonetaria = new ServicioNecesidadesMonetarias(context);
              servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
 
         }
@@ -67,14 +63,14 @@ namespace WebCovid19.Controllers
                 TempData["idNecesidad"] = necesidad.IdNecesidad;
                 if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")
                 {
-                    return View("Insumos"); 
+                    return RedirectToAction("Insumos");
                 }
                 else
                 {
-                    return RedirectToAction("Monetaria", "Necesidades", necesidad.IdNecesidad);
+                    return RedirectToAction("Monetaria");
                 }
             }
-
+            
         }
 
         [HttpGet]
@@ -84,10 +80,12 @@ namespace WebCovid19.Controllers
             string s = TempData["idNecesidad"].ToString();
             int idNecesidad = int.Parse(s);
             insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
+            insumos.IdNecesidad = idNecesidad;
             return View(insumos);
         }            
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Insumos(NecesidadesDonacionesInsumosMetadata insumos)
         {
             if (!ModelState.IsValid)
@@ -95,8 +93,8 @@ namespace WebCovid19.Controllers
                 TempData["idNecesidad"] = insumos.Necesidades.IdNecesidad;
                 return View();
             }
-            servicioInsumo.GuardarInsumos(insumos);
-            return View();
+            servicioNecesidad.AgregarInsumos(insumos);
+            return View("ConfirmacionCreacion");
         }
 
         public ActionResult Monetaria()
@@ -107,7 +105,8 @@ namespace WebCovid19.Controllers
             monetaria.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
             return View(monetaria);
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Monetarias(NecesidadesDonacionesMonetariasMetadata monetarias)
         {
             if (!ModelState.IsValid)
@@ -115,7 +114,7 @@ namespace WebCovid19.Controllers
                 TempData["idNecesidad"] = monetarias.Necesidades.IdNecesidad;
                 return View();
             }
-            servicioMonetaria.GuardarMonetarias(monetarias);
+            servicioNecesidad.AgregarMonetarias(monetarias);
             return View();
         }
 
@@ -139,12 +138,12 @@ namespace WebCovid19.Controllers
 
             if (necesidadObtenida.TipoDonacion == 1)//Dinero
             {
-                NecesidadesDonacionesMonetarias necDonacionObtenida = servicioMonetaria.obtenerPorIdNecesidad(idNecesidad);
+                NecesidadesDonacionesMonetarias necDonacionObtenida = servicioNecesidad.BuscarMonetariasPorIdNecesidad(idNecesidad);
                 vMPublicacion.necesidadesDonacionesMonetarias = necDonacionObtenida;
             }
             else if(necesidadObtenida.TipoDonacion == 2)//Insumos
             {
-               NecesidadesDonacionesInsumos insumosObtenidos = servicioInsumo.obtenerPorIdNecesidad(idNecesidad);
+               NecesidadesDonacionesInsumos insumosObtenidos = servicioNecesidad.BuscarInsumosPorIdNecesidad(idNecesidad);
                 vMPublicacion.necesidadesDonacionesInsumos = insumosObtenidos;
             }
             vMPublicacion.necesidad = necesidadObtenida;

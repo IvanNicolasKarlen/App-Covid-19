@@ -15,7 +15,7 @@ namespace DAO
 {
     public class NecesidadesDAO : Crud<Necesidades>
     {
-
+        #region Crud
         public NecesidadesDAO(TpDBContext context) :base(context)
         {
             
@@ -102,8 +102,8 @@ namespace DAO
                 return necesidadBd;
             }
         }
-
-
+        #endregion
+        #region otros
         /// <summary>
         /// Buscar necesidades en relación al nombre de las necesidades existentes o bien según el nombre del
         /// usuario creador. Ordenado por fecha más cercana de cierre de necesidad y, luego,
@@ -160,5 +160,53 @@ namespace DAO
 
             return listaNecesidades;
         }
+        #endregion
+        #region Insumos y Monetaria
+        public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumos insumo, int idNecesidad)
+        {
+            //NecesidadesDonacionesInsumos i = context.NecesidadesDonacionesInsumos.Add(insumo);
+            Necesidades n = context.Necesidades.Find(idNecesidad);
+            n.NecesidadesDonacionesInsumos.Add(insumo);
+            context.SaveChanges();
+            return insumo;
+        }
+        public NecesidadesDonacionesMonetarias AgregarMonetaria(NecesidadesDonacionesMonetarias monetaria)
+        {
+            NecesidadesDonacionesMonetarias m = context.NecesidadesDonacionesMonetarias.Add(monetaria);
+            context.SaveChanges();
+            return m;
+        }
+        public void ActualizarInsumos(NecesidadesDonacionesInsumos insumo)
+        {
+            NecesidadesDonacionesInsumos insumoViejo = context.NecesidadesDonacionesInsumos.Find(insumo.IdNecesidadDonacionInsumo);
+            insumoViejo = insumo;
+            context.SaveChanges();
+        }
+        public void ActualizarMonetaria(NecesidadesDonacionesMonetarias monetaria)
+        {
+            NecesidadesDonacionesMonetarias monetariaViejo = context.NecesidadesDonacionesMonetarias.Find(monetaria.IdNecesidadDonacionMonetaria);
+            monetariaViejo = monetaria;
+            context.SaveChanges();
+        }
+        
+        public NecesidadesDonacionesInsumos BuscarInsumoPorId(int id)
+        {
+            return context.NecesidadesDonacionesInsumos.Find(id);
+        }
+
+        public NecesidadesDonacionesMonetarias BuscarMonetariasPorId(int id)
+        {
+            return context.NecesidadesDonacionesMonetarias.Find(id);
+        }
+
+        public NecesidadesDonacionesInsumos BuscarInsumosPorIdNecesidad(int id)
+        {
+            return (NecesidadesDonacionesInsumos)context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidad == id).FirstOrDefault();
+        }
+        public NecesidadesDonacionesMonetarias BuscarMonetariasPorIdNecesidad(int id)
+        {
+            return (NecesidadesDonacionesMonetarias)context.NecesidadesDonacionesMonetarias.Where(o => o.IdNecesidad == id).FirstOrDefault();
+        }
+        #endregion
     }
 }

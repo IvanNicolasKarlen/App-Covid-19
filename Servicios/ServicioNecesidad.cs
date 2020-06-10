@@ -22,7 +22,7 @@ namespace Servicios
             contexto = context;
             // servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
         }
-
+        #region necesidad
         public Necesidades obtenerNecesidadPorId(int id)
         {
             return necesidadesDAO.ObtenerPorID(id);
@@ -187,6 +187,36 @@ namespace Servicios
             List<Necesidades> necesidadesBD = necesidadesDAO.TraerNecesidadesQueNoSonDelUsuario(idSession);
             return necesidadesBD;
         }
+        #endregion
+        
+        public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumosMetadata insumometa)
+        {
+            NecesidadesDonacionesInsumos insumo = new NecesidadesDonacionesInsumos()
+            {
+                Cantidad = insumometa.Cantidad,
+                Nombre = insumometa.Nombre
+            };
+            return necesidadesDAO.AgregarInsumos(insumo,insumo.IdNecesidad);
+        }
+        public NecesidadesDonacionesMonetarias AgregarMonetarias(NecesidadesDonacionesMonetariasMetadata monetariameta)
+        {
+            NecesidadesDonacionesMonetarias monetaria = new NecesidadesDonacionesMonetarias()
+            {
+                CBU = monetariameta.CBU,
+                Dinero = monetariameta.Dinero,
+                IdNecesidad = monetariameta.IdNecesidad,
+                Necesidades = monetariameta.Necesidades
+            };
+            return necesidadesDAO.AgregarMonetaria(monetaria);
+        }
+        public NecesidadesDonacionesInsumos BuscarInsumosPorIdNecesidad(int id)
+        {
+            return necesidadesDAO.BuscarInsumosPorIdNecesidad(id);
+        }
+        public NecesidadesDonacionesMonetarias BuscarMonetariasPorIdNecesidad(int id)
+        {
+            return necesidadesDAO.BuscarMonetariasPorIdNecesidad(id);
+        }
     }
-    }
+}
 
