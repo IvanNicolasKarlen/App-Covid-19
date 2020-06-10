@@ -162,13 +162,11 @@ namespace DAO
         }
         #endregion
         #region Insumos y Monetaria
-        public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumos insumo, int idNecesidad)
+        public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumos insumo)
         {
-            //NecesidadesDonacionesInsumos i = context.NecesidadesDonacionesInsumos.Add(insumo);
-            Necesidades n = context.Necesidades.Find(idNecesidad);
-            n.NecesidadesDonacionesInsumos.Add(insumo);
+            NecesidadesDonacionesInsumos i = context.NecesidadesDonacionesInsumos.Add(insumo);
             context.SaveChanges();
-            return insumo;
+            return i;
         }
         public NecesidadesDonacionesMonetarias AgregarMonetaria(NecesidadesDonacionesMonetarias monetaria)
         {

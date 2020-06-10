@@ -15,7 +15,6 @@ namespace Entidades.Metadata
         [Required(ErrorMessage = "El nombre del insumo es obligatorio")]
         public string Nombre { get; set; }
         [Required (ErrorMessage = "Debe añadir una cantidad")]
-        [MinLength(1, ErrorMessage = "Debe añadir una cantidad mínima de 1 insumo")]
         public int Cantidad { get; set; }
 
         public virtual ICollection<DonacionesInsumos> DonacionesInsumos { get; set; }

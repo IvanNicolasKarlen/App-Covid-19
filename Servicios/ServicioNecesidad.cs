@@ -194,9 +194,11 @@ namespace Servicios
             NecesidadesDonacionesInsumos insumo = new NecesidadesDonacionesInsumos()
             {
                 Cantidad = insumometa.Cantidad,
-                Nombre = insumometa.Nombre
+                Nombre = insumometa.Nombre,
+                IdNecesidad = insumometa.IdNecesidad,
+                Necesidades = insumometa.Necesidades
             };
-            return necesidadesDAO.AgregarInsumos(insumo,insumo.IdNecesidad);
+            return necesidadesDAO.AgregarInsumos(insumo);
         }
         public NecesidadesDonacionesMonetarias AgregarMonetarias(NecesidadesDonacionesMonetariasMetadata monetariameta)
         {
