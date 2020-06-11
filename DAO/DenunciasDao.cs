@@ -1,6 +1,7 @@
 ﻿using DAO.Abstract;
 using DAO.Context;
 using Entidades;
+using Entidades.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace DAO
         {
 
         }
-        public List<Denuncias> obtenerDenuncias()
+        public List<Denuncias> ObtenerDenuncias()
         {
-            List<Denuncias> listaObtenida = context.Denuncias.Where(o => o.Estado == 1).ToList();
+            List<Denuncias> listaObtenida = context.Denuncias.Where(o => o.Necesidades.Estado == (int)TipoEstadoNecesidad.Revision).ToList();
             return listaObtenida;
         }
 
@@ -42,15 +43,22 @@ namespace DAO
             return denunciaObtenida;
         }
 
-        public override Denuncias Crear(Denuncias generics)
+        public override Denuncias Crear(Denuncias denuncia)
         {
-            throw new NotImplementedException();
+           Denuncias d = context.Denuncias.Add(denuncia);
+           context.SaveChanges();
+           return d;
         }
 
         public void Eliminar(Denuncias item)
         {
             context.Denuncias.Remove(item);
             context.SaveChanges();
+        }
+
+        public List<MotivoDenuncia> ObtenerMotivosDenuncia()
+        {
+            return context.MotivoDenuncia.ToList();
         }
     }
 }

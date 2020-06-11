@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entidades.Enum
 {
-    public enum TipoEstadoNecesidad
+   public enum TipoEstadoDenuncia
     {
-        Inactiva = 0,
-        Activa = 1,
-        Finalizada = 2,
-        Revision = 3,
-        Bloqueada = 4
+        Pendiente = 0,
+        Revisada = 1,
     }
 }

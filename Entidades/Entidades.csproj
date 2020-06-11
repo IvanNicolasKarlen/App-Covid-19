@@ -64,8 +64,10 @@
     </Compile>
     <Compile Include="Enum\TipoDonacion.cs" />
     <Compile Include="Enum\TipoEmail.cs" />
+    <Compile Include="Enum\TipoEstadoDenuncia.cs" />
     <Compile Include="Enum\TipoEstadoNecesidad.cs" />
     <Compile Include="Enum\TipoUsuario.cs" />
+    <Compile Include="Metadata\Denuncias.cs" />
     <Compile Include="Metadata\NecesidadesDonacionesMonetariasMetadata.cs" />
     <Compile Include="Metadata\NecesidadesDonacionesInsumosMetadata.cs" />
     <Compile Include="Metadata\NecesidadesDonacionesMonetarias.cs" />

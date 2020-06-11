@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Diagnostics.Eventing.Reader;
 
 using DAO.Context;
-
+using Entidades.Enum;
 
 namespace DAO
 {
@@ -36,7 +36,7 @@ namespace DAO
         {
             List<Necesidades> necesidadesActivas = (from c in context.Necesidades
                                                     where c.IdUsuarioCreador == idSession
-                                                    where c.Estado == 1
+                                                    where c.Estado == (int)TipoEstadoNecesidad.Activa
                                                     where c.FechaFin > DateTime.Now
                                                     select c).ToList();
             return necesidadesActivas;
@@ -131,7 +131,7 @@ namespace DAO
 
             var listaObtenida = (from nec in context.Necesidades
                                  where nec.FechaFin > DateTime.Now
-                                 where nec.Estado == 1
+                                 where nec.Estado == (int)TipoEstadoNecesidad.Activa
                                  select nec);
 
             foreach (var item in listaObtenida)
@@ -149,7 +149,7 @@ namespace DAO
 
             var listaObtenida = (from nec in context.Necesidades
                                  where nec.FechaFin > DateTime.Now
-                                 where nec.Estado == 1
+                                 where nec.Estado == (int)TipoEstadoNecesidad.Activa
                                  where !nec.IdUsuarioCreador.Equals(idSession)
                                  select nec);
 

@@ -10,58 +10,55 @@ using DAO.Context;
 
 namespace WebCovid19.Controllers
 {
-    [AdminFilter]
     [LoginFilter]
     public class DenunciaController : Controller
     {
-        ServicioNecesidad servicioNecesidad;
         ServicioDenuncia servicioDenuncia;
 
         public DenunciaController()
         {
             TpDBContext context = new TpDBContext();
-            servicioNecesidad = new ServicioNecesidad(context);
             servicioDenuncia = new ServicioDenuncia(context);
         }
 
-        public ActionResult Denuncia(int id)
+        public ActionResult Denunciar(int id)
         {
-            Denuncias denuncia = new Denuncias();
-          
-
-            //Obtener los motivos de las denuncias para el select
-            //List<MotivoDenuncia> motivoDenuncias = servicioMotivoDenuncia.obtenerMotivos();
-
-            Necesidades necesidadDenunciada = servicioNecesidad.obtenerNecesidadPorId(id);
-            ViewBag.titulo = necesidadDenunciada.Nombre;
+            ViewBag.motivosDenuncia = servicioDenuncia.ObtenerMotivosDenuncia();
             ViewBag.idNecesidad = id;
             return View();
         }
 
 
         [HttpPost]
-        public ActionResult Denuncia(Denuncias denuncia)
+        public ActionResult Denunciar(Denuncias denuncia)
         {
+            int idUsuario = int.Parse(Session["UserId"].ToString());
             try
             {
                 if (!ModelState.IsValid)
                 {
+                    ViewBag.motivosDenuncia = servicioDenuncia.ObtenerMotivosDenuncia();
+                    ViewBag.idNecesidad = denuncia.IdNecesidad;
                     return View();
                 }
 
-                bool denunciaRegistrada = servicioDenuncia.guardarDenuncia(denuncia);
-
-                if (!denunciaRegistrada)
+                Denuncias denunciaRegistrada = servicioDenuncia.GuardarDenuncia(denuncia, idUsuario);
+                if (denunciaRegistrada == null)
                 {
                     ViewBag.mensajeError = "Ha ocurrido un error. Intente nuevamente por favor";
                     return View();
+                }
+                else
+                {
+                    ViewBag.mensajeCorrecto = "La denuncia se registró con éxito";
                 }
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("Error: ", ex.Message);
             }
-
+            ViewBag.motivosDenuncia = servicioDenuncia.ObtenerMotivosDenuncia();
+            ViewBag.idNecesidad = denuncia.IdNecesidad;
             return View(denuncia);
         }
 

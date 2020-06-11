@@ -1,6 +1,7 @@
 ﻿using DAO;
 using DAO.Context;
 using Entidades;
+using Entidades.Enum;
 using Entidades.Views;
 using System;
 using System.Collections.Generic;
@@ -27,72 +28,64 @@ namespace Servicios
 
 
         /// <summary>
-        /// Guardar la denuncia y validar si es necesario enviarselo al Admin o no
+        /// Guardar la denuncia 
         /// </summary>
         /// <param name="denuncia"></param>
         /// <returns>True o False</returns>
-        public bool guardarDenuncia(Denuncias denuncia)
+        public Denuncias GuardarDenuncia(Denuncias denuncia, int idUsuario)
         {
-            List<Denuncias> denunciasObtenidas = new List<Denuncias>();
-            //Registro la denuncia
-            //Recibo lista de denuncias de esa publicacion
-            //Validar si supera a 5 para enviarle la publicacion al admin.
+            denuncia.FechaCreacion = DateTime.Now;
+            denuncia.IdUsuario = idUsuario;
 
-            //Validar si se guardo 
-
-
-
-            if (denunciasObtenidas.Count >= 5)
-            {
-                //Enviarsela al admin
-            }
-
-
-            return true;
+            return denunciasDao.Crear(denuncia);
         }
 
-        public List<Denuncias> obtenerDenuncias()
+        public List<MotivoDenuncia> ObtenerMotivosDenuncia()
         {
-            List<Denuncias> listaDenuncias = denunciasDao.obtenerDenuncias();
+            return denunciasDao.ObtenerMotivosDenuncia();
+        }
+
+        public List<Denuncias> ObtenerDenuncias()
+        {
+            List<Denuncias> listaDenuncias = denunciasDao.ObtenerDenuncias();
             return listaDenuncias;
         }
 
         public bool necesidadEvaluada(int idNecesidad, bool estado)
         {
-         
-
+             Denuncias denunciaObtenida = denunciasDao.obtenerDenunciaPorIdNecesidad(idNecesidad);
             if (estado) //True es para dejarla bloqueada/Inactiva a la Necesidad
             {
-                Denuncias denunciaObtenida = denunciasDao.obtenerDenunciaPorIdNecesidad(idNecesidad);
+               
                 if (denunciaObtenida == null)
                 {
                     return false;
                 }
                 
                 //Pongo la necesidad en estado inactivo
-                denunciaObtenida.Necesidades.Estado = 0;
+                denunciaObtenida.Necesidades.Estado = (int)TipoEstadoNecesidad.Bloqueada;
+                denunciaObtenida.Estado = (int)TipoEstadoDenuncia.Revisada; // 1 revisada
                 //Actualizo el estado
                 Denuncias denunciaActualizada = denunciasDao.Actualizar(denunciaObtenida);
-                //Elimino la denuncia realizada
-                denunciasDao.Eliminar(denunciaObtenida);
-
+               
                 if (denunciaActualizada == null)
                     {
                         return false;
                     }
-                
-
-
                 }
             else //Al ser false, esta necesidad no le deberia volver a aparecer al Administrador
             {
-                Denuncias denunciaObtenida = denunciasDao.obtenerDenunciaPorIdNecesidad(idNecesidad);
                 if (denunciaObtenida == null)
                 {
                     return false;
                 }
 
-                    denunciasDao.Eliminar(denunciaObtenida);
+               
+                // Enum.GetValues(typeof(TipoDonacion)).ToString() ;
+
+                denunciaObtenida.Necesidades.Estado = (int)TipoEstadoNecesidad.Activa; // activa 1
+                denunciaObtenida.Estado = (int)TipoEstadoDenuncia.Revisada;
+                Denuncias denunciaActualizada = denunciasDao.Actualizar(denunciaObtenida);
                 
             }
 

@@ -1900,7 +1900,7 @@
     <Content Include="Scripts\umd\bootstrap.min.js.map" />
     <Content Include="Views\Usuario\Login.cshtml" />
     <Content Include="Views\Shared\VPFooter.cshtml" />
-    <Content Include="Views\Denuncia\Denuncia.cshtml" />
+    <Content Include="Views\Denuncia\Denunciar.cshtml" />
     <Content Include="Views\DonacionMonetaria\DonacionMonetaria.cshtml" />
     <Content Include="Views\Shared\_AnonimoLayout.cshtml" />
     <Content Include="Views\Shared\_BaseLayout.cshtml" />
