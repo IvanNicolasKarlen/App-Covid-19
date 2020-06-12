@@ -342,8 +342,9 @@ namespace WebCovid19.Controllers
         [AdminFilter]
         public ActionResult Administrador()
         {
-            List<Denuncias> denunciasObtenidas = servicioDenuncia.ObtenerDenunciasEnRevision();
-            return View(denunciasObtenidas);
+            List<Necesidades> necesidadesObtenidas = servicioNecesidad.obtenerNecesidadesDenunciadas();
+            return View("Administrador", necesidadesObtenidas);
+
         }
 
 
@@ -364,8 +365,7 @@ namespace WebCovid19.Controllers
                 ViewData["mensajeError"] = "Ha ocurrido un error al evaluar la necesidad, volverá a aparecerte en el listado";
             }
 
-            List<Denuncias> denunciasObtenidas = servicioDenuncia.ObtenerDenunciasEnRevision();
-            return View("Administrador", denunciasObtenidas);
+            return RedirectToAction("Administrador");
         }
 
 
