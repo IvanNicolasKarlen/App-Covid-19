@@ -342,19 +342,19 @@ namespace WebCovid19.Controllers
         [AdminFilter]
         public ActionResult Administrador()
         {
-            List<Denuncias> denunciasObtenidas = servicioDenuncia.ObtenerDenuncias();
+            List<Denuncias> denunciasObtenidas = servicioDenuncia.ObtenerDenunciasEnRevision();
             return View(denunciasObtenidas);
         }
 
 
 
         [HttpPost]
-        public ActionResult DenunciaEvaluada(int idNecesidad)
+        public ActionResult DenunciaEvaluada(Denuncias denuncia)
         {
 
             //Si es Desestimar obtengo un false, si es Bloquear obtengo un true
             bool estado = (Request.Form["Desestimar"] != null) ? false : (Request.Form["Bloquear"] != null) ? true : false;
-            bool evaluada = servicioDenuncia.necesidadEvaluada(idNecesidad, estado);
+            bool evaluada = servicioDenuncia.NecesidadEvaluada(denuncia.IdNecesidad, estado, denuncia);
             if (evaluada)
             {
                 ViewData["mensajeCorrecto"] = "La Denuncia que evaluaste fue guardada con exito";
@@ -364,7 +364,7 @@ namespace WebCovid19.Controllers
                 ViewData["mensajeError"] = "Ha ocurrido un error al evaluar la necesidad, volverá a aparecerte en el listado";
             }
 
-            List<Denuncias> denunciasObtenidas = servicioDenuncia.ObtenerDenuncias();
+            List<Denuncias> denunciasObtenidas = servicioDenuncia.ObtenerDenunciasEnRevision();
             return View("Administrador", denunciasObtenidas);
         }
 

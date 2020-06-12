@@ -16,17 +16,12 @@ namespace DAO
         {
 
         }
-        public List<Denuncias> ObtenerDenuncias()
+        public List<Denuncias> ObtenerDenunciasEnRevision()
         {
             List<Denuncias> listaObtenida = context.Denuncias.Where(o => o.Necesidades.Estado == (int)TipoEstadoNecesidad.Revision).ToList();
             return listaObtenida;
         }
 
-        public Denuncias obtenerDenunciaPorIdNecesidad(int idNecesidad)
-        {
-            Denuncias denunciaObtenida = context.Denuncias.Where(d => d.Necesidades.IdNecesidad == idNecesidad).FirstOrDefault();
-            return denunciaObtenida;
-        }
 
         public override Denuncias ObtenerPorID(int idDenuncia)
         {
@@ -59,6 +54,11 @@ namespace DAO
         public List<MotivoDenuncia> ObtenerMotivosDenuncia()
         {
             return context.MotivoDenuncia.ToList();
+        }
+        public List<Denuncias> ObtenerTodasLasDenuncias()
+        {
+            List<Denuncias> listaObtenida = context.Denuncias.ToList();
+            return listaObtenida;
         }
     }
 }

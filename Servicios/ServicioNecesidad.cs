@@ -48,8 +48,6 @@ namespace Servicios
             return necesidadesDAO.Crear(necesidades);
         }
 
-
-
         /// <summary>
         /// Trae todas las necesidades del usuario en base al estado de las mismas
         /// </summary>
@@ -185,6 +183,7 @@ namespace Servicios
         public List<Necesidades> TraerNecesidadesQueNoSonDelUsuario(int idSession)
         {
             List<Necesidades> necesidadesBD = necesidadesDAO.TraerNecesidadesQueNoSonDelUsuario(idSession);
+
             return necesidadesBD;
         }
     }

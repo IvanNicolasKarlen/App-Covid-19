@@ -14,11 +14,13 @@ namespace WebCovid19.Controllers
     public class DenunciaController : Controller
     {
         ServicioDenuncia servicioDenuncia;
+        ServicioNecesidad servicioNecesidad;
 
         public DenunciaController()
         {
             TpDBContext context = new TpDBContext();
             servicioDenuncia = new ServicioDenuncia(context);
+            servicioNecesidad = new ServicioNecesidad(context);
         }
 
         public ActionResult Denunciar(int id)
@@ -43,6 +45,7 @@ namespace WebCovid19.Controllers
                 }
 
                 Denuncias denunciaRegistrada = servicioDenuncia.GuardarDenuncia(denuncia, idUsuario);
+                servicioDenuncia.EvaluarCantidadDenunciasDeNecesidad(denuncia.IdNecesidad);
                 if (denunciaRegistrada == null)
                 {
                     ViewBag.mensajeError = "Ha ocurrido un error. Intente nuevamente por favor";
