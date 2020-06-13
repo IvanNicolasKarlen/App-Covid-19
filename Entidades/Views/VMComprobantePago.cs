@@ -11,5 +11,7 @@ namespace Entidades.Views
     {
         [Required]
         public string ArchivoTransferencia { get; set; }
+
+        public int IdDonacionMonetaria { get; set; }
     }
 }

@@ -41,16 +41,16 @@ namespace Servicios
         }
 
         //ToDo: No va harcodeado el id de necesidadDonacionMonetaria, y idusuario
-        public DonacionesMonetarias GuardarDonacionM(VMDonacionMonetaria VMDonacionMonetaria, int idUsuario)
+        public DonacionesMonetarias GuardarDonacionM(VMDonacionMonetaria vmDonacionMonetaria, int idUsuario )
         {
             DonacionesMonetarias donacionM = new DonacionesMonetarias()
             {
-                Dinero = VMDonacionMonetaria.Dinero,
-                IdNecesidadDonacionMonetaria = 5,
+                Dinero = vmDonacionMonetaria.Dinero,
+                IdNecesidadDonacionMonetaria = vmDonacionMonetaria.IdNecesidadDonacionMonetaria,
                 IdUsuario = idUsuario,
                 FechaCreacion = DateTime.Now,
                 ArchivoTransferencia = ""
-            };
+                };
 
             return DonacionMonetariaDao.Guardar(donacionM);
 

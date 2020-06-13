@@ -25,27 +25,31 @@ namespace WebCovid19.Controllers
         }
 
         [HttpGet]
-        public ActionResult DonacionMonetaria()
+        public ActionResult DonaMonetaria(int idNecesidadDonacionMonetaria)
         {
-            return View();
+            VMDonacionMonetaria vmDonacionMonetaria = new VMDonacionMonetaria();
+             vmDonacionMonetaria.IdNecesidadDonacionMonetaria = idNecesidadDonacionMonetaria;
+            return View(vmDonacionMonetaria);
         }
 
 
 
         [HttpPost]
-        public ActionResult DonacionMonetaria(VMDonacionMonetaria VMDonacionMonetaria)
+        public ActionResult DonaMonetaria(VMDonacionMonetaria VMDonacionMonetaria)
         {
+            DonacionesMonetarias donacionM = new DonacionesMonetarias();                
+
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View();
+                    return View(VMDonacionMonetaria);
                 }
                 else
                 {
 
                     int idUsuario = int.Parse(Session["UserId"].ToString());
-                    DonacionesMonetarias donacionM = servicioDonacion.GuardarDonacionM(VMDonacionMonetaria, idUsuario);
+                     donacionM = servicioDonacion.GuardarDonacionM(VMDonacionMonetaria, idUsuario);
                 }
 
             }
@@ -54,14 +58,17 @@ namespace WebCovid19.Controllers
                 ModelState.AddModelError("Error: ", ex.Message);
             }
 
-            return RedirectToAction("SeleccionComprobanteDePago");
+            VMComprobantePago vmComprobantePago = new VMComprobantePago();
+            vmComprobantePago.IdDonacionMonetaria = donacionM.IdDonacionMonetaria;
+
+
+            return View("SeleccionComprobanteDePago", vmComprobantePago);
         }
 
         [HttpGet]
         public ActionResult SeleccionComprobanteDePago()
         {
-            VMComprobantePago VMComprobantePago = new VMComprobantePago();
-            return View(VMComprobantePago);
+            return View();
         }
 
 

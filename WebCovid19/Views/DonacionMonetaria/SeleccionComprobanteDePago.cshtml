@@ -12,10 +12,12 @@
 <div class="card" id="card">
 
     <div class="col-md-4 mt-3 mb-3 float-left">
-            @using (Html.BeginForm("SeleccionComprobanteDePago", "DonacionMonetaria", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("SeleccionComprobanteDePago", "DonacionMonetaria", FormMethod.Post, new { enctype = "multipart/form-data" }))
 
-            { 
-                @Html.AntiForgeryToken()
+        {
+            <input type="hidden" name="IdDonacionMonetaria" value="@Model.IdDonacionMonetaria" />
+
+            @Html.AntiForgeryToken()
 
             if (ViewBag.mensajeError2 != null) //Mensaje que esta en el controller.
             {
@@ -24,11 +26,11 @@
 
             @*Valido que me suba un comprobante*@
 
-    <div class="form-group" name="ArchivoTransferencia">
-        @Html.TextBoxFor(model => model.ArchivoTransferencia, new { type = "file", accept = "image/jpg, image/jpeg, image/png", @class = "form-control-file" })
-        @Html.ValidationMessageFor(model => model.ArchivoTransferencia, "", new { @class = "text-danger" })
+            <div class="form-group" name="ArchivoTransferencia">
+                @Html.TextBoxFor(model => model.ArchivoTransferencia, new { type = "file", accept = "image/jpg, image/jpeg, image/png", @class = "form-control-file" })
+                @Html.ValidationMessageFor(model => model.ArchivoTransferencia, "", new { @class = "text-danger" })
 
-    </div>
+            </div>
 
             <div class="col-md-12 btn-group mt-4">
                 <button type="submit" class="btn btn-primary ml-2">Confirmar</button>
