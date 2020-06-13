@@ -9,13 +9,13 @@ using System.Net.Http;
 using System.Diagnostics.Eventing.Reader;
 
 using DAO.Context;
-using Entidades.Enum;
+
 
 namespace DAO
 {
     public class NecesidadesDAO : Crud<Necesidades>
     {
-
+        #region Crud
         public NecesidadesDAO(TpDBContext context) :base(context)
         {
             
@@ -34,9 +34,9 @@ namespace DAO
 
         public List<Necesidades> TraerNecesidadesActivasDelUsuario(int idSession)
         {
-            List<Necesidades> necesidadesActivas = (from c in context.Necesidades.Include("Denuncias")
+            List<Necesidades> necesidadesActivas = (from c in context.Necesidades
                                                     where c.IdUsuarioCreador == idSession
-                                                    where c.Estado == (int)TipoEstadoNecesidad.Activa
+                                                    where c.Estado == 1
                                                     where c.FechaFin > DateTime.Now
                                                     select c).ToList();
             return necesidadesActivas;
@@ -51,6 +51,7 @@ namespace DAO
 
             return todasLasNecesidadesDelUsuario;
         }
+
 
         public List<Necesidades> ListarTodasLasNecesidades()
         {
@@ -101,8 +102,8 @@ namespace DAO
                 return necesidadBd;
             }
         }
-
-
+        #endregion
+        #region otros
         /// <summary>
         /// Buscar necesidades en relación al nombre de las necesidades existentes o bien según el nombre del
         /// usuario creador. Ordenado por fecha más cercana de cierre de necesidad y, luego,
@@ -119,7 +120,6 @@ namespace DAO
               from necesidad in context.Necesidades.Include("Usuarios")
               where necesidad.Usuarios.Nombre.Contains(input) || necesidad.Nombre.Contains(input)
               where !necesidad.IdUsuarioCreador.Equals(idUser)
-              where necesidad.Estado.Equals((int)TipoEstadoNecesidad.Activa)
               select necesidad
               ).OrderBy(o => o.FechaFin).ThenByDescending(o => o.Valoracion).ToList();
             return necesidadesObtenidas;
@@ -131,7 +131,7 @@ namespace DAO
 
             var listaObtenida = (from nec in context.Necesidades
                                  where nec.FechaFin > DateTime.Now
-                                 where nec.Estado == (int)TipoEstadoNecesidad.Activa
+                                 where nec.Estado == 1
                                  select nec);
 
             foreach (var item in listaObtenida)
@@ -149,7 +149,7 @@ namespace DAO
 
             var listaObtenida = (from nec in context.Necesidades
                                  where nec.FechaFin > DateTime.Now
-                                 where nec.Estado.Equals((int)TipoEstadoNecesidad.Activa)
+                                 where nec.Estado == 1
                                  where !nec.IdUsuarioCreador.Equals(idSession)
                                  select nec);
 
@@ -160,11 +160,51 @@ namespace DAO
 
             return listaNecesidades;
         }
-
-        public List<Necesidades> obtenerNecesidadesDenunciadas()
-        {   
-            List<Necesidades> necesidadesBD = context.Necesidades.Where(o => o.Estado == (int)TipoEstadoNecesidad.Revision).ToList();
-            return necesidadesBD;
+        #endregion
+        #region Insumos y Monetaria
+        public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumos insumo)
+        {
+            NecesidadesDonacionesInsumos i = context.NecesidadesDonacionesInsumos.Add(insumo);
+            context.SaveChanges();
+            return i;
         }
+        public NecesidadesDonacionesMonetarias AgregarMonetaria(NecesidadesDonacionesMonetarias monetaria)
+        {
+            NecesidadesDonacionesMonetarias m = context.NecesidadesDonacionesMonetarias.Add(monetaria);
+            context.SaveChanges();
+            return m;
+        }
+        public void ActualizarInsumos(NecesidadesDonacionesInsumos insumo)
+        {
+            NecesidadesDonacionesInsumos insumoViejo = context.NecesidadesDonacionesInsumos.Find(insumo.IdNecesidadDonacionInsumo);
+            insumoViejo = insumo;
+            context.SaveChanges();
+        }
+        public void ActualizarMonetaria(NecesidadesDonacionesMonetarias monetaria)
+        {
+            NecesidadesDonacionesMonetarias monetariaViejo = context.NecesidadesDonacionesMonetarias.Find(monetaria.IdNecesidadDonacionMonetaria);
+            monetariaViejo = monetaria;
+            context.SaveChanges();
+        }
+        
+        public NecesidadesDonacionesInsumos BuscarInsumoPorId(int id)
+        {
+            return context.NecesidadesDonacionesInsumos.Find(id);
+        }
+
+        public NecesidadesDonacionesMonetarias BuscarMonetariasPorId(int id)
+        {
+            return context.NecesidadesDonacionesMonetarias.Find(id);
+        }
+
+        public NecesidadesDonacionesInsumos BuscarInsumosPorIdNecesidad(int id)
+        {
+            return (NecesidadesDonacionesInsumos)context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidad == id).FirstOrDefault();
+        }
+        public NecesidadesDonacionesMonetarias BuscarMonetariasPorIdNecesidad(int id)
+        {
+            return (NecesidadesDonacionesMonetarias)context.NecesidadesDonacionesMonetarias.Where(o => o.IdNecesidad == id).FirstOrDefault();
+        }
+        #endregion
     }
 }

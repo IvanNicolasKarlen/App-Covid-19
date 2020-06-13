@@ -22,7 +22,7 @@ namespace Servicios
             contexto = context;
             // servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
         }
-
+        #region necesidad
         public Necesidades obtenerNecesidadPorId(int id)
         {
             return necesidadesDAO.ObtenerPorID(id);
@@ -47,6 +47,8 @@ namespace Servicios
 
             return necesidadesDAO.Crear(necesidades);
         }
+
+
 
         /// <summary>
         /// Trae todas las necesidades del usuario en base al estado de las mismas
@@ -160,38 +162,62 @@ namespace Servicios
             return necesidades;
         }
 
-        public List<Necesidades> obtener5NecesidadesMasValoradas()
-        {
-            List<Necesidades> listadoNecesidades = necesidadesDAO.ListarTodasLasNecesidadesActivas();
-            List<Necesidades> necesidadesMasValoradas = new List<Necesidades>();
-            int cantidad = (listadoNecesidades.Count >= 5) ? 5 : listadoNecesidades.Count;
-
-            foreach (var item in listadoNecesidades.OrderByDescending(n => n.Valoracion).ToList())
+            public List<Necesidades> obtener5NecesidadesMasValoradas()
             {
-                necesidadesMasValoradas.Add(item);
+                List<Necesidades> listadoNecesidades = necesidadesDAO.ListarTodasLasNecesidadesActivas();
+                List<Necesidades> necesidadesMasValoradas = new List<Necesidades>();
+                int cantidad = (listadoNecesidades.Count >= 5) ? 5 : listadoNecesidades.Count;
 
-                if (necesidadesMasValoradas.Count == cantidad)
+                foreach (var item in listadoNecesidades.OrderByDescending(n => n.Valoracion).ToList())
                 {
-                    break;
+                    necesidadesMasValoradas.Add(item);
+
+                    if (necesidadesMasValoradas.Count == cantidad)
+                    {
+                        break;
+                    }
                 }
+
+                return necesidadesMasValoradas;
+
             }
-
-            return necesidadesMasValoradas;
-
-        }
 
         public List<Necesidades> TraerNecesidadesQueNoSonDelUsuario(int idSession)
         {
             List<Necesidades> necesidadesBD = necesidadesDAO.TraerNecesidadesQueNoSonDelUsuario(idSession);
-
             return necesidadesBD;
         }
-
-        public List<Necesidades> obtenerNecesidadesDenunciadas()
+        #endregion
+        
+        public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumosMetadata insumometa)
         {
-            List<Necesidades> listaNecesidades = necesidadesDAO.obtenerNecesidadesDenunciadas();
-
-            return listaNecesidades;
+            NecesidadesDonacionesInsumos insumo = new NecesidadesDonacionesInsumos()
+            {
+                Cantidad = insumometa.Cantidad,
+                Nombre = insumometa.Nombre,
+                IdNecesidad = insumometa.IdNecesidad,
+                Necesidades = insumometa.Necesidades
+            };
+            return necesidadesDAO.AgregarInsumos(insumo);
+        }
+        public NecesidadesDonacionesMonetarias AgregarMonetarias(NecesidadesDonacionesMonetariasMetadata monetariameta)
+        {
+            NecesidadesDonacionesMonetarias monetaria = new NecesidadesDonacionesMonetarias()
+            {
+                CBU = monetariameta.CBU,
+                Dinero = monetariameta.Dinero,
+                IdNecesidad = monetariameta.IdNecesidad,
+                Necesidades = monetariameta.Necesidades
+            };
+            return necesidadesDAO.AgregarMonetaria(monetaria);
+        }
+        public NecesidadesDonacionesInsumos BuscarInsumosPorIdNecesidad(int id)
+        {
+            return necesidadesDAO.BuscarInsumosPorIdNecesidad(id);
+        }
+        public NecesidadesDonacionesMonetarias BuscarMonetariasPorIdNecesidad(int id)
+        {
+            return necesidadesDAO.BuscarMonetariasPorIdNecesidad(id);
         }
     }
 }

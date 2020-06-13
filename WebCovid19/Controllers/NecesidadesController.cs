@@ -17,16 +17,12 @@ namespace WebCovid19.Controllers
     public class NecesidadesController : Controller
     {
         ServicioNecesidad servicioNecesidad;
-        ServicioNecesidadesInsumos servicioInsumo;
-        ServicioNecesidadesMonetarias servicioMonetaria;
         ServicioNecesidadValoraciones servicioNecesidadValoraciones;
 
         public NecesidadesController()
         {
             TpDBContext context = new TpDBContext();
              servicioNecesidad = new ServicioNecesidad(context);
-             servicioInsumo = new ServicioNecesidadesInsumos(context);
-             servicioMonetaria = new ServicioNecesidadesMonetarias(context);
              servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
 
         }
@@ -40,8 +36,13 @@ namespace WebCovid19.Controllers
 
 
         public ActionResult Crear()
-        { 
-
+        {
+            int idUsuario = int.Parse(Session["UserId"].ToString());
+            if (servicioNecesidad.TraerNecesidadesDelUsuario(idUsuario, "on").Count >= 3)
+            {
+                ViewBag.Mensaje = "Usted ya alcanzó el límite (3) de necesidades activas.";
+                return View("AvisosNecesidad");
+            }
             NecesidadesMetadata necesidadesMetadata = new NecesidadesMetadata();
             return View(necesidadesMetadata);
         }
@@ -67,14 +68,14 @@ namespace WebCovid19.Controllers
                 TempData["idNecesidad"] = necesidad.IdNecesidad;
                 if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")
                 {
-                    return View("Insumos"); 
+                    return View("Insumos");
                 }
                 else
                 {
-                    return RedirectToAction("Monetaria", "Necesidades", necesidad.IdNecesidad);
+                    return View("Monetaria");
                 }
             }
-
+            
         }
 
         [HttpGet]
@@ -83,40 +84,52 @@ namespace WebCovid19.Controllers
             NecesidadesDonacionesInsumosMetadata insumos = new NecesidadesDonacionesInsumosMetadata();
             string s = TempData["idNecesidad"].ToString();
             int idNecesidad = int.Parse(s);
-            insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
+            TempData["idNecesidad"] = idNecesidad;
             return View(insumos);
         }            
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Insumos(NecesidadesDonacionesInsumosMetadata insumos)
         {
+            string s = TempData["idNecesidad"].ToString();
+            int idNecesidad = int.Parse(s);
+            TempData["idNecesidad"] = idNecesidad;
             if (!ModelState.IsValid)
             {
-                TempData["idNecesidad"] = insumos.Necesidades.IdNecesidad;
-                return View();
+                TempData["idNecesidad"] = idNecesidad;
             }
-            servicioInsumo.GuardarInsumos(insumos);
-            return View();
+           insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
+           insumos.IdNecesidad = idNecesidad;
+            servicioNecesidad.AgregarInsumos(insumos);
+            ViewBag.Mensaje = "La necesidad de insumos se creó exitosamente.";
+            return View("AvisosNecesidad");
         }
 
         public ActionResult Monetaria()
-        {   
-            NecesidadesDonacionesMonetarias monetaria = new NecesidadesDonacionesMonetarias();
+        {
+            NecesidadesDonacionesMonetariasMetadata monetaria = new NecesidadesDonacionesMonetariasMetadata();
             string s = TempData["idNecesidad"].ToString();
             int idNecesidad = int.Parse(s);
-            monetaria.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
+            TempData["idNecesidad"] = idNecesidad;
             return View(monetaria);
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Monetarias(NecesidadesDonacionesMonetariasMetadata monetarias)
         {
+            string s = TempData["idNecesidad"].ToString();
+            int idNecesidad = int.Parse(s);
+            TempData["idNecesidad"] = idNecesidad;
             if (!ModelState.IsValid)
             {
-                TempData["idNecesidad"] = monetarias.Necesidades.IdNecesidad;
-                return View();
+                TempData["idNecesidad"] = idNecesidad;
             }
-            servicioMonetaria.GuardarMonetarias(monetarias);
-            return View();
+            monetarias.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
+            monetarias.IdNecesidad = idNecesidad;
+            servicioNecesidad.AgregarMonetarias(monetarias);
+            ViewBag.Mensaje = "La necesidad monetaria se creó exitosamente.";
+            return View("AvisosNecesidad");
         }
 
         [LoginFilter]//toDo: Probar que funcione bien del todo este action.
@@ -139,12 +152,12 @@ namespace WebCovid19.Controllers
 
             if (necesidadObtenida.TipoDonacion == 1)//Dinero
             {
-                NecesidadesDonacionesMonetarias necDonacionObtenida = servicioMonetaria.obtenerPorIdNecesidad(idNecesidad);
+                NecesidadesDonacionesMonetarias necDonacionObtenida = servicioNecesidad.BuscarMonetariasPorIdNecesidad(idNecesidad);
                 vMPublicacion.necesidadesDonacionesMonetarias = necDonacionObtenida;
             }
             else if(necesidadObtenida.TipoDonacion == 2)//Insumos
             {
-               NecesidadesDonacionesInsumos insumosObtenidos = servicioInsumo.obtenerPorIdNecesidad(idNecesidad);
+               NecesidadesDonacionesInsumos insumosObtenidos = servicioNecesidad.BuscarInsumosPorIdNecesidad(idNecesidad);
                 vMPublicacion.necesidadesDonacionesInsumos = insumosObtenidos;
             }
             vMPublicacion.necesidad = necesidadObtenida;
