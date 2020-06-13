@@ -10,28 +10,29 @@ namespace Entidades.Metadata
 {
    public class NecesidadesMetadata
     {
-        [Required]
+        [Required(ErrorMessage ="Obligatorio")]
         [StringLength(50)]
         public string Nombre { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Obligatorio")]
         public string Descripcion { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Obligatorio")]
         [StringLength(30)]
         public string TelefonoContacto { get; set; }
 
+        [Required(ErrorMessage = "Obligatorio")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaFin { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Obligatorio")]
         [StringLength(100)]
         public string Foto { get; set; }
 
         [Required]
         public int IdUsuarioCreador { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Obligatorio")]
         public TipoDonacion TipoDonacion { get; set; }
 
 

@@ -36,8 +36,13 @@ namespace WebCovid19.Controllers
 
 
         public ActionResult Crear()
-        { 
-
+        {
+            int idUsuario = int.Parse(Session["UserId"].ToString());
+            if (servicioNecesidad.TraerNecesidadesDelUsuario(idUsuario, "on").Count >= 3)
+            {
+                ViewBag.Mensaje = "Usted ya alcanzó el límite (3) de necesidades activas.";
+                return View("AvisosNecesidad");
+            }
             NecesidadesMetadata necesidadesMetadata = new NecesidadesMetadata();
             return View(necesidadesMetadata);
         }
@@ -63,11 +68,11 @@ namespace WebCovid19.Controllers
                 TempData["idNecesidad"] = necesidad.IdNecesidad;
                 if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")
                 {
-                    return RedirectToAction("Insumos");
+                    return View("Insumos");
                 }
                 else
                 {
-                    return RedirectToAction("Monetaria");
+                    return View("Monetaria");
                 }
             }
             
@@ -79,8 +84,7 @@ namespace WebCovid19.Controllers
             NecesidadesDonacionesInsumosMetadata insumos = new NecesidadesDonacionesInsumosMetadata();
             string s = TempData["idNecesidad"].ToString();
             int idNecesidad = int.Parse(s);
-            insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
-            insumos.IdNecesidad = idNecesidad;
+            TempData["idNecesidad"] = idNecesidad;
             return View(insumos);
         }            
 
@@ -88,34 +92,44 @@ namespace WebCovid19.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Insumos(NecesidadesDonacionesInsumosMetadata insumos)
         {
+            string s = TempData["idNecesidad"].ToString();
+            int idNecesidad = int.Parse(s);
+            TempData["idNecesidad"] = idNecesidad;
             if (!ModelState.IsValid)
             {
-                TempData["idNecesidad"] = insumos.Necesidades.IdNecesidad;
-                return View();
+                TempData["idNecesidad"] = idNecesidad;
             }
+           insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
+           insumos.IdNecesidad = idNecesidad;
             servicioNecesidad.AgregarInsumos(insumos);
-            return View("ConfirmacionCreacion");
+            ViewBag.Mensaje = "La necesidad de insumos se creó exitosamente.";
+            return View("AvisosNecesidad");
         }
 
         public ActionResult Monetaria()
-        {   
-            NecesidadesDonacionesMonetarias monetaria = new NecesidadesDonacionesMonetarias();
+        {
+            NecesidadesDonacionesMonetariasMetadata monetaria = new NecesidadesDonacionesMonetariasMetadata();
             string s = TempData["idNecesidad"].ToString();
             int idNecesidad = int.Parse(s);
-            monetaria.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
+            TempData["idNecesidad"] = idNecesidad;
             return View(monetaria);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Monetarias(NecesidadesDonacionesMonetariasMetadata monetarias)
         {
+            string s = TempData["idNecesidad"].ToString();
+            int idNecesidad = int.Parse(s);
+            TempData["idNecesidad"] = idNecesidad;
             if (!ModelState.IsValid)
             {
-                TempData["idNecesidad"] = monetarias.Necesidades.IdNecesidad;
-                return View();
+                TempData["idNecesidad"] = idNecesidad;
             }
+            monetarias.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
+            monetarias.IdNecesidad = idNecesidad;
             servicioNecesidad.AgregarMonetarias(monetarias);
-            return View();
+            ViewBag.Mensaje = "La necesidad monetaria se creó exitosamente.";
+            return View("AvisosNecesidad");
         }
 
         [LoginFilter]//toDo: Probar que funcione bien del todo este action.
