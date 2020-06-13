@@ -40,7 +40,6 @@ namespace Servicios
             return calculo;
         }
 
-        //ToDo: No va harcodeado el id de necesidadDonacionMonetaria, y idusuario
         public DonacionesMonetarias GuardarDonacionM(VMDonacionMonetaria vmDonacionMonetaria, int idUsuario )
         {
             DonacionesMonetarias donacionM = new DonacionesMonetarias()
@@ -53,8 +52,14 @@ namespace Servicios
                 };
 
             return DonacionMonetariaDao.Guardar(donacionM);
-
         }
 
+        //ACA SE GUARDA EL NOMBRE DEL COMPROBANTE DE PAGO EN LA BD.
+        public DonacionesMonetarias Actualizar(VMComprobantePago idDonaM)
+        {
+            string ArchivoTransferencia = idDonaM.ArchivoTransferencia;
+            int id = idDonaM.IdDonacionMonetaria;
+            return DonacionMonetariaDao.ActualizarComprobante(ArchivoTransferencia,id);
+        }
     }
 }

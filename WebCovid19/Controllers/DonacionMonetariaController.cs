@@ -36,6 +36,7 @@ namespace WebCovid19.Controllers
 
         [HttpPost]
         public ActionResult DonaMonetaria(VMDonacionMonetaria VMDonacionMonetaria)
+        
         {
             DonacionesMonetarias donacionM = new DonacionesMonetarias();                
 
@@ -60,7 +61,6 @@ namespace WebCovid19.Controllers
 
             VMComprobantePago vmComprobantePago = new VMComprobantePago();
             vmComprobantePago.IdDonacionMonetaria = donacionM.IdDonacionMonetaria;
-
 
             return View("SeleccionComprobanteDePago", vmComprobantePago);
         }
@@ -93,6 +93,8 @@ namespace WebCovid19.Controllers
                         VMComprobantePago.ArchivoTransferencia = pathRelativoImagen;
                     }
                 }
+                DonacionesMonetarias comprobante = servicioDonacion.Actualizar(VMComprobantePago);
+
             }
             catch (Exception ex)
             {

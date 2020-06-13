@@ -42,7 +42,6 @@ namespace DAO
             DonacionesMonetarias donacionesMonetarias = context.DonacionesMonetarias.Add(Dinero);
             context.SaveChanges();
             return donacionesMonetarias;
-
         }
 
         public override DonacionesMonetarias ObtenerPorID(int generics)
@@ -54,7 +53,6 @@ namespace DAO
         {
             List<DonacionesMonetarias> listarCantidadNecesariaADonar =
             context.DonacionesMonetarias.Where(a => a.IdNecesidadDonacionMonetaria == IdNeceDonacionMonetaria).ToList();
-
             return listarCantidadNecesariaADonar;
         }
 
@@ -63,6 +61,21 @@ namespace DAO
             NecesidadesDonacionesMonetarias traerDineroPorId =
             context.NecesidadesDonacionesMonetarias.Find(IdNecesidadDonacionMonetaria);
             return traerDineroPorId;
+        }
+
+        public DonacionesMonetarias ObtenerDonacionMonetariaPorId(int IdDonacionMonetaria)
+        {
+            DonacionesMonetarias donacioMnPorId = context.DonacionesMonetarias.Find(IdDonacionMonetaria);
+            return donacioMnPorId;
+        }
+
+        public DonacionesMonetarias ActualizarComprobante(String ArchivoTransferencia, int IdDonacionMonetaria)
+        {
+            DonacionesMonetarias DonacionesMonetariasBd = ObtenerDonacionMonetariaPorId(IdDonacionMonetaria);
+            DonacionesMonetariasBd.IdDonacionMonetaria = IdDonacionMonetaria;
+            DonacionesMonetariasBd.ArchivoTransferencia = ArchivoTransferencia;
+            context.SaveChanges();
+            return DonacionesMonetariasBd;
         }
     }
 }
