@@ -143,6 +143,13 @@
                         </div>
                     }
 
+                    @using (Html.BeginForm("VerTotalDeDonacion", "DonacionMonetaria", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+                    {
+                <center><input type="hidden" name="IdNecesidadDonacionMonetaria" value="@Model.necesidadesDonacionesMonetarias.IdNecesidadDonacionMonetaria" /></center>
+
+                        <button type="submit" class="btn btn-info ml-2">Info Necesidad</button>
+                    }
+
 
                 </div>
 

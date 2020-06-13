@@ -111,17 +111,22 @@ namespace WebCovid19.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult VerTotalDeDonacion()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult VerTotalDeDonacion(int idNecesidadDonacionMonetaria)
+        {
             /*SUMATORIA TOTAL RECAUDADO*/
-            int IdNeceDonacionMonetaria = 5;
-            decimal Sumatoria = servicioDonacion.TotalRecaudado(IdNeceDonacionMonetaria);
+            decimal Sumatoria = servicioDonacion.TotalRecaudado(idNecesidadDonacionMonetaria);
             ViewBag.Sumatoria = Sumatoria;
             decimal Suma = Sumatoria;
 
             /*PEDIDO DE DONACION*/
-            int IdNecesidadDonacionMonetaria = 5;
-            NecesidadesDonacionesMonetarias CantidadSolicitada = servicioDonacion.CantidadSolicitada(IdNecesidadDonacionMonetaria);
+            NecesidadesDonacionesMonetarias CantidadSolicitada = servicioDonacion.CantidadSolicitada(idNecesidadDonacionMonetaria);
             ViewBag.CantidadSolicitada = CantidadSolicitada.Dinero;
             decimal CantSolicitada = CantidadSolicitada.Dinero;
 

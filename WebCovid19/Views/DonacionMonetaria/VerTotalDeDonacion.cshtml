@@ -1,4 +1,4 @@
-﻿
+﻿@model Entidades.Views.VMDonacionMonetaria
 @{
     ViewBag.Title = "Total de donación";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
@@ -10,37 +10,43 @@
 <center><h1><u>Total</u> <u>de</u> <u>donación</u></h1></center>
 <br>
 <br>
-<div class="p-3 mb-2 bg-danger text-white">
+
+@using (Html.BeginForm("VerTotalDeDonacion", "DonacionMonetaria", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+{
+
+
+    <div class="p-3 mb-2 bg-danger text-white">
+        <center>
+            <h2><i>Cantidad solicitada</i></h2>
+            <h2>$ @ViewBag.CantidadSolicitada</h2>
+        </center>
+
+    </div>
+    <br>
+    <br>
+
+    <div class="p-3 mb-2 bg-danger text-white">
+        <center>
+            <h2><i>Total recaudado</i></h2>
+            <h2>$ @ViewBag.Sumatoria</h2>
+        </center>
+    </div>
+    <br>
+    <br>
+
+    <div class="p-3 mb-2 bg-danger text-white">
+        <center>
+            <h2><i>Total restante</i></h2>
+            <h2>$ @ViewBag.Restante</h2>
+        </center>
+    </div>
+    <br>
+    <br>
+    <br>
+
     <center>
-        <h2><i>Cantidad solicitada</i></h2>
-        <h2>$ @ViewBag.CantidadSolicitada</h2>
+        @Html.ActionLink("Necesidades", "Home", "Necesidades", null, new { @class = "btn btn-primary" })
     </center>
 
-</div>
-<br>
-<br>
 
-<div class="p-3 mb-2 bg-danger text-white">
-    <center>
-        <h2><i>Total recaudado</i></h2>
-        <h2>$ @ViewBag.Sumatoria</h2>
-    </center>
-</div>
-<br>
-<br>
-
-<div class="p-3 mb-2 bg-danger text-white">
-    <center>
-        <h2><i>Total restante</i></h2>
-        <h2>$ @ViewBag.Restante</h2>
-    </center>
-</div>
-<br>
-<br>
-<br>
-
-<center>
-    @Html.ActionLink("Realice una donación", "DonacionMonetaria", "DonacionMonetaria", null, new { @class = "btn btn-primary" })
-</center>
-
-
+}
