@@ -19,39 +19,13 @@ namespace WebCovid19.Controllers
             servicioDonacionInsumo = new ServicioDonacionInsumo(context);
         }
 
-        [HttpGet]
-        public ActionResult DonacionInsumos()
+        public ActionResult DonacionInsumos(int idNecesidad)
         {
-            return View();
-        }
+            NecesidadesDonacionesInsumos NdonacionesI = new NecesidadesDonacionesInsumos();
+            NdonacionesI.IdNecesidad = idNecesidad;
+            List<NecesidadesDonacionesInsumos> listaNombreInsumos = servicioDonacionInsumo.ListaNombre(NdonacionesI);
 
-        [HttpPost]
-        public ActionResult DonacionInsumos(DonacionesInsumos DonacionesInsumos)
-        {
-
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return View(DonacionesInsumos);
-                }
-
-                
-
-                //Valido que los datos ingresados estén bien
-                bool cantidadIngresada = servicioDonacionInsumo.CantidadMinimaDeInsumo(DonacionesInsumos);
-                if (!cantidadIngresada)
-                {
-                    ViewBag.mensajeError = "Debe ingresar al menos un insumo";
-                    return View();
-                }
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("Error: ", ex.Message);
-            }
-
-            return RedirectToAction("GraciasPorDonarInsumos");
+            return View("DonacionInsumos", listaNombreInsumos);
         }
 
         [HttpGet]
