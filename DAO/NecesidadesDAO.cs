@@ -102,6 +102,12 @@ namespace DAO
                 return necesidadBd;
             }
         }
+        public void ActivarNecesidad(int idNecesidad)
+        {
+            Necesidades n = context.Necesidades.Find(idNecesidad);
+            n.Estado = 1;
+            context.SaveChanges();
+        }
         #endregion
         #region otros
         /// <summary>
@@ -160,6 +166,7 @@ namespace DAO
 
             return listaNecesidades;
         }
+
         #endregion
         #region Insumos y Monetaria
         public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumos insumo)
@@ -204,6 +211,12 @@ namespace DAO
         public NecesidadesDonacionesMonetarias BuscarMonetariasPorIdNecesidad(int id)
         {
             return (NecesidadesDonacionesMonetarias)context.NecesidadesDonacionesMonetarias.Where(o => o.IdNecesidad == id).FirstOrDefault();
+        }
+        #endregion
+        #region Referencias
+        public void AgregarReferencia(NecesidadesReferencias nr)
+        {
+            context.NecesidadesReferencias.Add(nr);
         }
         #endregion
     }

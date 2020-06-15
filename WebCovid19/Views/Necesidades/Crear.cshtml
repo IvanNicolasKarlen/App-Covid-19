@@ -15,7 +15,6 @@
     <h4>Necesidades</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @{ #region }
     <div class="form-group">
         @Html.LabelFor(model => model.Nombre, "Nombre: ")
         <div class="col-md-10">
@@ -66,13 +65,12 @@
             @Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })
         </div>
     </div>
-    @{ #endregion }
     <div class="btn-group">
-        <input type="submit" value="Siguiente" class="offset-md-6 btn btn-primary" />
+        @Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "btn btn-primary" })
         <div class="col-2"></div>
         <input type="reset" value="Reiniciar" class="btn btn-primary" />
         <div class="col-2"></div>
-        @Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "btn btn-primary" })
+        <input type="submit" value="Siguiente" class="offset-md-6 btn btn-primary" />
     </div>
 
 </div>

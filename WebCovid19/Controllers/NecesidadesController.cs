@@ -65,7 +65,7 @@ namespace WebCovid19.Controllers
                 }
                 int idUsuario = int.Parse(Session["UserId"].ToString());
                 Necesidades necesidad = servicioNecesidad.buildNecesidad(vmnecesidad, idUsuario); 
-                TempData["idNecesidad"] = necesidad.IdNecesidad;
+                Session["idNecesidad"] = necesidad.IdNecesidad;
                 if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")
                 {
                     return View("Insumos");
@@ -82,9 +82,6 @@ namespace WebCovid19.Controllers
         public ActionResult Insumos()
         {
             NecesidadesDonacionesInsumosMetadata insumos = new NecesidadesDonacionesInsumosMetadata();
-            string s = TempData["idNecesidad"].ToString();
-            int idNecesidad = int.Parse(s);
-            TempData["idNecesidad"] = idNecesidad;
             return View(insumos);
         }            
 
@@ -92,43 +89,59 @@ namespace WebCovid19.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Insumos(NecesidadesDonacionesInsumosMetadata insumos)
         {
-            string s = TempData["idNecesidad"].ToString();
-            int idNecesidad = int.Parse(s);
-            TempData["idNecesidad"] = idNecesidad;
             if (!ModelState.IsValid)
             {
-                TempData["idNecesidad"] = idNecesidad;
+                return View();
             }
-           insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
-           insumos.IdNecesidad = idNecesidad;
+            int idN = int.Parse(Session["idNecesidad"].ToString());
+           insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idN);
+           insumos.IdNecesidad = idN;
             servicioNecesidad.AgregarInsumos(insumos);
-            ViewBag.Mensaje = "La necesidad de insumos se creó exitosamente.";
-            return View("AvisosNecesidad");
+            return View("Referencias");
         }
 
         public ActionResult Monetaria()
         {
             NecesidadesDonacionesMonetariasMetadata monetaria = new NecesidadesDonacionesMonetariasMetadata();
-            string s = TempData["idNecesidad"].ToString();
-            int idNecesidad = int.Parse(s);
-            TempData["idNecesidad"] = idNecesidad;
             return View(monetaria);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Monetarias(NecesidadesDonacionesMonetariasMetadata monetarias)
+        public ActionResult Monetaria(NecesidadesDonacionesMonetariasMetadata monetarias)
         {
-            string s = TempData["idNecesidad"].ToString();
-            int idNecesidad = int.Parse(s);
-            TempData["idNecesidad"] = idNecesidad;
+            monetarias.Dinero = decimal.Parse(monetarias.Dinero.ToString());
             if (!ModelState.IsValid)
             {
-                TempData["idNecesidad"] = idNecesidad;
+                return View();
             }
-            monetarias.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
-            monetarias.IdNecesidad = idNecesidad;
+            int idN = int.Parse(Session["idNecesidad"].ToString());
+            monetarias.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idN);
+            monetarias.IdNecesidad = idN;
             servicioNecesidad.AgregarMonetarias(monetarias);
-            ViewBag.Mensaje = "La necesidad monetaria se creó exitosamente.";
+            return View("Referencias");
+        }
+
+        public ActionResult Referencias()
+        {
+            VMReferencias vmReferencia = new VMReferencias();
+            return View(vmReferencia);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Referencias(VMReferencias vmref)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            int idN = int.Parse(Session["idNecesidad"].ToString());
+            vmref.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idN);
+            vmref.IdNecesidad = idN;
+            servicioNecesidad.AgregarReferencias(vmref);
+            servicioNecesidad.ActivarNecesidad(idN);
+            ViewBag.Mensaje = "La necesidad se creó exitosamente.";
+            Session.Remove("idNecesidad");
             return View("AvisosNecesidad");
         }
 

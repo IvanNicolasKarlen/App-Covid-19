@@ -120,6 +120,7 @@
     <Compile Include="Views\VMPerfil.cs" />
     <Compile Include="Views\VMPublicacion.cs" />
     <Compile Include="Views\VMReenvioDeEmail.cs" />
+    <Compile Include="Views\VMReferencias.cs" />
     <Compile Include="Views\VMRegistro.cs" />
   </ItemGroup>
   <ItemGroup>

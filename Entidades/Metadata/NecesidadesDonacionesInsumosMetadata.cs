@@ -10,7 +10,7 @@ namespace Entidades.Metadata
     public class NecesidadesDonacionesInsumosMetadata
     {
         public int IdNecesidadDonacionInsumo { get; set; }
-        [Required]
+
         public int IdNecesidad { get; set; }
         [Required(ErrorMessage = "El nombre del insumo es obligatorio")]
         public string Nombre { get; set; }

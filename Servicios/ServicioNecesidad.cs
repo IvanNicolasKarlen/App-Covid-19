@@ -61,13 +61,11 @@ namespace Servicios
             if (estadoNecesidad == "on")
             {
                 List<Necesidades> necesidadesBD = necesidadesDAO.TraerNecesidadesActivasDelUsuario(idSession);
-                //  List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
                 return necesidadesBD;
             }
             else
             {
                 List<Necesidades> necesidadesBD = necesidadesDAO.TraerTodasLasNecesidadesDelUsuario(idSession);
-                // List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
                 return necesidadesBD;
 
             }
@@ -181,14 +179,17 @@ namespace Servicios
                 return necesidadesMasValoradas;
 
             }
-
+        public void ActivarNecesidad(int idNecesidad)
+        {
+            necesidadesDAO.ActivarNecesidad(idNecesidad);
+        }
         public List<Necesidades> TraerNecesidadesQueNoSonDelUsuario(int idSession)
         {
             List<Necesidades> necesidadesBD = necesidadesDAO.TraerNecesidadesQueNoSonDelUsuario(idSession);
             return necesidadesBD;
         }
         #endregion
-        
+        #region InsumosMonetarias
         public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumosMetadata insumometa)
         {
             NecesidadesDonacionesInsumos insumo = new NecesidadesDonacionesInsumos()
@@ -218,6 +219,26 @@ namespace Servicios
         public NecesidadesDonacionesMonetarias BuscarMonetariasPorIdNecesidad(int id)
         {
             return necesidadesDAO.BuscarMonetariasPorIdNecesidad(id);
+        }
+        #endregion
+        public void AgregarReferencias (VMReferencias vmref)
+        {
+            NecesidadesReferencias nr = new NecesidadesReferencias()
+            {
+                IdNecesidad = vmref.IdNecesidad,
+                Nombre = vmref.Nombre1,
+                Telefono = vmref.Telefono1,
+                Necesidades = vmref.Necesidades
+            };
+            necesidadesDAO.AgregarReferencia(nr);
+            NecesidadesReferencias nr2 = new NecesidadesReferencias()
+            {
+                IdNecesidad = vmref.IdNecesidad,
+                Nombre = vmref.Nombre2,
+                Telefono = vmref.Telefono2,
+                Necesidades = vmref.Necesidades
+            };
+            necesidadesDAO.AgregarReferencia(nr2);
         }
     }
 }

@@ -10,7 +10,6 @@ namespace Entidades.Metadata
     public class NecesidadesDonacionesMonetariasMetadata
     {
         public int IdNecesidadDonacionMonetaria { get; set; }
-        [Required]
         public int IdNecesidad { get; set; }
         [Required(ErrorMessage = "Debe ingresar la cantidad de dinero necesitada")]
         public decimal Dinero { get; set; }
