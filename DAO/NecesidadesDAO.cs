@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Diagnostics.Eventing.Reader;
 
 using DAO.Context;
-
+using Entidades.Enum;
 
 namespace DAO
 {
@@ -165,6 +165,11 @@ namespace DAO
             }
 
             return listaNecesidades;
+        }
+        public List<Necesidades> obtenerNecesidadesDenunciadas()
+        {
+            List<Necesidades> necesidadesBD = context.Necesidades.Where(o => o.Estado == (int)TipoEstadoNecesidad.Revision).ToList();
+            return necesidadesBD;
         }
 
         #endregion

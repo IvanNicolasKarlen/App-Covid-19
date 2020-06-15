@@ -188,6 +188,12 @@ namespace Servicios
             List<Necesidades> necesidadesBD = necesidadesDAO.TraerNecesidadesQueNoSonDelUsuario(idSession);
             return necesidadesBD;
         }
+        public List<Necesidades> ObtenerNecesidadesDenunciadas()
+        {
+            List<Necesidades> listaNecesidades = necesidadesDAO.obtenerNecesidadesDenunciadas();
+
+            return listaNecesidades;
+        }
         #endregion
         #region InsumosMonetarias
         public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumosMetadata insumometa)

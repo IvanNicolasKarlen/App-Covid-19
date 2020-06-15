@@ -338,14 +338,14 @@ namespace WebCovid19.Controllers
             return RedirectToAction("Home" , "Necesidades");
         }
 
-        //todo: Agregar necesidadesDenunciadas
+        
         [AdminFilter]
-        /*public ActionResult Administrador()
+        public ActionResult Administrador()
         {
            List<Necesidades> necesidadesObtenidas = servicioNecesidad.ObtenerNecesidadesDenunciadas();
-            todo: return View("Administrador", necesidadesObtenidas);
+           return View("Administrador", necesidadesObtenidas);
 
-        }*/
+        }
 
 
 
