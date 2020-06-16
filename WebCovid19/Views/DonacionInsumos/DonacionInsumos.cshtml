@@ -13,7 +13,7 @@
         <h5 class="card-title text-center">Realizar donación de insumos</h5><br>
 
 
-        @using (Html.BeginForm("DonacionInsumos", "DonacionInsumos", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+        @using (Html.BeginForm("DonacionInsumos", "DonacionInsumos", FormMethod.Get, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
         {
 
             @Html.AntiForgeryToken()
@@ -47,5 +47,7 @@
                 </tbody>
             </table>
         }
+
+
     </div>
 </div>

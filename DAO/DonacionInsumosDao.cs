@@ -38,11 +38,17 @@ namespace DAO
             return listaObtenida;
         }
 
-        public List<NecesidadesDonacionesInsumos> BuscarNecesidadesDonacionIPorId(int IdNecesidadDonacionInsumo)
+        public NecesidadesDonacionesInsumos BuscarNecesidadesDonacionIPorId(int IdNecesidadDonacionInsumo)
         {
-            List<NecesidadesDonacionesInsumos> listaNdi = context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidadDonacionInsumo == IdNecesidadDonacionInsumo).ToList();
+            // NecesidadesDonacionesInsumos listaNdi = context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidadDonacionInsumo == IdNecesidadDonacionInsumo).ToList();
+            NecesidadesDonacionesInsumos listaNdi = context.NecesidadesDonacionesInsumos.Find(IdNecesidadDonacionInsumo);
             return listaNdi;
-
+        } 
+        public DonacionesInsumos GuardarInsumo(DonacionesInsumos donacionInsumo)
+        {
+            DonacionesInsumos donacion = context.DonacionesInsumos.Add(donacionInsumo);
+            context.SaveChanges();
+            return donacion;
         }
 
     }

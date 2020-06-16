@@ -1,4 +1,4 @@
-﻿@model List<Entidades.NecesidadesDonacionesInsumos>
+﻿@model Entidades.Views.VMNecesidadesDonacionesInsumos
 @{
     ViewBag.Title = "Donar";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
@@ -6,17 +6,15 @@
 
 
 
-@using (Html.BeginForm("DonacionInsumos", "Donar", FormMethod.Get, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
+@using (Html.BeginForm("Donar", "DonacionInsumos", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
 {
-
-    foreach (var item in Model)
-    {
-        <center><h2>Donación de @item.Nombre</h2></center><br><br><br>
-        <table class="table">
-            <tr>
-                <th scope="col">@item.Nombre</th>
-                <th scope="col">@item.Cantidad</th>
-            </tr>
-        </table>
-            }
-            }
+    <div>
+        <center>
+            <b>Cantidad a donar:</b>
+            <div class="wrap-input100 validate-input">
+                <input type="number" name="Cantidad" class="btn btn-primary ml-2" min="0" />
+            </div><br />
+            <button type="submit">DONAR</button>
+        </center>
+    </div>
+}

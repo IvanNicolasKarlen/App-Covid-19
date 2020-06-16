@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DAO;
 using DAO.Context;
 using Entidades;
+using Entidades.Views;
 
 namespace Servicios
 {
@@ -34,9 +35,21 @@ namespace Servicios
             return DonacionInsumosDao.BuscarPorId(idNecesidad.IdNecesidad);
         }
 
-        public List<NecesidadesDonacionesInsumos> BuscarNecesidadesDonacionIPorId(int idNecesidadDonacionInsumo)
+        public NecesidadesDonacionesInsumos BuscarNecesidadesDonacionIPorId(int idNecesidadDonacionInsumo)
         {
             return DonacionInsumosDao.BuscarNecesidadesDonacionIPorId(idNecesidadDonacionInsumo);
+        }
+
+        //ToDo: NO harcodear IdNecesidadDonacionInsumo
+        public DonacionesInsumos GuardarCantidadDonada(VMNecesidadesDonacionesInsumos vmNDI, int idUsuario)
+        {
+            DonacionesInsumos donacionI = new DonacionesInsumos()
+            {
+                Cantidad = vmNDI.Cantidad,
+                IdUsuario = idUsuario,
+                IdNecesidadDonacionInsumo = 1
+            };
+            return DonacionInsumosDao.GuardarInsumo(donacionI);
         }
     }
 }
