@@ -38,5 +38,12 @@ namespace DAO
             return listaObtenida;
         }
 
+        public List<NecesidadesDonacionesInsumos> BuscarNecesidadesDonacionIPorId(int IdNecesidadDonacionInsumo)
+        {
+            List<NecesidadesDonacionesInsumos> listaNdi = context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidadDonacionInsumo == IdNecesidadDonacionInsumo).ToList();
+            return listaNdi;
+
+        }
+
     }
 }

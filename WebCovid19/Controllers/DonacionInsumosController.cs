@@ -28,6 +28,17 @@ namespace WebCovid19.Controllers
             return View("DonacionInsumos", listaNombreInsumos);
         }
 
+        
+        public ActionResult Donar(int idNecesidadDonacionInsumo)
+        {
+
+            NecesidadesDonacionesInsumos necesidadesDonacionesInsumos = new NecesidadesDonacionesInsumos();
+            List <NecesidadesDonacionesInsumos> necesidadesDonaInsumos = servicioDonacionInsumo.BuscarNecesidadesDonacionIPorId(idNecesidadDonacionInsumo);
+
+
+            return View("Donar", necesidadesDonaInsumos);
+        }
+
         [HttpGet]
         public ActionResult GraciasPorDonarInsumos()
         {

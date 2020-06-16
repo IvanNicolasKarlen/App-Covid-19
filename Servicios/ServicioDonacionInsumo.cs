@@ -33,5 +33,10 @@ namespace Servicios
         {
             return DonacionInsumosDao.BuscarPorId(idNecesidad.IdNecesidad);
         }
+
+        public List<NecesidadesDonacionesInsumos> BuscarNecesidadesDonacionIPorId(int idNecesidadDonacionInsumo)
+        {
+            return DonacionInsumosDao.BuscarNecesidadesDonacionIPorId(idNecesidadDonacionInsumo);
+        }
     }
 }

@@ -28,18 +28,21 @@
                     <tr>
                         <th scope="col">Producto solicitado</th>
                         <th scope="col">Cantidad solicitada</th>
-                        <th scope="col">Cantidad restante</th>
-
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
 
-                        <tr>
-                            <th scope="col">@item.Nombre</th>
-                            <th scope="col">@item.Cantidad</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">@item.Nombre</th>
+                        <th scope="col">@item.Cantidad</th>
+                        <th>
+                            <a href="~/DonacionInsumos/Donar?idNecesidadDonacionInsumo=@item.IdNecesidadDonacionInsumo" class="btn btn-info">Donar</a>
+                        </th>
+
+                    </tr>
                     }
                 </tbody>
             </table>
