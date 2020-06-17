@@ -47,7 +47,7 @@ namespace Servicios
             {
                 Cantidad = vmNDI.Cantidad,
                 IdUsuario = idUsuario,
-                IdNecesidadDonacionInsumo = 1
+                IdNecesidadDonacionInsumo = vmNDI.IdNecesidadDonacionInsumo
             };
             return DonacionInsumosDao.GuardarInsumo(donacionI);
         }

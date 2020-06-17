@@ -33,12 +33,8 @@ namespace WebCovid19.Controllers
         public ActionResult Donar(int idNecesidadDonacionInsumo)
         {
             VMNecesidadesDonacionesInsumos vmNeDoIn = new VMNecesidadesDonacionesInsumos();
-            vmNeDoIn.Cantidad = idNecesidadDonacionInsumo;
+            vmNeDoIn.IdNecesidadDonacionInsumo = idNecesidadDonacionInsumo;
             return View(vmNeDoIn);
-
-            //NecesidadesDonacionesInsumos necesidadesDonacionesInsumos = new NecesidadesDonacionesInsumos();
-            //NecesidadesDonacionesInsumos necesidadesDonaInsumos = servicioDonacionInsumo.BuscarNecesidadesDonacionIPorId(idNecesidadDonacionInsumo);
-            //return View("Donar", necesidadesDonaInsumos);
         }
 
         [HttpPost]
@@ -63,13 +59,7 @@ namespace WebCovid19.Controllers
             }
 
 
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult GuardarDonacion(NecesidadesDonacionesInsumos necesidadesDonacionesInsumos)
-        {
-            return View();
+            return View("GraciasPorDonarInsumos");
         }
 
         [HttpGet]

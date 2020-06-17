@@ -8,6 +8,8 @@
 
 @using (Html.BeginForm("Donar", "DonacionInsumos", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
 {
+    <input type="hidden" name="IdNecesidadDonacionInsumo" value="@Model.IdNecesidadDonacionInsumo" />
+
     <div>
         <center>
             <b>Cantidad a donar:</b>
