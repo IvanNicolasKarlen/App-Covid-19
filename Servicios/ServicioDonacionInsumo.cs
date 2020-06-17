@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,6 @@ namespace Servicios
             return DonacionInsumosDao.BuscarNecesidadesDonacionIPorId(idNecesidadDonacionInsumo);
         }
 
-        //ToDo: NO harcodear IdNecesidadDonacionInsumo
         public DonacionesInsumos GuardarCantidadDonada(VMNecesidadesDonacionesInsumos vmNDI, int idUsuario)
         {
             DonacionesInsumos donacionI = new DonacionesInsumos()
@@ -50,6 +50,25 @@ namespace Servicios
                 IdNecesidadDonacionInsumo = vmNDI.IdNecesidadDonacionInsumo
             };
             return DonacionInsumosDao.GuardarInsumo(donacionI);
+        }
+
+        public int TraerCantidadDonada(int idNecesidadDonacionInsumo)
+        {
+            List<DonacionesInsumos> donacionesIn = DonacionInsumosDao.CantidadDonada(idNecesidadDonacionInsumo);
+            int suma = donacionesIn.Sum(item => item.Cantidad);
+            return suma;
+        }
+
+        public NecesidadesDonacionesInsumos ObtenerCantidadPorId(VMNecesidadesDonacionesInsumos idNecesidadDonacionInsumo)
+        {
+           return DonacionInsumosDao.BuscarCantidadDeInsumosPorId(idNecesidadDonacionInsumo.IdNecesidadDonacionInsumo);
+        
+        }
+
+        public int InsumoRestante(int cantidadInsumosSolicitado, int resultado)
+        {
+            int restante = cantidadInsumosSolicitado - resultado;
+            return restante;
         }
     }
 }

@@ -7,6 +7,7 @@ using DAO.Context;
 using Entidades.Views;
 using Entidades;
 using DAO.Abstract;
+using System.Runtime.Remoting.Messaging;
 
 namespace DAO
 {
@@ -49,6 +50,18 @@ namespace DAO
             DonacionesInsumos donacion = context.DonacionesInsumos.Add(donacionInsumo);
             context.SaveChanges();
             return donacion;
+        }
+
+        public List<DonacionesInsumos> CantidadDonada(int IdNecesidadDonacionInsumo)
+        {
+            List<DonacionesInsumos> lista = context.DonacionesInsumos.Where(o => o.IdNecesidadDonacionInsumo == IdNecesidadDonacionInsumo).ToList();
+            return lista;
+        }
+
+        public NecesidadesDonacionesInsumos BuscarCantidadDeInsumosPorId(int IdNecesidadDonacionInsumo)
+        {
+            NecesidadesDonacionesInsumos DonacionesPorId = context.NecesidadesDonacionesInsumos.Find(IdNecesidadDonacionInsumo);
+            return DonacionesPorId;
         }
 
     }

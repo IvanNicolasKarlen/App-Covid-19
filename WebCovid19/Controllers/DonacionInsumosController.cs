@@ -51,6 +51,17 @@ namespace WebCovid19.Controllers
                 {
                     int idUsuario = int.Parse(Session["UserId"].ToString());
                     donacionI= servicioDonacionInsumo.GuardarCantidadDonada(ndi, idUsuario);
+
+                    /*TRAIGO LA CANTIDAD DE INSUMOS DONADOS POR ID y HAGO LA SUMA */
+                    int resultado = servicioDonacionInsumo.TraerCantidadDonada(ndi.IdNecesidadDonacionInsumo);
+                    ViewBag.CantidadDonadaI = resultado;
+
+                    /*Traigo cantidad solicitada */
+                    NecesidadesDonacionesInsumos cantidadInsumosSolicitado = servicioDonacionInsumo.ObtenerCantidadPorId(ndi);
+                    ViewBag.CantidadSolicitadaIn = cantidadInsumosSolicitado.Cantidad;
+                    int res = cantidadInsumosSolicitado.Cantidad;
+
+                    int restante = servicioDonacionInsumo.InsumoRestante(cantidadInsumosSolicitado.Cantidad, resultado);
                 }
             }
             catch (Exception ex)
