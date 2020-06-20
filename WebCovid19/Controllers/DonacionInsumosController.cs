@@ -25,7 +25,6 @@ namespace WebCovid19.Controllers
             NecesidadesDonacionesInsumos NdonacionesI = new NecesidadesDonacionesInsumos();
             NdonacionesI.IdNecesidad = idNecesidad;
             List<NecesidadesDonacionesInsumos> listaNombreInsumos = servicioDonacionInsumo.ListaNombre(NdonacionesI);
-
             return View("DonacionInsumos", listaNombreInsumos);
         }
 
@@ -37,10 +36,11 @@ namespace WebCovid19.Controllers
             return View(vmNeDoIn);
         }
 
-        [HttpPost]
         public ActionResult Donar(VMNecesidadesDonacionesInsumos ndi)
         {
             DonacionesInsumos donacionI = new DonacionesInsumos();
+            NecesidadesDonacionesInsumos nec = new NecesidadesDonacionesInsumos();
+
             try
             {
                 if (!ModelState.IsValid)
@@ -50,33 +50,21 @@ namespace WebCovid19.Controllers
                 else
                 {
                     int idUsuario = int.Parse(Session["UserId"].ToString());
-                    donacionI= servicioDonacionInsumo.GuardarCantidadDonada(ndi, idUsuario);
+                    donacionI = servicioDonacionInsumo.GuardarCantidadDonada(ndi, idUsuario);
 
-                    /*TRAIGO LA CANTIDAD DE INSUMOS DONADOS POR ID y HAGO LA SUMA */
-                    int resultado = servicioDonacionInsumo.TraerCantidadDonada(ndi.IdNecesidadDonacionInsumo);
-                    ViewBag.CantidadDonadaI = resultado;
+                    //*****Obtener NecesidadDonacionInsumos por medio del id recibido por parametros*****
+                    nec = servicioDonacionInsumo.ObtenerNecesidadDonacionInsumosPorId(ndi.IdNecesidadDonacionInsumo);
+                    TempData["Mensaje"] = "Gracias por su donación"; //Creo el TempData son el mensaje. Este TempData lo uso en la vista.
 
-                    /*Traigo cantidad solicitada */
-                    NecesidadesDonacionesInsumos cantidadInsumosSolicitado = servicioDonacionInsumo.ObtenerCantidadPorId(ndi);
-                    ViewBag.CantidadSolicitadaIn = cantidadInsumosSolicitado.Cantidad;
-                    int res = cantidadInsumosSolicitado.Cantidad;
-
-                    int restante = servicioDonacionInsumo.InsumoRestante(cantidadInsumosSolicitado.Cantidad, resultado);
                 }
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("Error: ", ex.Message);
             }
+            return RedirectToAction("DonacionInsumos", new { nec.IdNecesidad }); /*Aca le paso nec.IdNecesidad porque DonacionInsumos espera un Id. Si no se 
+                                                                                                   lo paso, me va a tirar error 404*/
 
-
-            return View("GraciasPorDonarInsumos");
-        }
-
-        [HttpGet]
-        public ActionResult GraciasPorDonarInsumos()
-        {
-            return View();
         }
     }
 }

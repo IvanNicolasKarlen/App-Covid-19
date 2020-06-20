@@ -57,6 +57,7 @@
     <Compile Include="Abstract\Crud.cs" />
     <Compile Include="Context\TpDBContext.cs" />
     <Compile Include="DenunciasDao.cs" />
+    <Compile Include="DonacionInsumosDao.cs" />
     <Compile Include="DonacionMonetariaDao.cs" />
     <Compile Include="NecesidadesDAO.cs" />
     <Compile Include="NecesidadValoracionesDao.cs" />

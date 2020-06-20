@@ -13,5 +13,7 @@ namespace Entidades.Views
         public int Cantidad { get; set; }
 
         public int IdNecesidadDonacionInsumo { get; set; }
+
+        public List<NecesidadesDonacionesInsumos> listaNombre { get; set; }
     }
 }

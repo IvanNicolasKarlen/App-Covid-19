@@ -52,17 +52,10 @@ namespace DAO
             return donacion;
         }
 
-        public List<DonacionesInsumos> CantidadDonada(int IdNecesidadDonacionInsumo)
-        {
-            List<DonacionesInsumos> lista = context.DonacionesInsumos.Where(o => o.IdNecesidadDonacionInsumo == IdNecesidadDonacionInsumo).ToList();
-            return lista;
-        }
-
-        public NecesidadesDonacionesInsumos BuscarCantidadDeInsumosPorId(int IdNecesidadDonacionInsumo)
+        public NecesidadesDonacionesInsumos ObtenerNecesidadDonacionInsumosPorId(int IdNecesidadDonacionInsumo)
         {
             NecesidadesDonacionesInsumos DonacionesPorId = context.NecesidadesDonacionesInsumos.Find(IdNecesidadDonacionInsumo);
             return DonacionesPorId;
         }
-
     }
 }

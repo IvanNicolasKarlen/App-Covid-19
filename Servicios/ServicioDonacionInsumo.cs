@@ -52,23 +52,16 @@ namespace Servicios
             return DonacionInsumosDao.GuardarInsumo(donacionI);
         }
 
-        public int TraerCantidadDonada(int idNecesidadDonacionInsumo)
+        public NecesidadesDonacionesInsumos ObtenerNecesidadDonacionInsumosPorId(int idNecesidadDonacionInsumo)
         {
-            List<DonacionesInsumos> donacionesIn = DonacionInsumosDao.CantidadDonada(idNecesidadDonacionInsumo);
-            int suma = donacionesIn.Sum(item => item.Cantidad);
-            return suma;
+            return DonacionInsumosDao.ObtenerNecesidadDonacionInsumosPorId(idNecesidadDonacionInsumo);
+
         }
 
         public NecesidadesDonacionesInsumos ObtenerCantidadPorId(VMNecesidadesDonacionesInsumos idNecesidadDonacionInsumo)
         {
-           return DonacionInsumosDao.BuscarCantidadDeInsumosPorId(idNecesidadDonacionInsumo.IdNecesidadDonacionInsumo);
-        
-        }
+            return DonacionInsumosDao.ObtenerNecesidadDonacionInsumosPorId(idNecesidadDonacionInsumo.IdNecesidadDonacionInsumo);
 
-        public int InsumoRestante(int cantidadInsumosSolicitado, int resultado)
-        {
-            int restante = cantidadInsumosSolicitado - resultado;
-            return restante;
         }
     }
 }

@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Donación de insumos";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+    int resultado = 0;
+    int totalRecaudado = 0;
 }
 <br>
 <br>
@@ -11,7 +13,6 @@
 <div class="card mb-3 mt-5">
     <div class="card-body  mt-5">
         <h5 class="card-title text-center">Realizar donación de insumos</h5><br>
-
 
         @using (Html.BeginForm("DonacionInsumos", "DonacionInsumos", FormMethod.Get, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
         {
@@ -23,31 +24,57 @@
                 <div class="p-3 mb-2 bg-danger text-white">@ViewBag.mensajeError</div>
             } <br />
 
+
+            var Mensaje = ""; //creo var mensaje vacia
+
+            if (TempData["Mensaje"] != null) //Si TempData no esta vacio, a la variable mensaje le asigno el valor de tempdata (Gracias por su donación)
+            {
+                Mensaje = TempData["Mensaje"].ToString();
+            }
+
+            if (Mensaje == "Gracias por su donación") //Si mensaje es igual al mismo texto que puse en el controller (TempData["Mensaje"] = "Gracias por su donación") pongo el siguiente texto
+            {
+                 <center><h2 class="p-3 mb-2 bg-danger text-white">¡Muchas gracias por su donación!</h2></center>   
+            }
+            
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Producto solicitado</th>
                         <th scope="col">Cantidad solicitada</th>
-                        <th scope="col"></th>
+                        <th scope="col">Cantidad restante</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var necDonacionInsumos in Model) //@model List<Entidades.NecesidadesDonacionesInsumos>
                     {
 
-                    <tr>
-                        <th scope="col">@item.Nombre</th>
-                        <th scope="col">@item.Cantidad</th>
-                        <th>
-                            <a href="~/DonacionInsumos/Donar?idNecesidadDonacionInsumo=@item.IdNecesidadDonacionInsumo" class="btn btn-info">Donar</a>
-                        </th>
+                        totalRecaudado = 0;
+                        <tr>
+                            <th scope="col">@necDonacionInsumos.Nombre</th>
+                            <th scope="col">@necDonacionInsumos.Cantidad</th> <!-- Cantidad solicitada-->
 
-                    </tr>
+                            <th scope="col">
+
+                                @foreach (var donInsumos in necDonacionInsumos.DonacionesInsumos)
+                                {
+
+                                    totalRecaudado += donInsumos.Cantidad; //Se va acumulando la cantidad donada de insumos.
+
+                                }
+                                @{
+                                    resultado = necDonacionInsumos.Cantidad - totalRecaudado; // A la cantidad de insumos solicitado le resto el total recaudado.
+                                }
+
+                                @resultado
+                            </th>
+                            <th>
+                                <a href="~/DonacionInsumos/Donar?idNecesidadDonacionInsumo=@necDonacionInsumos.IdNecesidadDonacionInsumo" class="btn btn-info" id="boton">Donar</a>
+                            </th>
+                        </tr>
                     }
                 </tbody>
             </table>
         }
-
-
     </div>
 </div>

@@ -53,7 +53,7 @@
                             else
                             {
                                 @Html.ActionLink("En otro momento", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
-                                <a href="~/DonacionInsumos/DonacionInsumos?idNecesidad=@Model.necesidadesDonacionesInsumos.IdNecesidad" class="btn btn-info">Donar Insumos</a>
+                                <a href="~/DonacionInsumos/DonacionInsumos?idNecesidad=@Model.necesidadesDonacionesInsumos.IdNecesidad&idNecesidadDonacionInsumo=@Model.necesidadesDonacionesInsumos.IdNecesidadDonacionInsumo" class="btn btn-info">Donar Insumos</a>
                             }
 
                         </div>
