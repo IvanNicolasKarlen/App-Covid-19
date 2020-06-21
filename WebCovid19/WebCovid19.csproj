@@ -1929,6 +1929,7 @@
     <Content Include="Views\Shared\NecesidadDonacionMonetaria.cshtml" />
     <Content Include="Views\Necesidades\AvisosNecesidad.cshtml" />
     <Content Include="Views\Necesidades\Referencias.cshtml" />
+    <Content Include="Views\Usuario\HistorialDonaciones.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

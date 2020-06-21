@@ -20,6 +20,7 @@
     <Property Name="IdNecesidadDonacionInsumo" Type="int" Nullable="false" />
     <Property Name="IdUsuario" Type="int" Nullable="false" />
     <Property Name="Cantidad" Type="int" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="DonacionesMonetarias">
     <Key>

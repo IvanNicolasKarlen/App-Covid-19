@@ -8,6 +8,7 @@ using Entidades;
 using Entidades.Enum;
 using Entidades.Metadata;
 using DAO.Context;
+using System.Runtime.InteropServices;
 
 namespace Servicios
 {
@@ -246,6 +247,39 @@ namespace Servicios
             };
             necesidadesDAO.AgregarReferencia(nr2);
         }
+
+        public List<Necesidades> TraerNecesidadesConDonacionesDelUserLogueado(int idUserLogueado)
+        {
+            List<Necesidades> necesidadesConDonacionesMonetarias = necesidadesDAO.TraerNecesidadesConDonacionMonetariasPorUserLogueado(idUserLogueado);
+            List<Necesidades> necesidadesConDonacionesInsumos = necesidadesDAO.TraerNecesidadesConDonacionInsumosPorUserLogueado(idUserLogueado);
+            List<Necesidades> necesidades = new List<Necesidades>();
+
+            if (necesidadesConDonacionesMonetarias.Count != 0)
+            {
+                foreach (var item in necesidadesConDonacionesMonetarias)
+                {
+                    if (!necesidades.Contains(item))
+                    {
+                        necesidades.Add(item);
+                    }
+
+                }
+
+            }
+            if (necesidadesConDonacionesInsumos.Count != 0)
+            {
+                foreach (var item in necesidadesConDonacionesInsumos)
+                {
+                    if (!necesidades.Contains(item))
+                    {
+                        necesidades.Add(item);
+                    }
+                }
+
+            }
+                    return necesidades;
+        }
+
     }
 }
 

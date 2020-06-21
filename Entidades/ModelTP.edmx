@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Denuncias">
           <Key>
             <PropertyRef Name="IdDenuncia" />
@@ -25,6 +25,7 @@
           <Property Name="IdNecesidadDonacionInsumo" Type="int" Nullable="false" />
           <Property Name="IdUsuario" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="DonacionesMonetarias">
           <Key>
@@ -333,8 +334,7 @@
             <End Role="NecesidadesValoraciones" EntitySet="NecesidadesValoraciones" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -363,6 +363,7 @@
           <Property Name="Cantidad" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NecesidadesDonacionesInsumos" Relationship="Self.FK_DonacionesInsumos_NecesidadesDonacionesInsumos" FromRole="DonacionesInsumos" ToRole="NecesidadesDonacionesInsumos" />
           <NavigationProperty Name="Usuarios" Relationship="Self.FK_DonacionesInsumos_Usuarios" FromRole="DonacionesInsumos" ToRole="Usuarios" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="DonacionesMonetarias">
           <Key>
@@ -714,6 +715,7 @@
           <EntitySetMapping Name="DonacionesInsumos">
             <EntityTypeMapping TypeName="Model.DonacionesInsumos">
               <MappingFragment StoreEntitySet="DonacionesInsumos">
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="IdDonacionInsumo" ColumnName="IdDonacionInsumo" />
                 <ScalarProperty Name="IdNecesidadDonacionInsumo" ColumnName="IdNecesidadDonacionInsumo" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />

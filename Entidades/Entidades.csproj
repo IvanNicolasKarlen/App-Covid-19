@@ -112,11 +112,14 @@
       <DependentUpon>ModelTP.tt</DependentUpon>
     </Compile>
     <Compile Include="ValidationCustom\CheckValidDate.cs" />
+    <Compile Include="Views\DonacionesInsumosVM.cs" />
     <Compile Include="Views\EncriptarPassword.cs" />
     <Compile Include="Views\VMComprobantePago.cs" />
     <Compile Include="Views\VMDatosDeVerificacionDeUsuario.cs" />
     <Compile Include="Views\VMDonacionMonetaria.cs" />
     <Compile Include="Views\VMLogin.cs" />
+    <Compile Include="Views\VMNecesidades.cs" />
+    <Compile Include="Views\VMNecesidadesDonacionesInsumos.cs" />
     <Compile Include="Views\VMPerfil.cs" />
     <Compile Include="Views\VMPublicacion.cs" />
     <Compile Include="Views\VMReenvioDeEmail.cs" />

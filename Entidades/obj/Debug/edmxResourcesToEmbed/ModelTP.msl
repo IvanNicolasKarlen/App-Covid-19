@@ -17,6 +17,7 @@
     <EntitySetMapping Name="DonacionesInsumos">
       <EntityTypeMapping TypeName="Model.DonacionesInsumos">
         <MappingFragment StoreEntitySet="DonacionesInsumos">
+          <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
           <ScalarProperty Name="IdDonacionInsumo" ColumnName="IdDonacionInsumo" />
           <ScalarProperty Name="IdNecesidadDonacionInsumo" ColumnName="IdNecesidadDonacionInsumo" />
           <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />

@@ -16,9 +16,9 @@ namespace DAO
     public class NecesidadesDAO : Crud<Necesidades>
     {
         #region Crud
-        public NecesidadesDAO(TpDBContext context) :base(context)
+        public NecesidadesDAO(TpDBContext context) : base(context)
         {
-            
+
         }
         public override Necesidades ObtenerPorID(int idNecesidad)
         {
@@ -172,6 +172,42 @@ namespace DAO
             return necesidadesBD;
         }
 
+        public List<Necesidades> TraerNecesidadesConDonacionInsumosPorUserLogueado(int idUserLogueado)
+        {
+            List<Necesidades> listadoNecesidades = (from nec in context.Necesidades
+
+                                                    join necDonacionesInsumos in context.NecesidadesDonacionesInsumos
+                                                    on nec.IdNecesidad equals necDonacionesInsumos.IdNecesidad
+                                                    join DonInsumos in context.DonacionesInsumos
+                                                    on necDonacionesInsumos.IdNecesidadDonacionInsumo equals DonInsumos.IdNecesidadDonacionInsumo
+
+                                                    where DonInsumos.IdUsuario == idUserLogueado
+                                                    orderby DonInsumos.FechaCreacion descending
+                                                    select nec).ToList();
+
+
+            return listadoNecesidades;
+        }
+
+        public List<Necesidades> TraerNecesidadesConDonacionMonetariasPorUserLogueado(int idUserLogueado)
+        {
+
+            List<Necesidades> listadoNecesidades =
+                (
+                from nec in context.Necesidades
+                join necDonacionesMonetarias in context.NecesidadesDonacionesMonetarias
+                on nec.IdNecesidad equals necDonacionesMonetarias.IdNecesidad
+                join DonMonetarias in context.DonacionesMonetarias
+                on necDonacionesMonetarias.IdNecesidadDonacionMonetaria equals DonMonetarias.IdNecesidadDonacionMonetaria
+
+                
+                where DonMonetarias.IdUsuario == idUserLogueado
+                orderby DonMonetarias.FechaCreacion descending
+                select nec
+                         ).ToList();
+            return listadoNecesidades;
+        }
+
         #endregion
         #region Insumos y Monetaria
         public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumos insumo)
@@ -198,7 +234,7 @@ namespace DAO
             monetariaViejo = monetaria;
             context.SaveChanges();
         }
-        
+
         public NecesidadesDonacionesInsumos BuscarInsumoPorId(int id)
         {
             return context.NecesidadesDonacionesInsumos.Find(id);

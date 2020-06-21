@@ -25,6 +25,7 @@
     <Property Name="Cantidad" Type="Int32" Nullable="false" />
     <NavigationProperty Name="NecesidadesDonacionesInsumos" Relationship="Self.FK_DonacionesInsumos_NecesidadesDonacionesInsumos" FromRole="DonacionesInsumos" ToRole="NecesidadesDonacionesInsumos" />
     <NavigationProperty Name="Usuarios" Relationship="Self.FK_DonacionesInsumos_Usuarios" FromRole="DonacionesInsumos" ToRole="Usuarios" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
   <EntityType Name="DonacionesMonetarias">
     <Key>
