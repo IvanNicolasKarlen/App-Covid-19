@@ -1,7 +1,8 @@
-﻿@model Entidades.Views.VMPublicacion
+﻿@model Entidades.Necesidades
 @{
     ViewBag.Title = "NecesidadDonacionInsumos";
     int idSession = int.Parse(Session["UserId"].ToString());
+    int cantidad = 0;
 }
 
 
@@ -10,39 +11,74 @@
         <div class="col-md-12">
             <div class="float-right">
 
-                <p class="card-text text-secondary mt-4"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> @Model.necesidadesDonacionesInsumos.Necesidades.FechaFin</p>
+                <p class="card-text text-secondary mt-4"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> @Model.FechaFin</p>
             </div>
             <div class="row">
-                @if (@Model.necesidadesDonacionesInsumos.Necesidades.Usuarios.Foto == null)
+                @if (@Model.Foto == null)
                 {
                     <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="/Imagenes/imagenPerfil-Nula.png">
 
                 }
                 else
                 {
-                    <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="@Model.necesidadesDonacionesInsumos.Necesidades.Usuarios.Foto">
+                    <img class="rounded-circle float-left mt-2 ml-4 border border-white" id="image-perfil" src="@Model.Usuarios.Foto">
                 }
                 <div class="col-md-4">
-                    <p class=" text-secondary mt-3"><b>@Model.necesidadesDonacionesInsumos.Necesidades.Usuarios.UserName</b></p>
-                    <p><span class="fa fa-calendar"></span> @Model.necesidadesDonacionesInsumos.Necesidades.FechaCreacion</p>
+                    <p class=" text-secondary mt-3"><b>@Model.Usuarios.UserName</b></p>
+                    <p><span class="fa fa-calendar"></span> @Model.FechaCreacion</p>
                 </div>
             </div>
             <div class="col-md-12 ">
                 <div class="col-md-6 float-left">
                     <div class="col-md-12">
                         <div class="card-body float-auto">
-                            <h2 class="text-center">@Model.necesidadesDonacionesInsumos.Necesidades.Nombre</h2>
+                            <h2 class="text-center">@Model.Nombre</h2>
                             <div class="col-md-12 text-center m-auto">
-                                <i>@Model.necesidadesDonacionesInsumos.Necesidades.Descripcion</i>
+                                <i>@Model.Descripcion</i>
                             </div>
                             <div class="col-md-12 mb-3 mt-3 float-left">
 
-                                <h3> Total faltante: <b>@Model.necesidadesDonacionesInsumos.DonacionesInsumos.Count elementos</b></h3>
+
+                                @foreach (var necDonInsumos in Model.NecesidadesDonacionesInsumos)
+                                {
+
+                                    <p>
+                                        <b> Total Solicitado</b> :
+
+                                        @necDonInsumos.Nombre (@necDonInsumos.Cantidad)
+                                    </p>
+
+                                    cantidad = 0;
+
+
+
+                                    if (necDonInsumos.DonacionesInsumos.Count != 0)
+                                    {
+                                        <p>
+                                            <b>Recaudado</b>:
+
+
+                                            @foreach (var donInsumos in necDonInsumos.DonacionesInsumos)
+                                            {
+
+                                                {
+                                                    cantidad += donInsumos.Cantidad;
+                                                }
+
+                                            }
+
+                                            @cantidad
+                                        </p>
+                                    }
+
+                                }
+
+
 
                             </div>
                         </div>
                         <div class="col-md-12 btn-group mt-4 mb-3">
-                            @if (Model.necesidadesDonacionesInsumos.Necesidades.IdUsuarioCreador == idSession)
+                            @if (Model.IdUsuarioCreador == idSession)
                             {
                                 <div class="col-md-12 btn-group mt-4 mb-3">
                                     @Html.ActionLink("Regresar a Home", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
@@ -53,7 +89,7 @@
                             else
                             {
                                 @Html.ActionLink("En otro momento", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
-                                <a href="~/DonacionInsumos/DonacionInsumos?idNecesidad=@Model.necesidadesDonacionesInsumos.IdNecesidad&idNecesidadDonacionInsumo=@Model.necesidadesDonacionesInsumos.IdNecesidadDonacionInsumo" class="btn btn-info">Donar Insumos</a>
+                                <a href="~/DonacionInsumos/DonacionInsumos?idNecesidad=@Model.IdNecesidad" class="btn btn-info">Donar Insumos</a>
                             }
 
                         </div>
@@ -63,25 +99,25 @@
 
                 <div class="col-md-6 mt-3 mb-3 float-right">
 
-                    <img class="card-img-top" src="@Model.necesidadesDonacionesInsumos.Necesidades.Foto" id="imagen-detalle" alt="Card image cap">
+                    <img class="card-img-top" src="@Model.Foto" id="imagen-detalle" alt="Card image cap">
 
 
                     @using (Html.BeginForm("DetalleNecesidad", "Necesidades", FormMethod.Post, new { @class = "float-auto ml-5" }))
                     {
-                        <input type="hidden" name="IdNecesidad" value="@Model.necesidadesDonacionesInsumos.Necesidades.IdNecesidad" />
+                        <input type="hidden" name="IdNecesidad" value="@Model.IdNecesidad" />
 
-                        if (Model.necesidad.NecesidadesValoraciones.Count == 0)
+                        if (Model.NecesidadesValoraciones.Count == 0)
                         {
                             <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                         }
                         else
                         {
                             int bandera = 0;
-                            foreach (var necesidadesValoraciones in Model.necesidad.NecesidadesValoraciones)     //3 ... 1... 2
+                            foreach (var necesidadesValoraciones in Model.NecesidadesValoraciones)     //3 ... 1... 2
                             {
 
 
-                                if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.necesidadesDonacionesInsumos.Necesidades.IdNecesidad & necesidadesValoraciones.Valoracion == "Like")
+                                if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.IdNecesidad & necesidadesValoraciones.Valoracion == "Like")
                                 {
                                     <button type="submit" class="btn btn-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
 
@@ -95,25 +131,25 @@
                             }
 
 
-                            if (Model.necesidad.NecesidadesValoraciones.Count == bandera)
+                            if (Model.NecesidadesValoraciones.Count == bandera)
                             {
                                 <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                             }
                         }
-                        <label> <b class="text-primary">@Model.necesidadesDonacionesInsumos.Necesidades.Valoracion%</b> de coincidencias </label>
+                        <label> <b class="text-primary">@Model.Valoracion%</b> de coincidencias </label>
 
 
 
-                        if (Model.necesidad.NecesidadesValoraciones.Count == 0)
+                        if (Model.NecesidadesValoraciones.Count == 0)
                         {
                             <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
                         }
                         else
                         {
                             int bandera = 0;
-                            foreach (var necesidadesValoraciones in Model.necesidad.NecesidadesValoraciones)
+                            foreach (var necesidadesValoraciones in Model.NecesidadesValoraciones)
                             {
-                                if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.necesidadesDonacionesInsumos.Necesidades.IdNecesidad & necesidadesValoraciones.Valoracion == "Dislike")
+                                if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.IdNecesidad & necesidadesValoraciones.Valoracion == "Dislike")
                                 {
                                     <button type="submit" class="btn btn-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
 
@@ -126,7 +162,7 @@
                                 }
                             }
 
-                            if (Model.necesidad.NecesidadesValoraciones.Count == bandera)
+                            if (Model.NecesidadesValoraciones.Count == bandera)
                             {
                                 <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                             }

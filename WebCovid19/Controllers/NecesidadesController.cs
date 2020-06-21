@@ -159,22 +159,10 @@ namespace WebCovid19.Controllers
             }
             
             /**********************************************************************/
-            VMPublicacion vMPublicacion = new VMPublicacion();
+           
             Necesidades necesidadObtenida = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
-            List<NecesidadesValoraciones> valoracionesObtenidas = servicioNecesidadValoraciones.obtenerValoracionPorIdNecesidad(idNecesidad);
-
-            if (necesidadObtenida.TipoDonacion == 1)//Dinero
-            {
-                NecesidadesDonacionesMonetarias necDonacionObtenida = servicioNecesidad.BuscarMonetariasPorIdNecesidad(idNecesidad);
-                vMPublicacion.necesidadesDonacionesMonetarias = necDonacionObtenida;
-            }
-            else if(necesidadObtenida.TipoDonacion == 2)//Insumos
-            {
-               NecesidadesDonacionesInsumos insumosObtenidos = servicioNecesidad.BuscarInsumosPorIdNecesidad(idNecesidad);
-                vMPublicacion.necesidadesDonacionesInsumos = insumosObtenidos;
-            }
-            vMPublicacion.necesidad = necesidadObtenida;
-            return View(vMPublicacion);
+           
+            return View(necesidadObtenida);
         }
 
 

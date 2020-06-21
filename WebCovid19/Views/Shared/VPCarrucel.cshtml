@@ -9,8 +9,10 @@
         <div class="carousel-item active">
             <img src="~/Content/img/8.jpg" alt="Obelisco - Buenos Aires" width="1100" height="500">
             <div class="carousel-caption">
-              
-                @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = "btn btn-primary text-light btn-rounded my-2 my-sm-0 " })
+                @if (Session["UserId"] as string == "")
+                {
+                    @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = "btn btn-primary text-light btn-rounded my-2 my-sm-0 " })
+                }
                 <h3>Miles de personas están solicitando tu ayuda</h3>
                 <p>Necesidades humanas</p>
             </div>
@@ -18,7 +20,10 @@
         <div class="carousel-item">
             <img src="~/Content/img/9.jpg" alt="Gente con barbijos" width="1100" height="500">
             <div class="carousel-caption">
-                @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = "btn btn-primary text-light btn-rounded my-2 my-sm-0 " })
+                @if (Session["UserId"] as string == "")
+                {
+                    @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = "btn btn-primary text-light btn-rounded my-2 my-sm-0 " })
+                }
                 <h3>Debemos cuidarnos para proteger a los demás</h3>
                 <p>Solicitud de insumos y dinero</p>
             </div>
@@ -26,7 +31,10 @@
         <div class="carousel-item">
             <img src="~/Content/img/10.jpg" alt="Gente con bolsas" width="1100" height="500">
             <div class="carousel-caption">
-                @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = "btn btn-primary text-light btn-rounded my-2 my-sm-0 " })
+                @if (Session["UserId"] as string == "")
+                {
+                    @Html.ActionLink("Registrarme", "Registro", "Usuario", null, new { @class = "btn btn-primary text-light btn-rounded my-2 my-sm-0 " })
+                }
                 <h3>El aislamiento no genera separación, sino cuidado</h3>
                 <p>Ayudemos a quien lo necesita</p>
             </div>
