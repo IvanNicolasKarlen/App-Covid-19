@@ -1,4 +1,4 @@
-﻿@model Entidades.Necesidades
+@model Entidades.Necesidades
 @{
     ViewBag.Title = "NecesidadDonacionInsumos";
     int idSession = int.Parse(Session["UserId"].ToString());
@@ -82,7 +82,11 @@
                             {
                                 <div class="col-md-12 btn-group mt-4 mb-3">
                                     @Html.ActionLink("Regresar a Home", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
-                                    <button type="button" class="btn btn-info ml-2">Editar</button>
+
+                                    @if (Model.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
+                                    {
+                                        <button type="button" class="btn btn-info ml-2">Editar</button>
+                                    }
                                 </div>
 
                             }
@@ -93,6 +97,18 @@
                             }
 
                         </div>
+
+                        @if (Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada && Model.IdUsuarioCreador == idSession)
+                        {
+
+                            <div class="p-3 mb-2 bg-danger text-white text-center">Esta Necesidad ha sido bloqueada por nuestros administradores por incumplimiento de nuestras reglas.</div>
+                        }
+                        else if (Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Revision && Model.IdUsuarioCreador == idSession)
+                        {
+
+                            <div class="p-3 mb-2 bg-warning text-white text-center">Esta Necesidad está en revision de ser pública.</div>
+
+                        }
 
                     </div>
                 </div>
@@ -175,5 +191,3 @@
         </div>
     </div>
 </div>
-
-
