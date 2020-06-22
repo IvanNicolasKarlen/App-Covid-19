@@ -192,7 +192,8 @@
                         </div>
                     }
                 </div>
-                @if (Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada && Model.IdUsuarioCreador == idSession)
+
+            @if (Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada && Model.IdUsuarioCreador == idSession)
                 {
 
                     <div class="p-3 mb-2 bg-danger text-white text-center">Esta Necesidad ha sido bloqueada por nuestros administradores por incumplimiento de nuestras reglas.</div>
@@ -203,7 +204,6 @@
                     <div class="p-3 mb-2 bg-warning text-white text-center">Esta Necesidad está en revision de ser pública.</div>
 
                 }
-
             </div>
 
         </div>
