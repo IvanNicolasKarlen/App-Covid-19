@@ -25,10 +25,10 @@ namespace WebCovid19.Controllers
         }
 
         [HttpGet]
-        public ActionResult DonaMonetaria(int idNecesidadDonacionMonetaria)
+        public ActionResult DonaMonetaria(int idNecesidad)
         {
             VMDonacionMonetaria vmDonacionMonetaria = new VMDonacionMonetaria();
-             vmDonacionMonetaria.IdNecesidadDonacionMonetaria = idNecesidadDonacionMonetaria;
+             vmDonacionMonetaria.IdNecesidad = idNecesidad;
             return View(vmDonacionMonetaria);
         }
 
