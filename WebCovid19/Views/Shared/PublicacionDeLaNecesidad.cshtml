@@ -124,13 +124,13 @@
                     }
                     <label> No estoy de acuerdo </label>
 
-                    if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada && necesidad.IdUsuarioCreador == idSession)
+                    if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada)
                     {
                         <div class="float-right">
                             <label> <b class="text-black-50">Necesidad Finalizada</b> </label>
                         </div>
                     }
-                    else if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Activa && necesidad.IdUsuarioCreador == idSession)
+                    else if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Activa)
                     {
 
                         <div class="float-right">
@@ -160,20 +160,24 @@
                 else if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Revision && necesidad.IdUsuarioCreador == idSession)
                 {
 
-                    <div class="p-3 mb-2 bg-warning text-white text-center">Esta Necesidad está en revision de ser pública.</div>
+                    <div class="p-3 mb-2 bg-warning text-white text-center">Esta Necesidad esta en revision de ser publica.</div>
 
                 }
 
                 <p class="card-text text-secondary"><b>Fecha de finalizacion:</b> <span class="fa fa-calendar"></span> @necesidad.FechaFin</p>
-                @if (necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada | necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Revision && necesidad.IdUsuarioCreador == idSession)
+                @if (necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada | necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Revision)
                 {
 
             <div class="text-center">
                 @if (necesidad.IdUsuarioCreador == idSession)
                 {
-                   
+
+                    if (necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
+                    {
                         @Html.ActionLink("Editar", "", "", null, new { @class = "btn btn-primary" })
-                    
+
+                    }
+
 
                     <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
                 }
