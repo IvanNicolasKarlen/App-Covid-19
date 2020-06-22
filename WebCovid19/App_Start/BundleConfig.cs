@@ -52,9 +52,12 @@ namespace WebCovid19.App_Start
                .Include(
                "~/Scripts/jquery-{version}.slim.min.js"));
 
+            /*Validaciones del lado del cliente*/
+            bundles.Add(new ScriptBundle("~/bundles/Scripts/ValidacionesCliente")
+                .Include(
+                "~/Scripts/jquery.validate.js",
+                "~/Scripts/jquery.validate.unobtrusive.min.js"));
 
-
-     
 
 
 
