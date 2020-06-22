@@ -45,7 +45,7 @@ namespace Servicios
             DonacionesMonetarias donacionM = new DonacionesMonetarias()
             {
                 Dinero = vmDonacionMonetaria.Dinero,
-                IdNecesidadDonacionMonetaria = vmDonacionMonetaria.IdNecesidadDonacionMonetaria,
+                IdNecesidadDonacionMonetaria = vmDonacionMonetaria.IdNecesidad,
                 IdUsuario = idUsuario,
                 FechaCreacion = DateTime.Now,
                 ArchivoTransferencia = ""

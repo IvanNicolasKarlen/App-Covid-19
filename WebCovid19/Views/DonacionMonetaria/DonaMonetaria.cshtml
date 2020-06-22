@@ -16,7 +16,7 @@
 
         @using (Html.BeginForm("DonaMonetaria", "DonacionMonetaria", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
         {
-            <input type="hidden" name="IdNecesidadDonacionMonetaria" value="@Model.IdNecesidadDonacionMonetaria" />
+            <input type="hidden" name="IdNecesidad" value="@Model.IdNecesidad" />
 
 
             @Html.AntiForgeryToken()

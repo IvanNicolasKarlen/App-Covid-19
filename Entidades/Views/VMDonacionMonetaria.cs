@@ -12,6 +12,6 @@ namespace Entidades.Views
         [Range(100, 9999999, ErrorMessage = "La donación minima es de $100")]
         public decimal Dinero { get; set; }
 
-        public int IdNecesidadDonacionMonetaria { get; set; }
+        public int IdNecesidad { get; set; }
     }
 }
