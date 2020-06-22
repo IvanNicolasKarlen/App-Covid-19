@@ -1,4 +1,4 @@
-﻿@model Entidades.Necesidades
+@model Entidades.Necesidades
 @{
     ViewBag.Title = "NecesidadDonacionInsumos";
     int idSession = int.Parse(Session["UserId"].ToString());
@@ -80,6 +80,7 @@
                         <div class="col-md-12 btn-group mt-4 mb-3">
                             @if (Model.IdUsuarioCreador == idSession)
                             {
+
                             <div class="col-md-12 btn-group mt-4 mb-3">
                                 @Html.ActionLink("Regresar a Home", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
 
@@ -88,6 +89,7 @@
                                 <button type="button" class="btn btn-info ml-2">Editar</button>
                                 }
                             </div>
+
 
                             }
                             else
@@ -191,5 +193,3 @@
         </div>
     </div>
 </div>
-
-
