@@ -161,7 +161,12 @@ namespace Servicios
             return necesidades;
         }
 
-            public List<Necesidades> obtener5NecesidadesMasValoradas()
+        public void ModificarNecesidad(Necesidades n)
+        {
+            necesidadesDAO.Actualizar(n);
+        }
+
+        public List<Necesidades> obtener5NecesidadesMasValoradas()
             {
                 List<Necesidades> listadoNecesidades = necesidadesDAO.ListarTodasLasNecesidadesActivas();
                 List<Necesidades> necesidadesMasValoradas = new List<Necesidades>();

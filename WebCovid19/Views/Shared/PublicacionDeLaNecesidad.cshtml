@@ -120,6 +120,13 @@
                         if (necesidad.NecesidadesValoraciones.Count == bandera)
                         {
                             <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                    <p class="card-text text-secondary"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> @necesidad.FechaFin</p>
+                    <div class="text-center">
+                        @if (necesidad.IdUsuarioCreador == idSession && necesidad.FechaFin>DateTime.Now)
+                        {
+                        <a href="/Necesidades/Modificar/@necesidad.IdNecesidad">Modificar</a>
+
+                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
                         }
                     }
                     <label> No estoy de acuerdo </label>

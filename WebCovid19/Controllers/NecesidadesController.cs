@@ -34,7 +34,7 @@ namespace WebCovid19.Controllers
             return View();
         }
 
-
+        #region Creacion de Necesidad
         public ActionResult Crear()
         {
             int idUsuario = int.Parse(Session["UserId"].ToString());
@@ -144,7 +144,30 @@ namespace WebCovid19.Controllers
             Session.Remove("idNecesidad");
             return View("AvisosNecesidad");
         }
-
+        #endregion
+        public ActionResult Modificar(int? idNecesidad)
+        {
+            Necesidades n = servicioNecesidad.obtenerNecesidadPorId(int.Parse(idNecesidad.ToString()));
+            if (n == null)
+            {
+                return View("Home");
+            }
+            Session["idNecesidad"] = n.IdNecesidad;
+            return View(n);
+        }
+        [HttpPost]
+        public ActionResult Modificar(Necesidades n)
+        {
+            if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
+            {
+                string nombreSignificativo = n.Nombre + " " + Session["Email"];
+                //Guardar Imagen
+                string pathRelativoImagen = ImagenesUtil.Guardar(Request.Files[0], nombreSignificativo);
+                n.Foto = pathRelativoImagen;
+            }
+            servicioNecesidad.ModificarNecesidad(n);
+            return View("DetalleNecesidad", n.IdNecesidad);
+        }
         [LoginFilter]//toDo: Probar que funcione bien del todo este action.
         public ActionResult DetalleNecesidad(int idNecesidad)
         { 

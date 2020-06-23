@@ -1,0 +1,85 @@
+﻿@model Entidades.Metadata.NecesidadesMetadata
+
+@{
+    ViewBag.Title = "Modificar";
+    Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
+}
+
+<h2>Modificar</h2>
+
+@using (Html.BeginForm("Modificar", "Necesidades", FormMethod.Post,new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Modificar Necesidad</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TelefonoContacto, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TelefonoContacto, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TelefonoContacto, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FechaFin, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Foto, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Foto, new { htmlAttributes = new { type = "file", accept = "image/jpg, image/jpeg, image/png", @class = "form-control-file" } })
+            @Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.IdNecesidad)
+    @Html.HiddenFor(model => model.IdUsuarioCreador)
+    @Html.HiddenFor(model => model.FechaCreacion)
+    @Html.HiddenFor(model => model.Valoracion)
+    @Html.HiddenFor(model => model.TipoDonacion)
+    @Html.HiddenFor(model => model.NecesidadesValoraciones)
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Modificar" class="btn btn-default" />
+    </div>
+    @if (Model.TipoDonacion == Entidades.Enum.TipoDonacion.Insumos)
+    {
+        <a href="Necesidades/Insumos">Agregar Insumos</a>
+        <a href="Necesidades/EditarInsumos">Editar Insumos</a>
+    }
+    else
+    {
+        <a href="Necesidades/Monetaria">Agregar Necesidad Monetaria</a>
+        <a href="Necesidades/EditarMonetaria">Editar Necesidades Monetaria</a>
+    }
+</div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
