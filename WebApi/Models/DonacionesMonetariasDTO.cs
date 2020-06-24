@@ -1,8 +1,5 @@
 ﻿using Entidades;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace WebApi.Models
 {
@@ -34,7 +31,7 @@ namespace WebApi.Models
             ICollection<DonacionesMonetariasDTO> listaDto = new HashSet<DonacionesMonetariasDTO>();
             foreach (var donMonetarias in donacionesMonetarias)
             {
-              listaDto.Add(new DonacionesMonetariasDTO(donMonetarias));
+                listaDto.Add(new DonacionesMonetariasDTO(donMonetarias));
             }
 
             return listaDto;

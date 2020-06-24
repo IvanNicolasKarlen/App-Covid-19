@@ -187,11 +187,11 @@
                     {
                         <div class="col-md-12 btn-group mt-4 mb-3">
                             @Html.ActionLink("En otro momento", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
-                            <a href="~/DonacionMonetaria/DonaMonetaria?idNecesidad=@Model.IdNecesidad" class="btn btn-info ml-2">Donar Dinero</a>
+                            <a href="~/DonacionMonetaria/DetalleDeDonacion?idNecesidad=@Model.IdNecesidad" class="btn btn-info ml-2">Donar Dinero</a>
                         </div>
                     }
                 </div>
-            @if (Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada && Model.IdUsuarioCreador == idSession)
+                @if (Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada && Model.IdUsuarioCreador == idSession)
                 {
 
                     <div class="p-3 mb-2 bg-danger text-white text-center">Esta Necesidad ha sido bloqueada por nuestros administradores por incumplimiento de nuestras reglas.</div>
@@ -202,6 +202,8 @@
                     <div class="p-3 mb-2 bg-warning text-white text-center">Esta Necesidad está en revision de ser pública.</div>
 
                 }
+              
+
             </div>
 
         </div>

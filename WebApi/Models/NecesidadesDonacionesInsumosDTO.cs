@@ -1,9 +1,5 @@
 ﻿using Entidades;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace WebApi.Models
 {
@@ -14,7 +10,7 @@ namespace WebApi.Models
         public int Cantidad { get; set; }
 
         public virtual ICollection<DonacionInsumosDTO> DonacionesInsumos { get; set; }
-      
+
         public NecesidadesDonacionesInsumosDTO()
         {
         }
@@ -28,7 +24,7 @@ namespace WebApi.Models
 
             if (mapearRelacionadas && necesidadesDonacionesInsumosEF.DonacionesInsumos.Count > 0)
             {
-               this.DonacionesInsumos = donacionInsumosDTO.MapearDTO(necesidadesDonacionesInsumosEF.DonacionesInsumos, true);
+                this.DonacionesInsumos = donacionInsumosDTO.MapearDTO(necesidadesDonacionesInsumosEF.DonacionesInsumos, true);
             }
         }
 

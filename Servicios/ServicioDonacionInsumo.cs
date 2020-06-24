@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAO;
+﻿using DAO;
 using DAO.Context;
 using Entidades;
 using Entidades.Views;
+using System;
+using System.Collections.Generic;
 
 namespace Servicios
 {
@@ -41,16 +37,12 @@ namespace Servicios
             return DonacionInsumosDao.BuscarNecesidadesDonacionIPorId(idNecesidadDonacionInsumo);
         }
 
-        public DonacionesInsumos GuardarCantidadDonada(VMNecesidadesDonacionesInsumos vmNDI, int idUsuario)
+        public DonacionesInsumos GuardarCantidadDonada(DonacionesInsumos donacionesI, int idUsuario)
         {
-            DonacionesInsumos donacionI = new DonacionesInsumos()
-            {
-                Cantidad = vmNDI.Cantidad,
-                IdUsuario = idUsuario,
-                IdNecesidadDonacionInsumo = vmNDI.IdNecesidadDonacionInsumo,
-                FechaCreacion = DateTime.Now
-            };
-            return DonacionInsumosDao.GuardarInsumo(donacionI);
+            donacionesI.IdUsuario = idUsuario;
+            donacionesI.FechaCreacion = DateTime.Now;
+
+            return DonacionInsumosDao.GuardarInsumo(donacionesI);
         }
 
         public NecesidadesDonacionesInsumos ObtenerNecesidadDonacionInsumosPorId(int idNecesidadDonacionInsumo)
@@ -62,7 +54,6 @@ namespace Servicios
         public NecesidadesDonacionesInsumos ObtenerCantidadPorId(VMNecesidadesDonacionesInsumos idNecesidadDonacionInsumo)
         {
             return DonacionInsumosDao.ObtenerNecesidadDonacionInsumosPorId(idNecesidadDonacionInsumo.IdNecesidadDonacionInsumo);
-
         }
     }
 }

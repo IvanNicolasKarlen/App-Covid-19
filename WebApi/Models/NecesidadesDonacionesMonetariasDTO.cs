@@ -1,8 +1,5 @@
 ﻿using Entidades;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace WebApi.Models
 {
@@ -33,7 +30,7 @@ namespace WebApi.Models
             }
         }
 
-         public static List<NecesidadesDonacionesMonetariasDTO> MapearListaEF(List<NecesidadesDonacionesMonetarias> NecesidadesDonacionesMonetariasEF, bool mapearRelacionadas = true)
+        public static List<NecesidadesDonacionesMonetariasDTO> MapearListaEF(List<NecesidadesDonacionesMonetarias> NecesidadesDonacionesMonetariasEF, bool mapearRelacionadas = true)
         {
             List<NecesidadesDonacionesMonetariasDTO> necesidadesDonacionesMonetariasDTO = new List<NecesidadesDonacionesMonetariasDTO>();
             //mapeamos las necesidades a DTO y las agregamos a la lista que quiero retornar

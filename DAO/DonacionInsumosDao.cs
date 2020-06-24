@@ -1,13 +1,9 @@
-﻿using System;
+﻿using DAO.Abstract;
+using DAO.Context;
+using Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAO.Context;
-using Entidades.Views;
-using Entidades;
-using DAO.Abstract;
-using System.Runtime.Remoting.Messaging;
 
 namespace DAO
 {
@@ -41,7 +37,6 @@ namespace DAO
 
         public NecesidadesDonacionesInsumos BuscarNecesidadesDonacionIPorId(int IdNecesidadDonacionInsumo)
         {
-            // NecesidadesDonacionesInsumos listaNdi = context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidadDonacionInsumo == IdNecesidadDonacionInsumo).ToList();
             NecesidadesDonacionesInsumos listaNdi = context.NecesidadesDonacionesInsumos.Find(IdNecesidadDonacionInsumo);
             return listaNdi;
         }

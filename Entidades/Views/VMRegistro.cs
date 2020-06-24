@@ -1,9 +1,6 @@
 ﻿using Entidades.ValidationCustom;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Entidades.Views
 {
@@ -13,7 +10,7 @@ namespace Entidades.Views
         [Required(ErrorMessage = " Email es obligatorio")]
         [EmailAddress(ErrorMessage = "Formato de Email erroneo")]
         [StringLength(50, ErrorMessage = "Email demaciado largo")]
-   
+
         public string Email { get; set; }
 
         [Display(Name = "Clave")]

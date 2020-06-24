@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Entidades.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entidades.Enum;
 
 namespace Entidades.Metadata
 {
-   public class NecesidadesMetadata
+    public class NecesidadesMetadata
     {
-        [Required(ErrorMessage ="Obligatorio")]
+        [Required(ErrorMessage = "Obligatorio")]
         [StringLength(50)]
         public string Nombre { get; set; }
 

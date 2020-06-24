@@ -1,8 +1,6 @@
 ﻿using Entidades;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace WebApi.Models
 {
@@ -14,7 +12,7 @@ namespace WebApi.Models
         public int Cantidad { get; set; }
         public DateTime FechaCreacion { get; set; }
         public virtual NecesidadesDonacionesInsumosDTO NecesidadesDonacionesInsumos { get; set; }
-        
+
         public DonacionInsumosDTO()
         {
         }
@@ -33,12 +31,12 @@ namespace WebApi.Models
             }
         }
 
-        public ICollection<DonacionInsumosDTO> MapearDTO(ICollection<DonacionesInsumos> donacionesInsumos, bool mapearNecesidadDonacionInsumos=true)
+        public ICollection<DonacionInsumosDTO> MapearDTO(ICollection<DonacionesInsumos> donacionesInsumos, bool mapearNecesidadDonacionInsumos = true)
         {
             ICollection<DonacionInsumosDTO> listaDto = new HashSet<DonacionInsumosDTO>();
             foreach (var donInsumos in donacionesInsumos)
             {
-  
+
                 listaDto.Add(new DonacionInsumosDTO(donInsumos, mapearNecesidadDonacionInsumos));
             }
             return listaDto;

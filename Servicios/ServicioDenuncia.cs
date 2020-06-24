@@ -2,16 +2,9 @@
 using DAO.Context;
 using Entidades;
 using Entidades.Enum;
-using Entidades.Views;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Net.Mime;
-using System.Text;
-using System.Web;
 
 namespace Servicios
 {
@@ -92,7 +85,7 @@ namespace Servicios
 
                 //Pongo la necesidad en estado bloqueada
                 denunciaObtenida.Necesidades.Estado = (int)TipoEstadoNecesidad.Bloqueada;
-                
+
             }
             else //Al ser false, esta necesidad no le deberia volver a aparecer al Administrador
             {
