@@ -1911,7 +1911,6 @@
     <Content Include="Views\Shared\_NecesidadesLayout.cshtml" />
     <Content Include="Views\Shared\NecesidadDonacionInsumos.cshtml" />
     <Content Include="Views\NecesidadesDonacionesMonetarias\NecesidadesDonacionesMonetarias.cshtml" />
-    <Content Include="Views\DonacionMonetaria\GraciasPorDonarMonetariamente.cshtml" />
     <Content Include="Views\DonacionMonetaria\SeleccionComprobanteDePago.cshtml" />
     <Content Include="Views\Usuario\Administrador.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
@@ -1935,6 +1934,7 @@
     <Content Include="Views\Usuario\HistorialDonaciones.cshtml" />
     <Content Include="Views\DonacionMonetaria\DonaMonetaria.cshtml" />
     <Content Include="Views\DonacionInsumos\Donar.cshtml" />
+    <Content Include="Views\DonacionMonetaria\DetalleDeDonacion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

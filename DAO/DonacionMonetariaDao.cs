@@ -1,12 +1,10 @@
-﻿using System;
+﻿using DAO.Abstract;
+using DAO.Context;
+using Entidades;
+using Entidades.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAO.Context;
-using Entidades.Views;
-using Entidades;
-using DAO.Abstract;
 
 namespace DAO
 {
@@ -56,7 +54,7 @@ namespace DAO
             return listarCantidadNecesariaADonar;
         }
 
-        public NecesidadesDonacionesMonetarias CantidadSolicitada(int IdNecesidadDonacionMonetaria)
+        public NecesidadesDonacionesMonetarias ObtenerPorIdNecesidadDonacionMonetaria(int IdNecesidadDonacionMonetaria)
         {
             NecesidadesDonacionesMonetarias traerDineroPorId =
             context.NecesidadesDonacionesMonetarias.Find(IdNecesidadDonacionMonetaria);
@@ -69,11 +67,10 @@ namespace DAO
             return donacioMnPorId;
         }
 
-        public DonacionesMonetarias ActualizarComprobante(String ArchivoTransferencia, int IdDonacionMonetaria)
+        public DonacionesMonetarias ActualizarComprobante(VMComprobantePago donaM)
         {
-            DonacionesMonetarias DonacionesMonetariasBd = ObtenerDonacionMonetariaPorId(IdDonacionMonetaria);
-            DonacionesMonetariasBd.IdDonacionMonetaria = IdDonacionMonetaria;
-            DonacionesMonetariasBd.ArchivoTransferencia = ArchivoTransferencia;
+            DonacionesMonetarias DonacionesMonetariasBd = ObtenerDonacionMonetariaPorId(donaM.IdDonacionMonetaria);
+            DonacionesMonetariasBd.ArchivoTransferencia = donaM.ArchivoTransferencia;
             context.SaveChanges();
             return DonacionesMonetariasBd;
         }

@@ -2,17 +2,14 @@
 using DAO.Context;
 using Entidades;
 using Entidades.Enum;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAO
 {
     public class DenunciasDao : Crud<Denuncias> //Uso de Generics
     {
-        public DenunciasDao(TpDBContext context) : base (context)
+        public DenunciasDao(TpDBContext context) : base(context)
         {
 
         }
@@ -33,16 +30,16 @@ namespace DAO
         {
             Denuncias denunciaObtenida = ObtenerPorID(denuncia.IdDenuncia);
             denunciaObtenida.Estado = denuncia.Estado;
-            
+
             context.SaveChanges();
             return denunciaObtenida;
         }
 
         public override Denuncias Crear(Denuncias denuncia)
         {
-           Denuncias d = context.Denuncias.Add(denuncia);
-           context.SaveChanges();
-           return d;
+            Denuncias d = context.Denuncias.Add(denuncia);
+            context.SaveChanges();
+            return d;
         }
 
         public void Eliminar(Denuncias item)

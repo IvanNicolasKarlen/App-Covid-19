@@ -1,14 +1,14 @@
-﻿using Entidades;
+﻿using DAO.Context;
+using Entidades;
+using Entidades.Enum;
+using Entidades.Metadata;
+using Entidades.Views;
+using Servicios;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using Servicios;
-using WebCovid19.Utilities;
-using Entidades.Metadata;
 using WebCovid19.Filters;
-using Entidades.Views;
-using Entidades.Enum;
-using DAO.Context;
+using WebCovid19.Utilities;
 
 namespace WebCovid19.Controllers
 {
@@ -22,8 +22,8 @@ namespace WebCovid19.Controllers
         public NecesidadesController()
         {
             TpDBContext context = new TpDBContext();
-             servicioNecesidad = new ServicioNecesidad(context);
-             servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
+            servicioNecesidad = new ServicioNecesidad(context);
+            servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
 
         }
 
@@ -64,7 +64,7 @@ namespace WebCovid19.Controllers
                     vmnecesidad.Foto = pathRelativoImagen;
                 }
                 int idUsuario = int.Parse(Session["UserId"].ToString());
-                Necesidades necesidad = servicioNecesidad.buildNecesidad(vmnecesidad, idUsuario); 
+                Necesidades necesidad = servicioNecesidad.buildNecesidad(vmnecesidad, idUsuario);
                 Session["idNecesidad"] = necesidad.IdNecesidad;
                 if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")
                 {
@@ -75,7 +75,7 @@ namespace WebCovid19.Controllers
                     return View("Monetaria");
                 }
             }
-            
+
         }
 
         [HttpGet]
@@ -83,7 +83,7 @@ namespace WebCovid19.Controllers
         {
             NecesidadesDonacionesInsumosMetadata insumos = new NecesidadesDonacionesInsumosMetadata();
             return View(insumos);
-        }            
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -94,8 +94,8 @@ namespace WebCovid19.Controllers
                 return View();
             }
             int idN = int.Parse(Session["idNecesidad"].ToString());
-           insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idN);
-           insumos.IdNecesidad = idN;
+            insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idN);
+            insumos.IdNecesidad = idN;
             servicioNecesidad.AgregarInsumos(insumos);
             return View("Referencias");
         }
@@ -147,21 +147,21 @@ namespace WebCovid19.Controllers
 
         [LoginFilter]//toDo: Probar que funcione bien del todo este action.
         public ActionResult DetalleNecesidad(int idNecesidad)
-        { 
+        {
             int idSession = int.Parse(Session["UserId"].ToString());
             /***************************** Like or Dislike *************************/
             /*Si recibe un Like or dislike desde la vista DetalleNecesidad viene para acá*/
-           if(Request.Form["Like"]!=null | (Request.Form["Dislike"] != null))
+            if (Request.Form["Like"] != null | (Request.Form["Dislike"] != null))
             {
                 string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
                 LikeOrDislike likeOrDislike = new LikeOrDislike();
                 bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad, servicioNecesidadValoraciones);
             }
-            
+
             /**********************************************************************/
-           
+
             Necesidades necesidadObtenida = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
-           
+
             return View(necesidadObtenida);
         }
 

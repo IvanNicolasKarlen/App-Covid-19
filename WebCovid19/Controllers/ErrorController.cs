@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace WebCovid19.Controllers
 {
@@ -11,7 +7,7 @@ namespace WebCovid19.Controllers
         // GET: Error
         public ActionResult Index(int error = 0)
         {
-            
+
             switch (error)
             {
                 case 505:
