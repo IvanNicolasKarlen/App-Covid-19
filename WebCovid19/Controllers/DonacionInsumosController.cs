@@ -13,10 +13,12 @@ namespace WebCovid19.Controllers
     {
 
         ServicioDonacionInsumo servicioDonacionInsumo;
+        ServicioNecesidadesDonacionesInsumos servicioNecesidadesDonacionesInsumos;
         public DonacionInsumosController()
         {
             TpDBContext context = new TpDBContext();
             servicioDonacionInsumo = new ServicioDonacionInsumo(context);
+            servicioNecesidadesDonacionesInsumos = new ServicioNecesidadesDonacionesInsumos(context);
         }
 
         [LoginFilter]
@@ -24,7 +26,7 @@ namespace WebCovid19.Controllers
         {
             NecesidadesDonacionesInsumos NdonacionesI = new NecesidadesDonacionesInsumos();
             NdonacionesI.IdNecesidad = idNecesidad;
-            List<NecesidadesDonacionesInsumos> listaNombreInsumos = servicioDonacionInsumo.ListaNombre(NdonacionesI);
+            List<NecesidadesDonacionesInsumos> listaNombreInsumos = servicioNecesidadesDonacionesInsumos.ListaNombre(NdonacionesI);
             return View("DonacionInsumos", listaNombreInsumos);
         }
 
@@ -54,7 +56,7 @@ namespace WebCovid19.Controllers
                 {
                     int idUsuario = int.Parse(Session["UserId"].ToString());
                     donacionI = servicioDonacionInsumo.GuardarCantidadDonada(donacionInsumos, idUsuario);
-                    nec = servicioDonacionInsumo.ObtenerNecesidadDonacionInsumosPorId(donacionInsumos.IdNecesidadDonacionInsumo);
+                    nec = servicioNecesidadesDonacionesInsumos.ObtenerNecesidadDonacionInsumosPorId(donacionInsumos.IdNecesidadDonacionInsumo);
                     TempData["Mensaje"] = "Gracias por su donación"; //Creo el TempData son el mensaje. Este TempData lo uso en la vista.
                 }
             }

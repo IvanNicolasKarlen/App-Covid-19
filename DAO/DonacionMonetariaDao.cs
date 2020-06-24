@@ -54,12 +54,7 @@ namespace DAO
             return listarCantidadNecesariaADonar;
         }
 
-        public NecesidadesDonacionesMonetarias ObtenerPorIdNecesidadDonacionMonetaria(int IdNecesidadDonacionMonetaria)
-        {
-            NecesidadesDonacionesMonetarias traerDineroPorId =
-            context.NecesidadesDonacionesMonetarias.Find(IdNecesidadDonacionMonetaria);
-            return traerDineroPorId;
-        }
+
 
         public DonacionesMonetarias ObtenerDonacionMonetariaPorId(int IdDonacionMonetaria)
         {

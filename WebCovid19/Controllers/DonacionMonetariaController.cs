@@ -9,17 +9,18 @@ using WebCovid19.Utilities;
 
 namespace WebCovid19.Controllers
 {
-    
+
     public class DonacionMonetariaController : Controller
     {
-        ServicioDonacion servicioDonacion;
+        ServicioDonacionMonetaria servicioDonacion;
         ServicioNecesidad servicioNecesidad;
-
+        ServicioNecesidadesDonacionesMonetarias servicioNecesidadesDonacionesMonetarias;
         public DonacionMonetariaController()
         {
             TpDBContext context = new TpDBContext();
-            servicioDonacion = new ServicioDonacion(context);
+            servicioDonacion = new ServicioDonacionMonetaria(context);
             servicioNecesidad = new ServicioNecesidad(context);
+            servicioNecesidadesDonacionesMonetarias = new ServicioNecesidadesDonacionesMonetarias(context);
         }
 
         [LoginFilter]
@@ -30,9 +31,9 @@ namespace WebCovid19.Controllers
             return View(necesidades);
         }
 
-        [LoginFilter]
         //Pasa el idNecesidadDonacionMonetaria por el boton donar. 
         //DonaMonetaria ingreso el monto a donar
+        [LoginFilter]
         [HttpGet]
         public ActionResult DonaMonetaria(int idNecesidadDonacionMonetaria)
         {
@@ -58,7 +59,6 @@ namespace WebCovid19.Controllers
                 }
                 else
                 {
-
                     int idUsuario = int.Parse(Session["UserId"].ToString());
                     donacionM = servicioDonacion.GuardarDonacionM(DMonetarias, idUsuario);
                 }
@@ -111,42 +111,7 @@ namespace WebCovid19.Controllers
             {
                 ModelState.AddModelError("Error: ", ex.Message);
             }
-
             return RedirectToAction("DetalleDeDonacion", new { comprobante.NecesidadesDonacionesMonetarias.IdNecesidad });
-        }
-
-        [LoginFilter]
-        [HttpGet]
-        public ActionResult GraciasPorDonarMonetariamente()
-        {
-            return View();
-        }
-
-        [LoginFilter]
-        [HttpGet]
-        public ActionResult VerTotalDeDonacion()
-        {
-            return View();
-        }
-
-        [LoginFilter]
-        [HttpPost]
-        public ActionResult VerTotalDeDonacion(int idNecesidadDonacionMonetaria)
-        {
-            /*SUMATORIA TOTAL RECAUDADO*/
-            decimal Sumatoria = servicioDonacion.TotalRecaudado(idNecesidadDonacionMonetaria);
-            ViewBag.Sumatoria = Sumatoria;
-            decimal Suma = Sumatoria;
-
-            /*PEDIDO DE DONACION*/
-            NecesidadesDonacionesMonetarias CantidadSolicitada = servicioDonacion.CantidadSolicitada(idNecesidadDonacionMonetaria);
-            ViewBag.CantidadSolicitada = CantidadSolicitada.Dinero;
-            decimal CantSolicitada = CantidadSolicitada.Dinero;
-
-            /*TOTAL RESTANTE*/
-            decimal calculo = servicioDonacion.CalculoRestaDonacion(Suma, CantSolicitada);
-            ViewBag.Restante = calculo;
-            return View();
         }
     }
 }

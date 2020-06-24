@@ -13,9 +13,7 @@ namespace Servicios
         public ServicioDonacionInsumo(TpDBContext context)
         {
             DonacionInsumosDao = new DonacionInsumosDao(context);
-
         }
-
 
         public bool CantidadMinimaDeInsumo(DonacionesInsumos DonacionesInsumos)
         {
@@ -27,33 +25,12 @@ namespace Servicios
             return true;
         }
 
-        public List<NecesidadesDonacionesInsumos> ListaNombre(NecesidadesDonacionesInsumos idNecesidad)
-        {
-            return DonacionInsumosDao.BuscarPorId(idNecesidad.IdNecesidad);
-        }
-
-        public NecesidadesDonacionesInsumos BuscarNecesidadesDonacionIPorId(int idNecesidadDonacionInsumo)
-        {
-            return DonacionInsumosDao.BuscarNecesidadesDonacionIPorId(idNecesidadDonacionInsumo);
-        }
-
         public DonacionesInsumos GuardarCantidadDonada(DonacionesInsumos donacionesI, int idUsuario)
         {
             donacionesI.IdUsuario = idUsuario;
             donacionesI.FechaCreacion = DateTime.Now;
 
             return DonacionInsumosDao.GuardarInsumo(donacionesI);
-        }
-
-        public NecesidadesDonacionesInsumos ObtenerNecesidadDonacionInsumosPorId(int idNecesidadDonacionInsumo)
-        {
-            return DonacionInsumosDao.ObtenerNecesidadDonacionInsumosPorId(idNecesidadDonacionInsumo);
-
-        }
-
-        public NecesidadesDonacionesInsumos ObtenerCantidadPorId(VMNecesidadesDonacionesInsumos idNecesidadDonacionInsumo)
-        {
-            return DonacionInsumosDao.ObtenerNecesidadDonacionInsumosPorId(idNecesidadDonacionInsumo.IdNecesidadDonacionInsumo);
         }
     }
 }
