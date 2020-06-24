@@ -41,8 +41,8 @@
                 <thead>
                     <tr>
                         <th scope="col">Producto solicitado</th>
-                        <th scope="col">Cantidad solicitada</th>
-                        <th scope="col">Cantidad restante</th>
+                        <th scope="col">Monto solicitado</th>
+                        <th scope="col">Monto restante</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,13 +64,13 @@
                                 @if (resultado <= 0)
                                 {
                                 <th scope="col" class="text-danger"><del>@necDonacionInsumos.Nombre</del></th>
-                                <th scope="col" class="text-danger"><del>$@necDonacionInsumos.Cantidad</del></th>
+                                <th scope="col" class="text-danger"><del>@necDonacionInsumos.Cantidad</del></th>
                                 resultado = 0;
                                 }
                                 else
                                 {
                                     <th scope="col"> @necDonacionInsumos.Nombre </th>
-                                    <th scope="col"> $@necDonacionInsumos.Cantidad </th>
+                                    <th scope="col"> @necDonacionInsumos.Cantidad </th>
                                 }
                         <th>
                             $@resultado

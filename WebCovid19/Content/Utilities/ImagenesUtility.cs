@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Entidades.Views;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Configuration;
+using System.Web;
 
 
 namespace WebCovid19.Content.Utilities
@@ -65,7 +61,7 @@ namespace WebCovid19.Content.Utilities
 
             //{Nombre,8 carac}-{Random,5 carac}
             return string.Format("{0}-{1}", StringUtility.Truncar(nombreSignificativo, 8), StringUtility.Truncar(randomString, 5));
-           
+
         }
     }
 }

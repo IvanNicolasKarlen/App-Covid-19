@@ -1925,7 +1925,6 @@
     <Content Include="Views\Necesidades\MisNecesidades.cshtml" />
     <Content Include="Views\Usuario\acerca-de.cshtml" />
     <Content Include="Views\Shared\PublicacionDeLaNecesidad.cshtml" />
-    <Content Include="Views\DonacionMonetaria\VerTotalDeDonacion.cshtml" />
     <Content Include="Views\Necesidades\DetalleNecesidad.cshtml" />
     <Content Include="Views\Shared\PublicacionInsumos.cshtml" />
     <Content Include="Views\Shared\NecesidadDonacionMonetaria.cshtml" />

@@ -8,35 +8,14 @@ using System.Linq;
 
 namespace Servicios
 {
-    public class ServicioDonacion
+    public class ServicioDonacionMonetaria
     {
 
         DonacionMonetariaDao DonacionMonetariaDao;
 
-        public ServicioDonacion(TpDBContext context)
+        public ServicioDonacionMonetaria(TpDBContext context)
         {
             DonacionMonetariaDao = new DonacionMonetariaDao(context);
-        }
-
-
-        public decimal TotalRecaudado(int IdNeceDonacionMonetaria)
-        {
-            List<DonacionesMonetarias> lista = DonacionMonetariaDao.ObtenerPorId(IdNeceDonacionMonetaria);
-
-            decimal sumatoria = lista.Sum(item => item.Dinero);
-            return sumatoria;
-        }
-
-
-        public NecesidadesDonacionesMonetarias CantidadSolicitada(int IdNecesidadDonacionMonetaria)
-        {
-            return DonacionMonetariaDao.ObtenerPorIdNecesidadDonacionMonetaria(IdNecesidadDonacionMonetaria);
-        }
-
-        public decimal CalculoRestaDonacion(decimal Suma, decimal CantSolicitada)
-        {
-            decimal calculo = CantSolicitada - Suma;
-            return calculo;
         }
 
         public DonacionesMonetarias GuardarDonacionM(VMDonacionMonetaria donacionesMonetarias, int idUsuario)
@@ -59,9 +38,6 @@ namespace Servicios
             return DonacionMonetariaDao.ActualizarComprobante(donaM);
         }
 
-        public NecesidadesDonacionesMonetarias ObtenerPorId(int idNecesidadDonacionMonetaria)
-        {
-            return DonacionMonetariaDao.ObtenerPorIdNecesidadDonacionMonetaria(idNecesidadDonacionMonetaria);
-        }
+   
     }
 }
