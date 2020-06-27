@@ -1,4 +1,4 @@
-﻿@model Entidades.Necesidades
+@model Entidades.Necesidades
 
 @{
     ViewBag.Title = "NecesidadDonacionInsumos";
@@ -123,60 +123,81 @@
                         <div class="col-md-8 text-center m-auto">
                             <i>@Model.Descripcion</i>
                         </div>
-                        @foreach (var necDonacionInsumos in @Model.NecesidadesDonacionesMonetarias)
+                        @foreach (var necDonacionMonetaria in @Model.NecesidadesDonacionesMonetarias)
                         {
+                      
                             <div class="col-md-8 text-center m-auto">
-                                <p> CBU : @necDonacionInsumos.CBU </p>
+                                <p class="form-text mt-4"><b> CBU : @necDonacionMonetaria.CBU </b> </p>
+                                <p> Total Solicitado : $ @necDonacionMonetaria.Dinero</p>
+                            </div>
+
+                            <div class="col-md-8 text-center m-auto">
+                                <p>
+                                    Total Recaudado: $
+                                    @{
+                                        decimal totalDonado = 0;
+                                    }
+
+                                    @foreach (var donMonetarias in necDonacionMonetaria.DonacionesMonetarias)
+                                    {
+                                        totalDonado += donMonetarias.Dinero;
+                                    }
+
+                                    @totalDonado
+
+                                </p>
+
                             </div>
                         }
 
 
-                        <div class="col-md-12 mb-3 mt-3 text-center">
+                        @*<div class="col-md-12 mb-3 mt-3 text-center">
 
-                            <img src="img/dinero.png" id="icons" alt="">
+            <img src="img/dinero.png" id="icons" alt="">
 
-                            @{
-                                decimal totalSolicitado = 0;
-                            }
+            @{
+                decimal totalSolicitado = 0;
+            }
 
-                            @foreach (var necDonMonetaria in Model.NecesidadesDonacionesMonetarias)
-                            {
-                                totalSolicitado += @necDonMonetaria.Dinero;
-                            }
+            @foreach (var necDonMonetaria in Model.NecesidadesDonacionesMonetarias)
+            {
+                totalSolicitado += @necDonMonetaria.Dinero;
+            }
 
-                            <p>
-                                <b>  Total solicitado:</b> $ @totalSolicitado
-                            </p>
+            <p>
+                <b>  Total solicitado:</b> $ @totalSolicitado
+            </p>
 
-                            @foreach (var necDonMonetaria in Model.NecesidadesDonacionesMonetarias)
-                            {
-                                if (necDonMonetaria.DonacionesMonetarias.Count != 0)
-                                {
+            @foreach (var necDonMonetaria in Model.NecesidadesDonacionesMonetarias)
+            {
+                if (necDonMonetaria.DonacionesMonetarias.Count != 0)
+                {
 
-                                    <p>
-                                        <b>Total Recaudado:</b> $
-                                        @{
-                                            decimal totalDonado = 0;
-                                        }
+                    <p>
+                        <b>Total Recaudado:</b> $
+                        @{
+                            decimal totalDonado = 0;
+                        }
 
-                                        @foreach (var donMonetarias in necDonMonetaria.DonacionesMonetarias)
-                                        {
-                                            totalDonado += donMonetarias.Dinero;
-                                        }
+                        @foreach (var donMonetarias in necDonMonetaria.DonacionesMonetarias)
+                        {
+                            totalDonado += donMonetarias.Dinero;
+                        }
 
-                                        @totalDonado
+                        @totalDonado
 
-                                    </p>
-                                }
-                            }
+                    </p>
+                }
+            }
 
 
-                        </div>
+        </div>*@
                     </div>
                     @if (Model.IdUsuarioCreador == idSession)
                     {
                         <div class="col-md-12 btn-group mt-4 mb-3">
                             @Html.ActionLink("Regresar a Home", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
+
                             @if (Model.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
                             {
                                 <button type="button" class="btn btn-info ml-2">Editar</button>
@@ -187,11 +208,13 @@
                     {
                         <div class="col-md-12 btn-group mt-4 mb-3">
                             @Html.ActionLink("En otro momento", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
-                            <a href="~/DonacionMonetaria/DonaMonetaria?idNecesidad=@Model.IdNecesidad" class="btn btn-info ml-2">Donar Dinero</a>
+                            <a href="~/DonacionMonetaria/DetalleDeDonacion?idNecesidad=@Model.IdNecesidad" class="btn btn-info ml-2">Donar Dinero</a>
                         </div>
                     }
                 </div>
-            @if (Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada && Model.IdUsuarioCreador == idSession)
+
+
+                @if (Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada && Model.IdUsuarioCreador == idSession)
                 {
 
                     <div class="p-3 mb-2 bg-danger text-white text-center">Esta Necesidad ha sido bloqueada por nuestros administradores por incumplimiento de nuestras reglas.</div>
@@ -202,6 +225,8 @@
                     <div class="p-3 mb-2 bg-warning text-white text-center">Esta Necesidad está en revision de ser pública.</div>
 
                 }
+
+
             </div>
 
         </div>

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Entidades;
-using DAO.Abstract;
-using System.Data.Entity.Validation;
-
-using System.Net.Http;
-using System.Diagnostics.Eventing.Reader;
-
+﻿using DAO.Abstract;
 using DAO.Context;
+using Entidades;
 using Entidades.Enum;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Linq;
 
 namespace DAO
 {
@@ -200,7 +196,7 @@ namespace DAO
                 join DonMonetarias in context.DonacionesMonetarias
                 on necDonacionesMonetarias.IdNecesidadDonacionMonetaria equals DonMonetarias.IdNecesidadDonacionMonetaria
 
-                
+
                 where DonMonetarias.IdUsuario == idUserLogueado
                 orderby DonMonetarias.FechaCreacion descending
                 select nec

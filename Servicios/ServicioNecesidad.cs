@@ -1,14 +1,13 @@
-﻿using Entidades.Views;
+﻿using DAO;
+using DAO.Context;
+using Entidades;
+using Entidades.Enum;
+using Entidades.Metadata;
+using Entidades.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using DAO;
-using Entidades;
-using Entidades.Enum;
-using Entidades.Metadata;
-using DAO.Context;
-using System.Runtime.InteropServices;
 
 namespace Servicios
 {
@@ -161,30 +160,33 @@ namespace Servicios
             return necesidades;
         }
 
+
         public void ModificarNecesidad(Necesidades n)
         {
             necesidadesDAO.Actualizar(n);
         }
 
+
         public List<Necesidades> obtener5NecesidadesMasValoradas()
+        {
+            List<Necesidades> listadoNecesidades = necesidadesDAO.ListarTodasLasNecesidadesActivas();
+            List<Necesidades> necesidadesMasValoradas = new List<Necesidades>();
+            int cantidad = (listadoNecesidades.Count >= 5) ? 5 : listadoNecesidades.Count;
+
+            foreach (var item in listadoNecesidades.OrderByDescending(n => n.Valoracion).ToList())
+
             {
-                List<Necesidades> listadoNecesidades = necesidadesDAO.ListarTodasLasNecesidadesActivas();
-                List<Necesidades> necesidadesMasValoradas = new List<Necesidades>();
-                int cantidad = (listadoNecesidades.Count >= 5) ? 5 : listadoNecesidades.Count;
+                necesidadesMasValoradas.Add(item);
 
-                foreach (var item in listadoNecesidades.OrderByDescending(n => n.Valoracion).ToList())
+                if (necesidadesMasValoradas.Count == cantidad)
                 {
-                    necesidadesMasValoradas.Add(item);
-
-                    if (necesidadesMasValoradas.Count == cantidad)
-                    {
-                        break;
-                    }
+                    break;
                 }
-
-                return necesidadesMasValoradas;
-
             }
+
+            return necesidadesMasValoradas;
+
+        }
         public void ActivarNecesidad(int idNecesidad)
         {
             necesidadesDAO.ActivarNecesidad(idNecesidad);
@@ -233,7 +235,7 @@ namespace Servicios
             return necesidadesDAO.BuscarMonetariasPorIdNecesidad(id);
         }
         #endregion
-        public void AgregarReferencias (VMReferencias vmref)
+        public void AgregarReferencias(VMReferencias vmref)
         {
             NecesidadesReferencias nr = new NecesidadesReferencias()
             {
@@ -282,7 +284,7 @@ namespace Servicios
                 }
 
             }
-                    return necesidades;
+            return necesidades;
         }
 
     }

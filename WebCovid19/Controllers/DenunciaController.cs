@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Servicios;
+﻿using DAO.Context;
 using Entidades;
+using Servicios;
+using System;
+using System.Web.Mvc;
 using WebCovid19.Filters;
-using DAO.Context;
 
 namespace WebCovid19.Controllers
 {

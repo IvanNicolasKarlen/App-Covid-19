@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace WebApi.Models
 {
@@ -22,7 +21,7 @@ namespace WebApi.Models
 
         public List<NecesidadesDonacionesInsumosDTO> NecesidadesDonacionesInsumos { get; set; }
         public virtual List<NecesidadesDonacionesMonetariasDTO> NecesidadesDonacionesMonetarias { get; set; }
-       
+
         public NecesidadesDTO()
         {
         }
@@ -43,7 +42,7 @@ namespace WebApi.Models
             {
                 this.NecesidadesDonacionesInsumos = NecesidadesDonacionesInsumosDTO.MapearListaEF(necesidadesEntidad.NecesidadesDonacionesInsumos.ToList(), true);
             }
-        
+
             if (necesidadesEntidad.NecesidadesDonacionesMonetarias != null)
             {
                 this.NecesidadesDonacionesMonetarias = NecesidadesDonacionesMonetariasDTO.MapearListaEF(necesidadesEntidad.NecesidadesDonacionesMonetarias.ToList(), true);

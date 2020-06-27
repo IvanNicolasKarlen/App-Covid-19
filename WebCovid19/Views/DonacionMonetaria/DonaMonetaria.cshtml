@@ -1,7 +1,7 @@
 ﻿@model Entidades.Views.VMDonacionMonetaria
 
 @{
-    ViewBag.Title = "Donacion monetaria";
+    ViewBag.Title = "Donación monetaria";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
 }
 <br>
@@ -16,7 +16,7 @@
 
         @using (Html.BeginForm("DonaMonetaria", "DonacionMonetaria", FormMethod.Post, new { @class = "login100-form validate-form p-b-33 p-t-5" }))
         {
-            <input type="hidden" name="IdNecesidad" value="@Model.IdNecesidad" />
+            <input type="hidden" name="idNecesidadDonacionMonetaria" value="@Model.IdNecesidadDonacionMonetaria" />
 
 
             @Html.AntiForgeryToken()

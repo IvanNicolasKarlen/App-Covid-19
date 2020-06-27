@@ -5,11 +5,8 @@ using Entidades.Enum;
 using Entidades.Views;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Net.Mime;
-using System.Text;
 using System.Web;
 
 namespace Servicios
@@ -17,23 +14,23 @@ namespace Servicios
     public class ServicioUsuario
     {
         UsuarioDao usuarioDao;
-     
+
         public ServicioUsuario(TpDBContext context)
         {
             usuarioDao = new UsuarioDao(context);
         }
 
-            public Usuarios obtenerUsuarioPorID(int idUsuario)
-            {
+        public Usuarios obtenerUsuarioPorID(int idUsuario)
+        {
             Usuarios usuarioObtenido = usuarioDao.ObtenerPorID(idUsuario);
             return usuarioObtenido;
-            }
+        }
 
-            public Usuarios obtenerUsuarioPorEmail(string email)
-            {
+        public Usuarios obtenerUsuarioPorEmail(string email)
+        {
             Usuarios usuarioObtenido = usuarioDao.obtenerUsuarioPorEmail(email);
             return usuarioObtenido;
-            }
+        }
 
         public Usuarios asignoDatosAUsuarioDelRegistro(VMRegistro registro)
         {
@@ -75,12 +72,12 @@ namespace Servicios
             {
                 usuario.Nombre = perfil.Nombre;
             }
-            if(perfil.Apellido!= null)
+            if (perfil.Apellido != null)
             {
                 usuario.Apellido = perfil.Apellido;
             }
             usuario.Foto = perfil.Foto;
-            if(perfil.Nombre != null & perfil.Apellido!= null)
+            if (perfil.Nombre != null & perfil.Apellido != null)
             {
                 usuario.UserName = perfil.Nombre + "." + perfil.Apellido;
             }
@@ -205,9 +202,9 @@ namespace Servicios
         public Usuarios ValidarCodigoDeActivacion(Usuarios usuario)
         {
             bool existeCodigo = true;
-            
+
             Usuarios usuarioObtenido = new Usuarios();
-          
+
             do
             {
                 usuario.Token = CodigoDeActivacion();
@@ -256,7 +253,7 @@ namespace Servicios
             {
                 return -1;
             }
-            
+
         }
 
         public string validoQueExistaEsteUsuario(Usuarios usuario)
@@ -357,12 +354,12 @@ namespace Servicios
         {
             //Obtengo datos del usuario
             Usuarios usuarioRegistrado = obtenerUsuarioPorEmail(usuarioObtenido.Email);
-            
-            if(usuarioRegistrado.TipoUsuario == 1)
+
+            if (usuarioRegistrado.TipoUsuario == 1)
             {
                 return TipoUsuario.Usuario;
             }
-            else 
+            else
             {
                 return TipoUsuario.Administrador;
             }
@@ -391,8 +388,8 @@ namespace Servicios
 
         public bool validarSiExisteFaltanteDeDatos(VMPerfil vMPerfil)
         {
-           if(vMPerfil.Username == null | vMPerfil.Nombre == null | vMPerfil.Foto == null |
-               vMPerfil.Email == null | vMPerfil.Apellido == null)
+            if (vMPerfil.Username == null | vMPerfil.Nombre == null | vMPerfil.Foto == null |
+                vMPerfil.Email == null | vMPerfil.Apellido == null)
             {
                 return false;
             }

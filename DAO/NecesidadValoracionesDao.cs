@@ -8,7 +8,7 @@ namespace DAO
 {
     public class NecesidadValoracionesDao : Crud<NecesidadesValoraciones>
     {
-        public NecesidadValoracionesDao(TpDBContext context) : base (context)
+        public NecesidadValoracionesDao(TpDBContext context) : base(context)
         {
 
         }
@@ -18,7 +18,7 @@ namespace DAO
             return valoracionObtenida;
         }
 
-       
+
         public List<NecesidadesValoraciones> obtenerValoracionesDelUsuario(int idSession)
         {
             List<NecesidadesValoraciones> valoracionesObtenidas = context.NecesidadesValoraciones.Where(o => o.IdUsuario == idSession).ToList();

@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DataAnnotationsExtensions, Version=5.0.1.27, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DataAnnotationsExtensions.5.0.1.27\lib\NETFramework40\DataAnnotationsExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -68,6 +71,8 @@
     <Compile Include="Enum\TipoEstadoNecesidad.cs" />
     <Compile Include="Enum\TipoUsuario.cs" />
     <Compile Include="Metadata\Denuncias.cs" />
+    <Compile Include="Metadata\DonacionesInsumos.cs" />
+    <Compile Include="Metadata\DonacionesInsumosMetadata.cs" />
     <Compile Include="Metadata\NecesidadesDonacionesMonetariasMetadata.cs" />
     <Compile Include="Metadata\NecesidadesDonacionesInsumosMetadata.cs" />
     <Compile Include="Metadata\NecesidadesDonacionesMonetarias.cs" />

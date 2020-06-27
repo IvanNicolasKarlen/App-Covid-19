@@ -1,12 +1,11 @@
-﻿using Servicios;
+﻿using DAO.Context;
+using Entidades;
+using Entidades.Views;
+using Servicios;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Entidades;
-using DAO.Context;
-using Entidades.Views;
+using WebCovid19.Filters;
 
 namespace WebCovid19.Controllers
 {
@@ -14,29 +13,35 @@ namespace WebCovid19.Controllers
     {
 
         ServicioDonacionInsumo servicioDonacionInsumo;
+        ServicioNecesidadesDonacionesInsumos servicioNecesidadesDonacionesInsumos;
         public DonacionInsumosController()
         {
             TpDBContext context = new TpDBContext();
             servicioDonacionInsumo = new ServicioDonacionInsumo(context);
+            servicioNecesidadesDonacionesInsumos = new ServicioNecesidadesDonacionesInsumos(context);
         }
 
+        [LoginFilter]
         public ActionResult DonacionInsumos(int idNecesidad)
         {
             NecesidadesDonacionesInsumos NdonacionesI = new NecesidadesDonacionesInsumos();
             NdonacionesI.IdNecesidad = idNecesidad;
-            List<NecesidadesDonacionesInsumos> listaNombreInsumos = servicioDonacionInsumo.ListaNombre(NdonacionesI);
+            List<NecesidadesDonacionesInsumos> listaNombreInsumos = servicioNecesidadesDonacionesInsumos.ListaNombre(NdonacionesI);
             return View("DonacionInsumos", listaNombreInsumos);
         }
 
+        [LoginFilter]
         [HttpGet]
         public ActionResult Donar(int idNecesidadDonacionInsumo)
         {
-            VMNecesidadesDonacionesInsumos vmNeDoIn = new VMNecesidadesDonacionesInsumos();
-            vmNeDoIn.IdNecesidadDonacionInsumo = idNecesidadDonacionInsumo;
-            return View(vmNeDoIn);
+            DonacionesInsumos donacionesInsumos = new DonacionesInsumos();
+            donacionesInsumos.IdNecesidadDonacionInsumo = idNecesidadDonacionInsumo;
+            return View(donacionesInsumos);
         }
 
-        public ActionResult Donar(VMNecesidadesDonacionesInsumos ndi)
+        [LoginFilter]
+        [HttpPost]
+        public ActionResult Donar(DonacionesInsumos donacionInsumos)
         {
             DonacionesInsumos donacionI = new DonacionesInsumos();
             NecesidadesDonacionesInsumos nec = new NecesidadesDonacionesInsumos();
@@ -50,12 +55,9 @@ namespace WebCovid19.Controllers
                 else
                 {
                     int idUsuario = int.Parse(Session["UserId"].ToString());
-                    donacionI = servicioDonacionInsumo.GuardarCantidadDonada(ndi, idUsuario);
-
-                    //*****Obtener NecesidadDonacionInsumos por medio del id recibido por parametros*****
-                    nec = servicioDonacionInsumo.ObtenerNecesidadDonacionInsumosPorId(ndi.IdNecesidadDonacionInsumo);
+                    donacionI = servicioDonacionInsumo.GuardarCantidadDonada(donacionInsumos, idUsuario);
+                    nec = servicioNecesidadesDonacionesInsumos.ObtenerNecesidadDonacionInsumosPorId(donacionInsumos.IdNecesidadDonacionInsumo);
                     TempData["Mensaje"] = "Gracias por su donación"; //Creo el TempData son el mensaje. Este TempData lo uso en la vista.
-
                 }
             }
             catch (Exception ex)
@@ -64,7 +66,6 @@ namespace WebCovid19.Controllers
             }
             return RedirectToAction("DonacionInsumos", new { nec.IdNecesidad }); /*Aca le paso nec.IdNecesidad porque DonacionInsumos espera un Id. Si no se 
                                                                                                    lo paso, me va a tirar error 404*/
-
         }
     }
 }

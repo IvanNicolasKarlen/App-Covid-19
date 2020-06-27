@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAO;
+﻿using DAO;
 using DAO.Context;
 using Entidades;
 using Entidades.Views;
+using System;
+using System.Collections.Generic;
 
 namespace Servicios
 {
@@ -17,9 +13,7 @@ namespace Servicios
         public ServicioDonacionInsumo(TpDBContext context)
         {
             DonacionInsumosDao = new DonacionInsumosDao(context);
-
         }
-
 
         public bool CantidadMinimaDeInsumo(DonacionesInsumos DonacionesInsumos)
         {
@@ -31,38 +25,12 @@ namespace Servicios
             return true;
         }
 
-        public List<NecesidadesDonacionesInsumos> ListaNombre(NecesidadesDonacionesInsumos idNecesidad)
+        public DonacionesInsumos GuardarCantidadDonada(DonacionesInsumos donacionesI, int idUsuario)
         {
-            return DonacionInsumosDao.BuscarPorId(idNecesidad.IdNecesidad);
-        }
+            donacionesI.IdUsuario = idUsuario;
+            donacionesI.FechaCreacion = DateTime.Now;
 
-        public NecesidadesDonacionesInsumos BuscarNecesidadesDonacionIPorId(int idNecesidadDonacionInsumo)
-        {
-            return DonacionInsumosDao.BuscarNecesidadesDonacionIPorId(idNecesidadDonacionInsumo);
-        }
-
-        public DonacionesInsumos GuardarCantidadDonada(VMNecesidadesDonacionesInsumos vmNDI, int idUsuario)
-        {
-            DonacionesInsumos donacionI = new DonacionesInsumos()
-            {
-                Cantidad = vmNDI.Cantidad,
-                IdUsuario = idUsuario,
-                IdNecesidadDonacionInsumo = vmNDI.IdNecesidadDonacionInsumo,
-                FechaCreacion = DateTime.Now
-            };
-            return DonacionInsumosDao.GuardarInsumo(donacionI);
-        }
-
-        public NecesidadesDonacionesInsumos ObtenerNecesidadDonacionInsumosPorId(int idNecesidadDonacionInsumo)
-        {
-            return DonacionInsumosDao.ObtenerNecesidadDonacionInsumosPorId(idNecesidadDonacionInsumo);
-
-        }
-
-        public NecesidadesDonacionesInsumos ObtenerCantidadPorId(VMNecesidadesDonacionesInsumos idNecesidadDonacionInsumo)
-        {
-            return DonacionInsumosDao.ObtenerNecesidadDonacionInsumosPorId(idNecesidadDonacionInsumo.IdNecesidadDonacionInsumo);
-
+            return DonacionInsumosDao.GuardarInsumo(donacionesI);
         }
     }
 }

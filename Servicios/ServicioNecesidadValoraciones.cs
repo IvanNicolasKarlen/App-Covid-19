@@ -1,11 +1,7 @@
 ﻿using DAO;
 using DAO.Context;
 using Entidades;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Servicios
 {
@@ -71,7 +67,7 @@ namespace Servicios
                     }
 
                 }
-                
+
                 if (botonRecibido == "Dislike")
                 {
 
@@ -82,7 +78,7 @@ namespace Servicios
                             necesidadRegistrada.Valoracion = "Undefined";
                             valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
 
-                        
+
                             necesidadObtenida.NecesidadesValoraciones.Add(valoracionObtenidaBD);
                             Necesidades necesidadNueva = servicioNecesidad.calcularValoracion(necesidadObtenida);
 
@@ -96,7 +92,7 @@ namespace Servicios
                             necesidadRegistrada.Valoracion = "Dislike";
                             valoracionObtenidaBD = necesidadValoracionesDao.Actualizar(necesidadRegistrada);
 
-                   
+
                             necesidadObtenida.NecesidadesValoraciones.Add(valoracionObtenidaBD);
                             Necesidades necesidadNueva = servicioNecesidad.calcularValoracion(necesidadObtenida);
 
@@ -128,7 +124,7 @@ namespace Servicios
                 Necesidades necesidadNueva = servicioNecesidad.calcularValoracion(necesidadObtenida);
             }
 
-            
+
             return true;
         }
 

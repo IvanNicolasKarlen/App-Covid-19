@@ -34,15 +34,15 @@
 
             if (Mensaje == "Gracias por su donación") //Si mensaje es igual al mismo texto que puse en el controller (TempData["Mensaje"] = "Gracias por su donación") pongo el siguiente texto
             {
-                 <center><h2 class="p-3 mb-2 bg-success"><i>¡Muchas gracias por su donación!</i></h2></center>   
+                <center><h2 class="p-3 mb-2 bg-success"><i>¡Muchas gracias por su donación!</i></h2></center>
             }<br><br>
-            
+
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Producto solicitado</th>
-                        <th scope="col">Cantidad solicitada</th>
-                        <th scope="col">Cantidad restante</th>
+                        <th scope="col">Monto solicitado</th>
+                        <th scope="col">Monto restante</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,11 +51,6 @@
 
                         totalRecaudado = 0;
                         <tr>
-                            <th scope="col">@necDonacionInsumos.Nombre</th>
-                            <th scope="col">@necDonacionInsumos.Cantidad</th> <!-- Cantidad solicitada-->
-
-                            <th scope="col">
-
                                 @foreach (var donInsumos in necDonacionInsumos.DonacionesInsumos)
                                 {
 
@@ -66,13 +61,25 @@
                                     resultado = necDonacionInsumos.Cantidad - totalRecaudado; // A la cantidad de insumos solicitado le resto el total recaudado.
                                 }
 
-                                @resultado
-                            </th>
-                            <th>
-                                <a href="~/DonacionInsumos/Donar?idNecesidadDonacionInsumo=@necDonacionInsumos.IdNecesidadDonacionInsumo" class="btn btn-info" id="boton">Donar</a>
-                            </th>
-                        </tr>
-                    }
+                                @if (resultado <= 0)
+                                {
+                                <th scope="col" class="text-danger"><del>@necDonacionInsumos.Nombre</del></th>
+                                <th scope="col" class="text-danger"><del>@necDonacionInsumos.Cantidad</del></th>
+                                resultado = 0;
+                                }
+                                else
+                                {
+                                    <th scope="col"> @necDonacionInsumos.Nombre </th>
+                                    <th scope="col"> @necDonacionInsumos.Cantidad </th>
+                                }
+                        <th>
+                            $@resultado
+                        </th>
+                                <th>
+                                    <a href="~/DonacionInsumos/Donar?idNecesidadDonacionInsumo=@necDonacionInsumos.IdNecesidadDonacionInsumo" class="btn btn-info" id="boton">Donar</a>
+                                </th>
+                            </tr>
+                        }
                 </tbody>
             </table>
         }
