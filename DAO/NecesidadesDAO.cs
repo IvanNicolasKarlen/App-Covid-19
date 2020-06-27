@@ -4,6 +4,7 @@ using Entidades;
 using Entidades.Enum;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 
@@ -168,6 +169,13 @@ namespace DAO
             return necesidadesBD;
         }
 
+        public void EditarNecesidad(Necesidades n)
+        {
+            if(context.Entry(n).State == EntityState.Modified){
+                context.SaveChanges();
+            }     
+        }
+
         public List<Necesidades> TraerNecesidadesConDonacionInsumosPorUserLogueado(int idUserLogueado)
         {
             List<Necesidades> listadoNecesidades = (from nec in context.Necesidades
@@ -241,13 +249,13 @@ namespace DAO
             return context.NecesidadesDonacionesMonetarias.Find(id);
         }
 
-        public NecesidadesDonacionesInsumos BuscarInsumosPorIdNecesidad(int id)
+        public List<NecesidadesDonacionesInsumos> BuscarInsumosPorIdNecesidad(int id)
         {
-            return (NecesidadesDonacionesInsumos)context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidad == id).FirstOrDefault();
+            return (List<NecesidadesDonacionesInsumos>)context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidad == id).ToList();
         }
-        public NecesidadesDonacionesMonetarias BuscarMonetariasPorIdNecesidad(int id)
+        public List<NecesidadesDonacionesMonetarias> BuscarMonetariasPorIdNecesidad(int id)
         {
-            return (NecesidadesDonacionesMonetarias)context.NecesidadesDonacionesMonetarias.Where(o => o.IdNecesidad == id).FirstOrDefault();
+            return (List<NecesidadesDonacionesMonetarias>)context.NecesidadesDonacionesMonetarias.Where(o => o.IdNecesidad == id).ToList();
         }
         #endregion
         #region Referencias

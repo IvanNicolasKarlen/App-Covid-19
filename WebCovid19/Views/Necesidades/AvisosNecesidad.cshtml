@@ -1,7 +1,17 @@
 ﻿@{
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
 }
-<div>
-    <h2 class="text-lg-center">@ViewBag.Mensaje</h2>
-</div>
+    <div class="text-sm-center">
+        <h3 class="text-danger">@ViewBag.Mensaje</h3>
+        <h3 class="text-success">@ViewBag.Creada</h3>
+        @if (ViewBag.Insumo!=null)
+        {
+            @Html.ActionLink("Agregar otro Insumo", "Insumos", "Necesidades")
+        }
+        @if (ViewBag.Monetaria!=null)
+        {
+            @Html.ActionLink("Agregar otra necesidad Monetaria", "Monetaria", "Necesidades")
+        }
+
+    </div>
 

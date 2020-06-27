@@ -120,18 +120,11 @@
                         if (necesidad.NecesidadesValoraciones.Count == bandera)
                         {
                             <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
-                    <p class="card-text text-secondary"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> @necesidad.FechaFin</p>
-                    <div class="text-center">
-                        @if (necesidad.IdUsuarioCreador == idSession && necesidad.FechaFin>DateTime.Now)
-                        {
-                        <a href="/Necesidades/Modificar/@necesidad.IdNecesidad">Modificar</a>
-
-                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
                         }
                     }
                     <label> No estoy de acuerdo </label>
 
-                    if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada )
+                    if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada)
                     {
                         <div class="float-right">
                             <label> <b class="text-black-50">Necesidad Finalizada</b> </label>
@@ -167,7 +160,7 @@
                 else if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Revision && necesidad.IdUsuarioCreador == idSession)
                 {
 
-                    <div class="p-3 mb-2 bg-warning text-white text-center">Esta Necesidad está en revision de ser pública.</div>
+                    <div class="p-3 mb-2 bg-warning text-white text-center">Esta Necesidad esta en revision de ser publica.</div>
 
                 }
 
@@ -178,9 +171,9 @@
             <div class="text-center">
                 @if (necesidad.IdUsuarioCreador == idSession)
                 {
-                   
-                        @Html.ActionLink("Editar", "", "", null, new { @class = "btn btn-primary" })
-                    
+
+                    @Html.ActionLink("Editar", "Modificar/" + @necesidad.IdNecesidad, "Necesidades", null, new { @class = "btn btn-info ml-2" })
+
 
                     <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
                 }

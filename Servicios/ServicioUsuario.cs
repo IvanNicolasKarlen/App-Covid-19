@@ -395,5 +395,11 @@ namespace Servicios
             }
             return true;
         }
+
+        public bool VerificarPerfilCompleto(int id)
+        {
+            Usuarios u = usuarioDao.ObtenerPorID(id);
+            return (u.Apellido == null || u.Nombre == null || u.FechaNacimiento == null || u.Foto == null);
+        }
     }
 }
