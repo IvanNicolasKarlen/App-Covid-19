@@ -219,6 +219,73 @@ namespace Servicios
             return necesidadesMasValoradas;
 
         }
+
+        public List<NecesidadesReferencias> ObtenerReferenciasPorIdNecesidad(int id)
+        {
+            return (List<NecesidadesReferencias>)necesidadesDAO.ObtenerReferenciasPorIdNecesidad(id);
+        }
+
+        public bool ModificarReferencia(NecesidadesReferencias r)
+        {
+            if(string.IsNullOrEmpty(r.Nombre) || string.IsNullOrEmpty(r.Telefono))
+            {
+                return false;
+            }
+            necesidadesDAO.ModificarReferencia(r);
+            return true;
+        }
+
+        public List<NecesidadesDonacionesInsumosMetadata> ObtenerInsumosMetadataPorIdNecesidad(int id)
+        {
+            List<NecesidadesDonacionesInsumos> listaInsumos = this.ObtenerInsumosPorIdNecesidad(id);
+            List<NecesidadesDonacionesInsumosMetadata> listaMeta = new List<NecesidadesDonacionesInsumosMetadata>();
+            foreach(var i in listaInsumos)
+            {
+                NecesidadesDonacionesInsumosMetadata meta = new NecesidadesDonacionesInsumosMetadata()
+                {
+                    Nombre = i.Nombre,
+                    Cantidad = i.Cantidad,
+                    IdNecesidadDonacionInsumo = i.IdNecesidadDonacionInsumo,
+                    IdNecesidad = i.IdNecesidad
+                };
+                listaMeta.Add(meta);
+            };
+            return listaMeta;
+        }
+
+        public void EditarInsumo(NecesidadesDonacionesInsumosMetadata metaI)
+        {
+            NecesidadesDonacionesInsumos insumo = necesidadesDAO.BuscarInsumoPorId(metaI.IdNecesidadDonacionInsumo);
+            insumo.Nombre = metaI.Nombre;
+            insumo.Cantidad = metaI.Cantidad;
+            necesidadesDAO.ActualizarInsumos(insumo);
+        }
+        public void EditarMonetaria(NecesidadesDonacionesMonetariasMetadata metaI)
+        {
+            NecesidadesDonacionesMonetarias Monetaria = necesidadesDAO.BuscarMonetariasPorId(metaI.IdNecesidadDonacionMonetaria);
+            Monetaria.Dinero = metaI.Dinero;
+            Monetaria.CBU= metaI.CBU;
+            necesidadesDAO.ActualizarMonetaria(Monetaria);
+        }
+
+        public List<NecesidadesDonacionesMonetariasMetadata> ObtenerMonetariasMetadataPorIdNecesidad(int id)
+        {
+            List<NecesidadesDonacionesMonetarias> listaMonetarias = this.ObtenerMonetariasPorIdNecesidad(id);
+            List<NecesidadesDonacionesMonetariasMetadata> listaMeta = new List<NecesidadesDonacionesMonetariasMetadata>();
+            foreach (var m in listaMonetarias)
+            {
+                NecesidadesDonacionesMonetariasMetadata meta = new NecesidadesDonacionesMonetariasMetadata()
+                {
+                    Dinero = m.Dinero,
+                    CBU = m.CBU,
+                    IdNecesidadDonacionMonetaria = m.IdNecesidadDonacionMonetaria,
+                    IdNecesidad = m.IdNecesidad
+                };
+                listaMeta.Add(meta);
+            };
+            return listaMeta;
+        }
+
         public void ActivarNecesidad(int idNecesidad)
         {
             necesidadesDAO.ActivarNecesidad(idNecesidad);
@@ -277,7 +344,7 @@ namespace Servicios
             {
                 IdNecesidad = vmref.IdNecesidad,
                 Nombre = vmref.Nombre2,
-                Telefono = vmref.Telefono2,
+                Telefono = vmref.Telefono1,
                 Necesidades = vmref.Necesidades
             };
             necesidadesDAO.AgregarReferencia(nr2);

@@ -55,14 +55,14 @@
                     {
                         <div class="form-group-sm">
                             @Html.ActionLink("Agregar otro Insumo", "Insumos", "Necesidades", null, new { @class = "btn btn-primary" })
-                            @Html.ActionLink("Editar Insumos", "EditarInsumos", "Necesidades", null, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Editar Insumos", "EditarInsumos/"+Model.IdNecesidad, "Necesidades", null, new { @class = "btn btn-primary" })
                         </div>
                     }
                     else
                     {
                         <div class="form-group-sm">
                             @Html.ActionLink("Agregar otra Monetaria", "Monetaria", "Necesidades", null, new { @class = "btn btn-primary" })
-                            @Html.ActionLink("Editar Monetaria", "EditarMonetaria", "Necesidades", null, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Editar Monetaria", "EditarMonetarias/"+Model.IdNecesidad, "Necesidades", null, new { @class = "btn btn-primary" })
                         </div>
                     }
                     if (Model.NecesidadesReferencias.Count < 2)
@@ -71,7 +71,7 @@
                             @Html.ActionLink("Agregar Referencias", "Referencias", "Necesidades", null, new { @class = "btn btn-primary" })
                         </div>
                             }
-                            @Html.ActionLink("Editar Referencias", "EditarReferencias", "Necesidades", null, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Editar Referencias", "ModificarReferencias/"+Model.IdNecesidad, "Necesidades", null, new { @class = "btn btn-primary" })
 
                             }
                         </div>

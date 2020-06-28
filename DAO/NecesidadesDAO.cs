@@ -212,6 +212,19 @@ namespace DAO
             return listadoNecesidades;
         }
 
+        public List<NecesidadesReferencias> ObtenerReferenciasPorIdNecesidad(int id)
+        {
+            return (List<NecesidadesReferencias>)context.NecesidadesReferencias.Where(o => o.IdNecesidad == id).ToList();
+        }
+
+        public void ModificarReferencia(NecesidadesReferencias referencia)
+        {
+            NecesidadesReferencias r = context.NecesidadesReferencias.Find(referencia.IdReferencia);
+            r.Nombre = referencia.Nombre;
+            r.Telefono = referencia.Telefono;
+            context.SaveChanges();
+        }
+
         #endregion
         #region Insumos y Monetaria
         public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumos insumo)
@@ -228,15 +241,17 @@ namespace DAO
         }
         public void ActualizarInsumos(NecesidadesDonacionesInsumos insumo)
         {
-            NecesidadesDonacionesInsumos insumoViejo = context.NecesidadesDonacionesInsumos.Find(insumo.IdNecesidadDonacionInsumo);
-            insumoViejo = insumo;
-            context.SaveChanges();
+            if(context.Entry(insumo).State == EntityState.Modified)
+            {
+                context.SaveChanges();
+            }       
         }
         public void ActualizarMonetaria(NecesidadesDonacionesMonetarias monetaria)
         {
-            NecesidadesDonacionesMonetarias monetariaViejo = context.NecesidadesDonacionesMonetarias.Find(monetaria.IdNecesidadDonacionMonetaria);
-            monetariaViejo = monetaria;
-            context.SaveChanges();
+            if (context.Entry(monetaria).State == EntityState.Modified)
+            {
+                context.SaveChanges();
+            }
         }
 
         public NecesidadesDonacionesInsumos BuscarInsumoPorId(int id)
