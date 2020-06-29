@@ -1,6 +1,7 @@
 ﻿using DAO.Abstract;
 using DAO.Context;
 using Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -76,6 +77,10 @@ namespace DAO
             return listadoUsuarios;
         }
 
-
+        public Usuarios obtenerUsuarioPorUsername(string userName)
+        {
+            Usuarios usuarioObtenido = context.Usuarios.Where(o => o.UserName == userName).FirstOrDefault();
+            return usuarioObtenido;
+        }
     }
 }

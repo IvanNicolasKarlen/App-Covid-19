@@ -314,24 +314,45 @@ namespace Servicios
             usuarioObtenido.Nombre = usuarioPerfil.Nombre;
             usuarioObtenido.Apellido = usuarioPerfil.Apellido;
             usuarioObtenido.Foto = usuarioPerfil.Foto;
-            usuarioObtenido.UserName = usuarioPerfil.UserName;
+
 
             List<Usuarios> listaUsuarios = usuarioDao.listadoUsuariosActivos();
 
             string nombreDeUsuario = null;
             int contador = 2;
+            bool resultado = false;
+
 
             foreach (var item in listaUsuarios)
             {
                 if (item.UserName == usuarioPerfil.UserName)
                 {
-                    //Le agrego un numero al nombre, ej: Steven.Gerard.3
+                    //Le agrego un numero al nombre, ej: Steven.Gerard.2
+
+                    do
+                    {
+                        string userNameAlterado = usuarioPerfil.UserName + "." + contador;
+                        Usuarios usuarioBD = usuarioDao.obtenerUsuarioPorUsername(userNameAlterado);
+                        if (usuarioBD == null)
+                        {
+                            resultado = true;
+                        }
+                        else
+                        {
+                            resultado = false;
+                            contador++;
+                        }
+                    }
+                    while (resultado == false);
+
                     nombreDeUsuario = usuarioPerfil.UserName + "." + contador;
                     //Se lo asigno a UsuarioPerfil
                     usuarioPerfil.UserName = nombreDeUsuario;
-                    contador++;
+                    break;
                 }
             }
+
+
             usuarioObtenido.UserName = usuarioPerfil.UserName;
 
             return usuarioObtenido;

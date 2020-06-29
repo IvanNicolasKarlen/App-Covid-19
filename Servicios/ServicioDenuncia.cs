@@ -61,7 +61,7 @@ namespace Servicios
             if (idsUsuarioDenuncia.Count != 0)
             {
                 IEnumerable<int> idsUsuarioDenunciaSinDuplicados = idsUsuarioDenuncia.Distinct();
-                if (idsUsuarioDenunciaSinDuplicados.Count() == 1)
+                if (idsUsuarioDenunciaSinDuplicados.Count() == 5)
                 {
                     necesidad.Estado = (int)TipoEstadoNecesidad.Revision; // 3 revision
                                                                           //Actualizo el estado
