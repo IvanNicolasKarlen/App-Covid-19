@@ -2,9 +2,15 @@
     background-color: white;
 }
 
-#margin-top-header{
-margin-top: 86px;
-border-style:none;
+image-index{
+    height:100px;
+    width:100px;
+    display:flex;
+}
+
+#margin-top-header {
+    margin-top: 86px;
+    border-style: none;
 }
 
 #font-Registro-info{

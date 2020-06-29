@@ -42,7 +42,7 @@ namespace Servicios
                 TipoDonacion = (necesidadmd.TipoDonacion == TipoDonacion.Monetaria) ? 1 : 2,
                 IdUsuarioCreador = idUser,
                 Estado = 0,
-                Valoracion = null
+                Valoracion = 0
             };
 
             return necesidadesDAO.Crear(necesidades);
