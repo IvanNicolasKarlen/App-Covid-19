@@ -176,7 +176,7 @@ namespace WebCovid19.Controllers
 
         #region Modificacion y Detalle
         [HttpGet]
-        public ActionResult Modificar(int id=-2)
+        public ActionResult Modificar(int id)
         {
             Necesidades n = servicioNecesidad.obtenerNecesidadPorId(id);
             NecesidadesMetadata nm = servicioNecesidad.ConvertirNecesidadAMetadata(n);
@@ -190,6 +190,10 @@ namespace WebCovid19.Controllers
         [HttpPost]
         public ActionResult Modificar(NecesidadesMetadata nm)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
             {
                 string nombreSignificativo = nm.Nombre + " " + Session["Email"];
@@ -198,7 +202,7 @@ namespace WebCovid19.Controllers
                 nm.Foto = pathRelativoImagen;
             }
             servicioNecesidad.EditarNecesidad(nm);
-            return View("DetalleNecesidad", nm.IdNecesidad);
+            return RedirectToAction("DetalleNecesidad", new { idNecesidad = nm.IdNecesidad });
         }
         //TODO: AGREGAR MODIFICACION DE REFERENCIAS
         [HttpGet]
