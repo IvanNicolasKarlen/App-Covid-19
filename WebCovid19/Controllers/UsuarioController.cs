@@ -372,7 +372,6 @@ namespace WebCovid19.Controllers
         }
 
 
-        [LoginFilter]
 
         [ActionName("acerca-de")]
         public ActionResult AcercaDe()

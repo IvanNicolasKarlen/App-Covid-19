@@ -31,9 +31,9 @@ namespace WebApi.Models
             }
         }
 
-        public ICollection<DonacionInsumosDTO> MapearDTO(ICollection<DonacionesInsumos> donacionesInsumos, bool mapearNecesidadDonacionInsumos = true)
+        public List<DonacionInsumosDTO> MapearDTO(ICollection<DonacionesInsumos> donacionesInsumos, bool mapearNecesidadDonacionInsumos = true)
         {
-            ICollection<DonacionInsumosDTO> listaDto = new HashSet<DonacionInsumosDTO>();
+            List<DonacionInsumosDTO> listaDto = new List<DonacionInsumosDTO>();
             foreach (var donInsumos in donacionesInsumos)
             {
 

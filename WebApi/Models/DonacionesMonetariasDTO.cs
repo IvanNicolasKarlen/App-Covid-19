@@ -26,9 +26,9 @@ namespace WebApi.Models
             this.FechaCreacion = donacionMonetaria.FechaCreacion;
         }
 
-        public ICollection<DonacionesMonetariasDTO> MapearListaDTO(ICollection<DonacionesMonetarias> donacionesMonetarias)
+        public List<DonacionesMonetariasDTO> MapearListaDTO(ICollection<DonacionesMonetarias> donacionesMonetarias)
         {
-            ICollection<DonacionesMonetariasDTO> listaDto = new HashSet<DonacionesMonetariasDTO>();
+            List<DonacionesMonetariasDTO> listaDto = new List<DonacionesMonetariasDTO>();
             foreach (var donMonetarias in donacionesMonetarias)
             {
                 listaDto.Add(new DonacionesMonetariasDTO(donMonetarias));

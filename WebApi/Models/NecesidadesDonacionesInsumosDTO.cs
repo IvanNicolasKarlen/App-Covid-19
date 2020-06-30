@@ -9,7 +9,7 @@ namespace WebApi.Models
         public string Nombre { get; set; }
         public int Cantidad { get; set; }
 
-        public virtual ICollection<DonacionInsumosDTO> DonacionesInsumos { get; set; }
+        public List<DonacionInsumosDTO> DonacionesInsumos = new List<DonacionInsumosDTO>();
 
         public NecesidadesDonacionesInsumosDTO()
         {
