@@ -14,10 +14,14 @@ namespace Servicios
     public class ServicioUsuario
     {
         UsuarioDao usuarioDao;
+        NecesidadesDAO necesidadesDAO;
+        DenunciasDao denunciasDao;
 
         public ServicioUsuario(TpDBContext context)
         {
             usuarioDao = new UsuarioDao(context);
+            necesidadesDAO = new NecesidadesDAO(context);
+            denunciasDao = new DenunciasDao(context);
         }
 
         public Usuarios obtenerUsuarioPorID(int idUsuario)
@@ -371,6 +375,8 @@ namespace Servicios
             return actualizado;
         }
 
+        
+
         public TipoUsuario tipoDeUsuario(Usuarios usuarioObtenido)
         {
             //Obtengo datos del usuario
@@ -421,6 +427,30 @@ namespace Servicios
         {
             Usuarios u = usuarioDao.ObtenerPorID(id);
             return (u.Apellido == null || u.Nombre == null || u.FechaNacimiento == null || u.Foto == null);
+        }
+
+
+        public VMAdministrador ObtenerDenunciasParaElAdministrador()
+        {
+            List<Necesidades> necesidadesObtenidas = necesidadesDAO.ObtenerNecesidadesDenunciadas();
+            List<Denuncias> denunciasObtenidas = denunciasDao.ObtenerDenunciasEnRevision();
+            List<Denuncias> denunciasValidadas = new List<Denuncias>();
+            VMAdministrador vMAdministrador = new VMAdministrador();
+
+            foreach (var necesidad in necesidadesObtenidas)
+            {
+                foreach (var denuncias in denunciasObtenidas)
+                {
+                    if (necesidad.IdNecesidad == denuncias.IdNecesidad && denuncias.Estado == (int)TipoEstadoDenuncia.Pendiente)
+                    {
+                        denunciasValidadas.Add(denuncias);
+                    }
+                }
+            }
+
+            vMAdministrador.listaNecesidades = necesidadesObtenidas;
+            vMAdministrador.listaDenuncias = denunciasValidadas;
+            return vMAdministrador;
         }
     }
 }

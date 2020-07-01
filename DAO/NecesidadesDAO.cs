@@ -163,7 +163,7 @@ namespace DAO
 
             return listaNecesidades;
         }
-        public List<Necesidades> obtenerNecesidadesDenunciadas()
+        public List<Necesidades> ObtenerNecesidadesDenunciadas()
         {
             List<Necesidades> necesidadesBD = context.Necesidades.Where(o => o.Estado == (int)TipoEstadoNecesidad.Revision).ToList();
             return necesidadesBD;

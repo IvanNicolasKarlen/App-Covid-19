@@ -297,7 +297,7 @@ namespace Servicios
         }
         public List<Necesidades> ObtenerNecesidadesDenunciadas()
         {
-            List<Necesidades> listaNecesidades = necesidadesDAO.obtenerNecesidadesDenunciadas();
+            List<Necesidades> listaNecesidades = necesidadesDAO.ObtenerNecesidadesDenunciadas();
 
             return listaNecesidades;
         }

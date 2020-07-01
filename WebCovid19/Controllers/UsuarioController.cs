@@ -345,12 +345,9 @@ namespace WebCovid19.Controllers
         [AdminFilter]
         public ActionResult Administrador()
         {
-            List<Necesidades> necesidadesObtenidas = servicioNecesidad.ObtenerNecesidadesDenunciadas();
-            return View("Administrador", necesidadesObtenidas);
-
+            VMAdministrador vMAdministrador = servicioUsuario.ObtenerDenunciasParaElAdministrador();
+            return View("Administrador", vMAdministrador);
         }
-
-
 
         [HttpPost]
         public ActionResult DenunciaEvaluada(Denuncias denuncia)
