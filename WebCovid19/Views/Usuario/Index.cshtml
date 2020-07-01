@@ -18,61 +18,63 @@
 
 
 
-@if(Model.Count == 0)
+@if (Model.Count == 0)
 {
     <h1> Aun no hay necesidades cargadas</h1>
 }
 else
 {
-    
 
 
-<div id="about" class=" area-padding my-sm-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="section-headline text-center">
-                    <h2 class="font-weight-light">Necesidades más valoradas</h2>
+
+    <div id="about" class=" area-padding my-sm-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="section-headline text-center">
+                        <h2 class="font-weight-light">Necesidades más valoradas</h2>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-none col-md-1"></div><!--Trampa jajaja-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-none col-md-1"></div><!--Trampa jajaja-->
 
 
-        @foreach (var item in Model)
-        {
-            <!--Necesidad 1-->
-            <div class="card col-sm-12 col-md-2">
-                <img class="card-img-top" src="@item.Foto" alt="Card image cap" id="image-index">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Nombre</h5>
-                    <p class="card-text">@item.Usuarios.UserName</p>
-                    <p class="card-text">
-                        <div class="float-auto">
+            @foreach (var item in Model)
+            {
+                <!--Necesidad 1-->
+                <div class="card col-sm-12 col-md-2">
+                    <img class="card-img-top" src="@item.Foto" alt="Card image cap" id="image-index">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Nombre</h5>
+                        <p class="card-text">@item.Usuarios.UserName</p>
+                        <p class="card-text">
+                            <div class="float-auto">
 
-                            <label> <b class="text-primary">@item.Valoracion%</b> de coincidencias </label>
+                                <label> <b class="text-primary">@item.Valoracion%</b> de coincidencias </label>
+                            </div>
+                        </p>
+                        <p class="card-text text-secondary"><span class="fa fa-calendar"></span> 2016-03-05</p>
+                        <div class="text-center">
+
+                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@item.IdNecesidad" class="btn btn-info">Mas detalles</a>
+                            @{
+                                Session["parametro"] = item.IdNecesidad;
+                            }
                         </div>
-                    </p>
-                    <p class="card-text text-secondary"><span class="fa fa-calendar"></span> 2016-03-05</p>
-                    <div class="text-center">
-
-                         <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@item.IdNecesidad" class="btn btn-info">Mas detalles</a>
-
                     </div>
                 </div>
-            </div>
-            <!--Fin necesidad 1-->
-        }
+                <!--Fin necesidad 1-->
+            }
 
+        </div>
     </div>
-</div>
 }
