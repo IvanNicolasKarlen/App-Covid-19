@@ -11,7 +11,7 @@
     <div class="col-md-12">
         <div class="float-right">
 
-            <p class="card-text text-secondary mt-5"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> @Model.FechaFin</p>
+            <p class="card-text text-secondary mt-5"><b>Fecha de finalizacion:</b> <span class="fa fa-calendar"></span> @Model.FechaFin</p>
         </div>
 
 
@@ -195,14 +195,14 @@
                     </div>
                     @if (Model.IdUsuarioCreador == idSession)
                     {
-                        <div class="col-md-12 btn-group mt-4 mb-3">
-                            @Html.ActionLink("Regresar a Home", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
+                <div class="col-md-12 btn-group mt-4 mb-3">
+                    @Html.ActionLink("Regresar a Home", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
 
-                            @if (Model.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
-                            {
-                                <button type="button" class="btn btn-info ml-2">Editar</button>
-                            }
-                        </div>
+                    @if (Model.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
+                    {
+                        @Html.ActionLink("Editar", "Modificar/" + @Model.IdNecesidad, "Necesidades", null, new { @class = "btn btn-info ml-2" })
+                    }
+                </div>
                     }
                     else
                     {

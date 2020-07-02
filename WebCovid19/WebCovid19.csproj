@@ -1933,7 +1933,11 @@
     <Content Include="Views\Usuario\HistorialDonaciones.cshtml" />
     <Content Include="Views\DonacionMonetaria\DonaMonetaria.cshtml" />
     <Content Include="Views\DonacionInsumos\Donar.cshtml" />
+    <Content Include="Views\Necesidades\Modificar.cshtml" />
     <Content Include="Views\DonacionMonetaria\DetalleDeDonacion.cshtml" />
+    <Content Include="Views\Necesidades\ListadoInsumos.cshtml" />
+    <Content Include="Views\Necesidades\ListadoMonetarias.cshtml" />
+    <Content Include="Views\Necesidades\ModificarReferencias.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

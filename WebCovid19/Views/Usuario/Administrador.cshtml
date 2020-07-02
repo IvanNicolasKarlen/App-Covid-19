@@ -1,4 +1,4 @@
-﻿@model List<Entidades.Necesidades>
+﻿@model Entidades.Views.VMAdministrador
 @{
     ViewBag.Title = "Administrador";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
@@ -14,7 +14,7 @@
 <div class="col-md-12 ">
 
 
-    @if (Model.Count == 0)
+    @if (Model.listaNecesidades.Count == 0)
     {
         <div>
             <h1 class="text-center">No se preocupe, todavia no hay denuncias para gestionar.</h1>
@@ -31,10 +31,8 @@
             <div class="p-3 mb-2 bg-danger text-white">@mensajeError</div>
         }
 
-        foreach (var necesidad in Model.OrderBy(o => o.FechaFin).Distinct())
+        foreach (var necesidad in Model.listaNecesidades.OrderBy(o => o.FechaFin).Distinct())
         {
-
-
 
 
             using (Html.BeginForm("DenunciaEvaluada", "Usuario", FormMethod.Post, new { @class = "col-md-12" }))
@@ -71,13 +69,25 @@
                                     <div class="col-md-6">
                                         <b>Motivo de denuncia:</b>
                                         <div class="col-md-12 text-center">
-                                            @foreach (var denuncias in necesidad.Denuncias.GroupBy(den => den.MotivoDenuncia.Descripcion))
-                                            {
 
-                                            <h4 class="text-danger"> @denuncias.Key</h4>
+                                            <p>
+                                                <a class="btn btn-primary" data-toggle="collapse" href="#collapseMotivos" role="button" aria-expanded="false" aria-controls="collapseMotivos">
+                                                    Motivos
+                                                </a>
 
-                                            }
+                                            </p>
+                                            <div class="collapse" id="collapseMotivos">
+                                                <div class="card card-body">
 
+                                                    @foreach (var denuncias in Model.listaDenuncias.GroupBy(o=>o.MotivoDenuncia.Descripcion))
+                                                    {
+                                                        //if (necesidad.IdNecesidad == denuncias.IdNecesidad && denuncias.Estado == (int)Entidades.Enum.TipoEstadoDenuncia.Pendiente)
+                                                        //{
+                                                            <h4 class="text-danger"> @denuncias.Key</h4>
+                                                        //}
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -100,11 +110,14 @@
                                             </p>
                                             <div class="collapse" id="collapseExample">
                                                 <div class="card card-body">
-                                                    <p><b>Cantidad de comentarios: @necesidad.Denuncias.Count </b></p>
-                                                    @foreach (var denuncias in necesidad.Denuncias)
+                                                    @foreach (var denuncias in Model.listaDenuncias)
                                                     {
-                                                    <p><i class="fa fa-user-circle" aria-hidden="true"></i> @denuncias.Comentarios</p><br />
-                                                    <input type="hidden" name="IdDenuncia" value="@denuncias.IdDenuncia" />
+                                                        if (necesidad.IdNecesidad == denuncias.IdNecesidad & denuncias.Estado == (int)Entidades.Enum.TipoEstadoDenuncia.Pendiente)
+                                                        {
+                                                            <p><i class="fa fa-user-circle" aria-hidden="true"></i> @denuncias.Comentarios</p><br />
+                                                            <input type="hidden" name="IdDenuncia" value="@denuncias.IdDenuncia" />
+                                                        }
+
                                                     }
                                                 </div>
                                             </div>
@@ -124,7 +137,7 @@
                                 </div>
                             </div>
                             <input type="hidden" name="IdNecesidad" value="@necesidad.IdNecesidad" />
-                            
+
                             <div class="col-md-12 btn-group mb-3">
                                 <button type="submit" name="Desestimar" class="btn btn-danger">Desestimar</button>
                                 <button type="submit" name="Bloquear" class="btn btn-success ml-2">Bloquear</button>

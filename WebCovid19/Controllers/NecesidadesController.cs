@@ -18,15 +18,14 @@ namespace WebCovid19.Controllers
     {
         ServicioNecesidad servicioNecesidad;
         ServicioNecesidadValoraciones servicioNecesidadValoraciones;
-
+        ServicioUsuario servicioUsuario;
         public NecesidadesController()
         {
             TpDBContext context = new TpDBContext();
             servicioNecesidad = new ServicioNecesidad(context);
             servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
-
+            servicioUsuario = new ServicioUsuario(context);
         }
-
 
         // GET: Necesidades
         public ActionResult Index()
@@ -34,13 +33,17 @@ namespace WebCovid19.Controllers
             return View();
         }
 
-
+        #region Creacion de Necesidad
         public ActionResult Crear()
         {
             int idUsuario = int.Parse(Session["UserId"].ToString());
-            if (servicioNecesidad.TraerNecesidadesDelUsuario(idUsuario, "on").Count >= 3)
+            if (servicioUsuario.VerificarPerfilCompleto(idUsuario))
             {
-                ViewBag.Mensaje = "Usted ya alcanzó el límite (3) de necesidades activas.";
+                TempData["Mensaje"] = "Debe Completar su perfil para crear una necesidad.";
+                return View("AvisosNecesidad");
+            }else if (servicioNecesidad.TraerNecesidadesDelUsuario(idUsuario, "on").Count >= 3)
+            {
+                TempData["Mensaje"] = "Usted ya alcanzó el límite (3) de necesidades activas.";
                 return View("AvisosNecesidad");
             }
             NecesidadesMetadata necesidadesMetadata = new NecesidadesMetadata();
@@ -97,7 +100,16 @@ namespace WebCovid19.Controllers
             insumos.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idN);
             insumos.IdNecesidad = idN;
             servicioNecesidad.AgregarInsumos(insumos);
-            return View("Referencias");
+            TempData["Creada"] = "La necesidad se creó exitosamente.";
+            TempData["Insumo"] = "SI";
+            if (servicioNecesidad.ObtenerInsumosPorIdNecesidad(idN).Count<=1){
+                return View("Referencias");
+            }
+            else
+            {
+                return View("AvisosNecesidad");
+            }
+                  
         }
 
         public ActionResult Monetaria()
@@ -118,7 +130,20 @@ namespace WebCovid19.Controllers
             monetarias.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idN);
             monetarias.IdNecesidad = idN;
             servicioNecesidad.AgregarMonetarias(monetarias);
-            return View("Referencias");
+            TempData["Creada"] = "La necesidad se creó exitosamente.";
+            TempData["Monetaria"] = "SI";
+            if (servicioNecesidad.ObtenerMonetariasPorIdNecesidad(idN).Count <= 1)
+            {
+                return View("Referencias");
+            }
+            else 
+            {
+                if(monetarias.Necesidades.NecesidadesReferencias.Count>0)
+                {
+                    servicioNecesidad.ActivarNecesidad(idN);
+                }
+                return View("AvisosNecesidad");
+            }
         }
 
         public ActionResult Referencias()
@@ -134,17 +159,103 @@ namespace WebCovid19.Controllers
             if (!ModelState.IsValid)
             {
                 return View();
-            }
+            };
+            if (vmref.Telefono1.Equals(vmref.Nombre2))
+            {
+                ViewBag.TelIguales = "Los números de teléfonos no pueden ser los mismos";
+            };
             int idN = int.Parse(Session["idNecesidad"].ToString());
             vmref.Necesidades = servicioNecesidad.obtenerNecesidadPorId(idN);
             vmref.IdNecesidad = idN;
             servicioNecesidad.AgregarReferencias(vmref);
             servicioNecesidad.ActivarNecesidad(idN);
-            ViewBag.Mensaje = "La necesidad se creó exitosamente.";
-            Session.Remove("idNecesidad");
+            TempData["Creada"] = "La necesidad se creó exitosamente.";
             return View("AvisosNecesidad");
         }
+        #endregion
 
+        #region Modificacion y Detalle
+        [HttpGet]
+        public ActionResult Modificar(int id)
+        {
+            Necesidades n = servicioNecesidad.obtenerNecesidadPorId(id);
+            NecesidadesMetadata nm = servicioNecesidad.ConvertirNecesidadAMetadata(n);
+            if (n == null || n.FechaFin <= DateTime.Now)
+            {
+                return RedirectToAction("Index","Usuario");
+            }
+            Session["idNecesidad"] = n.IdNecesidad;
+            return View(nm);
+        }
+        [HttpPost]
+        public ActionResult Modificar(NecesidadesMetadata nm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
+            {
+                string nombreSignificativo = nm.Nombre + " " + Session["Email"];
+                //Guardar Imagen
+                string pathRelativoImagen = ImagenesUtil.Guardar(Request.Files[0], nombreSignificativo);
+                nm.Foto = pathRelativoImagen;
+            }
+            servicioNecesidad.EditarNecesidad(nm);
+            return RedirectToAction("DetalleNecesidad", new { idNecesidad = nm.IdNecesidad });
+        }
+        //TODO: AGREGAR MODIFICACION DE REFERENCIAS
+        [HttpGet]
+        public ActionResult ModificarReferencias(int id)
+        {
+            List<NecesidadesReferencias> lista = servicioNecesidad.ObtenerReferenciasPorIdNecesidad(id);
+            return View(lista);
+        }
+        [HttpPost]
+        public ActionResult ModificarReferencias(NecesidadesReferencias r)
+        {
+            if (!servicioNecesidad.ModificarReferencia(r)) 
+            {
+                TempData["Error"] = "Los datos no son válidos";
+            }
+            return RedirectToAction("ModificarReferencias", r.IdNecesidad);
+        }
+        [HttpGet]
+        public ActionResult EditarInsumos(int id)
+        {
+           List<NecesidadesDonacionesInsumosMetadata> lista = servicioNecesidad.ObtenerInsumosMetadataPorIdNecesidad(id);
+            return View("ListadoInsumos", lista);
+        }
+        [HttpGet]
+        public ActionResult EditarMonetarias(int id)
+        {
+            List<NecesidadesDonacionesMonetariasMetadata> lista = servicioNecesidad.ObtenerMonetariasMetadataPorIdNecesidad(id);
+            return View("ListadoMonetarias", lista);
+        }
+        [HttpPost]
+        public ActionResult EditarInsumos(NecesidadesDonacionesInsumosMetadata metaI)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Los Datos no son válidos";
+                return View("EditarInsumos", metaI.IdNecesidad);
+            }
+            servicioNecesidad.EditarInsumo(metaI);
+            return RedirectToAction("EditarInsumos", metaI.IdNecesidad);
+        }
+        [HttpPost]
+        public ActionResult EditarMonetarias(NecesidadesDonacionesMonetariasMetadata metaM)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Los Datos no son válidos";
+                return View("EditarMonetarias",metaM.IdNecesidad);
+            }
+            servicioNecesidad.EditarMonetaria(metaM);
+            return RedirectToAction("EditarMonetarias", metaM.IdNecesidad);
+        }
+
+        #endregion
         [LoginFilter]//toDo: Probar que funcione bien del todo este action.
         public ActionResult DetalleNecesidad(int idNecesidad)
         {
@@ -157,14 +268,10 @@ namespace WebCovid19.Controllers
                 LikeOrDislike likeOrDislike = new LikeOrDislike();
                 bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad, servicioNecesidadValoraciones);
             }
-
             /**********************************************************************/
-
             Necesidades necesidadObtenida = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
-
             return View(necesidadObtenida);
         }
-
 
         [LoginFilter]
         public ActionResult Home(string necesidad)

@@ -10,19 +10,39 @@ namespace WebCovid19.Filters
         {
             string action = HttpContext.Current.Session["action"].ToString();
             string controller = HttpContext.Current.Session["controller"].ToString();
+            var parametro = HttpContext.Current.Session["parametro"].ToString();
+            var intParametro = int.Parse(parametro);
+
 
             if (action != "")
             {
-                filterContext.Result = new RedirectToRouteResult
-                    (
-                        new RouteValueDictionary
-                        {
-                            {"Controller", controller },
-                            {"Action", action },
 
-                        }
-                    );
+                if (action == "DetalleNecesidad")
+                {
+                    filterContext.Result = new RedirectToRouteResult
+                        (
+                            new RouteValueDictionary
+                            {
+                                {"Controller", controller },
+                                {"Action", action},
+                                { "idNecesidad", intParametro },
+                            }
+                        );
+                }
+                else
+                {
+                    filterContext.Result = new RedirectToRouteResult
+                      (
+                          new RouteValueDictionary
+                          {
+                                {"Controller", controller },
+                                {"Action", action},
+                          }
+                      );
+
+                }
             }
+
 
         }
     }

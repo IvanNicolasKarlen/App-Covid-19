@@ -4,6 +4,7 @@ using Entidades;
 using Entidades.Enum;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 
@@ -162,10 +163,17 @@ namespace DAO
 
             return listaNecesidades;
         }
-        public List<Necesidades> obtenerNecesidadesDenunciadas()
+        public List<Necesidades> ObtenerNecesidadesDenunciadas()
         {
             List<Necesidades> necesidadesBD = context.Necesidades.Where(o => o.Estado == (int)TipoEstadoNecesidad.Revision).ToList();
             return necesidadesBD;
+        }
+
+        public void EditarNecesidad(Necesidades n)
+        {
+            if(context.Entry(n).State == EntityState.Modified){
+                context.SaveChanges();
+            }     
         }
 
         public List<Necesidades> TraerNecesidadesConDonacionInsumosPorUserLogueado(int idUserLogueado)
@@ -204,6 +212,19 @@ namespace DAO
             return listadoNecesidades;
         }
 
+        public List<NecesidadesReferencias> ObtenerReferenciasPorIdNecesidad(int id)
+        {
+            return (List<NecesidadesReferencias>)context.NecesidadesReferencias.Where(o => o.IdNecesidad == id).ToList();
+        }
+
+        public void ModificarReferencia(NecesidadesReferencias referencia)
+        {
+            NecesidadesReferencias r = context.NecesidadesReferencias.Find(referencia.IdReferencia);
+            r.Nombre = referencia.Nombre;
+            r.Telefono = referencia.Telefono;
+            context.SaveChanges();
+        }
+
         #endregion
         #region Insumos y Monetaria
         public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumos insumo)
@@ -220,15 +241,17 @@ namespace DAO
         }
         public void ActualizarInsumos(NecesidadesDonacionesInsumos insumo)
         {
-            NecesidadesDonacionesInsumos insumoViejo = context.NecesidadesDonacionesInsumos.Find(insumo.IdNecesidadDonacionInsumo);
-            insumoViejo = insumo;
-            context.SaveChanges();
+            if(context.Entry(insumo).State == EntityState.Modified)
+            {
+                context.SaveChanges();
+            }       
         }
         public void ActualizarMonetaria(NecesidadesDonacionesMonetarias monetaria)
         {
-            NecesidadesDonacionesMonetarias monetariaViejo = context.NecesidadesDonacionesMonetarias.Find(monetaria.IdNecesidadDonacionMonetaria);
-            monetariaViejo = monetaria;
-            context.SaveChanges();
+            if (context.Entry(monetaria).State == EntityState.Modified)
+            {
+                context.SaveChanges();
+            }
         }
 
         public NecesidadesDonacionesInsumos BuscarInsumoPorId(int id)
@@ -241,13 +264,13 @@ namespace DAO
             return context.NecesidadesDonacionesMonetarias.Find(id);
         }
 
-        public NecesidadesDonacionesInsumos BuscarInsumosPorIdNecesidad(int id)
+        public List<NecesidadesDonacionesInsumos> BuscarInsumosPorIdNecesidad(int id)
         {
-            return (NecesidadesDonacionesInsumos)context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidad == id).FirstOrDefault();
+            return (List<NecesidadesDonacionesInsumos>)context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidad == id).ToList();
         }
-        public NecesidadesDonacionesMonetarias BuscarMonetariasPorIdNecesidad(int id)
+        public List<NecesidadesDonacionesMonetarias> BuscarMonetariasPorIdNecesidad(int id)
         {
-            return (NecesidadesDonacionesMonetarias)context.NecesidadesDonacionesMonetarias.Where(o => o.IdNecesidad == id).FirstOrDefault();
+            return (List<NecesidadesDonacionesMonetarias>)context.NecesidadesDonacionesMonetarias.Where(o => o.IdNecesidad == id).ToList();
         }
         #endregion
         #region Referencias

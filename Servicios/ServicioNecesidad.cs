@@ -42,7 +42,7 @@ namespace Servicios
                 TipoDonacion = (necesidadmd.TipoDonacion == TipoDonacion.Monetaria) ? 1 : 2,
                 IdUsuarioCreador = idUser,
                 Estado = 0,
-                Valoracion = null
+                Valoracion = 0
             };
 
             return necesidadesDAO.Crear(necesidades);
@@ -132,6 +132,16 @@ namespace Servicios
             return necesidadBD;
         }
 
+        public List<NecesidadesDonacionesInsumos> ObtenerInsumosPorIdNecesidad(int idN)
+        {
+            return necesidadesDAO.BuscarInsumosPorIdNecesidad(idN);
+        }
+
+        public List<NecesidadesDonacionesMonetarias> ObtenerMonetariasPorIdNecesidad(int idN)
+        {
+            return necesidadesDAO.BuscarMonetariasPorIdNecesidad(idN);
+        }
+
 
         /// <summary>
         /// Divide en cada espacio con Split, el string ingresado en el buscador
@@ -160,6 +170,35 @@ namespace Servicios
             return necesidades;
         }
 
+
+        public void EditarNecesidad(NecesidadesMetadata nm)
+        {
+            Necesidades n = this.obtenerNecesidadPorId(nm.IdNecesidad);
+            n.Nombre = nm.Nombre;
+            n.Descripcion = nm.Descripcion;
+            n.TelefonoContacto = nm.TelefonoContacto;
+            n.FechaFin = nm.FechaFin;
+            n.Foto = nm.Foto;
+            necesidadesDAO.EditarNecesidad(n);
+        }
+
+        public NecesidadesMetadata ConvertirNecesidadAMetadata(Necesidades n)
+        {
+            NecesidadesMetadata meta = new NecesidadesMetadata()
+            {
+                Nombre = n.Nombre,
+                Descripcion = n.Descripcion,
+                TelefonoContacto = n.TelefonoContacto,
+                FechaFin = n.FechaFin,
+                Foto = n.Foto,
+                NecesidadesReferencias = n.NecesidadesReferencias,
+                IdUsuarioCreador = n.IdUsuarioCreador,
+                IdNecesidad = n.IdNecesidad,
+                TipoDonacion = n.TipoDonacion == 1 ? TipoDonacion.Monetaria : TipoDonacion.Insumos
+            };
+            return meta;
+        }
+
         public List<Necesidades> obtener5NecesidadesMasValoradas()
         {
             List<Necesidades> listadoNecesidades = necesidadesDAO.ListarTodasLasNecesidadesActivas();
@@ -167,6 +206,7 @@ namespace Servicios
             int cantidad = (listadoNecesidades.Count >= 5) ? 5 : listadoNecesidades.Count;
 
             foreach (var item in listadoNecesidades.OrderByDescending(n => n.Valoracion).ToList())
+
             {
                 necesidadesMasValoradas.Add(item);
 
@@ -179,6 +219,73 @@ namespace Servicios
             return necesidadesMasValoradas;
 
         }
+
+        public List<NecesidadesReferencias> ObtenerReferenciasPorIdNecesidad(int id)
+        {
+            return (List<NecesidadesReferencias>)necesidadesDAO.ObtenerReferenciasPorIdNecesidad(id);
+        }
+
+        public bool ModificarReferencia(NecesidadesReferencias r)
+        {
+            if(string.IsNullOrEmpty(r.Nombre) || string.IsNullOrEmpty(r.Telefono))
+            {
+                return false;
+            }
+            necesidadesDAO.ModificarReferencia(r);
+            return true;
+        }
+
+        public List<NecesidadesDonacionesInsumosMetadata> ObtenerInsumosMetadataPorIdNecesidad(int id)
+        {
+            List<NecesidadesDonacionesInsumos> listaInsumos = this.ObtenerInsumosPorIdNecesidad(id);
+            List<NecesidadesDonacionesInsumosMetadata> listaMeta = new List<NecesidadesDonacionesInsumosMetadata>();
+            foreach(var i in listaInsumos)
+            {
+                NecesidadesDonacionesInsumosMetadata meta = new NecesidadesDonacionesInsumosMetadata()
+                {
+                    Nombre = i.Nombre,
+                    Cantidad = i.Cantidad,
+                    IdNecesidadDonacionInsumo = i.IdNecesidadDonacionInsumo,
+                    IdNecesidad = i.IdNecesidad
+                };
+                listaMeta.Add(meta);
+            };
+            return listaMeta;
+        }
+
+        public void EditarInsumo(NecesidadesDonacionesInsumosMetadata metaI)
+        {
+            NecesidadesDonacionesInsumos insumo = necesidadesDAO.BuscarInsumoPorId(metaI.IdNecesidadDonacionInsumo);
+            insumo.Nombre = metaI.Nombre;
+            insumo.Cantidad = metaI.Cantidad;
+            necesidadesDAO.ActualizarInsumos(insumo);
+        }
+        public void EditarMonetaria(NecesidadesDonacionesMonetariasMetadata metaI)
+        {
+            NecesidadesDonacionesMonetarias Monetaria = necesidadesDAO.BuscarMonetariasPorId(metaI.IdNecesidadDonacionMonetaria);
+            Monetaria.Dinero = metaI.Dinero;
+            Monetaria.CBU= metaI.CBU;
+            necesidadesDAO.ActualizarMonetaria(Monetaria);
+        }
+
+        public List<NecesidadesDonacionesMonetariasMetadata> ObtenerMonetariasMetadataPorIdNecesidad(int id)
+        {
+            List<NecesidadesDonacionesMonetarias> listaMonetarias = this.ObtenerMonetariasPorIdNecesidad(id);
+            List<NecesidadesDonacionesMonetariasMetadata> listaMeta = new List<NecesidadesDonacionesMonetariasMetadata>();
+            foreach (var m in listaMonetarias)
+            {
+                NecesidadesDonacionesMonetariasMetadata meta = new NecesidadesDonacionesMonetariasMetadata()
+                {
+                    Dinero = m.Dinero,
+                    CBU = m.CBU,
+                    IdNecesidadDonacionMonetaria = m.IdNecesidadDonacionMonetaria,
+                    IdNecesidad = m.IdNecesidad
+                };
+                listaMeta.Add(meta);
+            };
+            return listaMeta;
+        }
+
         public void ActivarNecesidad(int idNecesidad)
         {
             necesidadesDAO.ActivarNecesidad(idNecesidad);
@@ -190,7 +297,7 @@ namespace Servicios
         }
         public List<Necesidades> ObtenerNecesidadesDenunciadas()
         {
-            List<Necesidades> listaNecesidades = necesidadesDAO.obtenerNecesidadesDenunciadas();
+            List<Necesidades> listaNecesidades = necesidadesDAO.ObtenerNecesidadesDenunciadas();
 
             return listaNecesidades;
         }
@@ -218,11 +325,7 @@ namespace Servicios
             };
             return necesidadesDAO.AgregarMonetaria(monetaria);
         }
-        public NecesidadesDonacionesInsumos BuscarInsumosPorIdNecesidad(int id)
-        {
-            return necesidadesDAO.BuscarInsumosPorIdNecesidad(id);
-        }
-        public NecesidadesDonacionesMonetarias BuscarMonetariasPorIdNecesidad(int id)
+        public List<NecesidadesDonacionesMonetarias> BuscarMonetariasPorIdNecesidad(int id)
         {
             return necesidadesDAO.BuscarMonetariasPorIdNecesidad(id);
         }
@@ -241,7 +344,7 @@ namespace Servicios
             {
                 IdNecesidad = vmref.IdNecesidad,
                 Nombre = vmref.Nombre2,
-                Telefono = vmref.Telefono2,
+                Telefono = vmref.Telefono1,
                 Necesidades = vmref.Necesidades
             };
             necesidadesDAO.AgregarReferencia(nr2);
