@@ -15,12 +15,16 @@ namespace Servicios
     {
         NecesidadesDAO necesidadesDAO;
         TpDBContext contexto;
-        //  ServicioNecesidadValoraciones servicioNecesidadValoraciones;
+        NecesidadesReferenciasDao necesidadesReferenciasDao;
+        NecesidadesDonacionesInsumosDAO necesidadesDonacionesInsumosDao;
+        NecesidadesDonacionesMonetariasDAO necesidadesDonacionesMonetariasDAO;
         public ServicioNecesidad(TpDBContext context)
         {
             necesidadesDAO = new NecesidadesDAO(context);
             contexto = context;
-            // servicioNecesidadValoraciones = new ServicioNecesidadValoraciones(context);
+            necesidadesReferenciasDao = new NecesidadesReferenciasDao(context);
+            necesidadesDonacionesInsumosDao = new NecesidadesDonacionesInsumosDAO(context);
+            necesidadesDonacionesMonetariasDAO = new NecesidadesDonacionesMonetariasDAO(context);
         }
         #region necesidad
         public Necesidades obtenerNecesidadPorId(int id)
@@ -45,7 +49,7 @@ namespace Servicios
                 Valoracion = 0
             };
 
-            return necesidadesDAO.Crear(necesidades);
+            return necesidadesDAO.Guardar(necesidades);
         }
 
 
@@ -124,22 +128,19 @@ namespace Servicios
             // necesidad.Valoracion = valoracion;
 
 
-            Necesidades necesidadBD = necesidadesDAO.Actualizar(necesidad);
-            if (necesidadBD == null)
-            {
-                return null;
-            }
-            return necesidadBD;
+            necesidadesDAO.Actualizar(necesidad);
+           
+            return necesidad;
         }
 
         public List<NecesidadesDonacionesInsumos> ObtenerInsumosPorIdNecesidad(int idN)
         {
-            return necesidadesDAO.BuscarInsumosPorIdNecesidad(idN);
+            return necesidadesDonacionesInsumosDao.BuscarInsumosPorIdNecesidad(idN);
         }
 
         public List<NecesidadesDonacionesMonetarias> ObtenerMonetariasPorIdNecesidad(int idN)
         {
-            return necesidadesDAO.BuscarMonetariasPorIdNecesidad(idN);
+            return necesidadesDonacionesMonetariasDAO.BuscarMonetariasPorIdNecesidad(idN);
         }
 
 
@@ -179,7 +180,7 @@ namespace Servicios
             n.TelefonoContacto = nm.TelefonoContacto;
             n.FechaFin = nm.FechaFin;
             n.Foto = nm.Foto;
-            necesidadesDAO.EditarNecesidad(n);
+            necesidadesDAO.Actualizar(n);
         }
 
         public NecesidadesMetadata ConvertirNecesidadAMetadata(Necesidades n)
@@ -222,7 +223,7 @@ namespace Servicios
 
         public List<NecesidadesReferencias> ObtenerReferenciasPorIdNecesidad(int id)
         {
-            return (List<NecesidadesReferencias>)necesidadesDAO.ObtenerReferenciasPorIdNecesidad(id);
+            return (List<NecesidadesReferencias>)necesidadesReferenciasDao.ObtenerReferenciasPorIdNecesidad(id);
         }
 
         public bool ModificarReferencia(NecesidadesReferencias r)
@@ -231,7 +232,7 @@ namespace Servicios
             {
                 return false;
             }
-            necesidadesDAO.ModificarReferencia(r);
+            necesidadesReferenciasDao.ModificarReferencia(r);
             return true;
         }
 
@@ -255,17 +256,17 @@ namespace Servicios
 
         public void EditarInsumo(NecesidadesDonacionesInsumosMetadata metaI)
         {
-            NecesidadesDonacionesInsumos insumo = necesidadesDAO.BuscarInsumoPorId(metaI.IdNecesidadDonacionInsumo);
+            NecesidadesDonacionesInsumos insumo = necesidadesDonacionesInsumosDao.ObtenerPorID(metaI.IdNecesidadDonacionInsumo);
             insumo.Nombre = metaI.Nombre;
             insumo.Cantidad = metaI.Cantidad;
-            necesidadesDAO.ActualizarInsumos(insumo);
+            necesidadesDonacionesInsumosDao.Actualizar(insumo);
         }
         public void EditarMonetaria(NecesidadesDonacionesMonetariasMetadata metaI)
         {
-            NecesidadesDonacionesMonetarias Monetaria = necesidadesDAO.BuscarMonetariasPorId(metaI.IdNecesidadDonacionMonetaria);
+            NecesidadesDonacionesMonetarias Monetaria = necesidadesDonacionesMonetariasDAO.ObtenerPorID(metaI.IdNecesidadDonacionMonetaria);
             Monetaria.Dinero = metaI.Dinero;
             Monetaria.CBU= metaI.CBU;
-            necesidadesDAO.ActualizarMonetaria(Monetaria);
+            necesidadesDonacionesMonetariasDAO.Actualizar(Monetaria);
         }
 
         public List<NecesidadesDonacionesMonetariasMetadata> ObtenerMonetariasMetadataPorIdNecesidad(int id)
@@ -312,7 +313,7 @@ namespace Servicios
                 IdNecesidad = insumometa.IdNecesidad,
                 Necesidades = insumometa.Necesidades
             };
-            return necesidadesDAO.AgregarInsumos(insumo);
+            return necesidadesDonacionesInsumosDao.Guardar(insumo);
         }
         public NecesidadesDonacionesMonetarias AgregarMonetarias(NecesidadesDonacionesMonetariasMetadata monetariameta)
         {
@@ -323,11 +324,11 @@ namespace Servicios
                 IdNecesidad = monetariameta.IdNecesidad,
                 Necesidades = monetariameta.Necesidades
             };
-            return necesidadesDAO.AgregarMonetaria(monetaria);
+            return necesidadesDonacionesMonetariasDAO.Guardar(monetaria);
         }
         public List<NecesidadesDonacionesMonetarias> BuscarMonetariasPorIdNecesidad(int id)
         {
-            return necesidadesDAO.BuscarMonetariasPorIdNecesidad(id);
+            return necesidadesDonacionesMonetariasDAO.BuscarMonetariasPorIdNecesidad(id);
         }
         #endregion
         public void AgregarReferencias(VMReferencias vmref)
@@ -339,7 +340,7 @@ namespace Servicios
                 Telefono = vmref.Telefono1,
                 Necesidades = vmref.Necesidades
             };
-            necesidadesDAO.AgregarReferencia(nr);
+            necesidadesReferenciasDao.Guardar(nr);
             NecesidadesReferencias nr2 = new NecesidadesReferencias()
             {
                 IdNecesidad = vmref.IdNecesidad,
@@ -347,7 +348,7 @@ namespace Servicios
                 Telefono = vmref.Telefono1,
                 Necesidades = vmref.Necesidades
             };
-            necesidadesDAO.AgregarReferencia(nr2);
+            necesidadesReferenciasDao.Guardar(nr2);
         }
 
         public List<Necesidades> TraerNecesidadesConDonacionesDelUserLogueado(int idUserLogueado)

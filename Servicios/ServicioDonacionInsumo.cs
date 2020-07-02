@@ -30,7 +30,7 @@ namespace Servicios
             donacionesI.IdUsuario = idUsuario;
             donacionesI.FechaCreacion = DateTime.Now;
 
-            return DonacionInsumosDao.GuardarInsumo(donacionesI);
+            return DonacionInsumosDao.Guardar(donacionesI);
         }
     }
 }

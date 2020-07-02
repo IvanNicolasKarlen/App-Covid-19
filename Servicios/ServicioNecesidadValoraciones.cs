@@ -114,7 +114,7 @@ namespace Servicios
                 necesidadesValoraciones.IdNecesidad = necesidadObtenida.IdNecesidad;
                 necesidadesValoraciones.Valoracion = (botonRecibido == "Like") ? "Like" : (botonRecibido == "Dislike") ? "Dislike" : null;
 
-                NecesidadesValoraciones valoracionObtenida = necesidadValoracionesDao.Crear(necesidadesValoraciones);
+                NecesidadesValoraciones valoracionObtenida = necesidadValoracionesDao.Guardar(necesidadesValoraciones);
                 if (valoracionObtenida == null)
                 {
                     return false;

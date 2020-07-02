@@ -1,33 +1,23 @@
-﻿using DAO.Abstract;
-using DAO.Context;
+﻿using DAO.Context;
+using DAO.Repository;
 using Entidades;
 using Entidades.Enum;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace DAO
 {
-    public class NecesidadesDAO : Crud<Necesidades>
+    public class NecesidadesDAO : BaseRepository<Necesidades>
     {
-        #region Crud
-        public NecesidadesDAO(TpDBContext context) : base(context)
-        {
+        TpDBContext context;
 
-        }
-        public override Necesidades ObtenerPorID(int idNecesidad)
+        #region Crud
+        public NecesidadesDAO(TpDBContext contexto) : base(contexto)
         {
-            Necesidades necesidad = context.Necesidades.Find(idNecesidad);
-            return necesidad;
+            context = contexto;
         }
-        public override Necesidades Crear(Necesidades necesidadAGuardar)
-        {
-            Necesidades necesidades = context.Necesidades.Add(necesidadAGuardar);
-            context.SaveChanges();
-            return necesidades;
-        }
+        
 
         public List<Necesidades> TraerNecesidadesActivasDelUsuario(int idSession)
         {
@@ -67,38 +57,8 @@ namespace DAO
             return listadoNecesidades;
         }
 
-        public override Necesidades Actualizar(Necesidades necesidadObtenida)
-        {
-            {
-                Necesidades necesidadBd = ObtenerPorID(necesidadObtenida.IdNecesidad);
-
-                necesidadBd.Valoracion = (decimal)necesidadObtenida.Valoracion;
-                necesidadBd.Descripcion = necesidadObtenida.Descripcion;
-                necesidadBd.Estado = necesidadObtenida.Estado;
-                necesidadBd.Foto = necesidadObtenida.Foto;
-                necesidadBd.Nombre = necesidadObtenida.Nombre;
-                necesidadBd.TelefonoContacto = necesidadObtenida.TelefonoContacto;
-                necesidadBd.NecesidadesValoraciones = necesidadObtenida.NecesidadesValoraciones;
-
-
-                try
-                {
-
-                    context.SaveChanges();
-                }
-                catch (DbEntityValidationException dbEx)
-                {
-                    foreach (var validationErrors in dbEx.EntityValidationErrors)
-                    {
-                        foreach (var validationError in validationErrors.ValidationErrors)
-                        {
-                            System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
-                        }
-                    }
-                }
-                return necesidadBd;
-            }
-        }
+        
+       
         public void ActivarNecesidad(int idNecesidad)
         {
             Necesidades n = context.Necesidades.Find(idNecesidad);
@@ -169,13 +129,7 @@ namespace DAO
             return necesidadesBD;
         }
 
-        public void EditarNecesidad(Necesidades n)
-        {
-            if(context.Entry(n).State == EntityState.Modified){
-                context.SaveChanges();
-            }     
-        }
-
+       
         public List<Necesidades> TraerNecesidadesConDonacionInsumosPorUserLogueado(int idUserLogueado)
         {
             List<Necesidades> listadoNecesidades = (from nec in context.Necesidades
@@ -212,72 +166,7 @@ namespace DAO
             return listadoNecesidades;
         }
 
-        public List<NecesidadesReferencias> ObtenerReferenciasPorIdNecesidad(int id)
-        {
-            return (List<NecesidadesReferencias>)context.NecesidadesReferencias.Where(o => o.IdNecesidad == id).ToList();
-        }
-
-        public void ModificarReferencia(NecesidadesReferencias referencia)
-        {
-            NecesidadesReferencias r = context.NecesidadesReferencias.Find(referencia.IdReferencia);
-            r.Nombre = referencia.Nombre;
-            r.Telefono = referencia.Telefono;
-            context.SaveChanges();
-        }
-
         #endregion
-        #region Insumos y Monetaria
-        public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumos insumo)
-        {
-            NecesidadesDonacionesInsumos i = context.NecesidadesDonacionesInsumos.Add(insumo);
-            context.SaveChanges();
-            return i;
-        }
-        public NecesidadesDonacionesMonetarias AgregarMonetaria(NecesidadesDonacionesMonetarias monetaria)
-        {
-            NecesidadesDonacionesMonetarias m = context.NecesidadesDonacionesMonetarias.Add(monetaria);
-            context.SaveChanges();
-            return m;
-        }
-        public void ActualizarInsumos(NecesidadesDonacionesInsumos insumo)
-        {
-            if(context.Entry(insumo).State == EntityState.Modified)
-            {
-                context.SaveChanges();
-            }       
-        }
-        public void ActualizarMonetaria(NecesidadesDonacionesMonetarias monetaria)
-        {
-            if (context.Entry(monetaria).State == EntityState.Modified)
-            {
-                context.SaveChanges();
-            }
-        }
-
-        public NecesidadesDonacionesInsumos BuscarInsumoPorId(int id)
-        {
-            return context.NecesidadesDonacionesInsumos.Find(id);
-        }
-
-        public NecesidadesDonacionesMonetarias BuscarMonetariasPorId(int id)
-        {
-            return context.NecesidadesDonacionesMonetarias.Find(id);
-        }
-
-        public List<NecesidadesDonacionesInsumos> BuscarInsumosPorIdNecesidad(int id)
-        {
-            return (List<NecesidadesDonacionesInsumos>)context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidad == id).ToList();
-        }
-        public List<NecesidadesDonacionesMonetarias> BuscarMonetariasPorIdNecesidad(int id)
-        {
-            return (List<NecesidadesDonacionesMonetarias>)context.NecesidadesDonacionesMonetarias.Where(o => o.IdNecesidad == id).ToList();
-        }
-        #endregion
-        #region Referencias
-        public void AgregarReferencia(NecesidadesReferencias nr)
-        {
-            context.NecesidadesReferencias.Add(nr);
-        }
-        #endregion
+      
     }
 }

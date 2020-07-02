@@ -28,7 +28,7 @@ namespace Servicios
 
         public NecesidadesDonacionesMonetarias ObtenerPorId(int idNecesidadDonacionMonetaria)
         {
-            return NecesidadesDonacionesMonetariasDAO.ObtenerPorIdNecesidadDonacionMonetaria(idNecesidadDonacionMonetaria);
+            return NecesidadesDonacionesMonetariasDAO.ObtenerPorID(idNecesidadDonacionMonetaria);
         }
     }
 }

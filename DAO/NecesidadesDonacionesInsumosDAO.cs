@@ -1,34 +1,17 @@
-﻿using DAO.Abstract;
-using DAO.Context;
+﻿using DAO.Context;
+using DAO.Repository;
 using Entidades;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAO
 {
-    public class NecesidadesDonacionesInsumosDAO : Crud<NecesidadesDonacionesInsumos>
+    public class NecesidadesDonacionesInsumosDAO : BaseRepository<NecesidadesDonacionesInsumos>
     {
-
-        public NecesidadesDonacionesInsumosDAO(TpDBContext context) : base(context)
+        TpDBContext context;
+        public NecesidadesDonacionesInsumosDAO(TpDBContext contexto) : base(contexto)
         {
-        }
-
-        public override NecesidadesDonacionesInsumos Actualizar(NecesidadesDonacionesInsumos generics)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override NecesidadesDonacionesInsumos Crear(NecesidadesDonacionesInsumos generics)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override NecesidadesDonacionesInsumos ObtenerPorID(int id)
-        {
-            throw new NotImplementedException();
+            context = contexto;
         }
 
         public List<NecesidadesDonacionesInsumos> BuscarPorId(int IdNecesidad)
@@ -37,16 +20,9 @@ namespace DAO
             return listaObtenida;
         }
 
-        public NecesidadesDonacionesInsumos ObtenerNecesidadDonacionInsumosPorId(int IdNecesidadDonacionInsumo)
+        public List<NecesidadesDonacionesInsumos> BuscarInsumosPorIdNecesidad(int id)
         {
-            NecesidadesDonacionesInsumos DonacionesPorId = context.NecesidadesDonacionesInsumos.Find(IdNecesidadDonacionInsumo);
-            return DonacionesPorId;
-        }
-
-        public NecesidadesDonacionesInsumos BuscarNecesidadesDonacionIPorId(int IdNecesidadDonacionInsumo)
-        {
-            NecesidadesDonacionesInsumos listaNdi = context.NecesidadesDonacionesInsumos.Find(IdNecesidadDonacionInsumo);
-            return listaNdi;
+            return (List<NecesidadesDonacionesInsumos>)context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidad == id).ToList();
         }
 
     }

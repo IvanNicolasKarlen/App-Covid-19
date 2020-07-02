@@ -28,7 +28,7 @@ namespace Servicios
 
         public NecesidadesDonacionesInsumos ObtenerNecesidadDonacionInsumosPorId(int idNecesidadDonacionInsumo)
         {
-            return necesidadesDonacionesInsumosDAO.ObtenerNecesidadDonacionInsumosPorId(idNecesidadDonacionInsumo);
+            return necesidadesDonacionesInsumosDAO.ObtenerPorID(idNecesidadDonacionInsumo);
         }
 
         /*public NecesidadesDonacionesInsumos ObtenerCantidadPorId(VMNecesidadesDonacionesInsumos idNecesidadDonacionInsumo)

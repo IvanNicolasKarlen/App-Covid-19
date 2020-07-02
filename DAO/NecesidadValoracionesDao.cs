@@ -1,23 +1,18 @@
-﻿using DAO.Abstract;
-using DAO.Context;
+﻿using DAO.Context;
+using DAO.Repository;
 using Entidades;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DAO
 {
-    public class NecesidadValoracionesDao : Crud<NecesidadesValoraciones>
+    public class NecesidadValoracionesDao : BaseRepository<NecesidadesValoraciones>
     {
-        public NecesidadValoracionesDao(TpDBContext context) : base(context)
+        TpDBContext context;
+        public NecesidadValoracionesDao(TpDBContext contexto) : base(contexto)
         {
-
+            context = contexto;
         }
-        public override NecesidadesValoraciones ObtenerPorID(int idValoracion)
-        {
-            NecesidadesValoraciones valoracionObtenida = context.NecesidadesValoraciones.Find(idValoracion);
-            return valoracionObtenida;
-        }
-
 
         public List<NecesidadesValoraciones> obtenerValoracionesDelUsuario(int idSession)
         {
@@ -31,13 +26,6 @@ namespace DAO
             return valoracionObtenida;
         }
 
-        public override NecesidadesValoraciones Actualizar(NecesidadesValoraciones valoracionNueva)
-        {
-            NecesidadesValoraciones valoracionObtenida = ObtenerPorID(valoracionNueva.IdValoracion);
-            valoracionObtenida.Valoracion = valoracionNueva.Valoracion;
-            context.SaveChanges();
-            return valoracionObtenida;
-        }
 
         public List<NecesidadesValoraciones> obtenerValoracionesPorIDNecesidad(int idNecesidad)
         {
@@ -45,17 +33,6 @@ namespace DAO
             return listadoObtenido;
         }
 
-        public override NecesidadesValoraciones Crear(NecesidadesValoraciones necesidadesValoraciones)
-        {
-            NecesidadesValoraciones valoracionGuardada = context.NecesidadesValoraciones.Add(necesidadesValoraciones);
-            int resultado = context.SaveChanges();
-
-            if (resultado < 0)
-            {
-                return null;
-            }
-            return valoracionGuardada;
-        }
 
         public List<NecesidadesValoraciones> obtenerValoracionPorIdNecesidad(int idNecesidad)
         {

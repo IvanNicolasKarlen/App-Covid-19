@@ -30,9 +30,9 @@ namespace Servicios
         {
             denuncia.FechaCreacion = DateTime.Now;
             denuncia.IdUsuario = idUsuario;
-            Denuncias denunciaCreada = denunciasDao.Crear(denuncia);
+           Denuncias denunciaSave= denunciasDao.Guardar(denuncia);
 
-            return denunciaCreada;
+            return denunciaSave;
         }
 
         public List<MotivoDenuncia> ObtenerMotivosDenuncia()
@@ -99,12 +99,8 @@ namespace Servicios
             {
                 d.Estado = (int)TipoEstadoDenuncia.Revisada; // 1 revisada
                                                              //Actualizo el estado
-                Denuncias denunciaActualizada = denunciasDao.Actualizar(denunciaObtenida);
+                 denunciasDao.Actualizar(denunciaObtenida);
 
-                if (denunciaActualizada == null)
-                {
-                    return false;
-                }
             }
 
             return true;

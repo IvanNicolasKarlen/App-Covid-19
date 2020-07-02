@@ -247,16 +247,8 @@ namespace Servicios
             Usuarios usuarioObtenido = ValidarCodigoDeActivacion(usuario);
 
             //Save usuario
-            Usuarios usuarioGuardado = usuarioDao.Crear(usuarioObtenido);/***********************/
-
-            if (usuarioGuardado.IdUsuario >= 0)
-            {
-                return usuarioGuardado.IdUsuario;
-            }
-            else
-            {
-                return -1;
-            }
+            Usuarios usuarioGuardado = usuarioDao.Guardar(usuarioObtenido);/***********************/
+            return usuarioGuardado.IdUsuario;
 
         }
 
@@ -287,12 +279,7 @@ namespace Servicios
             if (usuarioConElToken != null)
             {
                 usuarioConElToken.Activo = true;
-                Usuarios usuarioUpdate = usuarioDao.Actualizar(usuarioConElToken);/***********************/
-
-                if (usuarioUpdate == null)
-                {
-                    return false;
-                }
+                usuarioDao.Actualizar(usuarioConElToken);/***********************/
 
             }
 
@@ -301,14 +288,8 @@ namespace Servicios
 
         public bool actualizoDatosDelPerfilDelUsuario(Usuarios usuario)
         {
-
-            //int resultado = usuarioDao.actualizarDatosDeUsuario(usuario); /***********************/
-            Usuarios usuarioUpdate = usuarioDao.Actualizar(usuario);
-            if (usuarioUpdate == null)
-            {
-                return false;
-            }
-
+             usuarioDao.Actualizar(usuario);
+          
             return true;
         }
 
