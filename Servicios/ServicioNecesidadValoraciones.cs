@@ -135,17 +135,5 @@ namespace Servicios
             return valoracionesDelaNecesidad;
         }
 
-        public List<NecesidadesValoraciones> obtenerValoracionesDelUsuario(int idSession)
-        {
-
-            List<NecesidadesValoraciones> valoracionesDelUsuario = necesidadValoracionesDao.obtenerValoracionesDelUsuario(idSession);
-            return valoracionesDelUsuario;
-        }
-
-        public List<NecesidadesValoraciones> obtenerValoracionPorIdNecesidad(int idNecesidad)
-        {
-            return necesidadValoracionesDao.obtenerValoracionPorIdNecesidad(idNecesidad);
-
-        }
     }
 }

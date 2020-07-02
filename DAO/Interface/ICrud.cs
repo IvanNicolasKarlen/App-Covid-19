@@ -5,5 +5,6 @@
           T Guardar(T generics);
          
           T ObtenerPorID(int id);
+        T Actualizar(T generics);
     }
 }

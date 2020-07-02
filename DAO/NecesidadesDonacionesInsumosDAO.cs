@@ -22,7 +22,7 @@ namespace DAO
 
         public List<NecesidadesDonacionesInsumos> BuscarInsumosPorIdNecesidad(int id)
         {
-            return (List<NecesidadesDonacionesInsumos>)context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidad == id).ToList();
+            return context.NecesidadesDonacionesInsumos.Where(o => o.IdNecesidad == id).ToList();
         }
 
     }

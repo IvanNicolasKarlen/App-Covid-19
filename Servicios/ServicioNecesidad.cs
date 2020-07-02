@@ -76,29 +76,6 @@ namespace Servicios
 
         }
 
-        public List<Necesidades> ListarTodasLasNecesidades()
-        {
-            List<Necesidades> necesidadesBD = necesidadesDAO.ListarTodasLasNecesidades();
-            //List<Necesidades> necesidadesReturn = AlgoritmoCalculaValoracionDeListadoNecesidades(necesidadesBD);
-
-            return necesidadesBD;
-        }
-
-        /// <summary>
-        /// Obtiene un listado de necesidades y calcula los valores de cada necesidad
-        /// </summary>
-        /// <param name="lista"></param>
-        /// <returns>List<Necesidades></returns>
-        public List<Necesidades> AlgoritmoCalculaValoracionDeListadoNecesidades(List<Necesidades> lista)
-        {
-            List<Necesidades> necesidadesReturn = new List<Necesidades>();
-            foreach (var item in lista)
-            {
-                necesidadesReturn.Add(calcularValoracion(item));
-            }
-            return necesidadesReturn;
-        }
-
         /// <summary>
         /// Algoritmo que calcula la valoracion de la necesidad
         /// </summary>
@@ -296,12 +273,7 @@ namespace Servicios
             List<Necesidades> necesidadesBD = necesidadesDAO.TraerNecesidadesQueNoSonDelUsuario(idSession);
             return necesidadesBD;
         }
-        public List<Necesidades> ObtenerNecesidadesDenunciadas()
-        {
-            List<Necesidades> listaNecesidades = necesidadesDAO.ObtenerNecesidadesDenunciadas();
-
-            return listaNecesidades;
-        }
+       
         #endregion
         #region InsumosMonetarias
         public NecesidadesDonacionesInsumos AgregarInsumos(NecesidadesDonacionesInsumosMetadata insumometa)
@@ -326,10 +298,7 @@ namespace Servicios
             };
             return necesidadesDonacionesMonetariasDAO.Guardar(monetaria);
         }
-        public List<NecesidadesDonacionesMonetarias> BuscarMonetariasPorIdNecesidad(int id)
-        {
-            return necesidadesDonacionesMonetariasDAO.BuscarMonetariasPorIdNecesidad(id);
-        }
+        
         #endregion
         public void AgregarReferencias(VMReferencias vmref)
         {

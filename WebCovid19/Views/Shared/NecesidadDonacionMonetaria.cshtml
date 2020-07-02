@@ -150,48 +150,6 @@
                             </div>
                         }
 
-
-                        @*<div class="col-md-12 mb-3 mt-3 text-center">
-
-            <img src="img/dinero.png" id="icons" alt="">
-
-            @{
-                decimal totalSolicitado = 0;
-            }
-
-            @foreach (var necDonMonetaria in Model.NecesidadesDonacionesMonetarias)
-            {
-                totalSolicitado += @necDonMonetaria.Dinero;
-            }
-
-            <p>
-                <b>  Total solicitado:</b> $ @totalSolicitado
-            </p>
-
-            @foreach (var necDonMonetaria in Model.NecesidadesDonacionesMonetarias)
-            {
-                if (necDonMonetaria.DonacionesMonetarias.Count != 0)
-                {
-
-                    <p>
-                        <b>Total Recaudado:</b> $
-                        @{
-                            decimal totalDonado = 0;
-                        }
-
-                        @foreach (var donMonetarias in necDonMonetaria.DonacionesMonetarias)
-                        {
-                            totalDonado += donMonetarias.Dinero;
-                        }
-
-                        @totalDonado
-
-                    </p>
-                }
-            }
-
-
-        </div>*@
                     </div>
                     @if (Model.IdUsuarioCreador == idSession)
                     {
@@ -222,7 +180,7 @@
                 else if (Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Revision && Model.IdUsuarioCreador == idSession)
                 {
 
-                    <div class="p-3 mb-2 bg-warning text-white text-center">Esta Necesidad está en revision de ser pública.</div>
+                    <div class="p-3 mb-2 bg-warning text-white text-center">Esta Necesidad esta en revision de ser publica.</div>
 
                 }
 
