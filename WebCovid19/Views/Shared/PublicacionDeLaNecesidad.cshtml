@@ -50,8 +50,17 @@
             </div>
             <img class="card-img-top" src="@necesidad.Foto" id="imagen-necesidad" alt="Card image cap">
             <div class="card-body">
+                @if (necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada || necesidad.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
+                {
+                    <button type="button" class="btn btn-outline-info disabled" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
 
-                @using (Html.BeginForm("LikeOrDislike", "Usuario", FormMethod.Post, new { @class = "float-auto" }))
+                    <label> <b class="text-primary">@necesidad.Valoracion%</b> de coincidencias </label>
+
+                }
+                else
+                {
+
+                using (Html.BeginForm("LikeOrDislike", "Usuario", FormMethod.Post, new { @class = "float-auto" }))
                 {
                     <input type="hidden" name="IdNecesidad" value="@necesidad.IdNecesidad" />
 
@@ -147,7 +156,7 @@
                     }
                 }
 
-
+                }
                 <h2 class="card-title text-center">@necesidad.Nombre</h2>
                 <p class="card-text mt-3">
                     @necesidad.Descripcion
@@ -168,20 +177,20 @@
                 @if (necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada | necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Revision)
                 {
 
-            <div class="text-center">
-                @if (necesidad.IdUsuarioCreador == idSession)
-                {
+                    <div class="text-center">
+                        @if (necesidad.IdUsuarioCreador == idSession && necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada && necesidad.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
+                        {
 
-                    @Html.ActionLink("Editar", "Modificar/" + @necesidad.IdNecesidad, "Necesidades", null, new { @class = "btn btn-info ml-2" })
+                            @Html.ActionLink("Editar", "Modificar/" + @necesidad.IdNecesidad, "Necesidades", null, new { @class = "btn btn-info ml-2" })
 
 
-                    <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
-                }
-                else
-                {
-                    <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
-                }
-            </div>
+                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
+                        }
+                        else
+                        {
+                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
+                        }
+                    </div>
                 }
             </div>
         </div>

@@ -17,6 +17,18 @@ namespace Servicios
         TpDBContext contexto;
         NecesidadesReferenciasDao necesidadesReferenciasDao;
         NecesidadesDonacionesInsumosDAO necesidadesDonacionesInsumosDao;
+
+        public void VerificarFechaFinDeNecesidades()
+        {
+            List<Necesidades> necesidadesVencidas = necesidadesDAO.ListarNecesidadesVencidasActivas();
+            foreach (var item in necesidadesVencidas)
+            {
+                item.Estado = (int)TipoEstadoNecesidad.Finalizada;
+                necesidadesDAO.Actualizar(item);
+            }
+            
+        }
+
         NecesidadesDonacionesMonetariasDAO necesidadesDonacionesMonetariasDAO;
         public ServicioNecesidad(TpDBContext context)
         {

@@ -24,7 +24,6 @@ namespace DAO
             List<Necesidades> necesidadesActivas = (from c in context.Necesidades
                                                     where c.IdUsuarioCreador == idSession
                                                     where c.Estado == 1
-                                                    where c.FechaFin > DateTime.Now
                                                     select c).ToList();
             return necesidadesActivas;
         }
@@ -33,32 +32,29 @@ namespace DAO
         {
             List<Necesidades> todasLasNecesidadesDelUsuario = (from c in context.Necesidades
                                                                where c.IdUsuarioCreador.Equals(idSession)
-                                                               where c.FechaFin > DateTime.Now
                                                                select c).ToList();
 
             return todasLasNecesidadesDelUsuario;
         }
 
 
-        public List<Necesidades> ListarTodasLasNecesidades()
+        public List<Necesidades> ListarNecesidadesVencidasActivas()
         {
             List<Necesidades> listadoNecesidades = new List<Necesidades>();
-
             var listaObtenida = (from nec in context.Necesidades
-                                 where nec.FechaFin > DateTime.Now
-                                 where nec.Estado == 1
+                                 where nec.FechaFin < DateTime.Now && nec.Estado ==(int) TipoEstadoNecesidad.Activa
                                  select nec);
 
             foreach (var item in listaObtenida)
             {
                 listadoNecesidades.Add(item);
             }
-
             return listadoNecesidades;
+
         }
 
-        
-       
+
+
         public void ActivarNecesidad(int idNecesidad)
         {
             Necesidades n = context.Necesidades.Find(idNecesidad);

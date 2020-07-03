@@ -1,6 +1,7 @@
 ﻿using DAO;
 using DAO.Context;
 using Entidades;
+using Entidades.Enum;
 using System.Collections.Generic;
 
 namespace Servicios
@@ -25,6 +26,10 @@ namespace Servicios
             //Obtengo Usuario y Necesidad
             Usuarios usuarioObtenido = usuarioDao.ObtenerPorID(idUsuario);
             Necesidades necesidadObtenida = necesidadesDAO.ObtenerPorID(idNecesidad);
+            if (necesidadObtenida.Estado == (int)TipoEstadoNecesidad.Bloqueada || necesidadObtenida.Estado == (int)TipoEstadoNecesidad.Finalizada)
+            {
+                return false;
+            }
 
             //Valido si es que antes le dio Like or Dislike
             NecesidadesValoraciones necesidadRegistrada = necesidadValoracionesDao.obtenerNecesidadValoracionPor_IDUsuario_e_IdNecesidad(idUsuario, idNecesidad);

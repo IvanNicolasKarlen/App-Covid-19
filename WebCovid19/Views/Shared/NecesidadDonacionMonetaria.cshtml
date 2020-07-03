@@ -51,81 +51,83 @@
             <img class=" card-img-top" style="margin-right:10px;" src="@Model.Foto" id="imagen-detalle" alt="Card image cap">
 
             <div class="col-md-12 float-auto ml-4 mt-2">
-
-                @using (Html.BeginForm("DetalleNecesidad", "Necesidades", FormMethod.Post, new { @class = "float-auto ml-4" }))
+                @if (Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada || Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
                 {
-                    <input type="hidden" name="IdNecesidad" value="@Model.IdNecesidad" />
-
-                    if (Model.NecesidadesValoraciones.Count == 0)
+                    <button type="button" class="btn btn-outline-info disabled" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                    <label> <b class="text-primary">@Model.Valoracion%</b> de coincidencias </label>
+                }
+                else
+                {
+                    using (Html.BeginForm("DetalleNecesidad", "Necesidades", FormMethod.Post, new { @class = "float-auto ml-4" }))
                     {
-                        <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
-                    }
-                    else
-                    {
-                        int bandera = 0;
-                        foreach (var necesidadesValoraciones in Model.NecesidadesValoraciones)     //3 ... 1... 2
-                        {
+                        <input type="hidden" name="IdNecesidad" value="@Model.IdNecesidad" />
 
-
-                            if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.IdNecesidad & necesidadesValoraciones.Valoracion == "Like")
-                            {
-                                <button type="submit" class="btn btn-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
-
-                                break;
-                            }
-                            else
-                            {
-                                bandera++;
-                            }
-
-                        }
-
-
-                        if (Model.NecesidadesValoraciones.Count == bandera)
+                        if (Model.NecesidadesValoraciones.Count == 0)
                         {
                             <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                         }
-                    }
-                    <label> <b class="text-primary">@Model.Valoracion%</b> de coincidencias </label>
-
-
-
-                    if (Model.NecesidadesValoraciones.Count == 0)
-                    {
-                        <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
-                    }
-                    else
-                    {
-                        int bandera = 0;
-                        foreach (var necesidadesValoraciones in Model.NecesidadesValoraciones)
+                        else
                         {
-                            if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.IdNecesidad & necesidadesValoraciones.Valoracion == "Dislike")
+                            int bandera = 0;
+                            foreach (var necesidadesValoraciones in Model.NecesidadesValoraciones)     //3 ... 1... 2
                             {
-                                <button type="submit" class="btn btn-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
 
-                                break;
-                            }
-                            else
-                            {
-                                bandera++;
+
+                                if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.IdNecesidad & necesidadesValoraciones.Valoracion == "Like")
+                                {
+                                    <button type="submit" class="btn btn-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
+                                    break;
+                                }
+                                else
+                                {
+                                    bandera++;
+                                }
 
                             }
-                        }
 
-                        if (Model.NecesidadesValoraciones.Count == bandera)
-                        {
-                            <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
+                            if (Model.NecesidadesValoraciones.Count == bandera)
+                            {
+                                <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                            }
                         }
-                        <label>Desacuerdo </label>
+                        <label> <b class="text-primary">@Model.Valoracion%</b> de coincidencias </label>
+
+
+
+                        if (Model.NecesidadesValoraciones.Count == 0)
+                        {
+                            <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+                        }
+                        else
+                        {
+                            int bandera = 0;
+                            foreach (var necesidadesValoraciones in Model.NecesidadesValoraciones)
+                            {
+                                if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.IdNecesidad & necesidadesValoraciones.Valoracion == "Dislike")
+                                {
+                                    <button type="submit" class="btn btn-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+
+                                    break;
+                                }
+                                else
+                                {
+                                    bandera++;
+
+                                }
+                            }
+
+                            if (Model.NecesidadesValoraciones.Count == bandera)
+                            {
+                                <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                            }
+                            <label>Desacuerdo </label>
+                        }
                     }
                 }
-
-            </div>
+                </div>
         </div>
-
-
-
-
         <div class="col-md-7 float-right">
 
             <div class="col-md-12 ml-5">
@@ -165,14 +167,14 @@
         </div>
                 @if (Model.IdUsuarioCreador == idSession)
                 {
-                    <div class="col-md-12 btn-group mt-4 mb-3">
-                        @Html.ActionLink("Regresar a Home", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
+            <div class="col-md-12 btn-group mt-4 mb-3">
+                @Html.ActionLink("Regresar a Home", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
 
-                        @if (Model.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
-                        {
-                            @Html.ActionLink("Editar", "Modificar/" + @Model.IdNecesidad, "Necesidades", null, new { @class = "btn btn-info ml-2" })
-                        }
-                    </div>
+                @if (Model.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada && Model.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada)
+                {
+                    @Html.ActionLink("Editar", "Modificar/" + @Model.IdNecesidad, "Necesidades", null, new { @class = "btn btn-info ml-2" })
+                }
+            </div>
                 }
                 else
                 {

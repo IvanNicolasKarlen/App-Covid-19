@@ -86,9 +86,6 @@
                                 }
 
                             }
-
-
-
                         </div>
                     </div>
                     <div class="col-md-12 btn-group mt-4 mb-3">
@@ -97,15 +94,11 @@
                             <div class="col-md-12 btn-group mt-4 mb-3">
                                 @Html.ActionLink("Regresar a Home", "Home", "Necesidades", "", new { @class = "btn btn-danger" })
 
-                                @if (Model.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
+                                @if (Model.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada && Model.Estado != (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada)
                                 {
                                     @Html.ActionLink("Editar", "Modificar/" + @Model.IdNecesidad, "Necesidades", null, new { @class = "btn btn-info ml-2" })
-
-
-
                                 }
                             </div>
-
                         }
                         else
                         {
@@ -134,8 +127,18 @@
 
                 <img class="card-img-top" src="@Model.Foto" id="imagen-detalle" alt="Card image cap">
 
+                @if (Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Finalizada || Model.Estado == (int)Entidades.Enum.TipoEstadoNecesidad.Bloqueada)
+                {
+                    <button type="button" class="btn btn-outline-info disabled" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
 
-                @using (Html.BeginForm("DetalleNecesidad", "Necesidades", FormMethod.Post, new { @class = "float-auto ml-5" }))
+                    <label> <b class="text-primary">@Model.Valoracion%</b> de coincidencias </label>
+
+                }
+                else
+                {
+
+                
+                using (Html.BeginForm("DetalleNecesidad", "Necesidades", FormMethod.Post, new { @class = "float-auto ml-5" }))
                 {
                     <input type="hidden" name="IdNecesidad" value="@Model.IdNecesidad" />
 
@@ -201,6 +204,7 @@
                         }
                         <label> No estoy de acuerdo </label>
                     }
+                }
                 }
             </div>
 

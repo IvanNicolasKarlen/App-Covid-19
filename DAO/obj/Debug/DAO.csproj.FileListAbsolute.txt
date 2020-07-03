@@ -297,3 +297,18 @@ D:\Proyecto Covid 19\App 1-7\App-Covid-19\DAO\obj\Debug\DAO.csproj.CoreCompileIn
 D:\Proyecto Covid 19\App 1-7\App-Covid-19\DAO\obj\Debug\DAO.csproj.CopyComplete
 D:\Proyecto Covid 19\App 1-7\App-Covid-19\DAO\obj\Debug\DAO.dll
 D:\Proyecto Covid 19\App 1-7\App-Covid-19\DAO\obj\Debug\DAO.pdb
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\bin\Debug\DAO.dll.config
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\bin\Debug\DAO.dll
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\bin\Debug\DAO.pdb
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\bin\Debug\Entidades.dll
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\bin\Debug\EntityFramework.dll
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\bin\Debug\EntityFramework.SqlServer.dll
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\bin\Debug\Entidades.pdb
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\bin\Debug\Entidades.dll.config
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\bin\Debug\EntityFramework.xml
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\bin\Debug\EntityFramework.SqlServer.xml
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\obj\Debug\DAO.csprojAssemblyReference.cache
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\obj\Debug\DAO.csproj.CoreCompileInputs.cache
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\obj\Debug\DAO.csproj.CopyComplete
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\obj\Debug\DAO.dll
+D:\DIANA\proyectos-git\APP-COVID-Final1\App-Covid-19-master\DAO\obj\Debug\DAO.pdb

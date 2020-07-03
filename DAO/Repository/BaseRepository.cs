@@ -1,6 +1,8 @@
 ﻿using DAO.Context;
 using DAO.Interface;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 
 namespace DAO.Repository
 {
@@ -35,6 +37,11 @@ namespace DAO.Repository
             }
 
             return generics;
+        }
+
+        public List<T> ObtenerTodos()
+        {
+            return dbSet.ToList();
         }
     }
 }

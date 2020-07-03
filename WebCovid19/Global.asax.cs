@@ -17,7 +17,9 @@ namespace WebCovid19
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+            ValidacionesGenerales.VerificarFechaFinDeNecesidades();
+
+
         }
         
         protected void Application_Error(object sender, EventArgs e)
