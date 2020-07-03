@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
     var mensaje = (string)Request["mensaje"];
-
+    int top = 1;
 }
 
 <!--Carrucel-->
@@ -25,56 +25,87 @@
 else
 {
 
-
-
     <div id="about" class=" area-padding my-sm-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="section-headline text-center">
-                        <h2 class="font-weight-light">Necesidades más valoradas</h2>
+                        <h1 class="font-weight-light">Necesidades más valoradas</h1>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    foreach (var necesidad in Model)
+    {
 
+        <div class="container">
 
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-none col-md-1"></div><!--Trampa jajaja-->
-
-
-            @foreach (var item in Model)
+            @switch (@top)
             {
-                <!--Necesidad 1-->
-                <div class="card col-sm-12 col-md-2">
-                    <img class="card-img-top" src="@item.Foto" alt="Card image cap" id="image-index">
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Nombre</h5>
-                        <p class="card-text">@item.Usuarios.UserName</p>
-                        <p class="card-text">
-                            <div class="float-auto">
-
-                                <label> <b class="text-primary">@item.Valoracion%</b> de coincidencias </label>
-                            </div>
-                        </p>
-                        <p class="card-text text-secondary"><span class="fa fa-calendar"></span> 2016-03-05</p>
-                        <div class="text-center">
-
-                            <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@item.IdNecesidad" class="btn btn-info">Mas detalles</a>
-                            @{
-                                Session["parametro"] = item.IdNecesidad;
-                            }
-                        </div>
-                    </div>
-                </div>
-                <!--Fin necesidad 1-->
+                case 1:<h3 class="text-center mt-3 font-weight-light" text-white> Necesidad con más valoraciones</h3>
+                    break;
+                case 2: <h3 class="text-center mt-3 font-weight-light" text-white> Segunda Necesidad más valorada</h3>
+                    break;
+                case 3: <h3 class="text-center mt-3 font-weight-light" text-white> Tercera Necesidad más valorada</h3>
+                    break;
+                case 4: <h3 class="text-center mt-3 font-weight-light" text-white> Cuarta Necesidad más valorada</h3>
+                    break;
+                case 5: <h3 class="text-center mt-3 font-weight-light" text-white> Quinta Necesidad más valorada</h3>
+                    break;
             }
 
+            @{ top++;}
+            <div class="card" id="card">
+                <div class="col-md-12">
+
+
+                    <div class="row">
+                        @if (necesidad.Usuarios.Foto == null)
+                        {
+                            <img class="rounded-circle float-left mt-2 m-auto border border-white" id="image-perfil-index" src="/Imagenes/imagenPerfil-Nula.png">
+                        }
+                        else
+                        {
+                            <img class="rounded-circle float-left mt-2 border border-white" id="image-perfil-index" src="@necesidad.Usuarios.Foto">
+                        }
+
+                        <div class="col-md-12 text-center">
+                            <p class=" text-secondary mt-3 text-center"><b>@necesidad.Usuarios.UserName</b></p>
+                            <p><span class="fa fa-calendar text-center"></span> @necesidad.FechaCreacion</p>
+                        </div>
+
+                    </div>
+                    <h1 class="text-center font-weight-light"> <b class="text-primary">@necesidad.Valoracion%</b> de valoraciones </h1>
+
+
+                </div>
+                <img class="card-img-top" src="@necesidad.Foto" id="imagen-necesidad" alt="Card image cap">
+                <div class="card-body">
+
+
+
+                    <h2 class="card-title text-center">@necesidad.Nombre</h2>
+                    <p class="card-text mt-3">
+                        @necesidad.Descripcion
+                    </p>
+
+
+                    <p class="card-text text-secondary"><b>Fecha de finalización:</b> <span class="fa fa-calendar"></span> @necesidad.FechaFin</p>
+                    <div class="text-center">
+                        <a href="~/Necesidades/DetalleNecesidad?idNecesidad=@necesidad.IdNecesidad" class="btn btn-info">Mas detalles</a>
+                    </div>
+                    @{
+                        Session["parametro"] = necesidad.IdNecesidad;
+                    }
+                </div>
+
+            </div>
         </div>
-    </div>
+
+
+    }
+    <!--FIN DE LA PUBLICACION-->
+
 }

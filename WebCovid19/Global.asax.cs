@@ -19,7 +19,7 @@ namespace WebCovid19
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
         }
-        /*
+        
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception exception = Server.GetLastError();
@@ -31,7 +31,7 @@ namespace WebCovid19
 
             Server.ClearError();
             Response.Redirect(String.Format("~/Error/?error={0}", error, exception.Message));
-        }*/
+        }
         //ToDo: Sirve para verificar que esas variables de session no sean nulas, pero no soluciona todo el problema de tener que validar q no este vacio en cada services
          protected void Session_Start(Object sender, EventArgs e)
         {

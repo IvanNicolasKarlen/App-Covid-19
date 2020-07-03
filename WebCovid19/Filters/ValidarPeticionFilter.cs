@@ -10,7 +10,9 @@ namespace WebCovid19.Filters
         {
             string action = HttpContext.Current.Session["action"].ToString();
             string controller = HttpContext.Current.Session["controller"].ToString();
-            var parametro = HttpContext.Current.Session["parametro"].ToString();
+            
+             var parametro = HttpContext.Current.Session["parametro"].ToString();
+            
             var intParametro = int.Parse(parametro);
 
 

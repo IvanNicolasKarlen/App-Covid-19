@@ -1,4 +1,9 @@
-﻿#colour {
+﻿body {
+    background: linear-gradient(0.25turn, #3f87a6, #3cebbb);
+    /*background: linear-gradient(0.25turn, #5bb3db, #4183eb);*/
+}
+
+#colour {
     background-color: white;
 }
 
@@ -21,6 +26,11 @@ image-index{
     background-color: #3cebbb;
     color: white;
     font-size:26px;
+}
+#image-perfil-index {
+    height: 70px;
+    width: 70px;
+    margin: auto;
 }
 
 #imgperfil {

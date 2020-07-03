@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_NecesidadesLayout.cshtml";
 }
 <div class="row">
-    <div class="col offset-md-2 col-md-8 text-center border border-primary">
+    <div class="col offset-md-2 col-md-8 text-center border border-primary table-light">
         @using (Html.BeginForm("Crear", "Necesidades", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <h4>Crear Necesidad</h4>
+            <h4 class="font-weight-light">Crear Necesidad</h4>
             <hr />
             <div class="form-group">
                 @Html.LabelFor(model => model.Nombre, "Nombre: ")
@@ -50,7 +50,7 @@
                 @Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })
             </div>
             <div class="btn-group-sm">
-                @Html.ActionLink("Cancelar", "Index", "Home", null, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Regresar a Home", "Index", "Home", null, new { @class = "btn btn-info" })
                 <input type="submit" value="Siguiente" class="btn btn-primary" />
             </div>
             <hr />
