@@ -51,7 +51,7 @@ namespace WebCovid19.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear(NecesidadesMetadata vmnecesidad)
+        public ActionResult Crear(NecesidadesMetadata necesidadMeta)
         {
             if (!ModelState.IsValid)
             {
@@ -61,15 +61,15 @@ namespace WebCovid19.Controllers
             {
                 if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
                 {
-                    string nombreSignificativo = vmnecesidad.Nombre + " " + Session["Email"];
+                    string nombreSignificativo = necesidadMeta.Nombre + " " + Session["Email"];
                     //Guardar Imagen
                     string pathRelativoImagen = ImagenesUtil.Guardar(Request.Files[0], nombreSignificativo);
-                    vmnecesidad.Foto = pathRelativoImagen;
+                    necesidadMeta.Foto = pathRelativoImagen;
                 }
                 int idUsuario = int.Parse(Session["UserId"].ToString());
-                Necesidades necesidad = servicioNecesidad.buildNecesidad(vmnecesidad, idUsuario);
+                Necesidades necesidad = servicioNecesidad.buildNecesidad(necesidadMeta, idUsuario);
                 Session["idNecesidad"] = necesidad.IdNecesidad;
-                if (Enum.GetName(typeof(TipoDonacion), vmnecesidad.TipoDonacion) == "Insumos")
+                if (Enum.GetName(typeof(TipoDonacion), necesidadMeta.TipoDonacion) == "Insumos")
                 {
                     return View("Insumos");
                 }
@@ -160,7 +160,7 @@ namespace WebCovid19.Controllers
             {
                 return View();
             };
-            if (vmref.Telefono1.Equals(vmref.Nombre2))
+            if (vmref.Telefono1.Equals(vmref.Telefono2))
             {
                 ViewBag.TelIguales = "Los números de teléfonos no pueden ser los mismos";
             };

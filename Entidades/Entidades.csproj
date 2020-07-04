@@ -113,6 +113,7 @@
     <Compile Include="Usuarios.cs">
       <DependentUpon>ModelTP.tt</DependentUpon>
     </Compile>
+    <Compile Include="ValidationCustom\CheckDateGTNow.cs" />
     <Compile Include="ValidationCustom\CheckValidDate.cs" />
     <Compile Include="Views\DonacionesInsumosVM.cs" />
     <Compile Include="Views\EncriptarPassword.cs" />

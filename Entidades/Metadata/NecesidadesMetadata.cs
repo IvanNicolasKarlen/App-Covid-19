@@ -1,4 +1,5 @@
 ﻿using Entidades.Enum;
+using Entidades.ValidationCustom;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,11 +16,12 @@ namespace Entidades.Metadata
         public string Descripcion { get; set; }
 
         [Required(ErrorMessage = "Obligatorio")]
-        [StringLength(30)]
+        [RegularExpression("([0-9]{2,4})([0-9]{6,10})", ErrorMessage ="El número de teléfono no es válido")]
         public string TelefonoContacto { get; set; }
 
         [Required(ErrorMessage = "Obligatorio")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [CheckDateGTNow]
         public DateTime FechaFin { get; set; }
 
         [Required(ErrorMessage = "Obligatorio")]

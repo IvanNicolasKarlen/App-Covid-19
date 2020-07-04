@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Entidades.ValidationCustom
 {
-    class CheckValidDate : ValidationAttribute
+    class CheckDateGTNow : ValidationAttribute
     {
-        public CheckValidDate()
+        public CheckDateGTNow()
         {
-            ErrorMessage = "Debe ser mayor de 18 años para registrarse.";
+            ErrorMessage = "La fecha debe ser mayor al día de hoy.";
         }
-
+        //Verifica que la fecha ingresada sea mayor a la actual, sino devuelve false
         public override bool IsValid(object value)
         {
             if (value == null)
@@ -23,17 +23,8 @@ namespace Entidades.ValidationCustom
 
             DateTime fecha = (DateTime)value;
             DateTime now = DateTime.Now;
-            int year = now.Year - fecha.Year;
 
-            if (year < 18)
-            {
-                return false;
-            }
-            else if (year > 18)
-            {
-                return true;
-            }
-            else if ((fecha.Month < now.Month) || (fecha.Day <= now.Day && fecha.Month <= now.Month))
+            if (fecha > now)
             {
                 return true;
             }
@@ -44,4 +35,3 @@ namespace Entidades.ValidationCustom
         }
     }
 }
-
