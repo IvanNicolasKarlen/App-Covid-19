@@ -1,4 +1,4 @@
-﻿@model List<Entidades.Necesidades>
+@model List<Entidades.Necesidades>
 
 @{
     ViewBag.Title = "Index";
@@ -30,7 +30,7 @@ else
 {
 <div class="container">
     <div class="text-center text-uppercase card-title">
-        <h2 class="bg-soft">Top 5 Necesidades más valoradas</h2>
+        <h2>Top 5 Necesidades más valoradas</h2>
     </div>
     @foreach (var necesidad in Model)
     {
@@ -39,15 +39,15 @@ else
 
         @switch (@top)
         {
-            case 1:<h3 class="text-center card-title bg-soft" text-white> Necesidad con más valoraciones</h3>
+            case 1:<h3 class="text-center card-title" text-white> Necesidad con más valoraciones</h3>
                 break;
-            case 2: <h3 class="text-center card-title bg-soft" text-white> Segunda Necesidad más valorada</h3>
+            case 2: <h3 class="text-center card-title" text-white> Segunda Necesidad más valorada</h3>
                 break;
-            case 3: <h3 class="text-center card-title bg-soft" text-white> Tercera Necesidad más valorada</h3>
+            case 3: <h3 class="text-center card-title " text-white> Tercera Necesidad más valorada</h3>
                 break;
-            case 4: <h3 class="text-center  card-title bg-soft" text-white> Cuarta Necesidad más valorada</h3>
+            case 4: <h3 class="text-center  card-title" text-white> Cuarta Necesidad más valorada</h3>
                 break;
-            case 5: <h3 class="text-center  card-title bg-soft" text-white> Quinta Necesidad más valorada</h3>
+            case 5: <h3 class="text-center  card-title" text-white> Quinta Necesidad más valorada</h3>
                 break;
         }
 
