@@ -42,6 +42,7 @@ namespace WebCovid19
             Session["Admin"] = String.Empty;
             Session["action"] = String.Empty;
             Session["controller"] = String.Empty;
+            Session["parametro"] = String.Empty;
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using Microsoft.Ajax.Utilities;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -10,11 +11,13 @@ namespace WebCovid19.Filters
         {
             string action = HttpContext.Current.Session["action"].ToString();
             string controller = HttpContext.Current.Session["controller"].ToString();
-            var parametro = HttpContext.Current.Session["parametro"].ToString();
-
+            string parametro = HttpContext.Current.Session["parametro"].ToString();
+            var intParametro = 0;
+            if (! string.IsNullOrEmpty(parametro))
+            {
+                 intParametro = int.Parse(parametro);
+            }
             
-
-            var intParametro = int.Parse(parametro);
 
             
             if (action != "")

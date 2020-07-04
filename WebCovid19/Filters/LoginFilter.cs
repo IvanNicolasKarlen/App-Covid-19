@@ -21,7 +21,14 @@ namespace WebCovid19.Filters
 
                 HttpContext.Current.Session["action"] = action;
                 HttpContext.Current.Session["controller"] = controller;
-                HttpContext.Current.Session["parametro"] = parametro;
+
+                if(parametro != null)
+                {
+                    HttpContext.Current.Session["parametro"] = parametro;
+                }
+               
+
+              
                 
                 filterContext.Result = new RedirectToRouteResult
 
