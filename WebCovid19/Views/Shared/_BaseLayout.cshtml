@@ -23,18 +23,16 @@
 </head>
 
 <body>
-
-    <div class="container">
-        <!-- Definición del menú -->
-        @Html.Partial("VPHeader")
-        <!-- Termina la definición del menú -->
-
-        @RenderBody()
-
-
-
+    @Html.Partial("VPHeader")
+    <div class="main-base">
+        <div class="container bg-soft">
+            <!-- Definición del menú -->
+            @RenderBody()
+            <!-- Termina la definición del menú -->
+        </div>
     </div>
+    @Html.Partial("VPFooter")
 </body>
-@Html.Partial("VPFooter")
+
 
 </html>

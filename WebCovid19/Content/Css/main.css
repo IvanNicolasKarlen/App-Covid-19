@@ -1,11 +1,8 @@
-﻿body {
-    background: linear-gradient(0.25turn, #3f87a6, #3cebbb);
-    /*background: linear-gradient(0.25turn, #5bb3db, #4183eb);*/
+﻿.main-base {
+    background: rgb(164,255,150);
+    background: linear-gradient(90deg, rgba(164,255,150,1) 0%, rgba(160,255,193,1) 51%, rgba(143,245,255,0.8211659663865546) 100%);
 }
 
-#colour {
-    background-color: white;
-}
 
 image-index{
     height:100px;
@@ -43,10 +40,7 @@ image-index{
     width: 267px;
 }
 
-#link{
-    text-decoration: none;
-    color: black;
-}
+
 
 #selectLarge {
     font-size: 20px;
@@ -351,7 +345,7 @@ button {
 
 /********Footer*******/
 .footer-bs {
-    background-color: #3c3d41;
+    background-color: #062b31;
     padding: 60px 40px;
     color: rgba(255,255,255,1.00);
     margin-bottom: 20px;
@@ -468,4 +462,7 @@ button {
 
 .display-none{
     display:none;
+}
+.bg-soft {
+    background-color: #ffffff99;
 }

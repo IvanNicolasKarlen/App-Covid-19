@@ -13,20 +13,6 @@ C:\Users\pc\App-Covid-19\DAO\bin\Debug\EntityFramework.dll
 C:\Users\pc\App-Covid-19\DAO\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\pc\App-Covid-19\DAO\bin\Debug\EntityFramework.xml
 C:\Users\pc\App-Covid-19\DAO\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\DAO.dll.config
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\DAO.dll
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\DAO.pdb
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\Entidades.dll
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\EntityFramework.dll
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\Entidades.pdb
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\Entidades.dll.config
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\EntityFramework.xml
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\obj\Debug\DAO.csprojAssemblyReference.cache
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\obj\Debug\DAO.csproj.CopyComplete
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\obj\Debug\DAO.dll
-C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\obj\Debug\DAO.pdb
 D:\Proyectos Visual Studio\Proyecto Covid-19\App-Covid-19\DAO\bin\Debug\DAO.dll.config
 D:\Proyectos Visual Studio\Proyecto Covid-19\App-Covid-19\DAO\bin\Debug\DAO.dll
 D:\Proyectos Visual Studio\Proyecto Covid-19\App-Covid-19\DAO\bin\Debug\DAO.pdb
@@ -327,3 +313,17 @@ D:\Proyecto Covid 19\App 2-7\App-Covid-19\DAO\obj\Debug\DAO.csproj.CoreCompileIn
 D:\Proyecto Covid 19\App 2-7\App-Covid-19\DAO\obj\Debug\DAO.csproj.CopyComplete
 D:\Proyecto Covid 19\App 2-7\App-Covid-19\DAO\obj\Debug\DAO.dll
 D:\Proyecto Covid 19\App 2-7\App-Covid-19\DAO\obj\Debug\DAO.pdb
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\DAO.dll.config
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\DAO.dll
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\DAO.pdb
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\Entidades.dll
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\EntityFramework.dll
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\Entidades.pdb
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\Entidades.dll.config
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\EntityFramework.xml
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\obj\Debug\DAO.csprojAssemblyReference.cache
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\obj\Debug\DAO.csproj.CopyComplete
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\obj\Debug\DAO.dll
+C:\Users\candelaria.d\Desktop\TP WEB III UNLAM\App-Covid-19\DAO\obj\Debug\DAO.pdb
