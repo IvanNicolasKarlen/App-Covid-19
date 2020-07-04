@@ -1,6 +1,8 @@
 # App-Covid-19
-| Asp Net MVC - Entity Framework - Razor - Boostrap - Ado Net - SQL Server| 
+| Asp Net MVC - Entity Framework - Razor - Boostrap - Ado Net - SQL Server|
+
 Objetivo del Proyecto: 
+
 Desarrollar una aplicación web para las necesidades sociales generadas por la pandemia del COVID-19. 
 Personas registradas en la aplicación web podrán publicar sus necesidades solicitando ayuda o donaciones. 
 Las donaciones podrán ser monetarias o de bienes para ayudar a la contraparte. 
