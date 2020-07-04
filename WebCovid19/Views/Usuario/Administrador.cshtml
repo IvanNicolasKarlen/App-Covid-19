@@ -81,10 +81,9 @@
 
                                                     @foreach (var denuncias in Model.listaDenuncias.GroupBy(o=>o.MotivoDenuncia.Descripcion))
                                                     {
-                                                        //if (necesidad.IdNecesidad == denuncias.IdNecesidad && denuncias.Estado == (int)Entidades.Enum.TipoEstadoDenuncia.Pendiente)
-                                                        //{
+                                                        
                                                             <h4 class="text-danger"> @denuncias.Key</h4>
-                                                        //}
+                                                     
                                                     }
                                                 </div>
                                             </div>

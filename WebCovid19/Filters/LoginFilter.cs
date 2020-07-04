@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using System.Web.ModelBinding;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -14,10 +15,14 @@ namespace WebCovid19.Filters
             {
                 string action = filterContext.RouteData.Values["action"].ToString();
                 string controller = filterContext.RouteData.Values["controller"].ToString();
+                string parametro = HttpContext.Current.Request.Params.Get("idNecesidad");
 
+            
 
                 HttpContext.Current.Session["action"] = action;
                 HttpContext.Current.Session["controller"] = controller;
+                HttpContext.Current.Session["parametro"] = parametro;
+                
                 filterContext.Result = new RedirectToRouteResult
 
                     (

@@ -49,6 +49,27 @@
                         <h2 class="text-center">@Model.Nombre</h2>
                         <div class="col-md-12 text-center m-auto">
                             <i>@Model.Descripcion</i>
+
+                            <p>
+                                <b>
+                                    <i class="fa fa-phone-square" aria-hidden="true"></i>
+                                    Telefono: @Model.TelefonoContacto
+                                </b>
+                            </p>
+
+                            <a class="btn btn-info font-weight-light text-center" data-toggle="collapse" href="#collapseMotivos" role="button" aria-expanded="false" aria-controls="collapseMotivos">
+                                Referencias
+                            </a>
+
+                            <div class="collapse" id="collapseMotivos">
+                                <div class="card card-body">
+
+                                    @foreach (var referencias in Model.NecesidadesReferencias)
+                                    {
+                                         <h5><p class="fa fa-phone" aria-hidden="true"> @referencias.Nombre :  @referencias.Telefono </p></h5><br />
+                                    }
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-12 mb-3 mt-3 float-left">
 
@@ -57,7 +78,7 @@
                             {
 
                                 <p>
-                                    <b> Total Solicitado</b> :
+                                    <b class="text-center"> Total Solicitado</b> :
 
                                     @necDonInsumos.Nombre (@necDonInsumos.Cantidad)
                                 </p>
@@ -137,74 +158,74 @@
                 else
                 {
 
-                
-                using (Html.BeginForm("DetalleNecesidad", "Necesidades", FormMethod.Post, new { @class = "float-auto ml-5" }))
-                {
-                    <input type="hidden" name="IdNecesidad" value="@Model.IdNecesidad" />
 
-                    if (Model.NecesidadesValoraciones.Count == 0)
+                    using (Html.BeginForm("DetalleNecesidad", "Necesidades", FormMethod.Post, new { @class = "float-auto ml-5" }))
                     {
-                        <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
-                    }
-                    else
-                    {
-                        int bandera = 0;
-                        foreach (var necesidadesValoraciones in Model.NecesidadesValoraciones)     //3 ... 1... 2
-                        {
+                        <input type="hidden" name="IdNecesidad" value="@Model.IdNecesidad" />
 
-
-                            if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.IdNecesidad & necesidadesValoraciones.Valoracion == "Like")
-                            {
-                                <button type="submit" class="btn btn-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
-
-                                break;
-                            }
-                            else
-                            {
-                                bandera++;
-                            }
-
-                        }
-
-
-                        if (Model.NecesidadesValoraciones.Count == bandera)
+                        if (Model.NecesidadesValoraciones.Count == 0)
                         {
                             <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                         }
-                    }
-                    <label> <b class="text-primary">@Model.Valoracion%</b> de coincidencias </label>
-
-
-
-                    if (Model.NecesidadesValoraciones.Count == 0)
-                    {
-                        <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
-                    }
-                    else
-                    {
-                        int bandera = 0;
-                        foreach (var necesidadesValoraciones in Model.NecesidadesValoraciones)
+                        else
                         {
-                            if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.IdNecesidad & necesidadesValoraciones.Valoracion == "Dislike")
+                            int bandera = 0;
+                            foreach (var necesidadesValoraciones in Model.NecesidadesValoraciones)     //3 ... 1... 2
                             {
-                                <button type="submit" class="btn btn-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
 
-                                break;
-                            }
-                            else
-                            {
-                                bandera++;
+
+                                if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.IdNecesidad & necesidadesValoraciones.Valoracion == "Like")
+                                {
+                                    <button type="submit" class="btn btn-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
+                                    break;
+                                }
+                                else
+                                {
+                                    bandera++;
+                                }
 
                             }
-                        }
 
-                        if (Model.NecesidadesValoraciones.Count == bandera)
-                        {
-                            <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+
+                            if (Model.NecesidadesValoraciones.Count == bandera)
+                            {
+                                <button type="submit" class="btn btn-outline-info" name="Like"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                            }
                         }
-                        <label> No estoy de acuerdo </label>
+                        <label> <b class="text-primary">@Model.Valoracion%</b> de coincidencias </label>
+
+
+
+                        if (Model.NecesidadesValoraciones.Count == 0)
+                        {
+                            <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+                        }
+                        else
+                        {
+                            int bandera = 0;
+                            foreach (var necesidadesValoraciones in Model.NecesidadesValoraciones)
+                            {
+                                if (necesidadesValoraciones.IdUsuario == idSession & necesidadesValoraciones.IdNecesidad == @Model.IdNecesidad & necesidadesValoraciones.Valoracion == "Dislike")
+                                {
+                                    <button type="submit" class="btn btn-danger" name="Dislike"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+
+                                    break;
+                                }
+                                else
+                                {
+                                    bandera++;
+
+                                }
+                            }
+
+                            if (Model.NecesidadesValoraciones.Count == bandera)
+                            {
+                                <button type="submit" class="btn btn-outline-danger" name="Dislike"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+                            }
+                            <label> No estoy de acuerdo </label>
+                        }
                     }
-                }
                 }
             </div>
 

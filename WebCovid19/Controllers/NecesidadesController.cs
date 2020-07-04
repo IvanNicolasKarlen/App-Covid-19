@@ -267,6 +267,7 @@ namespace WebCovid19.Controllers
                 string boton = (Request.Form["Like"] != null) ? "Like" : (Request.Form["Dislike"] != null) ? "Dislike" : null;
                 LikeOrDislike likeOrDislike = new LikeOrDislike();
                 bool estado = likeOrDislike.AgregaLikeOrDislike(idSession, boton, idNecesidad, servicioNecesidadValoraciones);
+                return RedirectToAction("DetalleNecesidad", new { idNecesidad });
             }
             /**********************************************************************/
             Necesidades necesidadObtenida = servicioNecesidad.obtenerNecesidadPorId(idNecesidad);
