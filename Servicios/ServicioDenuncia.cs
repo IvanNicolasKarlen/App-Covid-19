@@ -99,7 +99,7 @@ namespace Servicios
             {
                 d.Estado = (int)TipoEstadoDenuncia.Revisada; // 1 revisada
                                                              //Actualizo el estado
-                 denunciasDao.Actualizar(denunciaObtenida);
+                 denunciasDao.Actualizar(d);
 
             }
 
